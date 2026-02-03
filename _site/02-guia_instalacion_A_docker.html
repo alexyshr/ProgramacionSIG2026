@@ -1,0 +1,2118 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.550">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Programación SIG: Python, R y Julia - 2&nbsp; Guía de Instalación. Opción A: Contenedor Docker (Python, R, Julia)</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./03-guia_instalacion_B_qgis.html" rel="next">
+<link href="./01-introduccion-entornos.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-introduccion-entornos.html">Instalación y Entornos</a></li><li class="breadcrumb-item"><a href="./02-guia_instalacion_A_docker.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción A: Contenedor Docker (Python, R, Julia)</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Programación SIG: Python, R y Julia</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bienvenida</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-prefacio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prefacio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Instalación y Entornos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-introduccion-entornos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción a Entornos de Desarrollo SIG</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-guia_instalacion_A_docker.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción A: Contenedor Docker (Python, R, Julia)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-guia_instalacion_B_qgis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción B: QGIS y PyQGIS</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-guia_instalacion_C_ArcGIS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Fundamentos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-introduccion_python_r_julia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Fundamentos: Python, R y Julia</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-estructuras_datos_geo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Estructuras de Datos Geoespaciales</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Prácticas</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./41-benchmark_raster.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Benchmark de Procesamiento Geoespacial</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">Presentaciones</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./71-presentacion_benchmark.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Benchmark geoespacial: cómo leer los resultados</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./91-referencia_tecnica.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Referencia Técnica y Compendio de Comandos</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./92-errata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Errata</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./93-referencias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referencias Bibliográficas</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de Contenidos</h2>
+   
+  <ul>
+  <li><a href="#introducción-al-entorno-de-trabajo" id="toc-introducción-al-entorno-de-trabajo" class="nav-link active" data-scroll-target="#introducción-al-entorno-de-trabajo"><span class="header-section-number">2.1</span> Introducción al Entorno de Trabajo</a>
+  <ul class="collapse">
+  <li><a href="#preparación-de-herramientas-en-windows" id="toc-preparación-de-herramientas-en-windows" class="nav-link" data-scroll-target="#preparación-de-herramientas-en-windows">Preparación de Herramientas en Windows</a></li>
+  <li><a href="#enlaces-de-descarga-e-instalación" id="toc-enlaces-de-descarga-e-instalación" class="nav-link" data-scroll-target="#enlaces-de-descarga-e-instalación">Enlaces de Descarga e Instalación</a></li>
+  </ul></li>
+  <li><a href="#sec-infraestructura" id="toc-sec-infraestructura" class="nav-link" data-scroll-target="#sec-infraestructura"><span class="header-section-number">2.2</span> Infraestructura con Docker y Docker Compose</a>
+  <ul class="collapse">
+  <li><a href="#el-manifiesto-técnico-dockerfile-y-docker-compose.yml" id="toc-el-manifiesto-técnico-dockerfile-y-docker-compose.yml" class="nav-link" data-scroll-target="#el-manifiesto-técnico-dockerfile-y-docker-compose.yml">El Manifiesto Técnico: <code>Dockerfile</code> y <code>docker-compose.yml</code></a></li>
+  </ul></li>
+  <li><a href="#puesta-en-marcha-y-acceso-al-contenedor-terminal-vscode-jupyterlab" id="toc-puesta-en-marcha-y-acceso-al-contenedor-terminal-vscode-jupyterlab" class="nav-link" data-scroll-target="#puesta-en-marcha-y-acceso-al-contenedor-terminal-vscode-jupyterlab"><span class="header-section-number">2.3</span> Puesta en Marcha y Acceso al Contenedor (Terminal, VSCode, JupyterLab)</a>
+  <ul class="collapse">
+  <li><a href="#resumen-de-la-infraestructura-instalada" id="toc-resumen-de-la-infraestructura-instalada" class="nav-link" data-scroll-target="#resumen-de-la-infraestructura-instalada">Resumen de la infraestructura instalada</a></li>
+  </ul></li>
+  <li><a href="#mapeo-de-capacidades-sig" id="toc-mapeo-de-capacidades-sig" class="nav-link" data-scroll-target="#mapeo-de-capacidades-sig"><span class="header-section-number">2.4</span> Mapeo de Capacidades SIG</a></li>
+  <li><a href="#guía-visual-de-jupyterlab" id="toc-guía-visual-de-jupyterlab" class="nav-link" data-scroll-target="#guía-visual-de-jupyterlab"><span class="header-section-number">2.5</span> Guía Visual de JupyterLab</a>
+  <ul class="collapse">
+  <li><a href="#la-carpeta-work-y-el-espejo-de-datos" id="toc-la-carpeta-work-y-el-espejo-de-datos" class="nav-link" data-scroll-target="#la-carpeta-work-y-el-espejo-de-datos">La Carpeta ‘work’ y el Espejo de Datos</a></li>
+  </ul></li>
+  <li><a href="#compilación-de-la-guía-documento-quarto-qmd" id="toc-compilación-de-la-guía-documento-quarto-qmd" class="nav-link" data-scroll-target="#compilación-de-la-guía-documento-quarto-qmd"><span class="header-section-number">2.6</span> Compilación de la guía (documento quarto <code>qmd</code>)</a></li>
+  <li><a href="#sec-limpieza" id="toc-sec-limpieza" class="nav-link" data-scroll-target="#sec-limpieza"><span class="header-section-number">2.7</span> Mantenimiento y Limpieza del Entorno</a>
+  <ul class="collapse">
+  <li><a href="#comandos-de-rescate-de-espacio" id="toc-comandos-de-rescate-de-espacio" class="nav-link" data-scroll-target="#comandos-de-rescate-de-espacio">Comandos de Rescate de Espacio</a></li>
+  </ul></li>
+  <li><a href="#verificación-de-conectividad-multilenguaje" id="toc-verificación-de-conectividad-multilenguaje" class="nav-link" data-scroll-target="#verificación-de-conectividad-multilenguaje"><span class="header-section-number">2.8</span> Verificación de Conectividad Multilenguaje</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-introduccion-entornos.html">Instalación y Entornos</a></li><li class="breadcrumb-item"><a href="./02-guia_instalacion_A_docker.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción A: Contenedor Docker (Python, R, Julia)</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="guia-A" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción A: Contenedor Docker (Python, R, Julia)</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introducción-al-entorno-de-trabajo" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="introducción-al-entorno-de-trabajo"><span class="header-section-number">2.1</span> Introducción al Entorno de Trabajo</h2>
+<p>Esta guía establece un entorno de <strong>Reproducibilidad Científica</strong>. Utilizaremos una arquitectura híbrida: <strong>VSCode</strong> como editor local <span class="citation" data-cites="vscode2026">(<a href="93-referencias.html#ref-vscode2026" role="doc-biblioref">Microsoft Corporation, 2026</a>)</span> y <strong>Docker</strong> como laboratorio de ejecución <span class="citation" data-cites="docker2025">(<a href="93-referencias.html#ref-docker2025" role="doc-biblioref">Inc., 2025</a>)</span>. Esta aproximación garantiza que todos los estudiantes operen bajo las mismas versiones de motores geoespaciales (GDAL, GEOS, PROJ), eliminando el problema de “en mi computador no funciona”.</p>
+<section id="preparación-de-herramientas-en-windows" class="level3">
+<h3 class="anchored" data-anchor-id="preparación-de-herramientas-en-windows">Preparación de Herramientas en Windows</h3>
+<p>Para preparar su equipo de trabajo, instale las siguientes herramientas básicas:</p>
+<ol type="1">
+<li><strong>VSCode IDE</strong>: Su interfaz principal para editar archivos <code>.qmd</code> y gestionar código <span class="citation" data-cites="vscode2026">(<a href="93-referencias.html#ref-vscode2026" role="doc-biblioref">Microsoft Corporation, 2026</a>)</span>. En el anexo de referencia técnica encontrará las principales extensiones (<a href="91-referencia_tecnica.html#sec-extensiones-vscode" class="quarto-xref"><span>Section A.7.2</span></a>)necesarias a instalar en VSCode.</li>
+<li><strong>Docker Desktop</strong>: Motor de virtualización que ejecutará nuestro laboratorio SIG <span class="citation" data-cites="docker2025">(<a href="93-referencias.html#ref-docker2025" role="doc-biblioref">Inc., 2025</a>)</span>. Durante la instalación, asegúrese de activar la opción <strong>“Use WSL 2 instead of Hyper-V”</strong>.</li>
+</ol>
+<p>Siguiendo los pasos detallados a continuación para instalar dos contenedores Docker, en resumen ellos contendrán (no es necesario instalarlos manualmente):</p>
+<ol type="1">
+<li><strong>Python</strong>, <strong>R</strong> y <strong>Julia</strong> con los principales paquetes/librerías para geoprocesamiento.</li>
+<li><strong>Quarto</strong>.</li>
+<li><strong>TinyTeX</strong>: Motor ligero de LaTeX necesario para compilar reportes profesionales (ej: en Quarto) en formato PDF <span class="citation" data-cites="xie2019tinytex">(<a href="93-referencias.html#ref-xie2019tinytex" role="doc-biblioref">Xie, 2019</a>)</span>. Si desea instalar TinyTeX para generar PDF por fuera del entorno Docker, desde la terminal de VSCode use el comando (opcional: fuera de clase):</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>  <span class="ex">quarto</span> install tinytex</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li><strong>PostgreSQL</strong> + <strong>PostGIS</strong></li>
+</ol>
+</section>
+<section id="enlaces-de-descarga-e-instalación" class="level3">
+<h3 class="anchored" data-anchor-id="enlaces-de-descarga-e-instalación">Enlaces de Descarga e Instalación</h3>
+<p>Descargue e instale las versiones oficiales desde los siguientes enlaces:</p>
+<ul>
+<li><strong>VSCode IDE</strong>:
+<ul>
+<li><strong>URL</strong>: <a href="https://code.visualstudio.com/" class="uri">https://code.visualstudio.com/</a></li>
+<li><strong>Instalación</strong>: Seleccione el instalador <code>.exe</code> más reciente para Windows.</li>
+</ul></li>
+<li><strong>Docker Desktop</strong>:
+<ul>
+<li><strong>URL</strong>: <a href="https://www.docker.com/products/docker-desktop/" class="uri">https://www.docker.com/products/docker-desktop/</a></li>
+<li><strong>Instalación</strong>: Ejecute el instalador y asegúrese de aceptar la actualización del kernel de WSL 2 si el sistema lo solicita.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="sec-infraestructura" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="sec-infraestructura"><span class="header-section-number">2.2</span> Infraestructura con Docker y Docker Compose</h2>
+<p>Para garantizar un entorno de análisis SIG reproducible y políglota, utilizaremos la orquestación de contenedores. Este enfoque permite ejecutar, de forma aislada y coordinada, tanto el motor de procesamiento como el servidor de datos.</p>
+<section id="el-manifiesto-técnico-dockerfile-y-docker-compose.yml" class="level3">
+<h3 class="anchored" data-anchor-id="el-manifiesto-técnico-dockerfile-y-docker-compose.yml">El Manifiesto Técnico: <code>Dockerfile</code> y <code>docker-compose.yml</code></h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Organización del Proyecto
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Para automatizar el despliegue de los dos contenedores del curso (<code>analisis-geo</code> y <code>db-postgis</code>), utilizaremos la orquestación de Docker. Mientras que el entorno de análisis se construye a medida sobre la imagen base <code>ghcr.io/osgeo/gdal:ubuntu-full-latest</code>, el servicio de base de datos utiliza la imagen especializada <code>kartoza/postgis</code>.</p>
+<p>Para este proceso, utilizaremos dos archivos clave: <strong>docker-compose.yml</strong> y <strong>Dockerfile</strong>.</p>
+</div>
+</div>
+<ol type="1">
+<li>Cree una carpeta utilizando su <strong>ID de usuario de correo institucional</strong> como nombre (el identificador que aparece antes del <code>@unal.edu.co</code>). Por ejemplo, si su correo es <code>juperez@unal.edu.co</code>, la carpeta deberá llamarse <code>juperez</code>. En adelante llamaremos a esa carpeta <code>su_carpeta</code>.</li>
+<li>Dentro de ella, guarde los archivos que se presentan a continuación.</li>
+</ol>
+<section id="archivo-docker-compose.yml-orquestación" class="level4">
+<h4 class="anchored" data-anchor-id="archivo-docker-compose.yml-orquestación">Archivo <code>docker-compose.yml</code> (Orquestación)</h4>
+<p>Este archivo es el <strong>manifiesto técnico</strong> que automatiza la construcción y coordinación de los servicios del curso. Su propósito es definir las reglas de convivencia entre los contenedores, configurando los siguientes pilares:</p>
+<ul>
+<li><strong>Imágenes</strong>: Versiones exactas de software (GDAL/Ubuntu para análisis y PostGIS para datos).</li>
+<li><strong>Puertos</strong>: Mapeos específicos para acceder a las herramientas desde Windows sin conflictos (8889 para Jupyter, 8788 para el visor de R y 5434 para la base de datos).</li>
+<li><strong>Volúmenes</strong>: Garantizan la persistencia de datos, sincronizando su carpeta local en tiempo real con el entorno interno del contenedor.</li>
+</ul>
+<p>A continuación, se describen los dos servicios integrados en este manifiesto:</p>
+<ul>
+<li><p><strong>Servicio de Análisis (<code>analisis-geo</code>)</strong>: Identificado en el archivo como <code>analisis-geo</code>, este servicio se construye a medida (etiqueta <code>build: .</code>) utilizando las instrucciones del <code>Dockerfile</code>. Es el motor políglota encargado de procesar R, Python y Julia sobre una base robusta de GDAL. Incluye una configuración de <code>LD_PRELOAD</code> para la estabilidad de las librerías dinámicas y una integración profunda que permite usar el visor <code>httpgd</code> de R como terminal gráfica unificada para todos los lenguajes. Crea el contenedor <code>contenedor_sig_unal</code>.</p></li>
+<li><p><strong>Servicio PostGIS (<code>db-postgis</code>)</strong>: Identificado como <code>db-postgis</code>, este servicio descarga automáticamente la imagen especializada de Kartoza. Levanta el servidor de base de datos <code>sig_db_unal</code>, configurado para recibir conexiones espaciales desde sus scripts o herramientas externas como QGIS o ArcGIS a través del puerto <code>5434</code>.</p></li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">services</span><span class="kw">:</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">  # ============================================================</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">  # SERVICIO PRINCIPAL</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">  # Entorno de análisis geoespacial y científico</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">  # Integra R, Python, Julia, GDAL, Quarto y Jupyter</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">  # ============================================================</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">analisis-geo</span><span class="kw">:</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">build</span><span class="kw">:</span><span class="at"> .</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> image_sig_unal</span><span class="co">                 # Nombre de la imagen Docker que se construye localmente</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> contenedor_sig_unal</span><span class="co">   # Nombre del contenedor (más fácil de usar en docker exec)</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="at">    </span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">    # Permite sesiones interactivas (terminal, REPLs, etc.)</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">tty</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">stdin_open</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">    # Carpeta compartida:</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">    # Todo lo que esté en el proyecto (host) aparece dentro del contenedor</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> .:/home/rstudio/work</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co">    # ------------------------------------------------------------</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co">    # VARIABLES DE ENTORNO</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co">    # Aseguran que R, Python, Julia y Quarto usen versiones correctas</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co">    # ------------------------------------------------------------</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">environment</span><span class="kw">:</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> RETICULATE_PYTHON=/usr/bin/python3</span><span class="co">   # Python que usará R (reticulate)</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> QUARTO_PYTHON=/usr/bin/python3</span><span class="co">       # Python que usará Quarto</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> JULIA_HOME=/opt/julia/bin</span><span class="co">             # Ruta base de Julia</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="co">      # "Cirugía" necesaria para evitar conflictos entre Julia y GDAL</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="co">      # (muy común en entornos científicos mixtos)</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libcurl.so.4:/usr/lib/x86_64-linux-gnu/libstdc++.so.6</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="co">      # Backend gráfico de Julia (evita errores al graficar en contenedores)</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> GKSwstype=100</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="co">    # ------------------------------------------------------------</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="co">    # PUERTOS</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="co">    # izquierda = computador del estudiante (acceso externo con localhost)</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="co">    # derecha   = contenedor (acceso interno - EXPOSE)</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="co">    # ------------------------------------------------------------</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="co">      # Jupyter Notebook / JupyterLab</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="co">      # Se accede desde el navegador en: http://localhost:8889</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">"127.0.0.1:8889:8888"</span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="co">      # Visor de gráficos de R (httpgd)</span></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="co">      # Permite ver gráficos interactivos fuera de RStudio</span></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">"127.0.0.1:8788:8787"</span></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="co">    # Este servicio solo se inicia cuando la base de datos esté lista</span></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">depends_on</span><span class="kw">:</span></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> db-postgis</span></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="co">  # ============================================================</span></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a><span class="co">  # SERVICIO DE BASE DE DATOS</span></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="co">  # PostgreSQL + PostGIS para datos espaciales</span></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a><span class="co">  # ============================================================</span></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">db-postgis</span><span class="kw">:</span></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> kartoza/postgis:latest</span></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> contenedor_postgis_unal</span></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a><span class="co">    # Credenciales y base de datos inicial</span></span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">environment</span><span class="kw">:</span></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> POSTGRES_USER=profe_unal</span></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> POSTGRES_PASS=geomatica2025</span></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> POSTGRES_DB=sig_db_unal</span></span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a><span class="co">    # Puerto para conectarse desde QGIS, DBeaver, PgAdmin, etc.</span></span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">"127.0.0.1:5434:5432"</span></span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a><span class="co">    # Volumen persistente:</span></span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a><span class="co">    # Los datos NO se pierden aunque el contenedor se borre</span></span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> postgis_data_unal:/var/lib/postgresql</span></span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a><span class="co"># VOLUMENES DOCKER</span></span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a><span class="co"># Espacio en disco administrado por Docker</span></span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">postgis_data_unal</span><span class="kw">:</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+<section id="archivo-dockerfile-construcción-del-entorno" class="level4">
+<h4 class="anchored" data-anchor-id="archivo-dockerfile-construcción-del-entorno">Archivo <code>Dockerfile</code> (Construcción del Entorno)</h4>
+<p>Este archivo constituye la <strong>receta de construcción</strong> del entorno de análisis. Su función es “congelar” un sistema operativo Ubuntu Noble optimizado, garantizando que todos los estudiantes trabajen exactamente con las mismas versiones de librerías, compiladores y paquetes.</p>
+<p>Los pilares técnicos de este archivo son:</p>
+<ul>
+<li><strong>Imagen Base Profesional</strong>: Utiliza la distribución oficial de <strong>OSGeo/GDAL</strong>, que provee el stack más estable de librerías geoespaciales (<code>PROJ</code>, <code>GEOS</code>, <code>GDAL</code>) a nivel de sistema.</li>
+<li><strong>Pila Políglota Integrada</strong>: Automatiza la instalación y configuración de <strong>R</strong>, <strong>Python 3</strong> y <strong>Julia 1.10.4</strong>, resolviendo dependencias cruzadas que suelen ser difíciles de configurar manualmente.</li>
+<li><strong>Motor de Reportes Científicos</strong>: Instala <strong>Quarto</strong> y <strong>TinyTeX</strong>, permitiendo la generación automática de informes en PDF y HTML con calidad editorial.</li>
+<li><strong>Puente de Comunicación Maestro</strong>: Configura el archivo <code>Rprofile.site</code>, el cual actúa como el “cerebro” que permite a R ejecutar código de Julia y capturar gráficos de Python de forma transparente.</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode dockerfile code-with-copy"><code class="sourceCode dockerfile"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Imagen base</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------------------</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Imagen oficial de OSGeo con GDAL completo, PROJ, GEOS y soporte</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># raster/vector profesional. Base estándar en SIG reproducible.</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> ghcr.io/osgeo/gdal:ubuntu-full-latest</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Base, Locales y Pandoc</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------------------</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Configuración UTF-8 para evitar problemas con acentos,</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># R, Python, Julia, LaTeX y generación de documentos.</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="kw">ENV</span> LANG=en_US.UTF-8</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="kw">ENV</span> LC_ALL=en_US.UTF-8</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Herramientas base del sistema:</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co"># - compiladores y toolchain (C/C++)</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co"># - git / curl / wget para descargas</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co"># - pandoc como motor universal de documentos</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">apt-get</span> update <span class="kw">&amp;&amp;</span> <span class="ex">apt-get</span> install <span class="at">-y</span> locales git curl wget ca-certificates <span class="dt">\</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    build-essential cmake libtool automake pkg-config software-properties-common <span class="dt">\</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    pandoc <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    <span class="ex">locale-gen</span> en_US.UTF-8</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Librerías criptográficas y de red</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------------------</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Necesarias para:</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="co"># - conexiones HTTPS</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="co"># - Julia</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="co"># - GDAL</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="co"># - acceso a APIs externas</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">apt-get</span> update <span class="kw">&amp;&amp;</span> <span class="ex">apt-get</span> install <span class="at">-y</span> <span class="at">--no-install-recommends</span> <span class="dt">\</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    libmbedtls-dev <span class="dt">\</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    libnng-dev <span class="dt">\</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>    libssl-dev <span class="dt">\</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>    libxml2-dev <span class="dt">\</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>    libcurl4-openssl-dev <span class="dt">\</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>    git <span class="dt">\</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>    cmake</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. R, Python y dependencias de sistema</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------------------</span></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Incluye soporte para:</span></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a><span class="co"># - SIG (GDAL / GEOS / PROJ)</span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a><span class="co"># - NetCDF / HDF5</span></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a><span class="co"># - NASA / Copernicus</span></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a><span class="co"># - WhiteboxTools</span></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">apt-get</span> update <span class="kw">&amp;&amp;</span> <span class="ex">apt-get</span> install <span class="at">-y</span> <span class="at">--no-install-recommends</span> <span class="dt">\</span></span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>    r-base r-base-dev python3-pip python3-dev <span class="dt">\</span></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>    psmisc lsof net-tools ffmpeg <span class="dt">\</span></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>    libpng-dev libcairo2-dev libsystemd-dev <span class="dt">\</span></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>    libfontconfig1-dev libfreetype6-dev <span class="dt">\</span></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>    libharfbuzz-dev libfribidi-dev <span class="dt">\</span></span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>    libcurl4-openssl-dev libsqlite3-dev libxml2-dev libssl-dev <span class="dt">\</span></span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>    libgeos-dev libproj-dev libgdal-dev libudunits2-dev <span class="dt">\</span></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>    libgit2-dev libssh2-1-dev libxt-dev libglpk-dev libmount-dev <span class="dt">\</span></span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>    libmagick++-dev libpcre2-dev libnetcdf-dev libhdf5-dev <span class="dt">\</span></span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>    libxt6 libxrender1 libxext6 default-jdk <span class="dt">\</span></span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Elimina la restricción de pip en Debian/Ubuntu modernos</span></span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>    &amp;&amp; rm /usr/lib/python3.12/EXTERNALLY-MANAGED || true &amp;&amp; <span class="op">\</span></span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>    rm -rf /var/lib/apt/lists/*</span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Quarto CLI y TinyTeX</span></span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------------------</span></span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a><span class="co"># Quarto: documentos reproducibles (HTML, PDF, slides)</span></span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a><span class="co"># TinyTeX: LaTeX liviano para generación de PDF</span></span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">curl</span> <span class="at">-LO</span> https://github.com/quarto-dev/quarto-cli/releases/download/v1.4.550/quarto-1.4.550-linux-amd64.deb <span class="dt">\</span></span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&amp;&amp;</span> <span class="ex">dpkg</span> <span class="at">-i</span> quarto-1.4.550-linux-amd64.deb <span class="kw">&amp;&amp;</span> <span class="fu">rm</span> quarto-1.4.550-linux-amd64.deb <span class="dt">\</span></span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&amp;&amp;</span> <span class="ex">quarto</span> install tinytex <span class="at">--no-prompt</span></span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Python Stack</span></span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------------------</span></span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a><span class="co"># Librerías SIG, ciencia de datos, notebooks y visualización</span></span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">pip3</span> install <span class="at">--upgrade</span> <span class="at">--ignore-installed</span> <span class="at">--break-system-packages</span> <span class="dt">\</span></span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Ya estaban:</span></span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a>    shapely matplotlib numpy geopandas fiona pyyaml nbformat nbclient ipykernel <span class="op">\</span></span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Nuevos agregados:</span></span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>    pandas rasterio rasterstats scipy psycopg2 pysal earthaccess cdsapi leafmap <span class="op">\</span></span>
+<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a>    geemap segment-geospatial geoai-py lidar pygis whitebox whiteboxgui streamlit <span class="op">\</span></span>
+<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a>    ghp-import jupyter-book jupyterlab jupytext mystmd notebook</span>
+<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. R Stack</span></span>
+<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------------------</span></span>
+<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a><span class="co"># Instalación desde CRAN optimizado de Posit para Linux</span></span>
+<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a><span class="co"># Incluye SIG, visualización, modelado y ML espacial</span></span>
+<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">R</span> <span class="at">-e</span> <span class="st">"options(timeout = 1000, Ncpus = parallel::detectCores(), repos = c(CRAN = 'https://packagemanager.posit.co/cran/__linux__/noble/latest')); </span><span class="dt">\</span></span>
+<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a><span class="st">    install.packages(c('ggplot2', 'patchwork', 'dplyr', 'remotes', 'languageserver', </span><span class="dt">\</span></span>
+<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a><span class="st">    'rmarkdown', 'units', 's2', 'sf', 'terra', 'stars', 'reticulate', 'IRkernel', </span><span class="dt">\</span></span>
+<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a><span class="st">    'unigd', 'cpp11', 'systemfonts', 'AsioHeaders', 'png', 'grid', 'JuliaCall', 'JuliaConnectoR', </span><span class="dt">\</span></span>
+<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a><span class="st">    # Nuevos CRAN:</span></span>
+<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a><span class="st">    'tidyverse', 'tmap', 'leaflet', 'googleway', 'ggspatial', 'mapview', 'plotly', </span><span class="dt">\</span></span>
+<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a><span class="st">    'rasterVis', 'cartogram', 'geogrid', 'geofacet', 'linemap', 'tanaka', 'rayshader', </span><span class="dt">\</span></span>
+<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a><span class="st">    'lwgeom', 'gstat', 'spdep', 'spatialreg', 'stplanr', 'sfnetworks', 'spatstat', </span><span class="dt">\</span></span>
+<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a><span class="st">    'stpp', 'magrittr', 'giscoR', 'caret', 'tidymodels', 'spatialsample', 'CAST', </span><span class="dt">\</span></span>
+<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a><span class="st">    'mlr3spatial', 'mlr3spatiotempcv', 'ncdf4', 'whitebox'))"</span></span>
+<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-117"><a href="#cb3-117" aria-hidden="true" tabindex="-1"></a><span class="co"># Starsdata y repositorios específicos</span></span>
+<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------------------</span></span>
+<span id="cb3-119"><a href="#cb3-119" aria-hidden="true" tabindex="-1"></a><span class="co"># Se compila desde código fuente y se usan repos especiales</span></span>
+<span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">R</span> <span class="at">-e</span> <span class="st">"options(timeout = 30000, Ncpus = parallel::detectCores()); </span><span class="dt">\</span></span>
+<span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a><span class="st">    install.packages('starsdata', repos='https://cran.uni-muenster.de/pebesma/', type='source')"</span> <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
+<span id="cb3-123"><a href="#cb3-123" aria-hidden="true" tabindex="-1"></a>    <span class="ex">R</span> <span class="at">-e</span> <span class="st">"options(timeout = 2000, Ncpus = parallel::detectCores()); </span><span class="dt">\</span></span>
+<span id="cb3-124"><a href="#cb3-124" aria-hidden="true" tabindex="-1"></a><span class="st">    install.packages(c('mlr3cmprsk', 'survdistr'), repos=c('https://mlr3learners.r-universe.dev', 'https://cloud.r-project.org')); </span><span class="dt">\</span></span>
+<span id="cb3-125"><a href="#cb3-125" aria-hidden="true" tabindex="-1"></a><span class="st">    install.packages('geocompkg', repos=c('https://geocompr.r-universe.dev', 'https://cloud.r-project.org'), dependencies=TRUE); </span><span class="dt">\</span></span>
+<span id="cb3-126"><a href="#cb3-126" aria-hidden="true" tabindex="-1"></a><span class="st">    whitebox::install_whitebox(); IRkernel::installspec(user = FALSE)"</span></span>
+<span id="cb3-127"><a href="#cb3-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-128"><a href="#cb3-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-129"><a href="#cb3-129" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-130"><a href="#cb3-130" aria-hidden="true" tabindex="-1"></a><span class="co"># httpgd estable</span></span>
+<span id="cb3-131"><a href="#cb3-131" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------------------</span></span>
+<span id="cb3-132"><a href="#cb3-132" aria-hidden="true" tabindex="-1"></a><span class="co"># Dispositivo gráfico moderno para R (gráficos en navegador)</span></span>
+<span id="cb3-133"><a href="#cb3-133" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-134"><a href="#cb3-134" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">wget</span> https://cran.r-project.org/src/contrib/Archive/httpgd/httpgd_2.0.3.tar.gz <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
+<span id="cb3-135"><a href="#cb3-135" aria-hidden="true" tabindex="-1"></a>    <span class="ex">R</span> CMD INSTALL httpgd_2.0.3.tar.gz <span class="kw">&amp;&amp;</span> <span class="fu">rm</span> httpgd_2.0.3.tar.gz</span>
+<span id="cb3-136"><a href="#cb3-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-137"><a href="#cb3-137" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-138"><a href="#cb3-138" aria-hidden="true" tabindex="-1"></a><span class="co"># 6. Puente Python ↔ R (Backend de Matplotlib para reticulate)</span></span>
+<span id="cb3-139"><a href="#cb3-139" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------------------</span></span>
+<span id="cb3-140"><a href="#cb3-140" aria-hidden="true" tabindex="-1"></a><span class="co"># Permite que gráficos de matplotlib generados desde Python</span></span>
+<span id="cb3-141"><a href="#cb3-141" aria-hidden="true" tabindex="-1"></a><span class="co"># puedan ser capturados y mostrados correctamente desde R</span></span>
+<span id="cb3-142"><a href="#cb3-142" aria-hidden="true" tabindex="-1"></a><span class="co"># usando reticulate (especialmente en notebooks y httpgd).</span></span>
+<span id="cb3-143"><a href="#cb3-143" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-144"><a href="#cb3-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-145"><a href="#cb3-145" aria-hidden="true" tabindex="-1"></a><span class="co"># Creamos la estructura esperada por reticulate</span></span>
+<span id="cb3-146"><a href="#cb3-146" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">mkdir</span> <span class="at">-p</span> /usr/local/lib/python3.12/dist-packages/reticulate/matplotlib <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
+<span id="cb3-147"><a href="#cb3-147" aria-hidden="true" tabindex="-1"></a>    <span class="fu">touch</span> /usr/local/lib/python3.12/dist-packages/reticulate/__init__.py</span>
+<span id="cb3-148"><a href="#cb3-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-149"><a href="#cb3-149" aria-hidden="true" tabindex="-1"></a><span class="co"># Definimos una función que R puede interceptar</span></span>
+<span id="cb3-150"><a href="#cb3-150" aria-hidden="true" tabindex="-1"></a><span class="co"># para recibir el path de la imagen generada por Python</span></span>
+<span id="cb3-151"><a href="#cb3-151" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="bu">printf</span> <span class="st">'def r_graphic_command(path):\n    import os\n    if os.path.exists(path): print(f"r_graphic_command: {path}")\n'</span> <span class="op">&gt;</span> /usr/local/lib/python3.12/dist-packages/reticulate/__init__.py</span>
+<span id="cb3-152"><a href="#cb3-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-153"><a href="#cb3-153" aria-hidden="true" tabindex="-1"></a><span class="co"># Backend custom de matplotlib:</span></span>
+<span id="cb3-154"><a href="#cb3-154" aria-hidden="true" tabindex="-1"></a><span class="co"># - Renderiza con Agg</span></span>
+<span id="cb3-155"><a href="#cb3-155" aria-hidden="true" tabindex="-1"></a><span class="co"># - Guarda el gráfico como PNG temporal</span></span>
+<span id="cb3-156"><a href="#cb3-156" aria-hidden="true" tabindex="-1"></a><span class="co"># - Notifica a R para que lo muestre</span></span>
+<span id="cb3-157"><a href="#cb3-157" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="bu">printf</span> <span class="st">'import matplotlib\nfrom matplotlib.backends.backend_agg import FigureCanvasAgg\nfrom matplotlib.backend_bases import FigureManagerBase\n\ndef show(*args, **kwargs):\n    import os, tempfile, reticulate\n    fd, path = tempfile.mkstemp(suffix=".png")\n    os.close(fd)\n    matplotlib.pyplot.savefig(path)\n    if hasattr(reticulate, "r_graphic_command"):\n        reticulate.r_graphic_command(path)\n\nclass FigureManager(FigureManagerBase):\n    def show(self):\n        show()\n\ndef new_figure_manager(num, *args, **kwargs):\n    FigureClass = kwargs.pop("FigureClass", matplotlib.figure.Figure)\n    thisFig = FigureClass(*args, **kwargs)\n    return new_figure_manager_given_figure(num, thisFig)\n\ndef new_figure_manager_given_figure(num, figure):\n    canvas = FigureCanvasAgg(figure)\n    manager = FigureManager(canvas, num)\n    return manager\n\nFigureCanvas = FigureCanvasAgg\n'</span> <span class="op">&gt;</span> /usr/local/lib/python3.12/dist-packages/reticulate/matplotlib/backend.py</span>
+<span id="cb3-158"><a href="#cb3-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-159"><a href="#cb3-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-160"><a href="#cb3-160" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-161"><a href="#cb3-161" aria-hidden="true" tabindex="-1"></a><span class="co"># 7. Julia: Instalación y Wrapper de Seguridad</span></span>
+<span id="cb3-162"><a href="#cb3-162" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------------------</span></span>
+<span id="cb3-163"><a href="#cb3-163" aria-hidden="true" tabindex="-1"></a><span class="co"># Se instala Julia binaria oficial y se fuerza el uso de</span></span>
+<span id="cb3-164"><a href="#cb3-164" aria-hidden="true" tabindex="-1"></a><span class="co"># librerías del sistema para evitar conflictos con GDAL/OpenSSL</span></span>
+<span id="cb3-165"><a href="#cb3-165" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-166"><a href="#cb3-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-167"><a href="#cb3-167" aria-hidden="true" tabindex="-1"></a><span class="co"># Versión fija de Julia (reproducibilidad total)</span></span>
+<span id="cb3-168"><a href="#cb3-168" aria-hidden="true" tabindex="-1"></a><span class="kw">ENV</span> JULIA_VERSION=1.10.4</span>
+<span id="cb3-169"><a href="#cb3-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-170"><a href="#cb3-170" aria-hidden="true" tabindex="-1"></a><span class="co"># Descarga e instalación manual de Julia</span></span>
+<span id="cb3-171"><a href="#cb3-171" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">wget</span> https://julialang-s3.julialang.org/bin/linux/x64/1.10/julia-<span class="va">${JULIA_VERSION}</span>-linux-x86_64.tar.gz <span class="dt">\</span></span>
+<span id="cb3-172"><a href="#cb3-172" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&amp;&amp;</span> <span class="fu">tar</span> <span class="at">-xvzf</span> julia-<span class="va">${JULIA_VERSION}</span>-linux-x86_64.tar.gz <span class="kw">&amp;&amp;</span> <span class="fu">mv</span> julia-1.10.4 /opt/julia</span>
+<span id="cb3-173"><a href="#cb3-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-174"><a href="#cb3-174" aria-hidden="true" tabindex="-1"></a><span class="co"># Wrapper de Julia:</span></span>
+<span id="cb3-175"><a href="#cb3-175" aria-hidden="true" tabindex="-1"></a><span class="co"># - Fuerza LD_PRELOAD</span></span>
+<span id="cb3-176"><a href="#cb3-176" aria-hidden="true" tabindex="-1"></a><span class="co"># - Evita conflictos de libcurl / libstdc++</span></span>
+<span id="cb3-177"><a href="#cb3-177" aria-hidden="true" tabindex="-1"></a><span class="co"># - Garantiza compatibilidad con GDAL</span></span>
+<span id="cb3-178"><a href="#cb3-178" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="bu">printf</span> <span class="st">'#!/bin/bash\nexport LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libcurl.so.4:/usr/lib/x86_64-linux-gnu/libstdc++.so.6\nexport JULIA_PKG_USE_CLI_GIT=true\n/opt/julia/bin/julia "$@"\n'</span> <span class="op">&gt;</span> /usr/local/bin/julia <span class="kw">&amp;&amp;</span> <span class="fu">chmod</span> +x /usr/local/bin/julia</span>
+<span id="cb3-179"><a href="#cb3-179" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-180"><a href="#cb3-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-181"><a href="#cb3-181" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-182"><a href="#cb3-182" aria-hidden="true" tabindex="-1"></a><span class="co"># 8. Julia: Configuración de librerías nativas</span></span>
+<span id="cb3-183"><a href="#cb3-183" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------------------</span></span>
+<span id="cb3-184"><a href="#cb3-184" aria-hidden="true" tabindex="-1"></a><span class="co"># Se fijan explícitamente las rutas del sistema para:</span></span>
+<span id="cb3-185"><a href="#cb3-185" aria-hidden="true" tabindex="-1"></a><span class="co"># - GDAL</span></span>
+<span id="cb3-186"><a href="#cb3-186" aria-hidden="true" tabindex="-1"></a><span class="co"># - GEOS</span></span>
+<span id="cb3-187"><a href="#cb3-187" aria-hidden="true" tabindex="-1"></a><span class="co"># evitando que Julia use binarios incompatibles</span></span>
+<span id="cb3-188"><a href="#cb3-188" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-189"><a href="#cb3-189" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">mkdir</span> <span class="at">-p</span> /root/.julia/environments/v1.10 <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
+<span id="cb3-190"><a href="#cb3-190" aria-hidden="true" tabindex="-1"></a>    <span class="bu">printf</span> <span class="st">"[LocalPreferences]\nGDAL_jll = { libgdal_path = </span><span class="dt">\"</span><span class="st">/usr/lib/libgdal.so</span><span class="dt">\"</span><span class="st"> }\nGEOS_jll = { libgeos_path = </span><span class="dt">\"</span><span class="st">/usr/lib/x86_64-linux-gnu/libgeos_c.so</span><span class="dt">\"</span><span class="st"> }\n"</span> <span class="op">&gt;</span> /root/.julia/environments/v1.10/LocalPreferences.toml</span>
+<span id="cb3-191"><a href="#cb3-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-192"><a href="#cb3-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-193"><a href="#cb3-193" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-194"><a href="#cb3-194" aria-hidden="true" tabindex="-1"></a><span class="co"># 9. Julia: Instalación de paquetes</span></span>
+<span id="cb3-195"><a href="#cb3-195" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------------------</span></span>
+<span id="cb3-196"><a href="#cb3-196" aria-hidden="true" tabindex="-1"></a><span class="co"># Stack SIG completo:</span></span>
+<span id="cb3-197"><a href="#cb3-197" aria-hidden="true" tabindex="-1"></a><span class="co"># - Rasters, ArchGDAL, GeoStats, Makie</span></span>
+<span id="cb3-198"><a href="#cb3-198" aria-hidden="true" tabindex="-1"></a><span class="co"># - Conectores DB, CSV, NetCDF</span></span>
+<span id="cb3-199"><a href="#cb3-199" aria-hidden="true" tabindex="-1"></a><span class="co"># - Visualización y notebooks (IJulia)</span></span>
+<span id="cb3-200"><a href="#cb3-200" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-201"><a href="#cb3-201" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">julia</span> <span class="at">-e</span> <span class="st">'using Pkg; Pkg.add(["Preferences", "Suppressor", "RCall", "LibGEOS", "Tables", "DataFrames", "Plots", \</span></span>
+<span id="cb3-202"><a href="#cb3-202" aria-hidden="true" tabindex="-1"></a><span class="st">    "Statistics", "ArchGDAL", "LibPQ", "GeoDataFrames", "IJulia", "CSV", "CairoMakie", "AlgebraOfGraphics", \</span></span>
+<span id="cb3-203"><a href="#cb3-203" aria-hidden="true" tabindex="-1"></a><span class="st">    "DimensionalData", "FlexiJoins", "GeoFormatTypes", "GeoInterface", "GeoJSON", "GeoMakie", "GeometryOps", \</span></span>
+<span id="cb3-204"><a href="#cb3-204" aria-hidden="true" tabindex="-1"></a><span class="st">    "Makie", "MakieCore", "NaturalEarth", "Proj", "Rasters", "StatsBase", "Tyler", "GeoStats", "Graphs", \</span></span>
+<span id="cb3-205"><a href="#cb3-205" aria-hidden="true" tabindex="-1"></a><span class="st">    "NCDatasets", "MetaGraphsNext"])'</span></span>
+<span id="cb3-206"><a href="#cb3-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-207"><a href="#cb3-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-208"><a href="#cb3-208" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-209"><a href="#cb3-209" aria-hidden="true" tabindex="-1"></a><span class="co"># Cirugía de librerías (OpenSSL)</span></span>
+<span id="cb3-210"><a href="#cb3-210" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------------------</span></span>
+<span id="cb3-211"><a href="#cb3-211" aria-hidden="true" tabindex="-1"></a><span class="co"># Fuerza a Julia a usar OpenSSL del sistema (Ubuntu Noble)</span></span>
+<span id="cb3-212"><a href="#cb3-212" aria-hidden="true" tabindex="-1"></a><span class="co"># Evita errores de TLS y descargas de paquetes</span></span>
+<span id="cb3-213"><a href="#cb3-213" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-214"><a href="#cb3-214" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">find</span> /root/.julia/artifacts <span class="at">-name</span> <span class="st">"libssl.so*"</span> <span class="at">-exec</span> ln <span class="at">-sf</span> /usr/lib/x86_64-linux-gnu/libssl.so.3 {} <span class="dt">\;</span> <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
+<span id="cb3-215"><a href="#cb3-215" aria-hidden="true" tabindex="-1"></a>    <span class="fu">find</span> /root/.julia/artifacts <span class="at">-name</span> <span class="st">"libcrypto.so*"</span> <span class="at">-exec</span> ln <span class="at">-sf</span> /usr/lib/x86_64-linux-gnu/libcrypto.so.3 {} <span class="dt">\;</span></span>
+<span id="cb3-216"><a href="#cb3-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-217"><a href="#cb3-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-218"><a href="#cb3-218" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-219"><a href="#cb3-219" aria-hidden="true" tabindex="-1"></a><span class="co"># Precompilación total de Julia</span></span>
+<span id="cb3-220"><a href="#cb3-220" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------------------</span></span>
+<span id="cb3-221"><a href="#cb3-221" aria-hidden="true" tabindex="-1"></a><span class="co"># Garantiza arranque instantáneo en:</span></span>
+<span id="cb3-222"><a href="#cb3-222" aria-hidden="true" tabindex="-1"></a><span class="co"># - VS Code</span></span>
+<span id="cb3-223"><a href="#cb3-223" aria-hidden="true" tabindex="-1"></a><span class="co"># - Jupyter</span></span>
+<span id="cb3-224"><a href="#cb3-224" aria-hidden="true" tabindex="-1"></a><span class="co"># - IJulia</span></span>
+<span id="cb3-225"><a href="#cb3-225" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-226"><a href="#cb3-226" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">julia</span> <span class="at">-e</span> <span class="st">'using Pkg; Pkg.precompile()'</span></span>
+<span id="cb3-227"><a href="#cb3-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-228"><a href="#cb3-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-229"><a href="#cb3-229" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-230"><a href="#cb3-230" aria-hidden="true" tabindex="-1"></a><span class="co"># Configuración de paralelismo</span></span>
+<span id="cb3-231"><a href="#cb3-231" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------------------</span></span>
+<span id="cb3-232"><a href="#cb3-232" aria-hidden="true" tabindex="-1"></a><span class="co"># Julia usará automáticamente todos los núcleos disponibles</span></span>
+<span id="cb3-233"><a href="#cb3-233" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-234"><a href="#cb3-234" aria-hidden="true" tabindex="-1"></a><span class="kw">ENV</span> JULIA_NUM_THREADS=auto</span>
+<span id="cb3-235"><a href="#cb3-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-236"><a href="#cb3-236" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-237"><a href="#cb3-237" aria-hidden="true" tabindex="-1"></a><span class="co"># 10. CONFIGURACIÓN MAESTRA Rprofile.site</span></span>
+<span id="cb3-238"><a href="#cb3-238" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------------------</span></span>
+<span id="cb3-239"><a href="#cb3-239" aria-hidden="true" tabindex="-1"></a><span class="co"># Este archivo se ejecuta automáticamente cada vez que inicia R.</span></span>
+<span id="cb3-240"><a href="#cb3-240" aria-hidden="true" tabindex="-1"></a><span class="co"># Centraliza la integración R ↔ Julia ↔ Python ↔ VS Code.</span></span>
+<span id="cb3-241"><a href="#cb3-241" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb3-242"><a href="#cb3-242" aria-hidden="true" tabindex="-1"></a><span class="co"># Build 47.42:</span></span>
+<span id="cb3-243"><a href="#cb3-243" aria-hidden="true" tabindex="-1"></a><span class="co"># - Control de DPI, tamaño y fuentes</span></span>
+<span id="cb3-244"><a href="#cb3-244" aria-hidden="true" tabindex="-1"></a><span class="co"># - Ejecución segura de Julia desde R</span></span>
+<span id="cb3-245"><a href="#cb3-245" aria-hidden="true" tabindex="-1"></a><span class="co"># - Renderizado consistente de gráficos</span></span>
+<span id="cb3-246"><a href="#cb3-246" aria-hidden="true" tabindex="-1"></a><span class="co"># - Hook para Matplotlib vía reticulate</span></span>
+<span id="cb3-247"><a href="#cb3-247" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-248"><a href="#cb3-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-249"><a href="#cb3-249" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">cat</span> <span class="op">&lt;&lt; 'EOF'</span> <span class="op">&gt;</span> /usr/lib/R/etc/Rprofile.site</span>
+<span id="cb3-250"><a href="#cb3-250" aria-hidden="true" tabindex="-1"></a><span class="st"># ============================================================</span></span>
+<span id="cb3-251"><a href="#cb3-251" aria-hidden="true" tabindex="-1"></a><span class="st"># --- 1. AJUSTES DE SISTEMA ---</span></span>
+<span id="cb3-252"><a href="#cb3-252" aria-hidden="true" tabindex="-1"></a><span class="st"># ------------------------------------------------------------</span></span>
+<span id="cb3-253"><a href="#cb3-253" aria-hidden="true" tabindex="-1"></a><span class="st"># Variables globales para que R sepa dónde encontrar:</span></span>
+<span id="cb3-254"><a href="#cb3-254" aria-hidden="true" tabindex="-1"></a><span class="st"># - Julia</span></span>
+<span id="cb3-255"><a href="#cb3-255" aria-hidden="true" tabindex="-1"></a><span class="st"># - Python usado por Quarto</span></span>
+<span id="cb3-256"><a href="#cb3-256" aria-hidden="true" tabindex="-1"></a><span class="st"># ============================================================</span></span>
+<span id="cb3-257"><a href="#cb3-257" aria-hidden="true" tabindex="-1"></a><span class="st">Sys.setenv(JULIA_BINDIR = "/opt/julia/bin")</span></span>
+<span id="cb3-258"><a href="#cb3-258" aria-hidden="true" tabindex="-1"></a><span class="st">Sys.setenv(QUARTO_PYTHON = "/usr/bin/python3")</span></span>
+<span id="cb3-259"><a href="#cb3-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-260"><a href="#cb3-260" aria-hidden="true" tabindex="-1"></a><span class="st"># ============================================================</span></span>
+<span id="cb3-261"><a href="#cb3-261" aria-hidden="true" tabindex="-1"></a><span class="st"># Código Julia embebido (auto-sanable)</span></span>
+<span id="cb3-262"><a href="#cb3-262" aria-hidden="true" tabindex="-1"></a><span class="st"># ------------------------------------------------------------</span></span>
+<span id="cb3-263"><a href="#cb3-263" aria-hidden="true" tabindex="-1"></a><span class="st"># Se define como string para:</span></span>
+<span id="cb3-264"><a href="#cb3-264" aria-hidden="true" tabindex="-1"></a><span class="st"># - Inyectarse dinámicamente en Julia</span></span>
+<span id="cb3-265"><a href="#cb3-265" aria-hidden="true" tabindex="-1"></a><span class="st"># - Evitar errores si el kernel se reinicia</span></span>
+<span id="cb3-266"><a href="#cb3-266" aria-hidden="true" tabindex="-1"></a><span class="st"># - Garantizar reproducibilidad en notebooks</span></span>
+<span id="cb3-267"><a href="#cb3-267" aria-hidden="true" tabindex="-1"></a><span class="st"># ============================================================</span></span>
+<span id="cb3-268"><a href="#cb3-268" aria-hidden="true" tabindex="-1"></a><span class="st">.unal_julia_code &lt;- '</span></span>
+<span id="cb3-269"><a href="#cb3-269" aria-hidden="true" tabindex="-1"></a><span class="st">using Suppressor, Plots, Statistics</span></span>
+<span id="cb3-270"><a href="#cb3-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-271"><a href="#cb3-271" aria-hidden="true" tabindex="-1"></a><span class="st"># Ejecutor central de código Julia desde R</span></span>
+<span id="cb3-272"><a href="#cb3-272" aria-hidden="true" tabindex="-1"></a><span class="st"># - Evalúa múltiples expresiones</span></span>
+<span id="cb3-273"><a href="#cb3-273" aria-hidden="true" tabindex="-1"></a><span class="st"># - Captura stdout</span></span>
+<span id="cb3-274"><a href="#cb3-274" aria-hidden="true" tabindex="-1"></a><span class="st"># - Maneja gráficos y texto</span></span>
+<span id="cb3-275"><a href="#cb3-275" aria-hidden="true" tabindex="-1"></a><span class="st">function _unal_core_executor(code, is_plot, filename, dpi, w, h, fs)</span></span>
+<span id="cb3-276"><a href="#cb3-276" aria-hidden="true" tabindex="-1"></a><span class="st">    @capture_out begin</span></span>
+<span id="cb3-277"><a href="#cb3-277" aria-hidden="true" tabindex="-1"></a><span class="st">        if is_plot</span></span>
+<span id="cb3-278"><a href="#cb3-278" aria-hidden="true" tabindex="-1"></a><span class="st">            # Parámetros gráficos homogéneos (DPI, tamaño, fuentes)</span></span>
+<span id="cb3-279"><a href="#cb3-279" aria-hidden="true" tabindex="-1"></a><span class="st">            default(dpi=dpi, size=(w, h), titlefontsize=fs+2, </span></span>
+<span id="cb3-280"><a href="#cb3-280" aria-hidden="true" tabindex="-1"></a><span class="st">                    guidefontsize=fs, tickfontsize=fs-2, legendfontsize=fs-1)</span></span>
+<span id="cb3-281"><a href="#cb3-281" aria-hidden="true" tabindex="-1"></a><span class="st">        end</span></span>
+<span id="cb3-282"><a href="#cb3-282" aria-hidden="true" tabindex="-1"></a><span class="st">        pos = 1</span></span>
+<span id="cb3-283"><a href="#cb3-283" aria-hidden="true" tabindex="-1"></a><span class="st">        while pos &lt;= lastindex(code)</span></span>
+<span id="cb3-284"><a href="#cb3-284" aria-hidden="true" tabindex="-1"></a><span class="st">            start_idx = pos</span></span>
+<span id="cb3-285"><a href="#cb3-285" aria-hidden="true" tabindex="-1"></a><span class="st">            try</span></span>
+<span id="cb3-286"><a href="#cb3-286" aria-hidden="true" tabindex="-1"></a><span class="st">                ex, pos = Meta.parse(code, pos)</span></span>
+<span id="cb3-287"><a href="#cb3-287" aria-hidden="true" tabindex="-1"></a><span class="st">                cmd_part = strip(code[start_idx:prevind(code, pos)])</span></span>
+<span id="cb3-288"><a href="#cb3-288" aria-hidden="true" tabindex="-1"></a><span class="st">                if !isempty(cmd_part)</span></span>
+<span id="cb3-289"><a href="#cb3-289" aria-hidden="true" tabindex="-1"></a><span class="st">                    println("julia&gt; ", cmd_part)</span></span>
+<span id="cb3-290"><a href="#cb3-290" aria-hidden="true" tabindex="-1"></a><span class="st">                    res = eval(ex)</span></span>
+<span id="cb3-291"><a href="#cb3-291" aria-hidden="true" tabindex="-1"></a><span class="st">                    if res !== nothing &amp;&amp; !(res isa Plots.Plot)</span></span>
+<span id="cb3-292"><a href="#cb3-292" aria-hidden="true" tabindex="-1"></a><span class="st">                        show(stdout, MIME("text/plain"), res)</span></span>
+<span id="cb3-293"><a href="#cb3-293" aria-hidden="true" tabindex="-1"></a><span class="st">                        println()</span></span>
+<span id="cb3-294"><a href="#cb3-294" aria-hidden="true" tabindex="-1"></a><span class="st">                    end</span></span>
+<span id="cb3-295"><a href="#cb3-295" aria-hidden="true" tabindex="-1"></a><span class="st">                    println() </span></span>
+<span id="cb3-296"><a href="#cb3-296" aria-hidden="true" tabindex="-1"></a><span class="st">                end</span></span>
+<span id="cb3-297"><a href="#cb3-297" aria-hidden="true" tabindex="-1"></a><span class="st">            catch e</span></span>
+<span id="cb3-298"><a href="#cb3-298" aria-hidden="true" tabindex="-1"></a><span class="st">                println("julia&gt; Error: ", e)</span></span>
+<span id="cb3-299"><a href="#cb3-299" aria-hidden="true" tabindex="-1"></a><span class="st">                break</span></span>
+<span id="cb3-300"><a href="#cb3-300" aria-hidden="true" tabindex="-1"></a><span class="st">            end</span></span>
+<span id="cb3-301"><a href="#cb3-301" aria-hidden="true" tabindex="-1"></a><span class="st">        end</span></span>
+<span id="cb3-302"><a href="#cb3-302" aria-hidden="true" tabindex="-1"></a><span class="st">        # Guardado del gráfico si aplica</span></span>
+<span id="cb3-303"><a href="#cb3-303" aria-hidden="true" tabindex="-1"></a><span class="st">        if is_plot &amp;&amp; current() !== nothing; savefig(current(), filename); end</span></span>
+<span id="cb3-304"><a href="#cb3-304" aria-hidden="true" tabindex="-1"></a><span class="st">    end</span></span>
+<span id="cb3-305"><a href="#cb3-305" aria-hidden="true" tabindex="-1"></a><span class="st">end</span></span>
+<span id="cb3-306"><a href="#cb3-306" aria-hidden="true" tabindex="-1"></a><span class="st">'</span></span>
+<span id="cb3-307"><a href="#cb3-307" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-308"><a href="#cb3-308" aria-hidden="true" tabindex="-1"></a><span class="st"># ============================================================</span></span>
+<span id="cb3-309"><a href="#cb3-309" aria-hidden="true" tabindex="-1"></a><span class="st"># Inicialización segura de Julia</span></span>
+<span id="cb3-310"><a href="#cb3-310" aria-hidden="true" tabindex="-1"></a><span class="st"># ------------------------------------------------------------</span></span>
+<span id="cb3-311"><a href="#cb3-311" aria-hidden="true" tabindex="-1"></a><span class="st"># - Verifica que JuliaConnectoR esté disponible</span></span>
+<span id="cb3-312"><a href="#cb3-312" aria-hidden="true" tabindex="-1"></a><span class="st"># - Inyecta el ejecutor solo una vez por sesión</span></span>
+<span id="cb3-313"><a href="#cb3-313" aria-hidden="true" tabindex="-1"></a><span class="st"># ============================================================</span></span>
+<span id="cb3-314"><a href="#cb3-314" aria-hidden="true" tabindex="-1"></a><span class="st">.ensure_julia_ready &lt;- function() {</span></span>
+<span id="cb3-315"><a href="#cb3-315" aria-hidden="true" tabindex="-1"></a><span class="st">  if (!requireNamespace("JuliaConnectoR", quietly = TRUE)) stop("JuliaConnectoR missing")</span></span>
+<span id="cb3-316"><a href="#cb3-316" aria-hidden="true" tabindex="-1"></a><span class="st">  if (!JuliaConnectoR::juliaEval('isdefined(Main, :_unal_core_executor)')) {</span></span>
+<span id="cb3-317"><a href="#cb3-317" aria-hidden="true" tabindex="-1"></a><span class="st">    JuliaConnectoR::juliaEval(.unal_julia_code)</span></span>
+<span id="cb3-318"><a href="#cb3-318" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb3-319"><a href="#cb3-319" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb3-320"><a href="#cb3-320" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-321"><a href="#cb3-321" aria-hidden="true" tabindex="-1"></a><span class="st"># ============================================================</span></span>
+<span id="cb3-322"><a href="#cb3-322" aria-hidden="true" tabindex="-1"></a><span class="st"># j_eval(): ejecutar código Julia (solo texto)</span></span>
+<span id="cb3-323"><a href="#cb3-323" aria-hidden="true" tabindex="-1"></a><span class="st"># ------------------------------------------------------------</span></span>
+<span id="cb3-324"><a href="#cb3-324" aria-hidden="true" tabindex="-1"></a><span class="st"># Uso típico:</span></span>
+<span id="cb3-325"><a href="#cb3-325" aria-hidden="true" tabindex="-1"></a><span class="st"># j_eval("1 + 1")</span></span>
+<span id="cb3-326"><a href="#cb3-326" aria-hidden="true" tabindex="-1"></a><span class="st"># ============================================================</span></span>
+<span id="cb3-327"><a href="#cb3-327" aria-hidden="true" tabindex="-1"></a><span class="st">j_eval &lt;- function(cmd) {</span></span>
+<span id="cb3-328"><a href="#cb3-328" aria-hidden="true" tabindex="-1"></a><span class="st">  .ensure_julia_ready()</span></span>
+<span id="cb3-329"><a href="#cb3-329" aria-hidden="true" tabindex="-1"></a><span class="st">  cat(JuliaConnectoR::juliaCall("_unal_core_executor", cmd, FALSE, "", 72, 800, 500, 12))</span></span>
+<span id="cb3-330"><a href="#cb3-330" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb3-331"><a href="#cb3-331" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-332"><a href="#cb3-332" aria-hidden="true" tabindex="-1"></a><span class="st"># ============================================================</span></span>
+<span id="cb3-333"><a href="#cb3-333" aria-hidden="true" tabindex="-1"></a><span class="st"># j_plot(): ejecutar código Julia con gráficos</span></span>
+<span id="cb3-334"><a href="#cb3-334" aria-hidden="true" tabindex="-1"></a><span class="st"># ------------------------------------------------------------</span></span>
+<span id="cb3-335"><a href="#cb3-335" aria-hidden="true" tabindex="-1"></a><span class="st"># - Guarda el gráfico en PNG</span></span>
+<span id="cb3-336"><a href="#cb3-336" aria-hidden="true" tabindex="-1"></a><span class="st"># - Lo renderiza directamente en R</span></span>
+<span id="cb3-337"><a href="#cb3-337" aria-hidden="true" tabindex="-1"></a><span class="st"># ============================================================</span></span>
+<span id="cb3-338"><a href="#cb3-338" aria-hidden="true" tabindex="-1"></a><span class="st">j_plot &lt;- function(cmd, n = "tmp_plot.png", dpi = 300, w = 800, h = NULL, ratio = 1.6, fontsize = 12) {</span></span>
+<span id="cb3-339"><a href="#cb3-339" aria-hidden="true" tabindex="-1"></a><span class="st">  .ensure_julia_ready()</span></span>
+<span id="cb3-340"><a href="#cb3-340" aria-hidden="true" tabindex="-1"></a><span class="st">  if (is.null(h)) h &lt;- round(w / ratio)</span></span>
+<span id="cb3-341"><a href="#cb3-341" aria-hidden="true" tabindex="-1"></a><span class="st">  log_out &lt;- JuliaConnectoR::juliaCall("_unal_core_executor", cmd, TRUE, n, dpi, as.integer(w), as.integer(h), as.integer(fontsize))</span></span>
+<span id="cb3-342"><a href="#cb3-342" aria-hidden="true" tabindex="-1"></a><span class="st">  if (nchar(log_out) &gt; 0) cat(log_out)</span></span>
+<span id="cb3-343"><a href="#cb3-343" aria-hidden="true" tabindex="-1"></a><span class="st">  if (file.exists(n)) {</span></span>
+<span id="cb3-344"><a href="#cb3-344" aria-hidden="true" tabindex="-1"></a><span class="st">    img &lt;- png::readPNG(n)</span></span>
+<span id="cb3-345"><a href="#cb3-345" aria-hidden="true" tabindex="-1"></a><span class="st">    grid::grid.newpage()</span></span>
+<span id="cb3-346"><a href="#cb3-346" aria-hidden="true" tabindex="-1"></a><span class="st">    grid::grid.raster(img)</span></span>
+<span id="cb3-347"><a href="#cb3-347" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb3-348"><a href="#cb3-348" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb3-349"><a href="#cb3-349" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-350"><a href="#cb3-350" aria-hidden="true" tabindex="-1"></a><span class="st"># ============================================================</span></span>
+<span id="cb3-351"><a href="#cb3-351" aria-hidden="true" tabindex="-1"></a><span class="st"># --- 2. CARGA DE LIBRERÍAS Y DISPOSITIVOS ---</span></span>
+<span id="cb3-352"><a href="#cb3-352" aria-hidden="true" tabindex="-1"></a><span class="st"># ------------------------------------------------------------</span></span>
+<span id="cb3-353"><a href="#cb3-353" aria-hidden="true" tabindex="-1"></a><span class="st"># Librerías base para renderizar imágenes</span></span>
+<span id="cb3-354"><a href="#cb3-354" aria-hidden="true" tabindex="-1"></a><span class="st"># ============================================================</span></span>
+<span id="cb3-355"><a href="#cb3-355" aria-hidden="true" tabindex="-1"></a><span class="st">library(png)</span></span>
+<span id="cb3-356"><a href="#cb3-356" aria-hidden="true" tabindex="-1"></a><span class="st">library(grid)</span></span>
+<span id="cb3-357"><a href="#cb3-357" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-358"><a href="#cb3-358" aria-hidden="true" tabindex="-1"></a><span class="st">if (interactive()) {</span></span>
+<span id="cb3-359"><a href="#cb3-359" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-360"><a href="#cb3-360" aria-hidden="true" tabindex="-1"></a><span class="st">  # ==========================================================</span></span>
+<span id="cb3-361"><a href="#cb3-361" aria-hidden="true" tabindex="-1"></a><span class="st">  # Visor gráfico httpgd (VS Code / navegador)</span></span>
+<span id="cb3-362"><a href="#cb3-362" aria-hidden="true" tabindex="-1"></a><span class="st">  # ----------------------------------------------------------</span></span>
+<span id="cb3-363"><a href="#cb3-363" aria-hidden="true" tabindex="-1"></a><span class="st">  # Permite gráficos interactivos persistentes</span></span>
+<span id="cb3-364"><a href="#cb3-364" aria-hidden="true" tabindex="-1"></a><span class="st">  # ==========================================================</span></span>
+<span id="cb3-365"><a href="#cb3-365" aria-hidden="true" tabindex="-1"></a><span class="st">  if (requireNamespace("httpgd", quietly = TRUE)) {</span></span>
+<span id="cb3-366"><a href="#cb3-366" aria-hidden="true" tabindex="-1"></a><span class="st">    options(device = "httpgd", httpgd.host = "0.0.0.0", httpgd.port = 8787, httpgd.token = FALSE)</span></span>
+<span id="cb3-367"><a href="#cb3-367" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb3-368"><a href="#cb3-368" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb3-369"><a href="#cb3-369" aria-hidden="true" tabindex="-1"></a><span class="st">  # ==========================================================</span></span>
+<span id="cb3-370"><a href="#cb3-370" aria-hidden="true" tabindex="-1"></a><span class="st">  # Hook Python → R (Matplotlib)</span></span>
+<span id="cb3-371"><a href="#cb3-371" aria-hidden="true" tabindex="-1"></a><span class="st">  # ----------------------------------------------------------</span></span>
+<span id="cb3-372"><a href="#cb3-372" aria-hidden="true" tabindex="-1"></a><span class="st">  # Captura gráficos de matplotlib y los muestra en R</span></span>
+<span id="cb3-373"><a href="#cb3-373" aria-hidden="true" tabindex="-1"></a><span class="st">  # usando el backend custom definido en Docker</span></span>
+<span id="cb3-374"><a href="#cb3-374" aria-hidden="true" tabindex="-1"></a><span class="st">  # ==========================================================</span></span>
+<span id="cb3-375"><a href="#cb3-375" aria-hidden="true" tabindex="-1"></a><span class="st">  setHook(packageEvent("reticulate", "onLoad"), function(...) {</span></span>
+<span id="cb3-376"><a href="#cb3-376" aria-hidden="true" tabindex="-1"></a><span class="st">    try({</span></span>
+<span id="cb3-377"><a href="#cb3-377" aria-hidden="true" tabindex="-1"></a><span class="st">      ret_py &lt;- reticulate::import("reticulate", delay_load = TRUE)</span></span>
+<span id="cb3-378"><a href="#cb3-378" aria-hidden="true" tabindex="-1"></a><span class="st">      reticulate::py_set_attr(ret_py, "r_graphic_command", function(path) {</span></span>
+<span id="cb3-379"><a href="#cb3-379" aria-hidden="true" tabindex="-1"></a><span class="st">        if (file.exists(path)) {</span></span>
+<span id="cb3-380"><a href="#cb3-380" aria-hidden="true" tabindex="-1"></a><span class="st">          img &lt;- png::readPNG(path)</span></span>
+<span id="cb3-381"><a href="#cb3-381" aria-hidden="true" tabindex="-1"></a><span class="st">          grid::grid.newpage()</span></span>
+<span id="cb3-382"><a href="#cb3-382" aria-hidden="true" tabindex="-1"></a><span class="st">          grid::grid.raster(img)</span></span>
+<span id="cb3-383"><a href="#cb3-383" aria-hidden="true" tabindex="-1"></a><span class="st">        }</span></span>
+<span id="cb3-384"><a href="#cb3-384" aria-hidden="true" tabindex="-1"></a><span class="st">      })</span></span>
+<span id="cb3-385"><a href="#cb3-385" aria-hidden="true" tabindex="-1"></a><span class="st">      reticulate::py_run_string("import matplotlib; matplotlib.use('module://reticulate.matplotlib.backend')")</span></span>
+<span id="cb3-386"><a href="#cb3-386" aria-hidden="true" tabindex="-1"></a><span class="st">    }, silent = TRUE)</span></span>
+<span id="cb3-387"><a href="#cb3-387" aria-hidden="true" tabindex="-1"></a><span class="st">  })</span></span>
+<span id="cb3-388"><a href="#cb3-388" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb3-389"><a href="#cb3-389" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span>
+<span id="cb3-390"><a href="#cb3-390" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-391"><a href="#cb3-391" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-392"><a href="#cb3-392" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-393"><a href="#cb3-393" aria-hidden="true" tabindex="-1"></a><span class="co"># Compatibilidad multi-R (opcional)</span></span>
+<span id="cb3-394"><a href="#cb3-394" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------------------</span></span>
+<span id="cb3-395"><a href="#cb3-395" aria-hidden="true" tabindex="-1"></a><span class="co"># Permite que R instalado en rutas alternativas use</span></span>
+<span id="cb3-396"><a href="#cb3-396" aria-hidden="true" tabindex="-1"></a><span class="co"># exactamente la misma configuración</span></span>
+<span id="cb3-397"><a href="#cb3-397" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-398"><a href="#cb3-398" aria-hidden="true" tabindex="-1"></a><span class="co">#RUN cp /usr/lib/R/etc/Rprofile.site /etc/R/Rprofile.site</span></span>
+<span id="cb3-399"><a href="#cb3-399" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-400"><a href="#cb3-400" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-401"><a href="#cb3-401" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-402"><a href="#cb3-402" aria-hidden="true" tabindex="-1"></a><span class="co"># 10. Finalización del contenedor</span></span>
+<span id="cb3-403"><a href="#cb3-403" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------------------</span></span>
+<span id="cb3-404"><a href="#cb3-404" aria-hidden="true" tabindex="-1"></a><span class="co"># Directorio de trabajo compartido</span></span>
+<span id="cb3-405"><a href="#cb3-405" aria-hidden="true" tabindex="-1"></a><span class="co"># Permisos amplios para docencia</span></span>
+<span id="cb3-406"><a href="#cb3-406" aria-hidden="true" tabindex="-1"></a><span class="co"># ============================================================</span></span>
+<span id="cb3-407"><a href="#cb3-407" aria-hidden="true" tabindex="-1"></a><span class="kw">WORKDIR</span> /home/rstudio/work</span>
+<span id="cb3-408"><a href="#cb3-408" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">chmod</span> <span class="at">-R</span> 777 /home/rstudio/work</span>
+<span id="cb3-409"><a href="#cb3-409" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-410"><a href="#cb3-410" aria-hidden="true" tabindex="-1"></a><span class="co"># Puertos:</span></span>
+<span id="cb3-411"><a href="#cb3-411" aria-hidden="true" tabindex="-1"></a><span class="co"># 8888 → JupyterLab</span></span>
+<span id="cb3-412"><a href="#cb3-412" aria-hidden="true" tabindex="-1"></a><span class="co"># 8787 → httpgd / RStudio-like viewer</span></span>
+<span id="cb3-413"><a href="#cb3-413" aria-hidden="true" tabindex="-1"></a><span class="kw">EXPOSE</span> 8888</span>
+<span id="cb3-414"><a href="#cb3-414" aria-hidden="true" tabindex="-1"></a><span class="kw">EXPOSE</span> 8787</span>
+<span id="cb3-415"><a href="#cb3-415" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-416"><a href="#cb3-416" aria-hidden="true" tabindex="-1"></a><span class="co"># Arranque por defecto: JupyterLab</span></span>
+<span id="cb3-417"><a href="#cb3-417" aria-hidden="true" tabindex="-1"></a><span class="kw">CMD</span> [<span class="st">"jupyter"</span>, <span class="st">"lab"</span>, <span class="st">"--ip=0.0.0.0"</span>, <span class="st">"--port=8888"</span>, <span class="st">"--no-browser"</span>, <span class="st">"--allow-root"</span>, <span class="st">"--NotebookApp.token='geomatica2025'"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="stack-de-python" class="level4">
+<h4 class="anchored" data-anchor-id="stack-de-python">Stack de Python</h4>
+<p>Para el análisis geoespacial avanzado, es necesario instalar un conjunto de librerías especializadas. El núcleo de este entorno es <strong><code>geopandas</code></strong>, cuya instalación gestiona automáticamente dependencias críticas como <strong><code>numpy</code></strong> (cálculo numérico), <strong><code>pandas</code></strong> (manipulación de datos) y <strong><code>shapely</code></strong> (operaciones geométricas). Complementariamente, instalaremos <strong><code>rasterio</code></strong> para la gestión profesional de datos ráster y <strong><code>rasterstats</code></strong> para la extracción de estadísticas zonales.</p>
+<div id="tbl-python-packages" class="quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-python-packages-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2.1: Paquetes principales de Python
+</figcaption>
+<div aria-describedby="tbl-python-packages-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Paquete</th>
+<th style="text-align: center;">Funcionalidad</th>
+<th style="text-align: center;">Sitio web</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>numpy</code></td>
+<td style="text-align: center;">Arreglos</td>
+<td style="text-align: center;"><a href="https://numpy.org/" class="uri">https://numpy.org/</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>pandas</code></td>
+<td style="text-align: center;">Tablas</td>
+<td style="text-align: center;"><a href="https://pandas.pydata.org/" class="uri">https://pandas.pydata.org/</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>shapely</code></td>
+<td style="text-align: center;">Geometrías vectoriales</td>
+<td style="text-align: center;"><a href="https://shapely.readthedocs.io/" class="uri">https://shapely.readthedocs.io/</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>geopandas</code></td>
+<td style="text-align: center;">Capas vectoriales</td>
+<td style="text-align: center;"><a href="https://geopandas.org/" class="uri">https://geopandas.org/</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>rasterio</code></td>
+<td style="text-align: center;">Ráster</td>
+<td style="text-align: center;"><a href="https://rasterio.readthedocs.io/" class="uri">https://rasterio.readthedocs.io/</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>rasterstats</code></td>
+<td style="text-align: center;">Estadísticas zonales</td>
+<td style="text-align: center;"><a href="https://github.com/perrygeo/python-rasterstats" class="uri">https://github.com/perrygeo/python-rasterstats</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>psycopg2</code></td>
+<td style="text-align: center;">Interfaz a PostgreSQL</td>
+<td style="text-align: center;"><a href="https://www.psycopg.org/docs/" class="uri">https://www.psycopg.org/docs/</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Como veremos, estos paquetes dependen unos de otros. Las dependencias principales se muestran en la <a href="#fig-python-package-deps" class="quarto-xref">Figure&nbsp;<span>2.1</span></a>:</p>
+<div id="fig-python-package-deps" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-python-package-deps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/dependencias_python.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-python-package-deps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.1: Main dependencies between the Python packages we are going to learn
+</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong><code>geopandas</code></strong>: Capa superior que integra a <code>pandas</code>, <code>shapely</code>, <code>fiona</code> y <code>pyproj</code>. Permite realizar consultas espaciales complejas y gestionar GeoDataFrames con una sintaxis simplificada.</li>
+<li><strong><code>rasterio</code></strong>: Basada en la librería <strong>GDAL</strong>, es el estándar para la lectura, escritura y manipulación de formatos ráster (como GeoTIFF), permitiendo gestionar metadatos y arreglos de píxeles con alta eficiencia.</li>
+<li><strong><code>scipy</code></strong>: Proporciona algoritmos avanzados de optimización, álgebra lineal y estadística necesarios para procesos de interpolación y análisis de superficies.</li>
+<li><strong><code>rasterstats</code></strong>: Herramienta específica para extraer estadísticas (medias, sumas) a partir de capas ráster basadas en geometrías vectoriales.</li>
+<li><strong><code>shapely</code></strong>: Motor geométrico basado en el estándar <em>Simple Features</em> y puente hacia la librería <strong>GEOS</strong>. Se encarga de la lógica matemática de las geometrías (áreas, intersecciones, buffers y validación topográfica).</li>
+<li><strong><code>pyproj</code></strong>: Interfaz para la librería <strong>PROJ</strong>. Gestiona proyecciones cartográficas, sistemas de referencia (CRS) y transformaciones de datums.</li>
+<li><strong><code>fiona</code> / <code>pyogrio</code></strong>: Motores de acceso a datos vectoriales (SHP, GPKG) que actúan como interfaces hacia la librería <strong>GDAL/OGR</strong>.</li>
+<li><strong><code>xyzservices</code></strong>: Repositorio de metadatos para conectar con servicios de mapas base dinámicos (como OpenStreetMap).</li>
+</ul>
+<p>La siguiente tabla vincula las librerías de Python con los motores de cálculo de bajo nivel (C/C++) integrados en el contenedor Docker:</p>
+<table class="table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 26%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Librería Python</th>
+<th style="text-align: left;">Motor de Sistema (C/C++)</th>
+<th style="text-align: left;">Función Principal en Geomática</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>pyproj</code></strong></td>
+<td style="text-align: left;"><strong>PROJ</strong></td>
+<td style="text-align: left;">Gestión de Proyecciones y Sistemas de Referencia (CRS).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>shapely</code></strong></td>
+<td style="text-align: left;"><strong>GEOS</strong></td>
+<td style="text-align: left;">Álgebra topológica (Intersecciones, Buffers, Áreas).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>fiona</code> / <code>pyogrio</code></strong></td>
+<td style="text-align: left;"><strong>GDAL/OGR</strong></td>
+<td style="text-align: left;">Lectura y escritura de formatos vectoriales.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>rasterio</code></strong></td>
+<td style="text-align: left;"><strong>GDAL</strong></td>
+<td style="text-align: left;">Manejo de datos ráster y metadatos de imágenes.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>geopandas</code></strong></td>
+<td style="text-align: left;"><em>(Integra los 3 motores)</em></td>
+<td style="text-align: left;">Gestión integral de GeoDataFrames espaciales.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="stack-de-r" class="level4">
+<h4 class="anchored" data-anchor-id="stack-de-r">Stack de R</h4>
+<p>Para el análisis geoespacial en <code>R</code>, utilizaremos un ecosistema robusto basado en el estándar <em>Simple Features</em> y motores de alto rendimiento para datos ráster (rejilla - grids).</p>
+<div id="tbl-r-packages" class="quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-r-packages-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2.2: Paquetes principales del stack espacial en R
+</figcaption>
+<div aria-describedby="tbl-r-packages-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Paquete</th>
+<th style="text-align: center;">Funcionalidad</th>
+<th style="text-align: center;">Sitio web</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>sf</code></td>
+<td style="text-align: center;">Geometrías vectoriales (Simple Features)</td>
+<td style="text-align: center;"><a href="https://r-spatial.github.io/sf/" class="uri">https://r-spatial.github.io/sf/</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>terra</code></td>
+<td style="text-align: center;">Análisis de datos espaciales (Ráster/Vector)</td>
+<td style="text-align: center;"><a href="https://rspatial.github.io/terra/" class="uri">https://rspatial.github.io/terra/</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>stars</code></td>
+<td style="text-align: center;">Arreglos ordenados espacio-temporales (DataCubes)</td>
+<td style="text-align: center;"><a href="https://r-spatial.github.io/stars/" class="uri">https://r-spatial.github.io/stars/</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>tidyverse</code></td>
+<td style="text-align: center;">Metapaquete para ciencia de datos</td>
+<td style="text-align: center;"><a href="https://www.tidyverse.org/" class="uri">https://www.tidyverse.org/</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>tidyterra</code></td>
+<td style="text-align: center;">Métodos de tidyverse para terra</td>
+<td style="text-align: center;"><a href="https://dieghernan.github.io/tidyterra/" class="uri">https://dieghernan.github.io/tidyterra/</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<ul>
+<li><strong><code>sf</code> (Simple Features)</strong>: Es el estándar moderno para el manejo de datos vectoriales. Representa las geometrías como una columna especial en un <em>data frame</em>, permitiendo aplicar toda la potencia de manipulación de tablas a objetos espaciales.</li>
+<li><strong><code>terra</code></strong>: Motor de alta eficiencia que reemplaza al antiguo paquete <code>raster</code>. Está optimizado para el manejo de grandes volúmenes de datos mediante objetos <code>SpatRaster</code> y <code>SpatVector</code>, permitiendo operaciones de álgebra de mapas y análisis local de manera veloz.</li>
+<li><strong><code>stars</code> (Spatiotemporal Arrays)</strong>: Especializada en el manejo de “cubos de datos” (rejillas con dimensiones de espacio, tiempo y múltiples atributos). Es la herramienta ideal para procesar series temporales de imágenes satelitales o modelos climáticos multidimensionales.</li>
+<li><strong><code>tidyterra</code></strong>: Extiende la gramática de <code>ggplot2</code> y <code>tidyverse</code> hacia los objetos de <code>terra</code>. Permite visualizar mapas ráster de forma elegante y realizar tuberías (<code>pipes</code>) de datos manteniendo la integridad espacial.</li>
+</ul>
+</section>
+<section id="stack-de-julia" class="level4">
+<h4 class="anchored" data-anchor-id="stack-de-julia">Stack de Julia</h4>
+<p>Julia ofrece un rendimiento de nivel C++ con sintaxis simplificada. Debido a que utilizaremos librerías espaciales modernas instaladas vía Mamba, debemos sincronizar el entorno para que el Kernel de Jupyter pueda localizar los controladores actualizados sin colapsar.</p>
+<div id="tbl-julia-packages" class="quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-julia-packages-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2.3: Paquetes principales del stack en Julia
+</figcaption>
+<div aria-describedby="tbl-julia-packages-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Paquete</th>
+<th style="text-align: center;">Funcionalidad</th>
+<th style="text-align: center;">Sitio web</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>LibPQ.jl</code></td>
+<td style="text-align: center;">Controlador PostgreSQL/PostGIS</td>
+<td style="text-align: center;"><a href="https://juliadatabases.org/LibPQ.jl/dev/" class="uri">https://juliadatabases.org/LibPQ.jl/dev/</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>ArchGDAL.jl</code></td>
+<td style="text-align: center;">Interfaz de alto nivel para GDAL</td>
+<td style="text-align: center;"><a href="https://yeesian.com/ArchGDAL.jl/" class="uri">https://yeesian.com/ArchGDAL.jl/</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>LibGEOS.jl</code></td>
+<td style="text-align: center;">Interfaz del motor geométrico (GEOS)</td>
+<td style="text-align: center;"><a href="https://github.com/JuliaGeo/LibGEOS.jl" class="uri">https://github.com/JuliaGeo/LibGEOS.jl</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>Plots.jl</code></td>
+<td style="text-align: center;">Visualización y generación de gráficos</td>
+<td style="text-align: center;"><a href="https://docs.juliaplots.org/" class="uri">https://docs.juliaplots.org/</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>DataFrames.jl</code></td>
+<td style="text-align: center;">Manipulación de datos en memoria</td>
+<td style="text-align: center;"><a href="https://dataframes.juliadata.org/" class="uri">https://dataframes.juliadata.org/</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<ul>
+<li><strong><code>LibPQ.jl</code></strong>: Conector de bajo nivel para <strong>PostgreSQL</strong>. Es la herramienta que permitirá a los estudiantes realizar ingesta y consulta de datos desde el servidor PostGIS.</li>
+<li><strong><code>ArchGDAL.jl</code></strong>: Proporciona una abstracción de alto nivel para el motor GDAL. Es excelente para transformar formatos y manejar proyecciones.</li>
+<li><strong><code>LibGEOS.jl</code></strong>: La interfaz directa al motor de geometrías (GEOS). Se utiliza para operaciones topológicas puras como validación de polígonos, intersecciones y cálculos de buffers.</li>
+<li><strong><code>DataFrames.jl</code></strong>: El estándar para el manejo de datos tabulares en Julia, permitiendo integrar los resultados de las consultas espaciales en estructuras fáciles de analizar.</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="puesta-en-marcha-y-acceso-al-contenedor-terminal-vscode-jupyterlab" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="puesta-en-marcha-y-acceso-al-contenedor-terminal-vscode-jupyterlab"><span class="header-section-number">2.3</span> Puesta en Marcha y Acceso al Contenedor (Terminal, VSCode, JupyterLab)</h2>
+<p>Siga este procedimiento para iniciar su laboratorio por primera vez:</p>
+<ol type="1">
+<li><strong>Iniciar Docker Desktop</strong>: Asegúrese de que el icono de la ballena está en la barra de tareas.</li>
+</ol>
+<ul>
+<li><p><strong>Configuración de Almacenamiento</strong>: Debido a que la imagen políglota y la base de datos requieren un espacio considerable, asegúrese de que el disco de destino tenga al menos <strong>30 GB de espacio libre</strong>.</p></li>
+<li><p><strong>Procedimiento para cambiar la ubicación de las imágenes</strong>: Si su disco principal (<code>C:</code>) está sin espacio, mueva Docker a otro disco:</p>
+<ol type="a">
+<li>Diríjase a <strong>Settings</strong> (engranaje) -&gt; <strong>Resources</strong> -&gt; <strong>Advanced</strong>.</li>
+<li>Localice <strong>Disk image location</strong>.</li>
+<li>Haga clic en <code>Browse</code> y seleccione una carpeta en un disco con mayor capacidad.</li>
+<li>Haga clic en <strong>Apply &amp; restart</strong>.</li>
+</ol></li>
+<li><p><strong>Optimización de Memoria Swap</strong> {#swap-ref}: Para procesar datos raster de gran tamaño sin interrupciones en R o Julia, es fundamental ampliar el archivo de intercambio (Swap). Puede consultar más detalles en la <a href="#sec-limpieza" class="quarto-xref"><span>Section 2.7</span></a> sobre cómo esto impacta el rendimiento.</p></li>
+<li><p><strong>Procedimiento para aumentar Swap en Windows (Host)</strong>: Ajuste la memoria virtual del sistema operativo para evitar cierres por falta de RAM:</p>
+<ol type="a">
+<li>En el buscador de Windows, escriba y seleccione <strong>“Ver la configuración avanzada del sistema”</strong>.</li>
+<li>En la pestaña <strong>Opciones avanzadas</strong>, sección <strong>Rendimiento</strong>, haga clic en el botón <code>Configuración</code>.</li>
+<li>Diríjase a <strong>Opciones avanzadas</strong> -&gt; <strong>Memoria Virtual</strong> y haga clic en <code>Cambiar</code>.</li>
+<li>Desmarque “Administrar automáticamente”, seleccione el disco principal, elija <strong>Tamaño personalizado</strong> y asigne estos valores sugeridos, que dependen del espacio disponible en el disco (verifíquelo): Inicial <strong>16384 MB</strong> / Máximo <strong>32768 MB</strong>.</li>
+<li>Haga clic en <code>Establecer</code> y luego en <strong>Aceptar</strong> (requerirá reiniciar el equipo).</li>
+</ol></li>
+<li><p><strong>Configuración de Swap en el Contenedor (WSL2)</strong>: Dado que Docker opera sobre el subsistema Linux, debe configurar el archivo de intercambio global de WSL2:</p>
+<ol type="a">
+<li>Abra el explorador de archivos y diríjase a su carpeta de usuario (escriba <code>%USERPROFILE%</code> en la barra de direcciones).</li>
+<li>Cree un archivo nuevo llamado <code>.wslconfig</code> (asegúrese de que no tenga extensión <code>.txt</code> al final).</li>
+<li>Pegue el siguiente contenido para definir la RAM y asegurar <strong>32 GB de swap</strong> para sus procesos espaciales (sugerido, depende de su espacio en disco):</li>
+</ol></li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode ini code-with-copy"><code class="sourceCode ini"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[wsl2]</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="dt">memory</span><span class="ot">=</span><span class="st">12GB # RAM máxima física asignada a Linux</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="dt">swap</span><span class="ot">=</span><span class="st">32GB   # Memoria de intercambio para evitar el cierre de contenedores</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si desea verificar si estos cambios surtieron efecto dentro de su laboratorio, puede ejecutar el comando <code>free -h</code> en la terminal de Jupyter o VS Code. Esto le mostrará la memoria total y el espacio de Swap disponible tal como se configuró en el <a href="#swap-ref">Anexo de Referencia Técnica</a>.</p>
+</div>
+</div>
+<ol start="2" type="1">
+<li><p><strong>Organización de Archivos</strong>: Copie los archivos <code>docker-compose.yml</code> y <code>Dockerfile</code> dentro de su carpeta de trabajo (nombrada con su ID de correo UNAL).</p></li>
+<li><p><strong>Configuración de Terminal</strong>: Abra PowerShell y ejecute el siguiente comando para visualizar correctamente caracteres especiales y logs:</p></li>
+</ol>
+<div class="sourceCode" id="cb5"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Forzar UTF8 en el PowerShell</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="op">[</span>Console<span class="op">]::</span>OutputEncoding <span class="op">=</span> <span class="op">[</span>System<span class="op">.</span><span class="fu">Text</span><span class="op">.</span><span class="fu">Encoding</span><span class="op">]::</span>UTF8</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li><strong>Construcción del Entorno (Build)</strong>: <strong>Este comando se ejecuta solo la primera vez</strong>. Desde la terminal, ubicado en su carpeta de ID (<code>su_carpeta</code>), ejecute:</li>
+</ol>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> compose build <span class="at">--no-cache</span> <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span> <span class="kw">|</span> <span class="fu">tee</span> build_sig_unal.log</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="5" type="1">
+<li><strong>Arrancar Contenedores</strong>: El comando <code>build</code> una vez se termina satisfactoriamente, no necesita volver a ejecutarse. El principal comando para subir el servicio de las imagenes instaladas se muestra a continuación. Use este comando siempre antes de inciar a trabajar con los contenedores instalados:</li>
+</ol>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> compose up <span class="at">-d</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="6" type="1">
+<li><strong>Verificación de Logs</strong>: Si desea ver el progreso o verificar errores, revise el archivo <code>.log</code> generado o ejecute el siguiente comando, sin embargo la url de acceso a <strong>JupyterLab</strong> mostranda después de ejecutar este comando puede estar errónea. Para acceder a <strong>JupyterLab</strong> vea la siguiente instrucción (<strong>Ingreso a JupyterLab</strong>)</li>
+</ol>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> logs contenedor_sig_unal</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="7" type="1">
+<li><strong>Ingreso a JupyterLab</strong>: Una vez el contenedor esté corriendo, abra su navegador y pegue la siguiente URL (note que usamos el puerto <strong>8889</strong> definido en nuestro manifiesto):</li>
+</ol>
+<p><code>http://127.0.0.1:8889/lab?token=geomatica2025</code></p>
+<ol start="8" type="1">
+<li><p><strong>Localización de Archivos y Persistencia</strong>: En el contenedor, su carpeta de Windows se encuentra vinculada a la ruta <strong>/home/rstudio/work</strong>.</p>
+<ul>
+<li>Cualquier archivo guardado en esa ruta dentro de Jupyter aparecerá en su carpeta de Windows.</li>
+<li>Se recomienda organizar su trabajo en las subcarpetas: <code>notebooks</code>, <code>scripts</code>, y <code>data</code>.</li>
+<li>La carpeta <code>imagenes</code> (provista para las guías Quarto) debe residir también en esta ruta para un renderizado correcto.</li>
+</ul></li>
+<li><p><strong>Acceso y Configuración en VS Code</strong>:</p>
+<p>Para una experiencia de desarrollo profesional, conecte VS Code directamente al contenedor:</p>
+<ul>
+<li><p>Ejecute <code>Ctrl + Shift + P</code> y seleccione <strong>Dev Containers: Attach to Running Container…</strong>.</p></li>
+<li><p>Seleccione el contenedor <strong><code>contenedor_sig_unal</code></strong>.</p></li>
+<li><p><strong>Extensiones</strong>: Una vez conectado “dentro” del contenedor, debe habilitar/instalar las extensiones (<em>‘Install in Container’</em>) de <strong>R</strong> (REditorSupport), <strong>R Debugger</strong>, <strong>R Extension Pack</strong> (Yuki Ueda), <strong>Julia</strong>, <strong>Python</strong>, <strong>Quarto</strong>, <strong>PostgreSQL</strong> (Chris Kolman), <strong>psql</strong> (doublefint), <strong>GitHub Repositories</strong>, <strong>Container Tools</strong>, <strong>Python</strong> (Microsoft), <strong>Jupyter</strong> (Microsoft). Ver <a href="91-referencia_tecnica.html#sec-extensiones-vscode" class="quarto-xref"><span>Section A.7.2</span></a>.</p></li>
+<li><p><strong>Inicialización del Visor Gráfico</strong> (Solo la primera vez por sesión)</p></li>
+</ul>
+<p>Para que los gráficos de R (y los puentes de Python/Julia) se visualicen correctamente en VS Code, debe inicializar el dispositivo gráfico. En su terminal de R, ejecute:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lanza el servidor de gráficos httpgd</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>httpgd<span class="sc">::</span><span class="fu">hgd</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><strong>Acceso al Visor</strong>: VS Code debería abrir automáticamente una pestaña con el visor. Si esto no sucede o prefiere usar su navegador externo (Chrome/Edge), acceda a la dirección: <strong><code>http://127.0.0.1:8788</code></strong>.</li>
+<li><strong>Nota sobre Puertos</strong>: Aunque el comando en R pueda imprimir una URL interna con el puerto <code>8787</code> o un token aleatorio, <strong>ignore esa dirección</strong>. Gracias a nuestro archivo <code>docker-compose.yml</code>, el puerto <strong>8788</strong> de su Windows está “cableado” permanentemente al visor, eliminando la necesidad de buscar tokens o puertos dinámicos.</li>
+</ul></li>
+<li><p><strong>Apagar los servicios</strong>:</p></li>
+</ol>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> compose down</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="resumen-de-la-infraestructura-instalada" class="level3">
+<h3 class="anchored" data-anchor-id="resumen-de-la-infraestructura-instalada">Resumen de la infraestructura instalada</h3>
+<table class="table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Componente</th>
+<th style="text-align: left;">Versión / Estado</th>
+<th style="text-align: left;">Detalles Técnicos</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>R Engine</strong></td>
+<td style="text-align: left;"><code>4.3.3</code> (Angel Food Cake)</td>
+<td style="text-align: left;">Puente <code>JuliaConnectoR</code> y visor <code>httpgd</code> configurados.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Julia Stack</strong></td>
+<td style="text-align: left;"><code>v1.10.x</code></td>
+<td style="text-align: left;"><strong>ArchGDAL 3.12.1</strong> operativo mediante enlaces simbólicos.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Python Stack</strong></td>
+<td style="text-align: left;"><code>3.12.x</code></td>
+<td style="text-align: left;">GeoPandas, PyTorch y drivers <code>psycopg2</code> listos.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Base de Datos</strong></td>
+<td style="text-align: left;"><strong>PostGIS</strong> (Noble)</td>
+<td style="text-align: left;">Host interno <code>db-postgis</code> con extensión espacial activa.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Visualización</strong></td>
+<td style="text-align: left;"><strong>Dual Mode</strong></td>
+<td style="text-align: left;">Puertos <strong>8788</strong> (R/Julia Plots) y <strong>8889</strong> (Jupyter Lab).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Persistencia</strong></td>
+<td style="text-align: left;"><strong>Volúmenes Docker</strong></td>
+<td style="text-align: left;">Mapeo bidireccional en <code>/home/rstudio/work</code> confirmado.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Cirugía SSL</strong></td>
+<td style="text-align: left;">✅ Aplicada</td>
+<td style="text-align: left;">Compatibilidad OpenSSL 3.0 (Sistema) vs 3.3 (Julia).</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="mapeo-de-capacidades-sig" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="mapeo-de-capacidades-sig"><span class="header-section-number">2.4</span> Mapeo de Capacidades SIG</h2>
+<p>Es vital entender que, aunque usemos lenguajes distintos, todos “beben” de las mismas librerías de bajo nivel instaladas en nuestra imagen base de OSGeo:</p>
+<table class="table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Operación</th>
+<th style="text-align: left;">R (<code>sf</code> / <code>terra</code>)</th>
+<th style="text-align: left;">Python (<code>GeoPandas</code>)</th>
+<th style="text-align: left;">Julia (<code>ArchGDAL</code>)</th>
+<th style="text-align: left;">Motor de Sistema</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Lectura de Datos</td>
+<td style="text-align: left;"><code>st_read()</code> / <code>rast()</code></td>
+<td style="text-align: left;"><code>read_file()</code> / <code>open()</code></td>
+<td style="text-align: left;"><code>ArchGDAL.read()</code></td>
+<td style="text-align: left;"><strong>GDAL</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Buffers / Geometría</td>
+<td style="text-align: left;"><code>st_buffer()</code></td>
+<td style="text-align: left;"><code>.buffer()</code></td>
+<td style="text-align: left;"><code>LibGEOS.buffer()</code></td>
+<td style="text-align: left;"><strong>GEOS</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Reproyección</td>
+<td style="text-align: left;"><code>st_transform()</code></td>
+<td style="text-align: left;"><code>.to_crs()</code></td>
+<td style="text-align: left;"><code>ArchGDAL.reproject()</code></td>
+<td style="text-align: left;"><strong>PROJ</strong></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="guía-visual-de-jupyterlab" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="guía-visual-de-jupyterlab"><span class="header-section-number">2.5</span> Guía Visual de JupyterLab</h2>
+<p>Al ingresar, se encontrará con el centro de mando de sus kernels, donde podrá elegir entre R, Python o Julia para sus Notebooks:</p>
+<div id="fig-jupyterlab" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-jupyterlab-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/JupyterLab.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-jupyterlab-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.2: Interfaz de JupyterLab configurada para el laboratorio.
+</figcaption>
+</figure>
+</div>
+<section id="la-carpeta-work-y-el-espejo-de-datos" class="level3">
+<h3 class="anchored" data-anchor-id="la-carpeta-work-y-el-espejo-de-datos">La Carpeta ‘work’ y el Espejo de Datos</h3>
+<p>En el panel izquierdo de la <a href="#fig-jupyterlab" class="quarto-xref">Figure&nbsp;<span>2.2</span></a>, la carpeta <strong><code>/home/rstudio/work/</code></strong> es el espejo de su directorio local en Windows. Gracias a la configuración de volúmenes en el archivo <code>docker-compose.yml</code>, existe un puente directo: todo cambio realizado en Jupyter se refleja en su disco duro y viceversa, garantizando que su trabajo no se pierda al apagar el contenedor.</p>
+</section>
+</section>
+<section id="compilación-de-la-guía-documento-quarto-qmd" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="compilación-de-la-guía-documento-quarto-qmd"><span class="header-section-number">2.6</span> Compilación de la guía (documento quarto <code>qmd</code>)</h2>
+<p>Para generar el reporte, ejecute los comandos según el formato requerido:</p>
+<p><strong>Generar todos los formatos (HTML y PDF):</strong></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render guia_instalacion.qmd <span class="at">--to</span> all</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Generar solo formato HTML:</strong></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render guia_instalacion.qmd <span class="at">--to</span> html</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Generar solo formato PDF:</strong></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render guia_instalacion.qmd <span class="at">--to</span> pdf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En Quarto, puedes agregar tus <strong>notas de estudio</strong> usando esta sintaxis:</p>
+<pre class="quarto"><code>::: {.callout-tip icon="true"}
+Escribe acá!
+:::</code></pre>
+</div>
+</div>
+</section>
+<section id="sec-limpieza" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="sec-limpieza"><span class="header-section-number">2.7</span> Mantenimiento y Limpieza del Entorno</h2>
+<p>El entorno políglota de este curso es robusto y, por lo tanto, pesado. Tras realizar actualizaciones o varias pruebas de construcción, es posible que el espacio en disco se agote rápidamente.</p>
+<section id="comandos-de-rescate-de-espacio" class="level3">
+<h3 class="anchored" data-anchor-id="comandos-de-rescate-de-espacio">Comandos de Rescate de Espacio</h3>
+<p>Si recibe errores de “Disk Full” o desea limpiar su sistema, ejecute los siguientes comandos en su terminal de Windows (PowerShell):</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Eliminar contenedores detenidos y redes en desuso</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>docker system prune <span class="op">-</span>f</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Limpiar caché de construcción (libera mucho espacio tras errores de build)</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>docker builder prune <span class="op">-</span>f</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. (Uso extremo) Eliminar TODAS las imágenes que no estén siendo usadas</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co"># docker image prune -a -f</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Seguridad de sus Datos
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>No tema realizar limpiezas periódicas. Gracias a la configuración de volúmenes en nuestro archivo <code>docker-compose.yml</code>, todo su código, scripts y datos espaciales están <strong>físicamente en su disco local</strong> (en la carpeta de su ID UNAL).</p>
+<p>Al apagar o borrar el contenedor, lo que está dentro de <code>/home/rstudio/work/</code> <strong>siempre estará a salvo</strong> en su carpeta de Windows. El contenedor es solo el “motor”, sus archivos son el “combustible” que usted posee.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="verificación-de-conectividad-multilenguaje" class="level2" data-number="2.8">
+<h2 data-number="2.8" class="anchored" data-anchor-id="verificación-de-conectividad-multilenguaje"><span class="header-section-number">2.8</span> Verificación de Conectividad Multilenguaje</h2>
+<p><strong>Nota técnica</strong>: Dentro de la red de Docker, el host es <code>db-postgis</code>.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Julia</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> psycopg2</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fiona</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely.geometry <span class="im">import</span> Point</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"--- Inicio de Verificación de Python SIG ---"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>--- Inicio de Verificación de Python SIG ---</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Prueba de conexión a la base de datos PostGIS</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    conn <span class="op">=</span> psycopg2.<span class="ex">connect</span>(</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>        host<span class="op">=</span><span class="st">"db-postgis"</span>, </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>        dbname<span class="op">=</span><span class="st">"sig_db_unal"</span>, </span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>        user<span class="op">=</span><span class="st">"profe_unal"</span>, </span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>        password<span class="op">=</span><span class="st">"geomatica2025"</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"✅ Conexión a PostGIS: Exitosa"</span>)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    conn.close()</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"❌ Error de conexión a PostGIS: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>✅ Conexión a PostGIS: Exitosa</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Prueba de Fiona y drivers GDAL</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    drivers <span class="op">=</span> <span class="bu">len</span>(fiona.supported_drivers)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"✅ Fiona operativo: </span><span class="sc">{</span>drivers<span class="sc">}</span><span class="ss"> drivers GDAL detectados"</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"❌ Error en Fiona/GDAL: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>✅ Fiona operativo: 17 drivers GDAL detectados</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Prueba de GeoPandas, Motores GEOS y Visualización</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Creamos un punto y su buffer (GEOS)</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    punto <span class="op">=</span> Point(<span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    buffer_geom <span class="op">=</span> punto.<span class="bu">buffer</span>(<span class="fl">1.0</span>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Creamos GeoDataFrames para graficar</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    gdf_buffer <span class="op">=</span> gpd.GeoDataFrame({<span class="st">'geometry'</span>: [buffer_geom]}, crs<span class="op">=</span><span class="st">"EPSG:4326"</span>)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    gdf_punto <span class="op">=</span> gpd.GeoDataFrame({<span class="st">'geometry'</span>: [punto]}, crs<span class="op">=</span><span class="st">"EPSG:4326"</span>)</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"✅ GeoPandas </span><span class="sc">{</span>gpd<span class="sc">.</span>__version__<span class="sc">}</span><span class="ss">: Operativo"</span>)</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"✅ Motores GEOS/Shapely: Verificados"</span>)</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Generación del Plot Espacial con Ejes y Cuadrícula</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Graficamos el buffer</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>    gdf_buffer.plot(ax<span class="op">=</span>ax, color<span class="op">=</span><span class="st">'lightgreen'</span>, edgecolor<span class="op">=</span><span class="st">'green'</span>, alpha<span class="op">=</span><span class="fl">0.4</span>, label<span class="op">=</span><span class="st">'Buffer'</span>)</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Graficamos el punto original (en rojo)</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>    gdf_punto.plot(ax<span class="op">=</span>ax, color<span class="op">=</span><span class="st">'red'</span>, markersize<span class="op">=</span><span class="dv">50</span>, zorder<span class="op">=</span><span class="dv">5</span>, label<span class="op">=</span><span class="st">'Centro'</span>)</span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Configuración de estilo consistente (Ejes y Grilla)</span></span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="st">"Validación Python SIG: Buffer GEOS"</span>)</span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">"Longitud"</span>)</span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">"Latitud"</span>)</span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>    ax.grid(<span class="va">True</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>) <span class="co"># Cuadrícula activada</span></span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>    ax.set_aspect(<span class="st">'equal'</span>) <span class="co"># Proporción 1:1 para evitar deformación</span></span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"✅ Visualización GeoPandas: Mapa generado con éxito"</span>)</span>
+<span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-33"><a href="#cb22-33" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb22-34"><a href="#cb22-34" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"❌ Error en el stack espacial de Python: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-guia_instalacion_A_docker_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"--- Verificación Finalizada ---"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>--- Verificación Finalizada ---</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DBI)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RPostgres)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Linking to GEOS 3.12.1, GDAL 3.8.4, PROJ 9.4.0; sf_use_s2() is TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>terra 1.8.93</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'terra'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:grid':
+
+    depth</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"--- Inicio de Verificación de R-Spatial ---</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>--- Inicio de Verificación de R-Spatial ---</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Prueba de conexión a la base de datos PostGIS</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tryCatch</span>({</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    RPostgres<span class="sc">::</span><span class="fu">Postgres</span>(), </span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">host =</span> <span class="st">"db-postgis"</span>, </span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">dbname =</span> <span class="st">"sig_db_unal"</span>, </span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">user =</span> <span class="st">"profe_unal"</span>, </span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">password =</span> <span class="st">"geomatica2025"</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"✅ Conexión a PostGIS: Exitosa</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dbDisconnect</span>(con)</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>}, <span class="at">error =</span> <span class="cf">function</span>(e) {</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"❌ Error de conexión a PostGIS:"</span>, <span class="fu">conditionMessage</span>(e), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>✅ Conexión a PostGIS: Exitosa</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Prueba de Motores de Sistema y Visualización (sf)</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tryCatch</span>({</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  conf <span class="ot">&lt;-</span> <span class="fu">sf_extSoftVersion</span>()</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">paste0</span>(<span class="st">"✅ sf operativo. Motores detectados:</span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>             <span class="st">"   - GDAL: "</span>, conf[<span class="st">"GDAL"</span>], <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>             <span class="st">"   - GEOS: "</span>, conf[<span class="st">"GEOS"</span>], <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>             <span class="st">"   - PROJ: "</span>, conf[<span class="st">"PROJ"</span>], <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>))</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Creamos el punto y el buffer</span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>  punto <span class="ot">&lt;-</span> <span class="fu">st_point</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>  buffer_geom <span class="ot">&lt;-</span> <span class="fu">st_buffer</span>(punto, <span class="at">dist =</span> <span class="dv">1</span>)</span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"✅ Prueba geométrica (GEOS): Buffer creado correctamente</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generación del Plot Espacial</span></span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Usamos st_geometry para graficar solo la forma</span></span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="fu">st_geometry</span>(buffer_geom), </span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">'lightblue'</span>, </span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">border =</span> <span class="st">'blue'</span>, </span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">main =</span> <span class="st">"Validación R-Spatial: Buffer GEOS"</span>,</span>
+<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a>       <span class="at">axes =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">graticule =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb35-23"><a href="#cb35-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Añadimos el punto original para referencia</span></span>
+<span id="cb35-24"><a href="#cb35-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="fu">st_geometry</span>(punto), <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="st">'red'</span>, <span class="at">pch =</span> <span class="dv">20</span>)</span>
+<span id="cb35-25"><a href="#cb35-25" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb35-26"><a href="#cb35-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"✅ Visualización sf: Mapa generado con éxito</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb35-27"><a href="#cb35-27" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb35-28"><a href="#cb35-28" aria-hidden="true" tabindex="-1"></a>}, <span class="at">error =</span> <span class="cf">function</span>(e) {</span>
+<span id="cb35-29"><a href="#cb35-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"❌ Error en el stack sf/GEOS:"</span>, <span class="fu">conditionMessage</span>(e), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb35-30"><a href="#cb35-30" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>✅ sf operativo. Motores detectados:
+   - GDAL: 3.8.4
+   - GEOS: 3.12.1
+   - PROJ: 9.4.0
+✅ Prueba geométrica (GEOS): Buffer creado correctamente</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-guia_instalacion_A_docker_files/figure-html/unnamed-chunk-2-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>✅ Visualización sf: Mapa generado con éxito</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Prueba de Raster (terra)</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tryCatch</span>({</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  r <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="at">ncols=</span><span class="dv">10</span>, <span class="at">nrows=</span><span class="dv">10</span>)</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">values</span>(r) <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncell</span>(r)</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"✅ Paquete 'terra' operativo: Objetos Raster verificados</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>}, <span class="at">error =</span> <span class="cf">function</span>(e) {</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"❌ Error en el stack terra:"</span>, <span class="fu">conditionMessage</span>(e), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>✅ Paquete 'terra' operativo: Objetos Raster verificados</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"--- Verificación Finalizada ---</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>--- Verificación Finalizada ---</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LibPQ</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LibGEOS</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">ArchGDAL</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Plots</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(<span class="st">"--- Inicio de Verificación de Julia SIG ---"</span>)</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Prueba de conexión a la base de datos PostGIS</span></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>try</span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>    conn <span class="op">=</span> LibPQ.<span class="fu">Connection</span>(<span class="st">"host=db-postgis dbname=sig_db_unal user=profe_unal password=geomatica2025"</span>)</span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">println</span>(<span class="st">"✅ Conexión a PostGIS: Exitosa"</span>)</span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">close</span>(conn)</span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>catch <span class="cn">e</span></span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">println</span>(<span class="st">"❌ Error de conexión a PostGIS: "</span>, <span class="cn">e</span>)</span>
+<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Verificación de LibGEOS y Visualización de Geometría</span></span>
+<span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a>try</span>
+<span id="cb42-19"><a href="#cb42-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Creamos un punto y le aplicamos un buffer de 1.0 unidades</span></span>
+<span id="cb42-20"><a href="#cb42-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Esto valida la integración de Julia con la librería GEOS del sistema</span></span>
+<span id="cb42-21"><a href="#cb42-21" aria-hidden="true" tabindex="-1"></a>    punto <span class="op">=</span> LibGEOS.<span class="fu">readgeom</span>(<span class="st">"POINT (0 0)"</span>)</span>
+<span id="cb42-22"><a href="#cb42-22" aria-hidden="true" tabindex="-1"></a>    buffer_geom <span class="op">=</span> LibGEOS.<span class="fu">buffer</span>(punto, <span class="fl">1.0</span>)</span>
+<span id="cb42-23"><a href="#cb42-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb42-24"><a href="#cb42-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">println</span>(<span class="st">"✅ LibGEOS operativo: Motores geométricos verificados"</span>)</span>
+<span id="cb42-25"><a href="#cb42-25" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb42-26"><a href="#cb42-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Graficamos el objeto del buffer</span></span>
+<span id="cb42-27"><a href="#cb42-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># fillcolor y alpha ayudan a ver que es un polígono real</span></span>
+<span id="cb42-28"><a href="#cb42-28" aria-hidden="true" tabindex="-1"></a>    plt <span class="op">=</span> <span class="fu">plot</span>(buffer_geom, </span>
+<span id="cb42-29"><a href="#cb42-29" aria-hidden="true" tabindex="-1"></a>               title<span class="op">=</span><span class="st">"Validación Julia SIG: Buffer GEOS"</span>, </span>
+<span id="cb42-30"><a href="#cb42-30" aria-hidden="true" tabindex="-1"></a>               fillcolor<span class="op">=:</span>blue, </span>
+<span id="cb42-31"><a href="#cb42-31" aria-hidden="true" tabindex="-1"></a>               fillalpha<span class="op">=</span><span class="fl">0.3</span>, </span>
+<span id="cb42-32"><a href="#cb42-32" aria-hidden="true" tabindex="-1"></a>               aspect_ratio<span class="op">=:</span>equal, </span>
+<span id="cb42-33"><a href="#cb42-33" aria-hidden="true" tabindex="-1"></a>               legend<span class="op">=</span><span class="cn">false</span>)</span>
+<span id="cb42-34"><a href="#cb42-34" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb42-35"><a href="#cb42-35" aria-hidden="true" tabindex="-1"></a>    <span class="co"># display() es OBLIGATORIO para mostrar gráficos dentro de bloques try/catch</span></span>
+<span id="cb42-36"><a href="#cb42-36" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display</span>(plt) </span>
+<span id="cb42-37"><a href="#cb42-37" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb42-38"><a href="#cb42-38" aria-hidden="true" tabindex="-1"></a>catch <span class="cn">e</span></span>
+<span id="cb42-39"><a href="#cb42-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">println</span>(<span class="st">"❌ Error en LibGEOS o Visualización: "</span>, <span class="cn">e</span>)</span>
+<span id="cb42-40"><a href="#cb42-40" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb42-41"><a href="#cb42-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-42"><a href="#cb42-42" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Verificación de ArchGDAL (Usando llamada de bajo nivel)</span></span>
+<span id="cb42-43"><a href="#cb42-43" aria-hidden="true" tabindex="-1"></a>try</span>
+<span id="cb42-44"><a href="#cb42-44" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Accedemos directamente al motor de C para evitar errores de exportación</span></span>
+<span id="cb42-45"><a href="#cb42-45" aria-hidden="true" tabindex="-1"></a>    gdal_ver <span class="op">=</span> ArchGDAL.GDAL.<span class="fu">gdalversioninfo</span>(<span class="st">"--version"</span>)</span>
+<span id="cb42-46"><a href="#cb42-46" aria-hidden="true" tabindex="-1"></a>    <span class="fu">println</span>(<span class="st">"✅ ArchGDAL operativo (Versión GDAL: </span><span class="sc">$</span>gdal_ver<span class="st">)"</span>)</span>
+<span id="cb42-47"><a href="#cb42-47" aria-hidden="true" tabindex="-1"></a>catch <span class="cn">e</span></span>
+<span id="cb42-48"><a href="#cb42-48" aria-hidden="true" tabindex="-1"></a>    <span class="fu">println</span>(<span class="st">"❌ Error en ArchGDAL: "</span>, <span class="cn">e</span>)</span>
+<span id="cb42-49"><a href="#cb42-49" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb42-50"><a href="#cb42-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-51"><a href="#cb42-51" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(<span class="st">"--- Verificación Finalizada ---"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
+<div id="ref-docker2025" class="csl-entry" role="listitem">
+Inc., D. (2025). <em>Docker desktop documentation</em>. <a href="https://docs.docker.com">https://docs.docker.com</a>
+</div>
+<div id="ref-vscode2026" class="csl-entry" role="listitem">
+Microsoft Corporation. (2026). <em>Visual studio code</em>. <a href="https://code.visualstudio.com/">https://code.visualstudio.com/</a>
+</div>
+<div id="ref-xie2019tinytex" class="csl-entry" role="listitem">
+Xie, Y. (2019). TinyTeX: A lightweight, cross-platform, and easy-to-maintain LaTeX distribution based on TeX live. <em>TUGboat</em>, <em>40</em>(1), 30–32.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./01-introduccion-entornos.html" class="pagination-link" aria-label="Introducción a Entornos de Desarrollo SIG">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción a Entornos de Desarrollo SIG</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./03-guia_instalacion_B_qgis.html" class="pagination-link" aria-label="Guía de Instalación. Opción B: QGIS y PyQGIS">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción B: QGIS y PyQGIS</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

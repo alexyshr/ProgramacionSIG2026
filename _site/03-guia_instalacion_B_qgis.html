@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.550">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Programación SIG: Python, R y Julia - 3&nbsp; Guía de Instalación. Opción B: QGIS y PyQGIS</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./04-guia_instalacion_C_ArcGIS.html" rel="next">
+<link href="./02-guia_instalacion_A_docker.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-introduccion-entornos.html">Instalación y Entornos</a></li><li class="breadcrumb-item"><a href="./03-guia_instalacion_B_qgis.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción B: QGIS y PyQGIS</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Programación SIG: Python, R y Julia</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bienvenida</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-prefacio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prefacio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Instalación y Entornos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-introduccion-entornos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción a Entornos de Desarrollo SIG</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-guia_instalacion_A_docker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción A: Contenedor Docker (Python, R, Julia)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-guia_instalacion_B_qgis.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción B: QGIS y PyQGIS</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-guia_instalacion_C_ArcGIS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Fundamentos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-introduccion_python_r_julia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Fundamentos: Python, R y Julia</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-estructuras_datos_geo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Estructuras de Datos Geoespaciales</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Prácticas</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./41-benchmark_raster.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Benchmark de Procesamiento Geoespacial</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">Presentaciones</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./71-presentacion_benchmark.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Benchmark geoespacial: cómo leer los resultados</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./91-referencia_tecnica.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Referencia Técnica y Compendio de Comandos</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./92-errata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Errata</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./93-referencias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referencias Bibliográficas</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de Contenidos</h2>
+   
+  <ul>
+  <li><a href="#sec-osgeo4w" id="toc-sec-osgeo4w" class="nav-link active" data-scroll-target="#sec-osgeo4w"><span class="header-section-number">3.1</span> Opción B.1 - OSGeo4W</a>
+  <ul class="collapse">
+  <li><a href="#instrucciones-de-instalación" id="toc-instrucciones-de-instalación" class="nav-link" data-scroll-target="#instrucciones-de-instalación">Instrucciones de Instalación</a></li>
+  <li><a href="#lista-de-paquetes-seleccionados" id="toc-lista-de-paquetes-seleccionados" class="nav-link" data-scroll-target="#lista-de-paquetes-seleccionados">Lista de Paquetes Seleccionados</a></li>
+  <li><a href="#verificación-de-la-instalación" id="toc-verificación-de-la-instalación" class="nav-link" data-scroll-target="#verificación-de-la-instalación">Verificación de la Instalación</a></li>
+  </ul></li>
+  <li><a href="#sec-qgis-gee-pixi" id="toc-sec-qgis-gee-pixi" class="nav-link" data-scroll-target="#sec-qgis-gee-pixi"><span class="header-section-number">3.2</span> Opción B.2: QGIS + GEE using Pixi</a>
+  <ul class="collapse">
+  <li><a href="#instalación-de-pixi" id="toc-instalación-de-pixi" class="nav-link" data-scroll-target="#instalación-de-pixi">Instalación de Pixi</a></li>
+  <li><a href="#creación-del-proyecto" id="toc-creación-del-proyecto" class="nav-link" data-scroll-target="#creación-del-proyecto">Creación del Proyecto</a></li>
+  <li><a href="#configuración-del-entorno-geográfico" id="toc-configuración-del-entorno-geográfico" class="nav-link" data-scroll-target="#configuración-del-entorno-geográfico">Configuración del Entorno Geográfico</a></li>
+  <li><a href="#autenticación-de-earth-engine" id="toc-autenticación-de-earth-engine" class="nav-link" data-scroll-target="#autenticación-de-earth-engine">Autenticación de Earth Engine</a></li>
+  <li><a href="#trabajar-gee-dentro-de-qgis" id="toc-trabajar-gee-dentro-de-qgis" class="nav-link" data-scroll-target="#trabajar-gee-dentro-de-qgis">Trabajar GEE dentro de QGIS</a></li>
+  <li><a href="#recursos-adicionales" id="toc-recursos-adicionales" class="nav-link" data-scroll-target="#recursos-adicionales">Recursos Adicionales</a></li>
+  </ul></li>
+  <li><a href="#otras-referencias-importantes" id="toc-otras-referencias-importantes" class="nav-link" data-scroll-target="#otras-referencias-importantes"><span class="header-section-number">3.3</span> Otras referencias importantes</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-introduccion-entornos.html">Instalación y Entornos</a></li><li class="breadcrumb-item"><a href="./03-guia_instalacion_B_qgis.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción B: QGIS y PyQGIS</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="guia-B" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción B: QGIS y PyQGIS</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>La <strong>Opción B</strong> realmente se basa en dos alternativas para la instalación de QGIS <span class="citation" data-cites="rosas2022qgis">(<a href="93-referencias.html#ref-rosas2022qgis" role="doc-biblioref">Rosas-Chavoya et al., 2022</a>)</span>: <strong>OSGeo4W</strong> y <strong>QGIS + GEE usando Pixi.</strong></p>
+<section id="sec-osgeo4w" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="sec-osgeo4w"><span class="header-section-number">3.1</span> Opción B.1 - OSGeo4W</h2>
+<p><strong>OSGeo4W</strong> es un entorno para Windows que agrupa y facilita la gestión de software geoespacial de código abierto como QGIS <span class="citation" data-cites="rosas2022qgis">(<a href="93-referencias.html#ref-rosas2022qgis" role="doc-biblioref">Rosas-Chavoya et al., 2022</a>)</span>, GDAL/OGR <span class="citation" data-cites="mitchell2015introduction">(<a href="93-referencias.html#ref-mitchell2015introduction" role="doc-biblioref">Mitchell, 2015</a>)</span>, GRASS <span class="citation" data-cites="neteler2012grass">(<a href="93-referencias.html#ref-neteler2012grass" role="doc-biblioref">Neteler et al., 2012</a>)</span> y SAGA <span class="citation" data-cites="passy2018use">(<a href="93-referencias.html#ref-passy2018use" role="doc-biblioref">Passy &amp; Théry, 2018</a>)</span>.</p>
+<p>En este escenario, <strong>Python</strong> <span class="citation" data-cites="python_docs">(<a href="93-referencias.html#ref-python_docs" role="doc-biblioref">Python Software Foundation, 2025</a>)</span> es el motor fundamental, permitiendo la automatización directa de tareas sobre el software de escritorio <span class="citation" data-cites="lawhead2017qgis">(<a href="93-referencias.html#ref-lawhead2017qgis" role="doc-biblioref">Lawhead, 2017</a>)</span>. Para mantener la estabilidad del sistema, en este entorno nativo no intentaremos vincular R <span class="citation" data-cites="rlanguage">(<a href="93-referencias.html#ref-rlanguage" role="doc-biblioref">R Core Team, 2025</a>)</span> o Julia <span class="citation" data-cites="bezanson2017julia">(<a href="93-referencias.html#ref-bezanson2017julia" role="doc-biblioref">Bezanson et al., 2017</a>)</span>; para dicho propósito políglota utilizaremos exclusivamente la <strong>Opción A (Docker)</strong> <span class="citation" data-cites="docker2025">(<a href="93-referencias.html#ref-docker2025" role="doc-biblioref">Inc., 2025</a>)</span>.</p>
+<section id="instrucciones-de-instalación" class="level3">
+<h3 class="anchored" data-anchor-id="instrucciones-de-instalación">Instrucciones de Instalación</h3>
+<ol type="1">
+<li>Descargue el <a href="https://qgis.org/download/"><strong>Network Installer</strong></a> de QGIS.</li>
+<li>Ejecute y seleccione <strong>Advanced Install</strong>.</li>
+<li>Mantenga las rutas por defecto (<code>C:\OSGeo4W</code>).</li>
+<li>En el paso de <strong>Select Packages</strong>, busque los elementos de la tabla y marque únicamente la casilla <strong>Bin</strong> (Binarios).</li>
+</ol>
+</section>
+<section id="lista-de-paquetes-seleccionados" class="level3">
+<h3 class="anchored" data-anchor-id="lista-de-paquetes-seleccionados">Lista de Paquetes Seleccionados</h3>
+<table class="table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Grupo</th>
+<th>Paquete</th>
+<th>Módulo</th>
+<th>Propósito / Uso en Clase</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Entorno Core</strong></td>
+<td><code>qgis-ltr</code> / <code>qgis-ltr-full</code></td>
+<td>Todo</td>
+<td>Software base y metapaquete de dependencias.</td>
+</tr>
+<tr class="even">
+<td><strong>Bases de Datos</strong></td>
+<td><code>pgmodeler</code></td>
+<td>5</td>
+<td>Diseño visual de modelos para PostGIS.</td>
+</tr>
+<tr class="odd">
+<td><strong>Bases de Datos</strong></td>
+<td><code>libspatialite</code></td>
+<td>5</td>
+<td>Motor de base de datos espacial liviano para verificación en shell.</td>
+</tr>
+<tr class="even">
+<td><strong>Bases de Datos</strong></td>
+<td><code>python3-psycopg2</code></td>
+<td>5</td>
+<td>Adaptador de Python para PostgreSQL/PostGIS.</td>
+</tr>
+<tr class="odd">
+<td><strong>Geoprocesamiento</strong></td>
+<td><code>grass</code></td>
+<td>6</td>
+<td>Motor para análisis topológico e hidrología.</td>
+</tr>
+<tr class="even">
+<td><strong>Geoprocesamiento</strong></td>
+<td><code>saga</code></td>
+<td>7</td>
+<td>Algoritmos de terreno y geomorfometría.</td>
+</tr>
+<tr class="odd">
+<td><strong>Geoprocesamiento</strong></td>
+<td><code>gdal</code></td>
+<td>6</td>
+<td>Lectura/escritura de formatos raster y vector.</td>
+</tr>
+<tr class="even">
+<td><strong>Ciencia de Datos</strong></td>
+<td><code>python3-numpy</code></td>
+<td>2</td>
+<td>Manejo de estructuras Arrays y Matrices.</td>
+</tr>
+<tr class="odd">
+<td><strong>Ciencia de Datos</strong></td>
+<td><code>python3-pandas</code></td>
+<td>3</td>
+<td>Análisis exploratorio de datos (EDA).</td>
+</tr>
+<tr class="even">
+<td><strong>Ciencia de Datos</strong></td>
+<td><code>python3-geopandas</code></td>
+<td>3</td>
+<td>Extensión espacial para GeoDataFrames.</td>
+</tr>
+<tr class="odd">
+<td><strong>Visualización</strong></td>
+<td><code>python3-matplotlib</code></td>
+<td>3</td>
+<td>Gráficos básicos y mapas estáticos.</td>
+</tr>
+<tr class="even">
+<td><strong>Visualización</strong></td>
+<td><code>python3-seaborn</code></td>
+<td>3</td>
+<td>Gráficos estadísticos avanzados.</td>
+</tr>
+<tr class="odd">
+<td><strong>Desarrollo</strong></td>
+<td><code>python3-pip</code></td>
+<td>1</td>
+<td>Gestor para instalar librerías adicionales.</td>
+</tr>
+<tr class="even">
+<td><strong>Desarrollo</strong></td>
+<td><code>python3-jupyterlab</code></td>
+<td>Todo</td>
+<td>Entorno interactivo para prototipado rápido <span class="citation" data-cites="wijayaningrum2022jupyter">(<a href="93-referencias.html#ref-wijayaningrum2022jupyter" role="doc-biblioref">Wijayaningrum et al., 2022</a>)</span>.</td>
+</tr>
+<tr class="odd">
+<td><strong>Motores SIG</strong></td>
+<td><code>proj</code> / <code>geos</code></td>
+<td>6</td>
+<td>Cálculos de proyecciones y geometría.</td>
+</tr>
+<tr class="even">
+<td><strong>Machine Learning</strong></td>
+<td><code>python3-scikit-learn</code></td>
+<td>6</td>
+<td>Modelado predictivo espacial.</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Aceptación de Dependencias Adicionales
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Al avanzar, el instalador mostrará la ventana <strong>“Unmet Dependencies”</strong>. Es obligatorio aceptar todos los paquetes sugeridos para contar con los controladores de formatos <code>.ecw</code> y <code>.sid</code> requeridos por la cartografía oficial nacional. Para que el comando <code>spatialite</code> funcione en la shell, asegúrese de marcar el paquete <code>libspatialite</code> en la sección <strong>Libs</strong>.</p>
+</div>
+</div>
+</section>
+<section id="verificación-de-la-instalación" class="level3">
+<h3 class="anchored" data-anchor-id="verificación-de-la-instalación">Verificación de la Instalación</h3>
+<p>Abra la <strong>OSGeo4W Shell</strong> y ejecute los comandos para verificar la correcta integración de Python y los motores SIG:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">--version</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">gdalinfo</span> <span class="at">--version</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">spatialite</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="corrección-de-errores-al-lanzar-qgis" class="level4">
+<h4 class="anchored" data-anchor-id="corrección-de-errores-al-lanzar-qgis">Corrección de Errores al Lanzar QGIS</h4>
+<p>Si al iniciar QGIS aparece un error crítico indicando <code>ModuleNotFoundError: No module named 'gdal'</code>, se debe a una sintaxis de importación obsoleta en ciertos complementos <span class="citation" data-cites="rosas2022qgis">(<a href="93-referencias.html#ref-rosas2022qgis" role="doc-biblioref">Rosas-Chavoya et al., 2022</a>)</span>.</p>
+<p><strong>Error identificado:</strong> <code>File ".../agknow_utils.py", line 29, in &lt;module&gt; import gdal, osr</code></p>
+<p><strong>Solución:</strong> Debe modificar el archivo del plugin para usar el espacio de nombres de OSGeo:</p>
+<ol type="1">
+<li><p>Localice el archivo en: <code>%AppData%\QGIS\QGIS3\profiles\default\python\plugins\agknow_qgis\agknow_utils.py</code>.</p></li>
+<li><p>Reemplace la línea 29:</p>
+<ul>
+<li><strong>Incorrecto:</strong> <code>import gdal, osr</code></li>
+<li><strong>Correcto:</strong> <code>from osgeo import gdal, osr</code></li>
+</ul></li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Nota sobre R y Julia
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Para el uso intensivo de R y Julia, se recomienda la <strong>Opción A (Docker)</strong> <span class="citation" data-cites="docker2025">(<a href="93-referencias.html#ref-docker2025" role="doc-biblioref">Inc., 2025</a>)</span> ya que viene con las librerías espaciales pre-configuradas, evitando errores de vinculación de DLLs comunes en instalaciones nativas de Windows.</p>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="sec-qgis-gee-pixi" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="sec-qgis-gee-pixi"><span class="header-section-number">3.2</span> Opción B.2: QGIS + GEE using Pixi</h2>
+<p>Antes de comenzar, es indispensable contar con una cuenta de <strong>Google Cloud</strong> habilitada para <strong>Google Earth Engine (GEE)</strong>. Puede dar de alta su cuenta en <a href="https://earthengine.google.com/">earthengine.google.com</a>.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Requisito de Google Cloud
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Asegúrese de haber creado un proyecto en la consola de Google Cloud y de tener activadas las <strong>APIs for Earth Engine</strong> para dicho proyecto; de lo contrario, el proceso de autenticación fallará.</p>
+</div>
+</div>
+<p><a href="https://youtu.be/LoQwc3ne0FU">Video gúia de creación y registro en GEE</a></p>
+<hr>
+<section id="instalación-de-pixi" class="level3">
+<h3 class="anchored" data-anchor-id="instalación-de-pixi">Instalación de Pixi</h3>
+<p><strong>Pixi</strong> es un gestor de paquetes extremadamente rápido basado en el ecosistema de Conda, pero mucho más ligero. Permite crear entornos aislados sin romper las librerías de su sistema operativo.</p>
+<section id="en-linux-macos-bashzsh" class="level4">
+<h4 class="anchored" data-anchor-id="en-linux-macos-bashzsh"><strong>En Linux / macOS (bash/zsh)</strong></h4>
+<p>Ejecute el siguiente comando en su terminal:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> https://pixi.sh/install.sh <span class="kw">|</span> <span class="fu">sh</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Nota:</strong> Cierre y vuelva a abrir su terminal para que <code>pixi</code> se añada a su <code>PATH</code>. Confirme la instalación con:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pixi</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="en-windows-powershell" class="level4">
+<h4 class="anchored" data-anchor-id="en-windows-powershell"><strong>En Windows (PowerShell)</strong></h4>
+<p>Abra <strong>PowerShell</strong> (no requiere permisos de Administrador) y ejecute:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>powershell <span class="op">-</span>ExecutionPolicy Bypass <span class="op">-</span>c <span class="st">"irm -useb https://pixi.sh/install.ps1 | iex"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Reinicie PowerShell y confirme la versión:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pixi <span class="op">--</span>version</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+</section>
+<section id="creación-del-proyecto" class="level3">
+<h3 class="anchored" data-anchor-id="creación-del-proyecto">Creación del Proyecto</h3>
+<p>Navegue hasta la carpeta (<strong>diferente a todas las utilizadas hasta el momento</strong>) donde desea guardar sus trabajos y cree un nuevo proyecto llamado <code>geocd</code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pixi</span> init geocd</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> geocd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+<section id="configuración-del-entorno-geográfico" class="level3">
+<h3 class="anchored" data-anchor-id="configuración-del-entorno-geográfico">Configuración del Entorno Geográfico</h3>
+<p>Instalaremos un stack potente que incluye <strong>QGIS</strong> y las herramientas necesarias para trabajar con <strong>Google Earth Engine</strong> y datos ráster/vectoriales en Python.</p>
+<p>Desde la carpeta <code>geocd</code>, ejecute:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pixi</span> add qgis geemap geopandas xee rioxarray</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+¿Qué estamos instalando?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>QGIS</strong>: El software SIG profesional de uso libre mas popular.</li>
+<li><strong>geemap</strong>: Librería para visualización interactiva de GEE.</li>
+<li><strong>geopandas</strong>: Gestión de datos vectoriales.</li>
+<li><strong>xee &amp; rioxarray</strong>: Motores para leer cubos de datos y archivos ráster.</li>
+</ul>
+</div>
+</div>
+<hr>
+</section>
+<section id="autenticación-de-earth-engine" class="level3">
+<h3 class="anchored" data-anchor-id="autenticación-de-earth-engine">Autenticación de Earth Engine</h3>
+<p>Finalmente, debe vincular su entorno local con su cuenta de Google Cloud. Este comando abrirá una ventana en su navegador para autorizar el acceso:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pixi</span> run earthengine authenticate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Siga las instrucciones en pantalla, seleccione su proyecto de Google Cloud y copie el código de verificación si el sistema se lo solicita. ¡Ya está listo para procesar datos satelitales a escala global!</p>
+</section>
+<section id="trabajar-gee-dentro-de-qgis" class="level3">
+<h3 class="anchored" data-anchor-id="trabajar-gee-dentro-de-qgis">Trabajar GEE dentro de QGIS</h3>
+<p>Una vez que el entorno está configurado y autenticado, el siguiente paso es integrar <strong>Google Earth Engine</strong> directamente en la interfaz de QGIS. Para esto, utilizaremos el complemento desarrollado por el equipo de <strong>OpenGeos</strong>: El Plugin: <strong>GEE Data Catalog</strong>. Este complemento permite navegar por los miles de datasets de Earth Engine (Sentinel, Landsat, MODIS, etc.) y cargarlos en el lienzo de QGIS con un solo clic, utilizando el motor de procesamiento en la nube.</p>
+</section>
+<section id="recursos-adicionales" class="level3">
+<h3 class="anchored" data-anchor-id="recursos-adicionales">Recursos Adicionales</h3>
+<ul>
+<li><p><strong>Repositorio oficial:</strong> <a href="https://github.com/opengeos/qgis-gee-data-catalogs-plugin">opengeos/qgis-gee-data-catalogs-plugin</a></p></li>
+<li><p>Video Guía <strong>Earth Engine Data Catalogs Plugin for QGIS</strong>: <a href="https://youtu.be/nZ3D6wLKJQw">aquí</a></p></li>
+<li><p>Video Guía <strong>Time Series Satellite Images in Seconds</strong>: <a href="https://youtu.be/8IW6XqnUjgg">aquí</a></p></li>
+</ul>
+</section>
+</section>
+<section id="otras-referencias-importantes" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="otras-referencias-importantes"><span class="header-section-number">3.3</span> Otras referencias importantes</h2>
+<ul>
+<li>PyQGIS cookbook en markdown y Jupyter notebook formats <span class="citation" data-cites="wu2023pyqgis">(<a href="93-referencias.html#ref-wu2023pyqgis" role="doc-biblioref">Wu, 2023a</a>)</span></li>
+<li>QGIS Notebook Plugin: Integrate Jupyter Notebooks into QGIS <span class="citation" data-cites="wu2023qgisnotebook">(<a href="93-referencias.html#ref-wu2023qgisnotebook" role="doc-biblioref">Wu, 2023b</a>)</span></li>
+</ul>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
+<div id="ref-bezanson2017julia" class="csl-entry" role="listitem">
+Bezanson, J., Edelman, A., Karpinski, S., &amp; Shah, V. B. (2017). Julia: A fresh approach to numerical computing. <em>SIAM Review</em>, <em>59</em>(1), 65–98.
+</div>
+<div id="ref-docker2025" class="csl-entry" role="listitem">
+Inc., D. (2025). <em>Docker desktop documentation</em>. <a href="https://docs.docker.com">https://docs.docker.com</a>
+</div>
+<div id="ref-lawhead2017qgis" class="csl-entry" role="listitem">
+Lawhead, J. (2017). <em>QGIS python programming cookbook</em>. Packt Publishing Ltd.
+</div>
+<div id="ref-mitchell2015introduction" class="csl-entry" role="listitem">
+Mitchell, T. (2015). <em>An introduction to open source geospatial tools</em>.
+</div>
+<div id="ref-neteler2012grass" class="csl-entry" role="listitem">
+Neteler, M., Bowman, M. H., Landa, M., &amp; Metz, M. (2012). GRASS GIS: A multi-purpose open source GIS. <em>Environmental Modelling &amp; Software</em>, <em>31</em>, 124–130.
+</div>
+<div id="ref-passy2018use" class="csl-entry" role="listitem">
+Passy, P., &amp; Théry, S. (2018). The use of SAGA GIS modules in QGIS. <em>QGIS and Generic Tools</em>, <em>1</em>, 107–149.
+</div>
+<div id="ref-python_docs" class="csl-entry" role="listitem">
+Python Software Foundation. (2025). <em>Python 3 documentation</em>. <a href="https://docs.python.org/3/">https://docs.python.org/3/</a>
+</div>
+<div id="ref-rlanguage" class="csl-entry" role="listitem">
+R Core Team. (2025). <em>R: A language and environment for statistical computing</em>. R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>
+</div>
+<div id="ref-rosas2022qgis" class="csl-entry" role="listitem">
+Rosas-Chavoya, M., Gallardo-Salazar, J. L., López-Serrano, P. M., Alcántara-Concepción, P. C., &amp; León-Miranda, A. K. (2022). QGIS a constantly growing free and open-source geospatial software contributing to scientific development. <em>Cuadernos de Investigaci<span>ó</span>n Geogr<span>á</span>fica</em>, <em>48</em>(1), 197–213.
+</div>
+<div id="ref-wijayaningrum2022jupyter" class="csl-entry" role="listitem">
+Wijayaningrum, V. N., Lestari, V. A., et al. (2022). Jupyter lab platform-based interactive learning. <em>2022 International Conference on Electrical and Information Technology (IEIT)</em>, 295–301.
+</div>
+<div id="ref-wu2023pyqgis" class="csl-entry" role="listitem">
+Wu, Q. (2023a). PyQGIS cookbook in markdown and jupyter notebook formats. In <em>GitHub repository</em>. <a href="https://github.com/opengeos/pyqgis-cookbook" class="uri">https://github.com/opengeos/pyqgis-cookbook</a>; GitHub.
+</div>
+<div id="ref-wu2023qgisnotebook" class="csl-entry" role="listitem">
+Wu, Q. (2023b). QGIS notebook plugin: Integrate jupyter notebooks into QGIS. In <em>GitHub repository</em> [Computer software]. <a href="https://github.com/opengeos/qgis-notebook-plugin" class="uri">https://github.com/opengeos/qgis-notebook-plugin</a>; GitHub.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./02-guia_instalacion_A_docker.html" class="pagination-link" aria-label="Guía de Instalación. Opción A: Contenedor Docker (Python, R, Julia)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción A: Contenedor Docker (Python, R, Julia)</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./04-guia_instalacion_C_ArcGIS.html" class="pagination-link" aria-label="Guía de Instalación. Opción C: ArcGIS Pro y ArcPy">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
