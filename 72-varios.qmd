@@ -1,0 +1,121 @@
+---
+title: "Temas por Charlar"
+subtitle: "Asunto: varios"
+author: "Laboratorio de Programación SIG"
+format:
+  revealjs:
+    theme: simple
+    slide-number: true
+    transition: fade
+    incremental: true
+    center: true
+---
+
+## Clase de Hoy: Instalación y uso básido del Software
+
+
+- 1. Docker Desktop
+- 2. Instalar nuestros contenedores
+- 3. VSCode + Extensiones (dentro del nuestros contenerores)
+- 4. Git + GitHub
+- 5. Acceso a Jupyter Lab
+- 6. Creación de archivos Quarto (*.qmd): HTML & PDF
+- 7. OSGeo4W (QGIS) - QGIS + GEE (Pixi)
+- 8. Chequeo ArcGIS Pro
+
+
+---
+
+
+## Contenido - Syllabus actual
+
+- 1. Principios de Programación.
+- 2. Fundamentos de Python.
+- 3. Marcos de Datos.
+- 4. Programación Orientada a Objetos.
+- 5. Python y PostgreSQL.
+- 6. Librerías Geoespaciales.
+- 7. ArcGIS.
+
+👉 Necesitamos modificarlo.
+
+---
+
+## Contenido - Estructura
+
+- 1. Exposiciones del Profesor.
+    - Teoría.
+    - Práctica.
+- 2. Trabajos en Grupo.
+- 3. Exposiciones de los Estudiantes.
+- 4. Lecturas.
+- 5. Prácticas.
+- 6. Trabajo Final.
+
+👉 Necesitamos concretarlo y asignar porcentajes.
+
+---
+
+## Propuestas de Estudiantes para el Curso
+
+🎯 Tienes la palabra.
+
+---
+
+## Enfoque Open Science
+
+- Material presentado por profesor
+    - Diapositivas
+    - Código
+    - Teoría
+    - Archivos de configuración
+- Material de los estudiantes
+- HTML, PDF
+- GitHub
+
+---
+
+## Seminario **LatinGeo** al final del curso
+
+
+- Organizado por GeoCorp y UNAL.
+- Presentar trabajos finales.
+- Presentar temas específicos.
+- Abierto al público (en línea).
+- Formato Open Science.
+- Puede contribuir a la nota final.
+- Podemos traer invitados.
+
+🎯 **LatinGeo**: Python, R y Julia
+
+---
+
+## Temas para Proyecto Final
+
+- 1. Geocomputación en la Nube.
+- 2. Virtualización.
+- 3. Librerías Geo: Pipelines Composables.
+- 4. Creación de Paquetes (R, Python, Julia).
+- 5. Creación de Extensiones.
+- 6. GitHub Actions.
+- 7. DuckDB
+- 8. GEE - GEEMAP
+- 9. Temas aplicados
+- 10. ...
+
+---
+
+## Paquetes o comandos faltantes en Dockerfile
+
+- `apt-get update && apt-get install -y fonts-symbola`
+- Julia: `FileIO`, `ImageIO`
+- Opcion B: QGIS OSGeo4W  y QGIS para correr el plugin GEE (archivo 03-guia_instalacion_B_qgis.qmd)
+- Actualizar código en la guía 02-A (usuario y clave y poner {} a todos menos a Julia)
+- Quitar los números `### 1.`  en 03-B
+- Actualizar 04-arcgis (está incompleto)
+- Rscript -e "install.packages('webshot2')" (capturar pantalla en html dinamico para pdf)
+- Dependencia de sistema para capturas (acompaña al anterior)
+- pip3 install selenium
+- Guía B (arreglar nivel de subtítulos)
+- Semana 3 y 4: Proyecciones con R (Sillabus)
+- BD PostGIS (5 y 6)

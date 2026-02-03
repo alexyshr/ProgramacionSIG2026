@@ -1,0 +1,211 @@
+# CONFIGURACIÓN DEL PROYECTO
+project:
+  type: book                     # Tipo: libro (genera estructura de capítulos)
+  output-dir: _site              # Carpeta de salida para archivos generados
+
+# CONFIGURACIÓN DEL LIBRO
+book:
+  title: "Programación SIG: Python, R y Julia"
+  author: "Alexys H. Rodríguez-Avellaneda Ph.D."
+  date: today                    # Fecha automática
+  language: es                   # Idioma: español
+  
+  # ESTRUCTURA DEL LIBRO
+  chapters:
+    - index.qmd                  # Portada/índice
+    - 00-prefacio.qmd             # Prefacio (sin numeración)
+    - part: "Instalación y Entornos"  # Primera parte
+      chapters:                  # Capítulos de esta parte
+        - 01-introduccion-entornos.qmd
+        - 02-guia_instalacion_A_docker.qmd
+        - 03-guia_instalacion_B_qgis.qmd
+        - 04-guia_instalacion_C_ArcGIS.qmd
+    - part: "Fundamentos"        # Segunda parte
+      chapters:
+        - 05-introduccion_python_r_julia.qmd
+        - 06-estructuras_datos_geo.qmd
+    - part: "Prácticas"        # Tercera parte
+      chapters:
+        - 41-benchmark_raster.qmd
+        #- 00-prefacio.qmd
+    - part: "Presentaciones"        # Tercera parte
+      chapters:
+        - 71-presentacion_benchmark.qmd
+        
+  # APÉNDICES (aparecen después de los capítulos)
+  appendices:
+    - 91-referencia_tecnica.qmd  # Comandos y guías técnicas
+    - 92-errata.qmd              # Apéndice B: Erratas
+    - 93-referencias.qmd         # Apéndice C: Referencias bibliográficas
+    # IMPORTANTE: Este archivo crea la sección de referencias al final
+    # Si se quita, las referencias aparecerán sin título en cada capítulo (HTML)
+    # o no aparecerán agrupadas al final (PDF)
+
+# CONFIGURACIÓN DE BIBLIOGRAFÍA (GLOBAL)
+bibliography: referencias.bib     # Archivo BibTeX con todas las referencias
+csl: https://www.zotero.org/styles/apa  # Estilo de citación: APA
+link-citations: true             # Enlaza citas con la bibliografía
+
+# NIVEL GLOBAL (RECOMENDADO)
+number-sections: true
+
+# FORMATOS DE SALIDA
+format:
+  # FORMATO HTML (para web)
+  html:
+    theme: cosmo                 # Tema visual para HTML
+    toc: true                    # Tabla de contenidos: activada
+    toc-depth: 3                 # Profundidad del TOC: hasta nivel 3 (###)
+    #number-sections: true        # Numeración automática de secciones
+    number-depth: 2              # Numerar hasta nivel 2 (##)
+    # reference-location: section # NO FUNCIONA con bibliografía global
+    # Opciones: 'section' (final de sección) o 'document' (final del documento)
+    # Con bibliografía global, las referencias solo aparecen en el apéndice 93_references.qmd
+    # TÍTULO EN ESPAÑOL PARA HTML
+    toc-title: "Tabla de Contenidos"
+
+  # FORMATO PDF (para impresión)
+  pdf:
+    documentclass: book          # Clase LaTeX: libro. Puedes usar "scrreport" (usa arabigo en la numeración inicial) o "book" (usa romanos en la paginación inicial)
+    papersize: letter            # Tamaño de papel: carta
+    
+    # MOTOR PDF MEJORADO - DEL OTRO YAML (xelatex puede manejar mejor caracteres especiales)
+    # PRUEBA CON: lualatex (actual) o xelatex (alternativa)
+    pdf-engine: lualatex         # o xelatex para probar si hay problemas
+    cite-method: citeproc  # <-- AGREGA ESTO EXPLICITAMENTE
+
+    # CONFIGURACIÓN DIRECTA PARA TÍTULOS EN ESPAÑOL
+    # Esto va AQUÍ, NO en include-in-header
+    # lang: es-ES
+    toc-title: "Tabla de Contenidos"
+    lof-title: "Lista de Figuras"
+    lot-title: "Lista de Tablas"
+
+    geometry:                    # Márgenes de la página
+      - top=2.5cm
+      - bottom=2.5cm
+      - left=2.5cm
+      - right=2.5cm
+    
+    # CONFIGURACIÓN LaTeX (se inserta en el preámbulo)
+    include-in-header:
+      text: |
+        \usepackage{emptypage}   % Elimina números en páginas vacías
+        % \usepackage[spanish]{babel}
+
+        %PAQUETES APRA COLOREO DE TABLAS
+        \usepackage{colortbl}
+
+        % 2. CIRUGÍA DE EMOJIS PARA LUALATEX
+        % Esto mapea los símbolos que causan error a una fuente compatible
+        \usepackage{fontspec}
+        \usepackage{newunicodechar}
+        
+        % Definición con la ruta exacta que encontró fc-list
+        \newfontfamily{\symbolsfont}{Symbola}[
+          Path=/usr/share/fonts/truetype/ancient-scripts/,
+          Extension=.ttf,
+          UprightFont=*_hint,
+          ErrorIfNotFound=false
+        ]
+        
+        % Mapeo de caracteres detectados en tu error:
+        \newunicodechar{🐍}{{\symbolsfont 🐍}}
+        \newunicodechar{✅}{{\symbolsfont ✅}}
+        \newunicodechar{❌}{{\symbolsfont ❌}}
+        \newunicodechar{⚡}{{\symbolsfont ⚡}}
+        \newunicodechar{🟣}{{\symbolsfont 🟣}}
+        \newunicodechar{🟤}{{\symbolsfont 🟤}}
+        \newunicodechar{🏁}{{\symbolsfont 🏁}}
+        \newunicodechar{🌟}{{\symbolsfont 🌟}}
+        \newunicodechar{↔}{{\symbolsfont ↔}}
+
+        % PAQUETES PARA AJUSTAR CÓDIGO
+        \usepackage{fvextra}  % Mejoras para listings
+        \usepackage{xcolor}
+        \usepackage{listings}
+        
+        % CONFIGURACIÓN GENERAL PARA TODOS LOS BLOQUES DE CÓDIGO
+        \lstset{
+          basicstyle=\ttfamily\footnotesize,
+          breaklines=true,
+          breakatwhitespace=false,  % Permite dividir EN CUALQUIER PUNTO
+          breakindent=0pt,
+          prebreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\hookrightarrow}},
+          postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}\space},
+          columns=fullflexible,
+          showstringspaces=false,
+          frame=single,
+          framerule=0.5pt,
+          framesep=5pt,
+          % CARACTERES ESPECIALES QUE PUEDEN DIVIDIRSE
+          literate={\\}{{\textbackslash}}1
+                  {~}{{\textasciitilde}}1
+                  {|}{{\textbar}}1
+                  {/}{{/}}1
+                  {=}{{=}}1
+                  {-}{{-}}1,
+        }
+
+        % CONFIGURACIÓN ESPECÍFICA PARA BASH/SHELL
+        \lstdefinestyle{bash}{
+          language=bash,
+          basicstyle=\ttfamily\footnotesize,
+          breaklines=true,
+          breakatwhitespace=false,
+          morekeywords={sudo, apt-get, curl, docker},
+          keywordstyle=\color{blue},
+          commentstyle=\color{gray},
+          stringstyle=\color{red},
+          showstringspaces=false,
+        }
+        
+        % APLICAR ESTILO BASH AUTOMÁTICAMENTE
+        \lstnewenvironment{bashcode}{\lstset{style=bash}}{}
+        
+        % SOBRESCRIBIR ENTORNOS DE QUARTO
+        \usepackage{fancyvrb}
+        \fvset{
+          fontsize=\footnotesize,
+          frame=single,
+          framesep=3mm,
+          breaklines=true,
+          breakanywhere=true,  % CLAVE: permite dividir en cualquier carácter
+          baselinestretch=0.8,
+        }
+        
+        % PARA LOS BLOQUES Shaded DE QUARTO
+        \RecustomVerbatimEnvironment{Highlighting}{Verbatim}{
+          breaklines=true,
+          breakanywhere=true,
+          commandchars=\\\{\},
+          fontsize=\footnotesize,
+        }
+
+        % NOTA: NO usar cite-method: biblatex aquí porque:
+        % 1. Causa conflicto con csl: apa
+        % 2. Genera error "Option clash for package biblatex"
+        % 3. Pandoc maneja automáticamente las citas con el CSL APA
+    
+    # reference-location: section  # NO tiene efecto con bibliografía global
+    # Las referencias aparecen solo donde está 93_references.qmd
+    
+    linestretch: 1.25            # Espaciado entre líneas
+    toc: true                    # Tabla de contenidos en PDF
+    toc-depth: 3                 # Profundidad del TOC en PDF
+    #number-sections: true        # Numerar secciones en PDF
+    colorlinks: true             # Enlaces en color (no cajas)
+    fig-cap-location: bottom     # Ubicación de leyendas de figuras: abajo
+
+# RESUMEN DEL COMPORTAMIENTO:
+# 1. Todas las citas [@autor] en cualquier archivo se recopilan automáticamente
+# 2. Se muestran ÚNICAMENTE en 93_references.qmd (apéndice final)
+# 3. HTML: Referencias al final del libro, no por capítulo
+# 4. PDF: Referencias como apéndice final con título
+# 5. Estilo APA aplicado automáticamente
+# 6. Sin conflictos LaTeX/CSL
+
+# PARA REFERENCIAS POR CAPÍTULO (NO esta configuración):
+# 1. Quitar bibliography, csl, link-citations del YAML
+# 2. Agregar esos metadatos en cada archivo .qmd individual
+# 3. Agregar "::: {#refs} :::" al final de cada capítulo

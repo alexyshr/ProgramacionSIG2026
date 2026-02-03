@@ -1,0 +1,34 @@
+# Bienvenida {.unnumbered}
+
+Bienvenido a la documentación del curso **Programación en SIG** de la Maestría en Geomática de la Universidad Nacional de Colombia.
+
+Este recurso ha sido diseñado como una guía teórico-práctica para el análisis y procesamiento de datos geográficos utilizando los tres lenguajes más potentes en la ciencia de datos actual: **Python, R y Julia**.
+
+## Objetivos del curso {.unnumbered}
+
+El objetivo principal es que el estudiante desarrolle habilidades para automatizar procesos geoespaciales y construir flujos de trabajo reproducibles.
+
+- **Python**: Lenguaje principal de enfoque.
+- **R**: Comparativa para análisis estadístico espacial.
+- **Julia**: Alternativa de alto rendimiento para computación científica.
+
+## Cómo usar este libro {.unnumbered}
+
+A lo largo de los capítulos, encontrarás ejemplos de código organizados en **pestañas (tabs)**. Aunque el énfasis de las explicaciones está en Python, puedes alternar entre lenguajes para ver cómo se implementa la misma lógica en los otros entornos:
+
+::: {.callout-note}
+Utiliza las pestañas superiores en los bloques de código para cambiar entre **Python**, **R** y **Julia**.
+:::
+
+## Requisitos previos {.unnumbered}
+
+Para seguir este curso, se proveen guías de instalación de:
+- Docker Desktop (para el entorno unificado).
+- Editor de código VS Code.
+- QGIS
+- ArcGIS Pro
+- Conocimientos básicos de Sistemas de Información Geográfica (SIG) y manejo de datos vectoriales/raster.
+
+## Licencia {.unnumbered}
+
+Este material es de uso académico para la Universidad Nacional de Colombia. Está pendiente la definición de la licencia (...).

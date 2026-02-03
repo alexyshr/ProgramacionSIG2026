@@ -1,0 +1,978 @@
+# Referencia Técnica y Compendio de Comandos {#anexo-referencia}
+
+## Introducción a la Infraestructura de Datos
+
+Este anexo constituye la guía técnico para la gestión del entorno de desarrollo. A diferencia de los capítulos teóricos, aquí nos centramos en la operatividad: cómo configurar el motor de Docker, cómo asegurar que la memoria virtual (Swap) no colapse en procesos masivos, cómo sincronizar el conocimiento mediante Git, y otros temas técnicos (ej. comandos) importantes.
+
+---
+
+## Contenedores Instalados
+
+### Resumen de Infraestructura Docker {#sec-resumen-infra}
+
+Antes de entrar en los detalles técnicos, es vital entender el rol de los dos archivos maestros que sostienen su laboratorio geográfico. 
+
+| Archivo | Rol Crítico |
+|:---|:--- |
+| **`Dockerfile`** | **El "Qué" (La Receta):** Crea el entorno políglota desde cero, instala las librerías de NASA/Copernicus y aplica la **"cirugía" de OpenSSL** para que Julia sea estable en Ubuntu Noble. |
+| **`docker-compose.yml`** | **El "Cómo" (La Orquesta):** Despliega los servicios, mapea los puertos externos (**8889**, **8788**, **5434**) y asegura que sus mapas y bases de datos no se borren gracias al volumen persistente (`postgis_data_unal`). |
+
+
+::: {.callout-important}
+### Persistencia de Datos
+Gracias al `docker-compose`, si su contenedor se apaga o se reinicia, los datos de su base de datos PostGIS **no se pierden**. El volumen nombrado actúa como un disco duro externo que sobrevive a cualquier caída del sistema.
+:::
+
+### 🧪 Batería de Pruebas de Integridad del Docker (Health Checks)
+
+| ID | Comando de Verificación (Docker) | Descripción |
+|:---|:---|:---|
+| 01 | `docker exec contenedor_sig_unal gdalinfo --version` | Verifica que el núcleo de GDAL está activo. |
+| 02 | `docker exec contenedor_sig_unal R -e "library(sf); st_point(c(0,0))"` | Prueba la librería `sf` y el motor de geometría en R. |
+| 03 | `docker exec contenedor_sig_unal python3 -c "import geopandas; print(geopandas.__version__)"` | Verifica el stack espacial de Python. |
+| 04 | `docker exec contenedor_sig_unal R -e "j_eval('sum([1, 2, 3])')"` | **Test Crítico:** Verifica la función personalizada y el puente R -> Julia. |
+| 05 | `docker exec contenedor_sig_unal R -e "j_plot('plot(rand(10))')"` | Prueba la generación de gráficos Julia capturados por R. |
+| 06 | `docker exec contenedor_sig_unal julia -e 'using ArchGDAL; println(ArchGDAL.GDAL.gdalversioninfo("RELEASE_NAME"))'` | **Cirugía Exitosa:** Confirma que Julia accede a GDAL del sistema (v3.12.1). |
+| 07 | `docker exec contenedor_sig_unal R -e "library(RPostgres); dbConnect(Postgres(), host='db-postgis', dbname='sig_db_unal', user='profe_unal', password='geomatica2025')"` | Prueba la conexión R -> PostGIS (Interna). |
+| 08 | `docker exec contenedor_sig_unal python3 -c "import psycopg2; conn = psycopg2.connect(host='db-postgis', dbname='sig_db_unal', user='profe_unal', password='geomatica2025'); print('Python PostGIS conectado ✅'); conn.close()"` | Prueba la conexión Python -> PostGIS (Interna). |
+| 09 | `docker exec contenedor_sig_unal R -e "cat(whitebox::wbt_version())"` | Verifica que los binarios de WhiteboxTools están instalados y accesibles. |
+| 10 | `docker exec contenedor_sig_unal R -e "library(httpgd); print('Visor OK')"` | Verifica que el motor gráfico para VS Code está listo en el puerto `8787`. |
+
+### Configuración de Puertos y Conectividad {#sec-puertos}
+
+Para que su computadora (Host) pueda comunicarse con los servicios dentro del contenedor, hemos diseñado un sistema de "puentes" o mapeo de puertos. Esto evita conflictos si ya tiene instalados otros servidores de bases de datos o Jupyter en su PC.
+
+| Servicio | Puerto en su PC (Host) | Puerto en Contenedor | Propósito | Acceso / Conexión |
+|:---|:---:|:---:|:---|:---|
+| **Jupyter Lab** | `8889` | `8888` | Programación y Notebooks | `http://localhost:8889` |
+| **Visor R (httpgd)** | `8788` | `8787` | Gráficos de R y VS Code | `http://localhost:8788` |
+| **PostGIS (DB)** | `5434` | `5432` | Base de Datos Espacial | `localhost:5434` |
+
+---
+
+### 🔑 Credenciales de la Base de Datos {#sec-credenciales}
+
+Utilice estos datos para configurar sus conexiones en QGIS, DBeaver o mediante código (R/Python/Julia):
+
+* **Base de Datos:** `sig_db_unal`
+* **Usuario:** `profe_unal`
+* **Contraseña:** `geomatica2025`
+* **Host Interno:** `db-postgis` (Use este nombre únicamente para conexiones **dentro** de sus scripts).
+
+
+
+---
+
+### Lógica de Arquitectura (Dockerfile y Compose) {#sec-arquitectura-puertos}
+
+La configuración del entorno se ha "blindado" técnicamente para garantizar la estabilidad:
+
+1.  **En el Dockerfile**: Se usan las instrucciones `EXPOSE 8888` y `EXPOSE 8787`. Esto le avisa a Docker que el contenedor tiene dos "puertas" abiertas internamente. Al fijar `httpgd.port = 8787`, nos aseguramos de que el visor de gráficos de R no pelee con Jupyter por el mismo canal.
+2.  **En el Docker-Compose**: 
+    * **`8889:8888`**: Permite que este curso conviva con otras instalaciones de Jupyter (que suelen usar el 8888).
+    * **`8788:8787`**: Habilita la conexión independiente de VS Code al visor de gráficos de R.
+    * **`5434:5432`**: Evita el choque con bases de datos locales (Postgres suele usar el 5432 o 5433).
+
+---
+
+### Guía de Acceso: El concepto de "Lados" {#sec-guia-acceso}
+
+Es fundamental entender desde dónde está intentando conectar:
+
+> #### 🌐 Desde afuera (Su PC / Host)
+> Es lo que usted configura en su navegador o en QGIS. Usted ve los puertos mapeados:
+> * **Jupyter/Notebooks**: `http://localhost:8889` (usando el token `geomatica2025`).
+> * **Base de Datos (QGIS/DBeaver)**: Host: `localhost`, Puerto: `5434`.
+
+> #### 🐳 Desde adentro (El Contenedor)
+> Sus scripts de Python, R y Julia no saben que existe un mapeo externo. Dentro de su "casa" Docker, nada ha cambiado:
+> * **PostGIS**: El código debe buscar el puerto estándar `5432` y el host `db-postgis`.
+> * **httpgd**: El servidor de gráficos sigue escuchando en el puerto interno `8787`.
+
+::: {.callout-note}
+### Tip de Conexión
+Si intenta conectar QGIS usando el puerto `5432` y falla, recuerde que el "puente" hacia el contenedor se construyó específicamente sobre el puerto **`5434`**.
+:::
+
+
+## Quarto: Orquestación y Configuración {#quarto-ref}
+
+Quarto se basa en un archivo de configuración centralizado donde se definen los parámetros de renderizado, bibliografía y estilos.
+
+### Opciones del encabezado yml
+
+**Ejemplo 1**: Solo HTML
+
+```markdown
+---
+title: "Título de la Práctica"
+author: "Nombre del Estudiante"
+date: last-modified
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    toc-location: left
+    number-sections: true
+    theme: lux
+---
+```
+
+**Ejemplo 2**: HTML y Python
+
+```markdown
+---
+title: "Informe Técnico: Análisis Geoespacial"
+author: "ID Correo UNAL"
+date: today
+format:
+  html:
+    toc: true
+    number-sections: true
+    theme: cosmo
+  pdf:
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    documentclass: scrreprt
+    geometry:
+      - top=25mm
+      - left=25mm
+      - right=25mm
+      - bottom=25mm
+---
+```
+### Resumen de comandos Quarto
+
+`quarto render guia_instalacion.qmd --to all`
+
+`quarto render guia_instalacion.qmd --to html`
+
+`quarto render guia_instalacion.qmd --to pdf`
+
+### Control de Ejecución en Quarto: Opciones de Chunks {#sec-opciones-chunks}
+
+Para que sus informes técnicos sean profesionales, no basta con que el código funcione; es necesario controlar qué se muestra y qué se oculta al lector final. En Quarto, esto se logra mediante el uso de "opciones de chunk" utilizando la sintaxis de la tubería de comentarios (`#|`).
+
+| Opción de Chunk | ¿Se ejecuta? | ¿Muestra el Código? | ¿Muestra Resultados / Plots? | Uso Ideal |
+|:--- |:---:|:---:|:---:|:--- |
+| **`#| echo: false`** | ✅ SÍ | ❌ NO | ✅ SÍ | **Para Resultados Finales.** Muestra el mapa/tabla sin la "receta". |
+| **`#| include: false`** | ✅ SÍ | ❌ NO | ❌ NO | **Para el Setup.** Corre todo en secreto, sin mensajes ni advertencias. |
+| **`#| code-fold: true`** | ✅ SÍ | 📂 Plegado | ✅ SÍ | **Para el Proceso.** El código se oculta tras un botón "Code". |
+| **`#| eval: false`** | ❌ NO | ✅ SÍ | ❌ NO | **Para Tutoriales.** Solo muestra el texto del código sin procesarlo. |
+| **`#| output: false`** | ✅ SÍ | ✅ SÍ | ❌ NO | **Para Debugging.** Ves su código pero no los resultados pesados. |
+| **`#| warning: false`** | ✅ SÍ | - | - | Oculta esos textos naranjas de advertencia de las librerías. |
+| **`#| message: false`** | ✅ SÍ | - | - | Oculta mensajes de carga (ej: "Loading terra package..."). |
+
+
+
+---
+
+#### Recomendaciones de Uso según el Contexto
+
+Dependiendo de la parte del script en la que se encuentre, existen configuraciones que garantizan un documento más limpio y fluido:
+
+| Tipo de Chunk | Opción recomendada | ¿Por qué? |
+|:--- |:--- |:--- |
+| **Setup / Librerías** | `#| include: false` | Ejecuta todo pero oculta el código y los mensajes de carga de R/Julia/Python. |
+| **Limpieza de RAM** | `#| include: false` | Borra objetos y vacía el cache en silencio. El lector no necesita ver la "limpieza". |
+| **Procesamiento** | `#| code-fold: true` | Muestra el mapa pero esconde el código tras un clic. Ideal para transparencia académica. |
+| **Resultados Finales** | `#| echo: false` | Muestra solo la tabla comparativa y conclusiones. Es el "veredicto" limpio y profesional. |
+
+::: {.callout-tip}
+### Sintaxis Correcta
+Recuerde que las opciones deben ir al inicio del chunk, justo después de los corchetes del lenguaje:
+```r
+#| echo: false
+#| warning: false
+library(terra)
+# Su código aquí...
+```
+:::
+
+## Docker: Gestión de Contenedores e Imágenes {#docker-ref}
+
+### Procedimiento Incial
+
+Antes de trabajar con Docker debes:
+
+1. Arrancar Docker Desktop
+
+2. Usando la terminal **PowerShell** de Windows ubicarte sobre la carpeta dónde se encuentran los archivos `Dockerfile` y  `docker-compose.html`
+
+Los siguientes pasos son **compilar** (solo una vez), arrancar las imágenes y detener las imágenes:
+
+3. **Compilación Limpia (Sin Cache) con Log:**
+
+```bash
+docker build --no-cache -t mi_sig_env:v1 . > build_details.log 2>&1
+```
+4. **Arrancar las imágenes:**
+
+```bash
+docker compose up -d
+```
+
+5. **Detener las imágenes:** (opcional: solo para terminar)
+
+```bash
+docker compose down
+```
+
+Finalmente trabajar con los contenedores dentro de VSCode:
+
+6. "Ctrl + Shif + P": "Dev Containers: Attach to Running Container..." y seleccionar container `image_sig_unal` (`contenedor_sig_unal`)
+
+### Comandos Docker
+
+Use la siguiente tabla como referencia para gestionar sus contenedores desde la terminal de su sistema anfitrión (Windows/Mac/Linux).
+
+| Acción | Comando | Propósito |
+| :- | :--- | :--- |
+| **Construcción Inicial** | `docker-compose up --build -d` | Compila el Dockerfile y levanta los servicios (Solo una vez). |
+| **Inicio Diario** | `docker-compose up -d` | Inicia los servicios de forma instantánea si ya fueron construidos. |
+| **Monitoreo de Procesos** | `docker logs -f entorno_unal_sig` | Sigue los logs en vivo (ideal para ver pre-compilaciones). |
+| **Ver logs recientes** | `docker logs --tail 20 entorno_unal_sig` | Muestra las últimas 20 líneas (ideal para buscar el token). |
+| **Apagado** | `docker-compose down` | Detiene los servicios y libera recursos del sistema. |
+| **Prueba de R (sf)** | `docker exec entorno_unal_sig R -e "library(sf); print('R-Spatial detectado')"` | Confirmar que R reconoce los drivers geoespaciales del sistema. |
+| **Prueba de Python** | `docker exec entorno_unal_sig python -c "import shapely; import geopandas; print('Python OK')"` | Confirmar que el stack de Python (GeoPandas/Shapely) está instalado. |
+| **Prueba de Julia** | `docker exec entorno_unal_sig julia -e "using LibGEOS; println('Julia OK')"` | Confirmar que Julia tiene acceso a los binarios geoespaciales. |
+
+### Compilación Avanzada
+Para trabajar con entornos SIG, a menudo necesitamos reconstruir imágenes sin basura previa.
+
+* **Compilación Limpia (Sin Cache) con Log:**
+    Para asegurar que Docker descargue todas las librerías desde cero y guarde un registro detallado de los errores:
+    `docker build --no-cache -t mi_sig_env:v1 . --progress=plain > build_details.log 2>&1`
+* **Subir Imagen a Repositorio:**
+    `docker tag mi_sig_env:v1 usuario_dockerhub/mi_sig_env:v1`
+    `docker push usuario_dockerhub/mi_sig_env:v1`
+* **Cargar en VSCode:**
+    Una vez el contenedor esté corriendo, use la extensión **Dev Containers** -> Botón verde inferior izquierdo -> *Attach to Running Container*.
+
+### Cambio de Ruta de Almacenamiento (Windows)
+Si el disco `C:` se agota debido a las imágenes de Docker, siga estos pasos en **Docker Desktop**:
+1.  Vaya a **Settings** (engranaje).
+2.  **Resources** > **Advanced**.
+3.  En **Disk image location**, cambie la ruta a un disco con mayor capacidad (ej. `D:\DockerImages`).
+4.  Presione **Apply & Restart**.
+
+
+### Optimización de Memoria y Swap {#sec-optimizacion-memoria}
+
+Cuando procesamos datos masivos (como imágenes Sentinel-2 o rásters globales), la RAM física de 16GB suele ser insuficiente. Para evitar que el sistema aborte los procesos con el error **"Killed"**, debemos configurar un "pulmón" de emergencia en dos niveles.
+
+#### 1. El "Pulmón" de Windows: Memoria Virtual
+Obligamos a Windows a usar el disco duro como si fuera RAM de reserva. Si tiene un disco sólido (SSD) secundario con mucho espacio libre (ej. Disco D:), es el lugar ideal para configurarlo.
+
+1.  En el buscador de Windows, escriba: **"Ajustar la apariencia y rendimiento de Windows"**.
+2.  Vaya a la pestaña **Opciones avanzadas** > sección **Memoria virtual** > clic en **Cambiar**.
+3.  Desmarque la opción "Administrar automáticamente el tamaño del archivo de paginación para todas las unidades".
+4.  Seleccione la unidad de disco (C: o D:) y marque **Tamaño personalizado**.
+5.  Establezca los siguientes valores (recomendados para este curso):
+    * **Tamaño inicial**: `16384` MB (16 GB).
+    * **Tamaño máximo**: `32768` MB (32 GB).
+6.  Haga clic en **Establecer**, luego en **Aceptar** y **reinicie su computadora** para aplicar los cambios.
+
+#### 2. El "Túnel" de Docker: Swap de WSL2
+Docker Desktop corre sobre WSL2 (*Windows Subsystem for Linux*), el cual tiene su propio "presupuesto" limitado. Por defecto, este túnel es estrecho (máximo 4GB de Swap). Si no ampliamos esto, el contenedor nunca podrá aprovechar realmente el espacio que le asignamos a Windows.
+
+**Cómo ampliar la tubería:**
+1.  Presione `Win + R`, escriba `%UserProfile%` y presione Enter.
+2.  Busque el archivo `.wslconfig`. Si no existe, créelo con el Bloc de Notas.
+3.  Pegue el siguiente contenido:
+
+```ini
+[wsl2]
+memory=12GB # RAM máxima que le permitimos usar a Linux/Docker
+swap=16GB   # El nuevo tamaño de swap que verá el comando 'top' en la terminal
+```
+
+4.  **Aplicar cambios**: Guarde el archivo, abra una terminal (PowerShell) y escriba `wsl --shutdown`. Luego, inicie Docker Desktop nuevamente.
+
+---
+
+### Higiene y Limpieza de Choque
+
+Para garantizar que un renderizado de Quarto llegue al 100% sin colapsar el contenedor, aplique estas medidas de higiene:
+
+* **Cierre "Vampiros"**: Aplicaciones como Chrome, Edge, Teams y Slack consumen RAM de forma agresiva. Ciérrelas antes de procesos pesados.
+* **Limpieza de disco**: Use el Liberador de espacio en disco (`cleanmgr`) para vaciar archivos de volcado de memoria.
+* **La "Escoba" en el Código**: Use comandos de limpieza entre procesos de diferentes lenguajes:
+    * **R**: `rm(obj); gc(full = TRUE)`
+    * **Python**: `del var; gc.collect()`
+    * **Julia**: `GC.gc()`
+
+
+
+::: {.callout-warning}
+### Importante para Visualización
+En Julia y R, evite generar gráficos interactivos pesados dentro de bucles de procesamiento. La acumulación de objetos visuales en la memoria de VS Code es la causa número uno de colapsos en el contenedor.
+:::
+
+## Git y GitHub: Sincronización Local-Remota {#git-ref}
+
+### Subír el contenido existende de una carpeta local a un repositorio vacío en GitHub
+
+Si ya tiene sus archivos en Windows y quiere subirlos a un repositorio recién creado en GitHub:
+
+1. **Instalar Git**
+
+* **Descarga**: Acceda a [git-scm.com/download/win](https://git-scm.com/download/win).
+* **Instalación**: Ejecute el instalador manteniendo las opciones por defecto; asegúrese de que la opción **"Git from the command line and also from 3rd-party software"** esté activa.
+* **Verificación**: Ejecute `git --version` en una terminal para confirmar la instalación.
+
+2. **Crear una cuenta en GitHub**
+
+3.  **Abrir Terminal en la carpeta local:**
+
+4. **Incicializar Git** en la carpeta local:
+```powershell
+git init
+```
+
+5. Ver el **estado actual** del repositorio Git:
+```powershell
+git status
+```
+
+6. **Archivo `.gitignore`**: Crear un archivo de texto `.gitignore` para indicarle a Git que archivos y carperas nunca deben ser registrados con Git. A continuación un archivo de ejemplo:
+
+```text
+.quarto/
+_freeze/
+.ipynb_checkpoints/
+__pycache__/
+*.pdf
+*.html
+notebooks/
+scripts/
+data/
+```
+
+7. **Registrar (add)** el archivo `.gitignore` con Git:
+
+```powershell
+git add .gitignore
+```
+
+8. Revise nuevamente el **estátus** y verifique cambios:
+
+```powershell
+git status
+```
+
+9. **Salvar (commit)** el archivo en Git (local). Note que en el comando, el texto "*Archivo .gitignore*" es un comentario que describe lo que está salvando:
+```powershell
+git commit -m "Archivo .gitignore"
+```
+
+10. Cambiar al nombre de **rama (branch)** a **principal (main)**. Pueden haber diferentes ramas con diferentes versiones del mismo archivo. Para cambiar a **main**:
+
+```powershell
+git branch -M main
+```
+
+11. **Conectar** el repositorio local (Git) con nuestro repositorio en GitHub. 
+
+Para conectar Git con GitHub, puede hacerlo con SSH (debe realizar el proceso de instalación de llaves @sec-ssh-github) o con HTTPS (debe generar un PAT desde `github.com` que usará como clave de autenticación). En este caso usaremos HTTPS.
+
+Cree un nuevo repositorio en GitHub y copie la url HTTP del repositorio. Es algo como: `https://github.com/usuario/repositorio.git`
+
+
+```powershell
+git remote add origin https://github.com/usuario/repositorio.git
+```
+
+12. Procedimiento para **generar el PAT** en GitHub.com {#github-pat}
+
+- En lugar de escribir tu contraseña cuando el terminal te la pida, debes pegar un token generado en tu cuenta.
+- Ve a tu cuenta de GitHub.com: `Settings` > `Developer settings` > `Personal access tokens` > `Tokens (classic)`.
+- Genera un nuevo token **con el permiso repo activado.**
+- Copia el token (no lo volverás a ver).
+
+
+13. **Subir (push)** la información guardada localmente en Git a nuestro repositorio en GitHub:
+
+```powershell
+git push -u origin main   
+# Cuanto solicite el password use el PAT/token generado previamente en github.com
+```
+
+Puedes ver el estatus `git status` y realizar un procedimiento similar para registrar (`add`), salvar (`commit`) y subir (`push`) mas archivos. 
+
+* Registrar archivos específicos con Git (local):
+
+```powershell
+git add file1 file2 ...
+```
+
+* Registrar **todos los archivos y carpetas** disponibles y sin registrar, sin embargo todos los archivos y carpetas dentro de `.gitignore` no serán tenidos en cuenta:
+
+```powershell
+git add .
+```
+
+* En **resumen** estos son los comandos que usarás permanentemente para mentener sincronizados tus archivos con Git y tu Git con GitHub.
+
+- `git add` (agregar archivos a Git)
+- `git commit` (guardar archivos en Git)
+- `git push` (subir archivos a GitHub)
+
+* Los otros comandos vistos solo se ejecutan **una vez** o de acuerdo con **necesitades específicas**:
+
+- `git init` (una vez)
+- `git remote add origin` (una vez)
+- `git branch -M main` (lo debes usar para cambiar a main en caso de tener múltiples ramas)
+
+
+### Autenticación Segura: Configuración de Llaves SSH en GitHub {#sec-ssh-github}
+
+La autenticación mediante SSH permite interactuar con GitHub de forma segura sin necesidad de ingresar credenciales manualmente en cada operación. Siga este procedimiento detallado para configurar su acceso.
+
+
+#### Requitiso Previo: Creación de Cuenta en GitHub
+
+El correo que use para crear esta cuenta **debe ser el mismo correo** usado para crear las llaves SSH para conexión automática.
+
+#### Requisito Previo: Instalación de Git
+
+Es indispensable que su sistema operativo cuente con el motor de Git antes de iniciar la configuración:
+
+
+#### Preparación del Entorno Local
+
+* **Navegación**: Diríjase mediante el Explorador de Archivos a la carpeta raíz de su proyecto (ejemplo: carpeta `ID Unal`).
+* **Terminal**: Abra una ventana de PowerShell en esa ubicación (clic derecho -> **"Abrir en Terminal"**).
+* **Inicialización**: Prepare el repositorio local mediante el comando:
+
+```powershell
+git init
+```
+
+---
+
+#### Gestión de Llaves SSH en Windows
+
+
+**SSH** (*Secure Shell*) es un protocolo de red diseñado para el acceso, administración y transferencia de datos entre un equipo local y un servidor remoto mediante un canal cifrado. En nuestro flujo de trabajo, implementamos el algoritmo **Ed25519**, un estándar de vanguardia basado en criptografía de curva elíptica (EdDSA). Este método no solo ofrece un nivel de seguridad superior frente a ataques de fuerza bruta, sino que permite una **autenticación transparente y sin contraseña**, actuando como un "pasaporte digital" que vincula de forma única su estación de trabajo con GitHub.
+
+::: {.callout-note}
+##### ¿Por qué Ed25519?
+A diferencia de los estándares antiguos (como RSA), **Ed25519** genera llaves más cortas, rápidas y significativamente más seguras, optimizando la latencia en cada comunicación con el repositorio.
+:::
+
+
+* **Comprobación de llaves existentes**: Verifique si su usuario ya posee llaves configuradas:
+
+```powershell
+ls ~/.ssh
+```
+    * Si el directorio está vacío o solo contiene `known_hosts`, proceda a generar una nueva.
+    * Si visualiza los archivos `id_ed25519` e `id_ed25519.pub`, puede saltar al paso de registro en GitHub.
+
+* **Generación de llaves**: Cree un par de llaves seguras utilizando el algoritmo Ed25519:
+
+El correo que use en el siguiente paso, **debe** ser el correo con el que creó la cuenta de GitHub: "su_correo@domimio.com"
+
+```powershell
+ssh-keygen -t ed25519 -C "su_correo@domimio.com"
+```
+    * **Nota**: Presione `ENTER` en todas las solicitudes para aceptar las rutas por defecto y no asignar una *passphrase*.
+
+::: {.callout-note}
+### Seguridad de la Identidad
+La **llave pública** (`id_ed25519.pub`) es la que se entrega a GitHub, mientras que la **llave privada** (`id_ed25519`) funciona como su sello personal secreto y nunca debe salir de su equipo.
+:::
+
+
+#### Registro de la Identidad en GitHub
+
+* **Copiar la firma pública**: Obtenga el contenido de su llave para registrarla:
+
+```powershell
+cat $env:USERPROFILE\.ssh\id_ed25519.pub
+    ```
+    *Seleccione y copie toda la cadena de texto resultante.*
+
+* **Configuración en la plataforma**:
+    * Acceda a su cuenta en [GitHub.com](https://github.com).
+    * Entre a **Settings** -> **SSH and GPG keys**.
+    * Seleccione **New SSH key**.
+    * Asigne el título `Windows-UNAL-2025`, pegue el contenido en el campo **Key** y presione **Add SSH key**.
+
+
+#### Activación del Agente SSH del Sistema
+
+Para que Windows gestione su identidad de forma transparente, debe habilitar el servicio correspondiente:
+
+* **Modo Administrador**: Cierre su terminal actual y abra una nueva sesión de **PowerShell como Administrador**.
+* **Habilitar Servicio**: Ejecute los siguientes comandos para automatizar el arranque del agente:
+```powershell
+Set-Service ssh-agent -StartupType Automatic
+Start-Service ssh-agent
+```
+
+* **Cargar la llave privada**: Registre su llave en el agente activo:
+```powershell
+ssh-add $env:USERPROFILE\.ssh\id_ed25519
+```
+
+#### Verificación de la Autenticación
+
+* **Prueba de conexión**: Compruebe que el túnel de comunicación con los servidores de GitHub funciona correctamente:
+```powershell
+ssh -T git@github.com
+```
+* **Resultado esperado**: Si la configuración es exitosa, recibirá un mensaje similar a: `Hi usuario! You've successfully authenticated, but GitHub does not provide shell access.`
+
+::: {.callout-success}
+## ¡Túnel SSH Activo y Configurado!
+
+Has establecido una identidad digital segura entre tu equipo y GitHub. A partir de este momento, la comunicación para sincronizar tus repositorios será transparente y automática.
+
+* **Identidad Permanente**: Esta configuración se realiza **una sola vez** por computador; tu "firma digital" ya reside en el sistema.
+* **Adiós a las Interrupciones**: GitHub ya no solicitará tu usuario, contraseña o tokens personales de acceso en cada operación.
+* **Compatibilidad Total**: Esta llave es reconocida automáticamente por **PowerShell**, **VS Code**, **Positron**, **RStudio** y cualquier otra terminal científica que utilices.
+* **Seguridad de Grado Profesional**: Tus envíos (`push`) viajan ahora por un canal cifrado bajo el estándar Ed25519.
+
+
+:::
+
+
+### Vinculación del Repositorio de Contenidos de la Clase{#sec-vinculacion-clase}
+
+Los contenidos de la clase están en `https://github.com/alexyshr/ProgramacionSIG2026.git` (HTTPS) o `git@github.com:alexyshr/ProgramacionSIG2026.git` (SSH). La elección de uno de estos dos protocolos (HTTPS o SSH), depende de si ha configurado su identidad digital, ver @sec-ssh-github.
+
+::: {.callout-warning}
+#### ¡Advertencia sobre la Estructura de Carpetas!
+
+Es fundamental para el orden del curso que el repositorio con los contenidos de la clase se conecte a una **carpeta independiente**. 
+
+**No sincronice estos archivos dentro de su carpeta local con los contenedores `ID UNAL`**. Mantener directorios separados garantiza que sus ejercicios personales y los materiales de lectura del profesor no se mezclen, evitando errores de sobreescritura y conflictos de Git al realizar actualizaciones del material.
+:::
+
+
+#### Opción A: Sincronizar mediante SSH (Recomendado)
+
+Utilice este método si ya configuró sus llaves siguiendo los pasos de la @sec-ssh-github.
+
+* **URL de la Clase**: `git@github.com:alexyshr/ProgramacionSIG2026.git`
+
+* **Vincular el repositorio remoto**:
+    Si ya inicializó su carpeta local (no la de sus contenedores Docker) con `git init`, ejecute el siguiente comando para establecer el origen:
+```powershell
+git remote add origin git@github.com:alexyshr/ProgramacionSIG2026.git
+```
+
+* **Descargar el contenido (Pull)**:
+    Para traer los archivos del servidor a su computadora por primera vez:
+```powershell
+git pull origin main
+```
+
+* **Verificación de estado**:
+    Confirme que la carpeta local está sincronizada correctamente:
+```powershell
+git status
+```
+    *Resultado esperado: `On branch main. Your branch is up to date. working tree clean.`*
+
+### Opción B: Sincronizar mediante HTTPS
+
+Utilice este método si aún no ha configurado llaves SSH o prefiere una descarga rápida. A diferencia del método anterior, este suele solicitar un **Personal Access Token (PAT)** (ver @github-pat) para realizar operaciones de subida (*push*).
+
+* **URL de la Clase**: `https://github.com/alexyshr/ProgramacionSIG2026.git`
+* **Instrucción**: Este comando descarga el repositorio completo y crea automáticamente una subcarpeta con el nombre del proyecto:
+```powershell
+git clone https://github.com/alexyshr/ProgramacionSIG2026.git
+```
+
+### Notas de Flujo de Trabajo
+
+* **Persistencia**: Una vez clonado o vinculado el repositorio, Git recordará la ruta del servidor (ya sea SSH o HTTPS). No es necesario repetir los comandos de `remote add` o `clone` en sesiones futuras.
+* **Seguridad**: Si opta por HTTPS, recuerde que GitHub ya no acepta contraseñas básicas por terminal; deberá generar un Token en la configuración de su cuenta. Por esta razón, se recomienda priorizar el uso de **SSH**.
+
+::: {.callout-tip}
+## Siguiente Paso
+Con el repositorio sincronizado y el contenedor de Docker activo (como se vio en la @sec-infraestructura), ya puede comenzar a trabajar en sus archivos `.qmd` y ver los cambios reflejados en tiempo real.
+:::
+
+## Visual Studio Code: Extensiones e Interfaz {#vscode-ref}
+
+### Atajos de Poder: La Paleta de Comandos {#sec-command-palette}
+
+La mayoría de las funciones avanzadas de VS Code no tienen un botón visible. Se acceden mediante la **Paleta de Comandos** presionando `Ctrl + Shift + P`. A continuación, los comandos más utilizados en este curso:
+
+| Comando (Command Palette) | Propósito | ¿Cuándo usarlo? |
+| :--- | :--- | :--- |
+| **`Developer: Reload Window`** | Reinicia la interfaz de VS Code sin cerrar el contenedor. | Cuando una extensión (como la de R o Julia) deja de responder. |
+| **`Dev Containers: Rebuild Container`** | Reconstruye la imagen desde el Dockerfile. | Cuando se realizan cambios en la configuración del entorno. |
+| **`Quarto: Preview`** | Abre una ventana lateral con la previsualización del documento. | Para ver los cambios en el `.qmd` en tiempo real. |
+| **`R: Create R terminal`** | Fuerza la apertura de una nueva consola de R vinculada. | Si el prompt `>` no aparece automáticamente. |
+| **`Julia: Start REPL`** | Inicia la consola interactiva de Julia. | Al abrir el contenedor por primera vez para ejecutar código Julia. |
+| **`Python: Select Interpreter`** | Permite elegir la versión de Python del contenedor. | Si VS Code no detecta automáticamente `/usr/bin/python3`. |
+| **`PostgreSQL: New Query`** | Abre un editor SQL en blanco. | Para realizar consultas a la base de datos espacial. |
+| **`Git: Pull` / `Git: Push`** | Sincroniza cambios con GitHub. | Para actualizar el repositorio de la clase o subir tareas. |
+
+
+
+---
+
+::: {.callout-important}
+### El comando de "Primer Auxilio"
+Si notas que el autocompletado desaparece o que los gráficos no cargan en **httpgd**, el primer paso siempre es ejecutar **`Developer: Reload Window`**. Esto refresca todas las conexiones de las extensiones con el contenedor sin interrumpir los procesos que Docker está ejecutando de fondo.
+:::
+
+#### Atajos de Teclado Rápidos
+Además de la paleta, memorice estos tres para su flujo diario:
+* **`Ctrl + Shift + ` ` `** (acento grave): Abre una nueva Terminal.
+* **`Ctrl + Enter`**: Envía la línea de código actual desde el editor al REPL (R, Julia o Python).
+* **`Ctrl + Shift + V`**: Previsualiza archivos Markdown (.md) de forma rápida.
+
+
+### Configuración de Extensiones en VS Code {#sec-extensiones-vscode}
+
+Para que el entorno de desarrollo sea plenamente funcional, es necesario instalar un conjunto de extensiones específicas. Una vez que haya realizado el proceso de **"Attach to Running Container"**, asegúrese de que estas herramientas estén instaladas **dentro del contenedor** (busque el botón azul *Install in Dev Container* en la pestaña de extensiones).
+
+| Categoría | Herramienta | Propósito | ID de la Extensión |
+|:--- |:--- |:--- |:--- |
+| **Infraestructura** | **Dev Containers** | Conexión y gestión del contenedor activo | `ms-vscode-remote.remote-containers` |
+| | **Docker / Container Tools** | Control de imágenes y recursos del contenedor | `ms-azuretools.vscode-docker` |
+| **Ecosistema R** | **R (REditorSupport)** | Soporte de sintaxis, LSP y terminal de R | `REditorSupport.r` |
+| | **R Debugger & Tools** | Depuración de scripts y herramientas de desarrollo | `RDebugger.r-debugger` |
+| | **R Extension Pack** | Pack de utilidades (por Yuki Ueda) | `yukiueda.r-extension-pack` |
+| **Ecosistema Python** | **Python (Microsoft)** | IntelliSense (Pylance) y depuración avanzada | `ms-python.python` |
+| | **Python Debugger** | Motor de depuración específico para Python | `ms-python.debugpy` |
+| | **Jupyter (Microsoft)** | Soporte para Notebooks e interactividad nativa | `ms-toolsai.jupyter` |
+| **Ecosistema Julia** | **Julia** | Soporte integral para ejecución y gráficos | `julialang.language-julia` |
+| **Base de Datos** | **PostgreSQL** | Cliente para explorar la DB (Chris Kolkman) | `ckolkman.vscode-postgres` |
+| | **psql** | Herramienta de consulta SQL (doublefint) | `doublefint.psql` |
+| **Publicación** | **Quarto** | Renderizado y preview de archivos `.qmd` | `quarto.quarto` |
+| **Versión** | **GitHub Repositories** | Manejo de archivos remotos sin clonar todo | `github.remotehub` |
+
+: Extensiones de VS Code para el entorno de Geomática y Programación SIG {#tbl-extensiones}
+
+---
+
+#### Notas sobre herramientas específicas
+
+
+
+* **PostgreSQL (Chris Kolkman)**: Esta extensión le permitirá conectarse a la base de datos espacial del contenedor sin salir de VS Code. Podrá ejecutar queries SQL y visualizar tablas directamente.
+* **Jupyter Ecosystem**: Incluimos el *Jupyter Keymap* para aquellos acostumbrados a los atajos de teclado de Jupyter Notebooks. Esto facilita la transición al trabajar con kernels de Python dentro de Quarto.
+* **Sobre `psql`**: La herramienta de línea de comandos `psql` ya viene preinstalada **dentro del sistema operativo del contenedor** (PostgreSQL Client). No requiere una extensión adicional para funcionar en la terminal.
+
+::: {.callout-important}
+### Instalación Local vs. Remota
+Recuerde que extensiones como **Dev Containers** y **Docker** deben estar instaladas en su VS Code **local** (en Windows), mientras que las de análisis (R, Python, Julia, PostgreSQL) deben estar instaladas **dentro de la sesión del contenedor** para acceder a los compiladores y librerías de la imagen.
+:::
+
+---
+
+::: {.callout-note}
+### Soporte del Lenguaje en R
+Para que el autocompletado y la documentación en tiempo real funcionen, el contenedor requiere el paquete `languageserver`. Aunque la imagen ya lo incluye por defecto, si nota que el resaltado de sintaxis falla, puede reinstalarlo ejecutando:
+`install.packages("languageserver")` en su consola de R.
+:::
+
+
+
+---
+
+### Verificación de Conectividad
+
+Una vez instaladas las extensiones, verifique que su entorno esté correctamente configurado siguiendo estos puntos:
+
+* **Estado del Contenedor**: En la esquina inferior izquierda de VS Code, debe aparecer un recuadro azul con el texto: **Dev Container: contenedor_sig_unal**.
+* **Activación de Kernels**: Al abrir un archivo `.qmd`, en la esquina superior derecha debe poder seleccionar el kernel deseado (R, Python 3 o Julia).
+* **Terminal Unificada**: Al abrir una nueva terminal (`Ctrl + Shift + ` ` `), la línea de comandos debe estar identificada como `rstudio@contenedor_sig_unal:/home/rstudio/work$`.
+
+::: {.callout-tip}
+## Sincronización Automática
+Recuerde que cualquier cambio que realice en la configuración de estas extensiones mientras esté conectado al contenedor se guardará en su perfil local de VS Code, facilitando las conexiones futuras.
+:::
+
+## Comandos Rápidos y Shortcuts {#shortcuts-ref}
+
+### Jupyter Notebook (Dentro de VSCode)
+| Acción | Atajo (Esc Mode) |
+| :--- | :--- |
+| Ejecutar Celda | `Ctrl + Enter` |
+| Ejecutar y pasar a la siguiente | `Shift + Enter` |
+| Convertir a Markdown | `M` |
+| Convertir a Código | `Y` |
+| Crear celda arriba / abajo | `A` / `B` |
+
+### Comandos de Windows (PowerShell/CMD)
+
+
+* **Ver uso de RAM:** `Get-Process | Sort-Object WorkingSet -Descending | Select-Object -First 10`
+* **Ver estado de WSL:** `wsl --list --verbose`
+* **Limpiar Cache de DNS:** `ipconfig /flushdns`
+
+## Adicionales Sobre Python
+
+### Versiones Instaladas del Software
+
+Para verificar las versiones instaladas, puede ejecutar `pip3 list` en la terminal. Las versiones instaladas deben coincidir con la siguiente tabla:
+
+| Software | Tipo | Versión | Comando (desde terminal) | Comando (desde Python) |
+|:-|:--|:-|:----|:------|
+| `Python` | Lenguaje | 3.12.3 | `python3 --version` | `import sys; sys.version` |
+| `pip` | Gestor de paquetes | 24.0 | `pip3 --version` | `import pip; pip.__version__` |
+| `numpy` | Paquete | 2.4.1 | `pip3 show numpy` | `import numpy; numpy.__version__` |
+| `pandas` | Paquete | 2.3.3 | `pip3 show pandas` | `import pandas; pandas.__version__` |
+| `geopandas` | Paquete | 1.1.2 | `pip3 show geopandas` | `import geopandas; geopandas.__version__` |
+| `shapely` | Paquete | 2.1.2 | `pip3 show shapely` | `import shapely; shapely.__version__` |
+| `pyproj` | Paquete | 3.7.2 | `pip3 show pyproj` | `import pyproj; pyproj.__version__` |
+| `fiona` | Paquete | 1.10.1 | `pip3 show fiona` | `import fiona; fiona.__version__` |
+| `rasterio` | Paquete | 1.5.0 | `pip3 show rasterio` | `import rasterio; rasterio.__version__` |
+
+
+## Adicionales Sobre R
+
+### Versiones Instaladas del Software
+
+Versiones que deben quedar instaladas en el sistema R:
+
+| Software | Tipo | Versión | Comando (desde terminal) | Comando (desde R) |
+|:-|:-|:-|:------|:---------|
+| `R` | Lenguaje | 4.5.2 | `R --version` | `R.version.string` |
+| `GEOS` | Librería sistema | 3.12.1 | `geos-config --version` | `sf::sf_extSoftVersion()["GEOS"]` |
+| `GDAL` | Librería sistema | 3.8.4 | `gdalinfo --version` | `sf::sf_extSoftVersion()["GDAL"]` |
+| `PROJ` | Librería sistema | 9.4.0 | (no aplica / no disponible) | `sf::sf_extSoftVersion()["PROJ"]` |
+| `sf` | Paquete | 1.0.23 | `R -q -e "packageVersion('sf')"` | `packageVersion("sf")` |
+| `terra` | Paquete | 1.8.86 | `R -q -e "packageVersion('terra')"` | `packageVersion("terra")` |
+| `stars` | Paquete | 0.7.0 | `R -q -e "packageVersion('stars')"` | `packageVersion("stars")` |
+
+### Visualización Interactiva con `httpgd` {#sec-httpgd-config}
+
+Dado que nuestro entorno Docker es "headless" (sin monitor propio), utilizamos **`httpgd`** como un servidor gráfico intermedio. Este paquete captura las señales de dibujo de R y las sirve a través de una URL que VS Code puede renderizar.
+
+#### 1. Inicio del Servidor Gráfico
+Cada vez que inicie una nueva sesión de R, debe despertar al servidor manualmente:
+
+```r
+# Inicia el motor gráfico
+httpgd::hgd()
+
+# Verifica el estado y el puerto asignado
+httpgd::hgd_details()
+```
+
+#### 2. Resolución de Conflictos (El "Fix" del Puerto)
+En nuestro contenedor, el puerto estándar para gráficos está mapeado al **8787**. Si al ejecutar `hgd_details()` nota que el sistema asignó un puerto aleatorio o si el visor aparece en blanco, fuerce la conexión con la siguiente "receta":
+
+```r
+# Forzar host y puerto para compatibilidad con Docker
+httpgd::hgd(host = "0.0.0.0", port = 8787, token = FALSE)
+```
+
+---
+
+#### 3. Formas de ver sus Gráficos
+Una vez el servidor está corriendo, tiene dos caminos para visualizar sus mapas:
+
+| Método | Comando / Acción | Ventaja |
+| :--- | :--- | :--- |
+| **Visor Interno** | `Ctrl + Shift + P` -> **Open httpgd viewer** | Mantiene todo dentro de una pestaña de VS Code. |
+| **Navegador Externo** | `httpgd::hgd_browse()` | Ideal si trabaja con dos monitores para ver mapas en pantalla completa. |
+
+::: {.callout-note}
+### ¿Por qué `token = FALSE`?
+Dentro del entorno seguro del contenedor, desactivamos el *token* para facilitar la conexión inmediata entre el servidor de R y el visor de VS Code sin que el firewall interno bloquee la petición por falta de credenciales.
+:::
+
+---
+
+#### 4. Verificación de Salud
+Si después de iniciar el servidor intenta graficar algo (ej: `plot(1:10)`) y no ve nada, ejecute `httpgd::hgd_details()`. Asegúrese de que:
+1.  **URL**: Apunte a `http://0.0.0.0:8787`.
+2.  **Status**: Indique que está escuchando (*listening*).
+
+### El Entorno Interactivo (REPL) y Motores Gráficos {#sec-repl-concept}
+
+En el desarrollo científico, el **REPL** (*Read-Eval-Print Loop*) es la consola interactiva que permite la "programación exploratoria". Es el ciclo donde el sistema **lee** su instrucción, la **evalúa** mediante el motor correspondiente, **imprime** el resultado y queda en un **bucle** a la espera del siguiente comando.
+
+En nuestro laboratorio políglota, la identidad visual del REPL es su brújula para saber en qué lenguaje está operando:
+
+| Lenguaje | ¿Cómo se ve el REPL? | Características en este curso |
+| :--- | :--- | :--- |
+| **R** | `>` | Consola estándar para procesos geoespaciales con `sf` o `terra`. |
+| **Julia** | `julia>` | Entorno de alto rendimiento con modos de ayuda (`?`) y terminal (`;`). |
+| **Python** | `>>>` | Consola básica; se recomienda el uso de **IPython** para interactividad. |
+
+
+
+La experiencia interactiva y el soporte gráfico dentro de **VS Code** dependen de la combinación entre el motor de ejecución y el dispositivo gráfico configurado en el contenedor:
+
+| Lenguaje | Acceso / Contexto | Motor de Ejecución | Dispositivo Gráfico | Soporte Inline |
+| :--- | :--- | :--- | :--- | :---: |
+| **R** | Nativo (Estático) | R Extension | VS Code Plots (Pane) | ✅ |
+| **R** | Nativo (Interactivo) | R Extension | **httpgd** | ✅ |
+| **Julia** | Nativo (REPL) | VSCodeServer | VS Code Plots (Pane) | ✅ |
+| **Julia** | Interop (R-Bridge) | `JuliaConnectoR` | **httpgd** (vía R) | ✅ |
+| **Python** | Interop (R-Bridge) | `reticulate` | R Device (**httpgd**) | ❌ / ⚠️ |
+| **Python** | Nativo (Jupyter) | Jupyter kernel | Jupyter Viewer | ✅ |
+
+#### El rol crítico de `httpgd` en R
+Para R, no basta con tener la extensión instalada. El paquete **`httpgd`** actúa como un servidor web interno que captura los gráficos generados en el contenedor y los "proyecta" en VS Code. 
+
+* **¿Por qué lo usamos?** Los dispositivos gráficos tradicionales (como `X11` o `windows()`) no funcionan dentro de un contenedor Docker (*headless*). `httpgd` soluciona esto convirtiendo cada mapa en un elemento interactivo SVG/HTML renderizable.
+* **Activación**: Siempre debe iniciar su sesión de R ejecutando `httpgd::hgd()` para abrir este canal de comunicación.
+
+---
+
+### Paquetes para Comunicación con Julia y Python {#sec-interoperabilidad}
+
+Para que este ecosistema funcione, R actúa como el "director de orquesta" utilizando un motor de ejecución y una serie de puentes que permiten la comunicación fluida de datos entre lenguajes.
+
+| Lenguaje / Función | Paquete en R | Motor / Propósito | Estado |
+| :--- | :--- | :--- | :---: |
+| **Renderizado** | **`knitr`** | Motor maestro que orquesta la ejecución de celdas en el documento | ✅ |
+| **Julia** | `JuliaConnectoR` | Comunicación funcional estable con el kernel de Julia | ✅ |
+| **Python** | `reticulate` | Interoperabilidad de objetos y ejecución de Python | ✅ |
+| **LSP (Soporte)** | `languageserver` | Autocompletado, IntelliSense y ayuda en tiempo real | ✅ |
+
+#### El Rol de `knitr`
+Mientras que los paquetes actúan como puentes técnicos, **`knitr`** es el encargado de leer el archivo `.qmd`, enviar las instrucciones a los motores respectivos y capturar los resultados (tablas, mapas, gráficos) para integrarlos en el documento final. Sin `knitr`, la integración políglota de Quarto no sería posible.
+
+
+
+#### Transición Técnica: De `JuliaCall` a `JuliaConnectoR`
+En el diseño de este entorno, se tomó la decisión técnica de descartar el paquete `JuliaCall` en favor de **`JuliaConnectoR`**:
+
+1. **El Problema**: `JuliaCall` presentaba inestabilidades al gestionar dependencias dinámicas compartidas (como `libcurl` o `libstdc++`) dentro del contenedor, causando cierres inesperados (*crashes*) de la sesión de R.
+2. **La Sustitución**: Se seleccionó **`JuliaConnectoR`** por su arquitectura más limpia, que no interfiere con el entorno de Julia ya configurado en el sistema operativo.
+3. **La Solución**: La integración se resolvió mediante una "inyección" de código en el archivo `Rprofile.site`, configurando automáticamente la ruta del ejecutable en `$Sys.BINDIR$` y definiendo las funciones maestras **`j_eval()`** y **`j_plot()`**.
+
+
+
+---
+
+::: {.callout-tip}
+### 🧠 Regla de Oro del Curso
+1.  **Julia y R**: Se operan de manera totalmente **interactiva** en VS Code (envío de líneas con `Ctrl+Enter`).
+2.  **Python vía reticulate**: Se utiliza primordialmente para el **renderizado (vía knitr)** de informes finales. Para una programación interactiva pura en Python, se recomienda el uso de los **Jupyter kernels**.
+:::
+
+## Adicionales Sobre Julia
+
+### Versiones Instaladas del Software
+
+Versiones de paquetes `Julia` en el sistema:
+
+| Software | Tipo | Versión | Comando (desde terminal) | Comando (desde Julia) |
+|:-|:-|:-|:-------|:-----|
+| `Julia` | Lenguaje | 1.10.4 | `julia --version` | `VERSION` |
+| `LibPQ` | Paquete | 1.18.0 | `julia -e "using LibPQ; println(pkgversion(LibPQ))"` | `using LibPQ; pkgversion(LibPQ)` |
+| `ArchGDAL` | Paquete | 0.10.11 | `julia -e "using ArchGDAL; println(pkgversion(ArchGDAL))"` | `using ArchGDAL; pkgversion(ArchGDAL)` |
+| `LibGEOS` | Paquete | 0.9.7 | `julia -e "using LibGEOS; println(pkgversion(LibGEOS))"` | `using LibGEOS; pkgversion(LibGEOS)` |
+| `Plots` | Paquete | 1.41.4 | `julia -e "using Plots; println(pkgversion(Plots))"` | `using Plots; pkgversion(Plots)` |
+| `DataFrames` | Paquete | 1.8.1 | `julia -e "using DataFrames; println(pkgversion(DataFrames))"` | `using DataFrames; pkgversion(DataFrames)` |
+
+
+
+## Comandos de Terminal (Sistema Operativo) {#sec-comandos-so}
+
+Al trabajar dentro de un contenedor Docker, la terminal es su línea directa con el sistema operativo (Ubuntu/Debian). Estos comandos le permitirán verificar que los motores geoespaciales y las librerías de sistema están correctamente instalados.
+
+| Comando | Propósito | ¿Para qué sirve en el curso? |
+| :--- | :--- | :--- |
+| `dpkg -l \| grep -E "libpng\|libgdal\|libproj\|libgeos"` | Lista librerías instaladas | Verificar que los drivers de mapas (GDAL, PROJ, GEOS) están activos. |
+| `gdalinfo --version` | Versión de GDAL | Confirmar que el motor de traducción de datos geográficos funciona. |
+| `df -h` | Espacio en disco | Evitar errores de "Disk Full" al descargar imágenes satelitales pesadas. |
+| `htop` (o `top`) | Monitor de recursos | Ver si un proceso de Julia o R está consumiendo toda la RAM o CPU. |
+| `ls -la` | Listado detallado | Revisar permisos de archivos y carpetas (clave para errores de Git). |
+| `psql --version` | Versión de Postgres | Confirmar que el cliente de base de datos está listo para usarse. |
+| `which r` / `which julia` | Ruta del ejecutable | Localizar dónde están instalados los lenguajes para configurar el Path. |
+
+
+
+---
+
+### Verificación de Librerías Geoespaciales
+El comando `dpkg -l | grep -E "libpng|libgdal|libproj|libgeos"` es su principal herramienta de diagnóstico. Si al ejecutarlo no obtiene resultados, las funciones de mapeo en R (`sf`), Python (`geopandas`) y Julia (`ArchGDAL`) fallarán, ya que todas dependen de estos binarios del sistema.
+
+::: {.callout-note}
+#### Tip de Productividad
+En la terminal de VS Code, puede usar la tecla **Tab** para autocompletar nombres de archivos o comandos, y las **flechas arriba/abajo** para navegar por el historial de comandos ejecutados.
+:::
+
+#### ¿Cómo leer la salida de `dpkg`?
+Al ejecutar el comando de verificación, verá una lista con el prefijo `ii`. Esto significa:
+* **i**: *Desired state* (Install)
+* **i**: *Current state* (Installed)
+
+Si ve algo diferente a `ii`, el paquete tiene problemas de instalación.
+
+---
+
+## La Cirugía de Librerías: El "Cambiazo" de OpenSSL {#sec-openssl-surgery}
+
+Al trabajar con contenedores de última generación, a veces nos encontramos con un choque de versiones entre lo que el sistema operativo ofrece y lo que los lenguajes de programación esperan. En nuestro caso, realizamos una "cirugía" técnica utilizando enlaces simbólicos (`ln -sf`).
+
+### 1. El Conflicto: ¿3.0.x o 3.3.x?
+
+La respuesta corta es: **Físicamente tiene instalada la versión 3.0.x, pero le mentimos al software diciéndole que es la 3.3.x.**
+
+* **La Realidad (Sistema)**: Su contenedor corre sobre **Ubuntu 24.04 (Noble Numbat)**. Esta versión viene de fábrica con **OpenSSL 3.0.x**, que es la versión estable y oficial del sistema.
+* **La Expectativa (Julia)**: Algunos paquetes potentes de Julia (como los binarios JLL de `GDAL` o `NCDatasets`) fueron compilados en entornos más recientes que ya usaban **OpenSSL 3.3.x**. 
+
+Cuando Julia intenta arrancar, busca una "etiqueta" interna llamada `OPENSSL_3.3.0`. Al no encontrarla en la librería de Ubuntu, el sistema lanza un error y bloquea la carga de mapas.
+
+
+
+### 2. La Solución: ¿Qué hace exactamente `ln -sf`?
+
+Imagine que Julia es un guardia de seguridad que busca una llave maestra etiquetada como **"Llave 3.3"**. Al revisar la caja fuerte (el sistema), solo ve la **"Llave 3.0"** y se niega a abrir. Lo que hicimos fue un "cambiazo" estratégico.
+
+Ejecutamos este comando de "cirugía":
+```bash
+find /root/.julia/artifacts -name "libssl.so*" -exec ln -sf /usr/lib/x86_64-linux-gnu/libssl.so.3 {} \;
+```
+
+**Desglose de la operación:**
+1.  **`find ... -name "libssl.so*"`**: Localiza todos los archivos de librería que Julia descargó por su cuenta (sus propios binarios internos).
+2.  **`-exec ln -sf ... {}`**: Por cada archivo encontrado, borra el original (la `-f` de *force*) y crea un **enlace simbólico** (la `-s` de *symbolic*).
+3.  **El Destino**: El enlace apunta directamente a la librería real de Ubuntu (`/usr/lib/.../libssl.so.3`).
+
+### 3. ¿Por qué funciona si las versiones son distintas?
+
+Funciona gracias a que **OpenSSL 3** mantiene algo llamado **compatibilidad binaria** entre sus versiones menores. Las funciones internas se llaman exactamente igual; lo único que cambió fue el "nombre del archivo" que Julia buscaba. 
+
+Al redirigir el nombre, Julia utiliza la librería de Ubuntu pensando que es la suya, y como las instrucciones internas son compatibles, el sistema arranca sin errores y con total estabilidad.
+
+::: {.callout-warning}
+### Importancia para el SIG
+Sin esta cirugía, paquetes como `ArchGDAL` en Julia no podrían cargar los controladores para leer archivos `.tif` o conectarse a bases de datos espaciales, ya que la comunicación segura (SSL) fallaría al inicio.
+:::
+
+---
+
+## Herramientas de admon de Windows
+
+| Acceso Directo | Parámetro / Comando | Descripción |
+|:--- |:--- |:--- |
+| **Windows + R** | `%UserProfile%` | Abre tu carpeta personal de usuario (donde se crea el archivo `.wslconfig`). |
+| **Windows + R** | `cleanmgr` | Abre el **Liberador de espacio en disco** para purgar basura del sistema. |
+| **Windows + R** | `taskmgr` | **[Ctrl + Shift + Esc]** Abre el **Administrador de Tareas** para ver procesos. |
+| **Windows + R** | `resmon` | Abre el **Monitor de Recursos** (ideal para ver el uso real de RAM y Swap). |
+| **Windows + R** | `sysdm.cpl` | **[Win + Pausa]** Propiedades del sistema (configuración de Memoria Virtual). |
+| **Windows + R** | `%temp%` | Abre la carpeta de **Archivos temporales del usuario** actual. |
+| **Windows + R** | `temp` | Abre la carpeta de **Archivos temporales del sistema** (raíz). |
+| **Windows + R** | `prefetch` | Carpeta de precarga de Windows (caché que puedes vaciar para liberar espacio). |
+| **Windows + R** | `diskmgmt.msc` | Abre la **Administración de discos** (para vigilar tus unidades C: y D:). |
+| **Windows + R** | `appdata` | Acceso a carpetas de configuración de aplicaciones (Roaming/Local). |
+| **Windows + R** | `cmd` | **[Win + X, luego C]** Abre el Símbolo del Sistema (Terminal clásica). |
+| **Windows + R** | `powershell` | **[Win + X, luego A]** Abre PowerShell con permisos de administrador. |
+| **Windows + R** | `control` | Abre el **Panel de Control clásico** de Windows. |
+| **Windows + R** | `msconfig` | Configuración del sistema (gestión de servicios y arranque). |
+| **Windows + R** | `ncpa.cpl` | Panel de **Conexiones de red** (configuración de adaptadores e IPs). |
+| **Nativo** | **Win + E** | Abre instantáneamente el **Explorador de Archivos**. |
+| **Nativo** | **Win + I** | Abre el panel de **Configuración de Windows** (Settings). |
+| **Nativo** | **Win + D** | **Minimiza/Restaura todo** para ir al Escritorio rápidamente. |
+| **Nativo** | **Win + V** | Abre el **Historial del Portapapeles** (muy útil para copiar varios códigos). |
+
+* Procesos de **WSL2** (Windows Subsystem for Linux 2): Docker y Vmmem

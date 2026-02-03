@@ -1,0 +1,141 @@
+# Estructuras de Datos Geoespaciales {#estructuras-geo}
+
+## El Estándar Simple Features (ISO 19125)
+
+La mayoría de las librerías modernas de programación SIG (Geopandas en Python, `sf` en R y `LibGEOS`/`ArchGDAL` en Julia) implementan el estándar **Simple Features Access** de la OGC. Este estándar define un modelo común para almacenar y acceder a geometrías en 2D.
+
+Las geometrías fundamentales que utilizaremos son:
+
+* **Point (Punto):** Un par de coordenadas $(x, y)$.
+* **LineString (Línea):** Una secuencia de puntos conectados.
+* **Polygon (Polígono):** Un anillo cerrado que puede contener "huecos" (anillos interiores).
+
+## Creación de Geometrías Básicas
+
+A continuación, definiremos la ubicación de la **Plaza de Bolívar en Bogotá** (aprox. $-74.076, 4.598$) usando los tres lenguajes.
+
+::: {.panel-tabset}
+
+### Python (Shapely)
+
+```{python}
+# #| eval: false
+from shapely.geometry import Point, LineString
+
+# Crear punto (Longitud, Latitud)
+plaza_bolivar = Point(-74.076, 4.598)
+
+# Crear una línea (un segmento de la Séptima)
+calle_septima = LineString([(-74.076, 4.598), (-74.075, 4.605)])
+
+print(f"Tipo: {plaza_bolivar.geom_type}")
+print(f"WKT: {plaza_bolivar.wkt}")
+```
+
+### R (sf)
+
+```{r}
+# #| eval: false
+library(sf)
+
+# Crear punto
+plaza_bolivar <- st_point(c(-74.076, 4.598))
+
+# Crear línea
+calle_septima <- st_linestring(rbind(c(-74.076, 4.598), c(-74.075, 4.605)))
+
+print(plaza_bolivar)
+```
+
+### Julia (LibGEOS)
+
+```{julia}
+#| eval: false
+using LibGEOS
+
+# Crear punto desde formato WKT
+plaza_bolivar = LibGEOS.readgeom("POINT (-74.076 4.598)")
+
+println("Tipo: ", typeof(plaza_bolivar))
+```
+
+:::
+
+## Atributos y Tablas Espaciales
+
+Un SIG es la unión de **geometría + atributos**. Cada lenguaje tiene una estructura principal para manejar estas tablas:
+
+| Concepto | Python | R | Julia |
+| :--- | :--- | :--- | :--- |
+| **Librería** | `geopandas` | `sf` | `GeoTables.jl` |
+| **Estructura** | `GeoDataFrame` | `sf` (data.frame) | `GeoTable` |
+
+### Ejemplo: Ciudades Principales de Colombia
+
+::: {.panel-tabset}
+
+### Python (GeoPandas)
+
+```{python}
+# #| eval: false
+import geopandas as gpd
+import pandas as pd
+from shapely.geometry import Point
+
+# Datos alfanuméricos
+df = pd.DataFrame({
+    'Ciudad': ['Bogotá', 'Medellín', 'Cali'],
+    'Pob': [7.9, 2.5, 2.2]
+})
+
+# Geometrías
+geoms = [Point(-74.08, 4.60), Point(-75.56, 6.25), Point(-76.52, 3.42)]
+
+# Unión en GeoDataFrame
+gdf = gpd.GeoDataFrame(df, geometry=geoms, crs="EPSG:4326")
+print(gdf)
+```
+
+### R (sf)
+
+```{r}
+# #| eval: false
+library(sf)
+
+ciudades <- data.frame(
+  Ciudad = c("Bogotá", "Medellín", "Cali"),
+  Pob = c(7.9, 2.5, 2.2),
+  lon = c(-74.08, -75.56, -76.52),
+  lat = c(4.60, 6.25, 3.42)
+)
+
+gdf <- st_as_sf(ciudades, coords = c("lon", "lat"), crs = 4326)
+print(gdf)
+```
+
+### Julia (GeoTables)
+
+```{julia}
+#| eval: false
+using GeoTables, GeometryBasics, DataFrames
+
+df = DataFrame(Ciudad = ["Bogotá", "Medellín", "Cali"], Pob = [7.9, 2.5, 2.2])
+puntos = [Point2f(-74.08, 4.60), Point2f(-75.56, 6.25), Point2f(-76.52, 3.42)]
+
+gt = GeoTable(df, geometry = puntos)
+println(gt)
+```
+
+:::
+
+## Sistemas de Referencia de Coordenadas (CRS)
+
+En Colombia, trabajamos principalmente con:
+
+1.  **WGS84 (EPSG:4326):** Grados decimales.
+2.  **MAGNA-SIRGAS / Origen Nacional (EPSG:9377):** Metros.
+
+::: {.callout-warning}
+### Importante
+Nunca realice cálculos de área o distancia usando coordenadas en grados (`EPSG:4326`). Siempre proyecte a `EPSG:9377` para obtener resultados en metros.
+:::

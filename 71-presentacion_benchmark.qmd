@@ -1,0 +1,239 @@
+---
+title: "Benchmark geoespacial: cómo leer los resultados"
+subtitle: "Una comparación de stacks, no de lenguajes"
+author: "Laboratorio de Programación SIG"
+format:
+  revealjs:
+    theme: simple
+    slide-number: true
+    transition: fade
+    incremental: true
+    center: true
+---
+
+## ¿Qué estamos comparando?
+
+Este ejercicio **no compara lenguajes de programación**.
+
+Evalúa el rendimiento del **stack completo**:
+
+- GDAL (Geospatial Data Abstraction Library): raster (GDAL) + vector (OGR: Open GIS Reference (Simple Features))
+- Librerías raster
+- Modelo de ejecución
+- Nivel de abstracción
+
+👉 El lenguaje es solo una parte del sistema.
+
+---
+
+## ¿Qué hace exactamente el benchmark?
+
+El benchmark ejecuta un **caso extremo y muy simplificado**:
+
+- Usa **una sola banda raster**
+- Aplica **una operación matemática simple** (× 1.5)
+- Calcula **una media global**
+
+🎯 Diseñado para forzar la lectura completa de los datos.
+
+---
+
+## ¿Qué NO evalúa?
+
+Este benchmark **no evalúa**:
+
+- Análisis multibanda
+- Operaciones espaciales complejas
+- Vecindarios, máscaras o reproyecciones
+- Flujos iterativos o modelos estadísticos
+
+🚫 No representa un flujo SIG real completo.
+
+---
+
+## ¿Por qué usamos `mean()`?
+
+El cálculo de la media es clave porque:
+
+- Obliga a **recorrer todos los píxeles**
+- Garantiza que la operación aritmética fue ejecutada
+- Fuerza la evaluación completa del raster
+
+⚠️ Cada motor implementa este paso de forma distinta.
+
+---
+
+## Modelos de ejecución comparados
+
+Cada stack sigue una filosofía diferente:
+
+- **Python / rasterio + NumPy**  
+  Lectura completa a memoria + ejecución inmediata
+
+- **R / terra**  
+  Raster algebra optimizado en C++ y procesamiento por bloques, pero sin exponer un pipeline diferido composable
+
+- **R / stars**  
+  Manejo de cubos de datos multidimensionales y metadatos ricos; el modo `proxy` difiere la lectura, pero **no construye un DAG composable completo**
+
+- **Julia / Rasters.jl**  
+  Flujos *lazy* y **pipelines composables**, evaluados al final como un plan coherente
+
+---
+
+## ¿Qué favorece este benchmark?
+
+Este escenario favorece motores optimizados para:
+
+- Recorridos contiguos de memoria
+- Operaciones simples en una sola pasada
+- Reducciones globales monolíticas
+
+👉 No todos los motores están diseñados para este patrón.
+
+---
+
+## Abstracción vs rendimiento
+
+Más abstracción implica:
+
+- Más metadatos
+- Más coordinación interna
+- Más costo administrativo
+
+Pero también ofrece:
+
+- Código más claro
+- Menos errores
+- Mayor expresividad analítica
+
+⚖️ Es un intercambio inevitable.
+
+---
+
+## Niveles de abstracción por motor
+
+| Motor | Nivel de abstracción | Forma de trabajar |
+|---|---|---|
+| **NumPy / rasterio** | Baja | “Aquí tienes un array, calcula ahora” |
+| **terra (R)** | Media | “Yo optimizo internamente en C++” |
+| **stars (R)** | Alta | “Gestiono dimensiones, tiempo y metadatos” |
+| **Rasters.jl (Julia)** | Flexible | “Defino un pipeline que se evalúa al final” |
+
+📌 Más abstracción = más expresividad, pero más costo administrativo.
+
+---
+
+## Paralelismo y pipelines composables
+
+Solo algunos stacks permiten **componer operaciones** y ejecutarlas al final:
+
+- **Julia (Rasters.jl)**  
+  Pipelines composables + **paralelismo multihilo nativo**,  
+  sin librerías externas adicionales
+
+- **Python (xarray + Dask)**  
+  Pipelines lazy con ejecución distribuida explícita
+
+- **R (dplyr + dbplyr)**  
+  Lenguaje de pipelines, **no espacial por sí mismo**;  
+  requiere backends como PostGIS, DuckDB o Spark
+
+📌 Optimización interna **no equivale** a pipeline composable.
+
+---
+
+## No hay un ganador universal
+
+Este benchmark mide:
+
+> Rendimiento bajo un patrón específico de acceso y reducción global
+
+No mide:
+
+- Calidad general del lenguaje
+- Flexibilidad analítica
+- Escalabilidad en flujos SIG complejos
+
+📍 Los resultados deben interpretarse con contexto.
+
+---
+
+## Escalando a datos realmente grandes
+
+En proyectos reales con grandes volúmenes de datos se consideran:
+
+- Cloud Optimized GeoTIFF (COG)
+- Zarr
+- GeoParquet
+- Procesamiento por bloques
+- Infraestructura virtualizada - cloud / HPC - High-Performance Computing (AWS - GCP - Azure)
+
+👉 La **arquitectura de datos** suele importar más que el lenguaje.
+
+---
+
+## Mensaje final del Benchmark
+
+Este ejercicio sirve para:
+
+- Entender costos reales de lectura y abstracción
+- Leer benchmarks de forma crítica
+- Elegir herramientas según el problema
+
+🎯 No existe el “lenguaje más rápido”  
+existe el **stack adecuado para cada tarea**.
+
+
+---
+
+## ¿Qué es lo importante hoy (y qué no)?
+
+En este punto del curso:
+
+❌ **No es importante** entender cada línea de código  
+❌ No es importante memorizar sintaxis  
+❌ No es importante “ser rápido programando”
+
+✅ **Sí es importante**:
+
+- Ver el **panorama completo** de la programación SIG actual  
+- Entender que existen **múltiples stacks y enfoques**
+- Reconocer que el rendimiento depende de **arquitectura**, no solo del lenguaje
+
+👉 El código lo aprenderemos paso a paso.
+
+---
+
+## ¿Qué estamos aprendiendo realmente?
+
+Más allá del benchmark, este laboratorio busca que ustedes aprendan a:
+
+- Usar **GitHub** como bitácora de trabajo
+- Documentar con **Quarto**
+- Ejecutar análisis en **Jupyter Lab**
+- Trabajar en **VS Code**
+- Usar la **terminal** (Windows / Linux)
+- Ejecutar entornos reproducibles con **Docker**
+- Correr el mismo proceso **de muchas formas distintas**
+
+🎯 Programar SIG hoy es saber **orquestar herramientas**, no solo escribir código.
+
+---
+
+## El límite lo ponen ustedes
+
+En clase aprenderemos:
+
+- Los conceptos fundamentales
+- Las herramientas base
+- Los patrones comunes de trabajo
+
+Pero el verdadero aprendizaje vendrá de:
+
+- Sus **proyectos**
+- Su **trabajo individual**
+- Lo que decidan explorar más allá del aula
+
+🚀 En programación SIG,  
+**el límite no lo pone el lenguaje, lo pone la curiosidad y el problema que quieran resolver.**

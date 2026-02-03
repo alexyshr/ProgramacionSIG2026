@@ -1,0 +1,43 @@
+services:
+  analisis-geo:
+    build: .
+    # --- ESTOS SON LOS CAMBIOS CLAVE ---
+    image: image_sig_unal         # <--- Agrega esto para nombrar la imagen
+    container_name: contenedor_sig_unal # <--- Cambia esto para el contenedor    
+    tty: true
+    stdin_open: true
+    volumes:
+      - .:/home/rstudio/work
+    environment:
+      - RETICULATE_PYTHON=/usr/bin/python3
+      - QUARTO_PYTHON=/usr/bin/python3
+      - JULIA_HOME=/opt/julia/bin
+      # Mantenemos la "cirugía" de Julia para que no choque con GDAL
+      - LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libcurl.so.4:/usr/lib/x86_64-linux-gnu/libstdc++.so.6
+      - GKSwstype=100
+    ports:
+      # Forzamos IPv4 para que VS Code no se pierda en el limbo del [::1]
+      # JUPYTER: El 8889 de tu PC va al 8888 del contenedor
+      - "127.0.0.1:8889:8888" # <----- cambiado 8889 #Para programar en Python/Notebooks localhost:8889
+      # R VISOR (httpgd): El 8788 de tu PC va al 8787 del contenedor 
+      - "127.0.0.1:8788:8787" # <----- cambiado a 8788  #Para ver los gráficos de R (httpgd) localhost:8788
+
+    depends_on:
+      - db-postgis
+
+  db-postgis:
+    image: kartoza/postgis:latest
+    container_name: contenedor_postgis_unal # <--- Cambia este nombre también    
+    environment:
+      - POSTGRES_USER=profe_unal
+      - POSTGRES_PASS=geomatica2025
+      - POSTGRES_DB=sig_db_unal # <--- cambió
+    ports:
+      # Limpiamos el puerto 43266 de aquí (no pertenece a la DB)
+      # Cambiamos el puerto de la izquierda (el de Windows) a 5434
+      - "127.0.0.1:5434:5432" # cambiado 5434
+    volumes:
+      - postgis_data_unal:/var/lib/postgresql
+
+volumes:
+  postgis_data_unal:

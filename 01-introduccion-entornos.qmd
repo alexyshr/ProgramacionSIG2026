@@ -1,0 +1,39 @@
+# Introducción a Entornos de Desarrollo SIG {#intro-entornos}
+
+## Estrategia de Trabajo: Arquitectura Híbrida
+
+Para el desarrollo del curso, utilizaremos tres enfoques que permiten equilibrar la potencia del software de escritorio (comercial y libre) con el rigor de la ciencia de datos reproducible. Esta estructura garantiza que el estudiante adquiera competencias tanto en la automatización de software SIG tradicional como en el análisis de datos geoespaciales moderno.
+
+### Comparativa de Entornos
+
+| Criterio | **Opción A: Contenedor (Docker)** | **Opción B: Nativo (OSGeo4W)** | **Opción C: Nativo (ArcGIS Pro)** |
+| --- | --- | --- | --- |
+| **Tecnología** | Docker [@docker2025] Compose (JupyterLab). | OSGeo4W - QGIS [@rosas2022qgis] LTR. | ArcGIS Pro [@law2019getting] (Conda Environment). |
+| **Uso Principal** | Análisis masivo y Ciencia de Datos. | Automatización SIG con PyQGIS [@lawhead2017qgis]. | Geoprocesamiento y ArcPy  [@toms2015arcpy]. |
+| **Ventaja** | Entorno idéntico y reproducible. | Acceso a drivers locales y QGIS. | Herramientas comerciales avanzadas. |
+| **Lenguajes** | **Python [@python2021python], R [@rlanguage] y Julia [@bezanson2017julia]** (Pre-configurados). | **Python (PyQGIS)**. | **Python (ArcPy)**. |
+
+### Secuencia Didáctica y Uso de Entornos
+
+El curso seguirá una progresión lógica desde la abstracción de datos y bases de datos hacia la automatización en software especializado:
+
+| Etapa | Entorno Sugerido | Contenido Temático | Razón |
+| --- | --- | --- | --- |
+| **Fase 1: Fundamentos y DB (Semanas 1-7)** | **Opción A: Docker** | Principios de programación, estructuras básicas, Ciencia de Datos políglota y **PostGIS**. | Entorno controlado para aprender lógica de programación y gestión de bases de datos sin conflictos de instalación. |
+| **Fase 2: Extensibilidad Libre (Semanas 8-11)** | **Opción B: OSGeo4W** | Desarrollo de scripts, complementos y automatización dentro de QGIS. | Uso de Python (PyQGIS) para extender las capacidades del software libre más relevante. |
+| **Fase 3: Extensibilidad Comercial (Semanas 12-15)** | **Opción C: ArcGIS** | Scripts de geoprocesamiento, Toolbox y flujos de trabajo en ArcGIS Pro. | Uso de Python (ArcPy) para automatizar procesos en el entorno comercial líder. |
+
+### Propósito según el Escenario
+
+| Escenario | **Usa la Opción A (Docker/PostGIS)** | **Usa la Opción B (QGIS/Python)** | **Usa la Opción C (ArcGIS/Python)** |
+| --- | --- | --- | --- |
+| **Prácticas de clase** | Para aprender Python y consultas SQL espaciales. | Para automatizar tareas repetitivas en QGIS. | Para crear herramientas dentro de ArcGIS Pro. |
+| **Automatización** | Para flujos de análisis de datos masivos. | Para interactuar con la API de QGIS (PyQGIS). | Para interactuar con la API de ArcGIS (ArcPy). |
+| **Ecosistema** | Independiente del Sistema Operativo. | Ecosistema de Código Abierto (OSGeo). | Ecosistema Comercial (ESRI). |
+
+
+## Decisiones de Diseño del Entorno
+
+La **Opción A** constituye el núcleo de la Ciencia de Datos Espaciales del curso. Al integrar **PostGIS** en este entorno, se garantiza que los estudiantes practiquen la persistencia de datos y el análisis SQL desde la primera fase. 
+
+Las **Opciones B y C** tienen como propósito específico el dominio de Python dentro de los entornos de software SIG de mayor relevancia, permitiendo al estudiante tener acceso a todas las funcionalidades, motores de renderizado y herramientas de geoprocesamiento nativas de QGIS y ArcGIS respectivamente.

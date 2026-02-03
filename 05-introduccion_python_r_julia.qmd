@@ -1,0 +1,235 @@
+# Fundamentos: Python, R y Julia {#fundamentos-coding}
+
+## 1. Principios de programación con Geometrías
+
+En esta sesión inicial de la **Maestría en Geomática**, exploraremos la sintaxis básica de los tres lenguajes dominantes en la ciencia de datos espaciales. Utilizaremos el estándar *Simple Features* y la representación *Well-Known Text* (WKT) para modelar objetos en el territorio colombiano. En estos ejemplos no se define formalmente un *Sistema de Referencia de Coordenadas* (CRS por sus siglas en inglés)
+
+### Creación de Geometrías desde WKT
+
+::: {.panel-tabset}
+
+### Python
+Utilizaremos `shapely` para instanciar objetos espaciales. Nota que `shapely` por sí solo no gestiona proyecciones; solo manipula la topología y geometría en el plano.
+
+
+```{python}
+# #| eval: false
+import shapely
+
+# Definición de un polígono (coordenadas cartesianas origen 0,0)
+# Importante: No tiene SRC definido ni unidades específicas.
+pol_wkt = 'POLYGON ((0 0, 0 -1, 7.5 -1, 7.5 0, 0 0))'
+pol1 = shapely.from_wkt(pol_wkt)
+
+print(f"Tipo de objeto: {type(pol1)}")
+print(f"Representación WKT: {pol1}")
+# Visualización directa en cuadernos
+pol1
+```
+
+### R
+En R, la librería fundamental es `sf`. Noten que el WKT es un estándar universal. En R, al crear un objeto con `st_as_sfc`, el parámetro `crs` queda como `NA` por defecto, indicando un sistema puramente cartesiano.
+
+```{r}
+# #| eval: false
+library(sf)
+
+pol_wkt <- 'POLYGON ((0 0, 0 -1, 7.5 -1, 7.5 0, 0 0))'
+pol1 <- st_as_sfc(pol_wkt)
+print(class(pol1))
+print(pol1)
+plot(pol1)
+# El resultado mostrará: CRS: NA
+```
+
+### Julia
+En Julia, la eficiencia se logra mediante `LibGEOS.jl`.
+
+```{julia}
+#| eval: false
+# 1. Configuración del entorno (Ejecutar en la primera celda del Notebook)
+using Pkg
+
+# Forzar la activación del proyecto local y añadir los paquetes si no están
+if !haskey(Pkg.project().dependencies, "LibGEOS")
+    Pkg.add(["LibGEOS", "Plots", "ArchGDAL", "DataFrames", "LibPQ"])
+end
+
+# 2. Carga de librerías
+using LibGEOS
+using Plots
+
+# 3. Código de verificación
+pol_wkt = "POLYGON ((0 0, 0 -1, 7.5 -1, 7.5 0, 0 0))"
+#pol1 = LibGEOS.readWKT(pol_wkt) # Nota: use readWKT que es el estándar de LibGEOS
+# La función correcta en la API actual es LibGEOS.readgeom
+pol1 = LibGEOS.readgeom(pol_wkt)
+
+# Imprimir descripción en consola
+println("Tipo: ", typeof(pol1))
+println("WKT: ", pol1)
+
+# Imprimir/Visualizar gráfico
+# Esto requiere que Plots.jl esté instalado y cargado
+plot(pol1, title="Polígono en Julia", fillalpha=0.5,fillcolor=:green, aspect_ratio=:equal)
+
+```
+:::
+
+---
+
+## 2. Estructuras de Datos y Geometría en Colombia
+
+### Listas y Tuplas (Colecciones de Puntos)
+
+Utilizaremos listas para agrupar coordenadas de ciudades principales.
+
+::: {.panel-tabset}
+
+### Python
+Las **Listas** agrupan geometrías. Las **Tuplas** representan coordenadas inmutables.
+
+```{python}
+# #| eval: false
+from shapely.geometry import Point
+
+# Lista de puntos: Bogotá y Medellín
+ciudades = [Point(-74.07, 4.60), Point(-75.56, 6.25)] 
+
+# Agregar Cali usando una tupla de coordenadas
+coord_cali = (-76.52, 3.43)
+ciudades.append(Point(coord_cali))
+
+print(f"Número de ciudades cargadas: {len(ciudades)}")
+```
+
+### R
+En R manejamos listas de geometrías (sfc) para conformar capas.
+
+```{r}
+# #| eval: false
+library(sf)
+ciudades <- list(st_point(c(-74.07, 4.60)), st_point(c(-75.56, 6.25)))
+# Inserción en lista
+ciudades[[3]] <- st_point(c(-76.52, 3.43))
+```
+
+### Julia
+Julia destaca por su manejo de tipos en arreglos.
+
+```{julia}
+#| eval: false
+using LibGEOS
+ciudades = [LibGEOS.Point(-74.07, 4.60), LibGEOS.Point(-75.56, 6.25)]
+push!(ciudades, LibGEOS.Point(-76.52, 3.43))
+```
+:::
+
+### Diccionarios (Metadatos de Capas)
+
+::: {.panel-tabset}
+
+### Python
+```{python}
+# #| eval: false
+departamento = {
+    "nombre": "Cundinamarca",
+    "centroide": shapely.Point(-74.1, 4.8),
+    "codigo_dane": 25
+}
+print(f"Entidad: {departamento['nombre']}")
+```
+
+### R
+```{r}
+# #| eval: false
+departamento <- list(
+  nombre = "Cundinamarca",
+  centroide = st_point(c(-74.1, 4.8)),
+  codigo_dane = 25
+)
+print(departamento$nombre)
+```
+
+### Julia
+```{julia}
+#| eval: false
+departamento = Dict(
+    "nombre" => "Cundinamarca",
+    "centroide" => LibGEOS.Point(-74.1, 4.8),
+    "codigo_dane" => 25
+)
+```
+:::
+
+---
+
+## 3. Funciones y Matrices de Coordenadas
+
+### Funciones Geométricas
+
+::: {.panel-tabset}
+
+### Python
+```{python}
+# #| eval: false
+def crear_zona_influencia(geom, radio=0.01):
+    """Retorna un buffer geométrico."""
+    return geom.buffer(radio)
+
+buffer_bogota = crear_zona_influencia(ciudades[0])
+```
+
+### R
+```{r}
+# #| eval: false
+crear_zona_influencia <- function(geom, radio = 0.01) {
+  return(st_buffer(geom, dist = radio))
+}
+```
+
+### Julia
+```{julia}
+#| eval: false
+crear_zona_influencia(geom, radio=0.01) = LibGEOS.buffer(geom, radio)
+```
+:::
+
+### Matrices (Arrays) - Datos del IDEAM
+
+Simularemos una matriz de estaciones meteorológicas con (Lon, Lat, Elevación).
+
+::: {.panel-tabset}
+
+### Python
+```{python}
+# #| eval: false
+import numpy as np
+
+estaciones = np.array([
+    [-74.0, 4.6, 2600],
+    [-75.5, 6.2, 1495],
+    [-76.5, 3.4, 1018]
+])
+
+# Extraer elevaciones (Todas las filas, columna 2)
+elevaciones = estaciones[:, 2]
+```
+
+### R
+```{r}
+# #| eval: false
+estaciones <- matrix(c(-74.0, 4.6, 2600, -75.5, 6.2, 1495, -76.5, 3.4, 1018), 
+                     nrow = 3, byrow = TRUE)
+elevaciones <- estaciones[, 3]
+```
+
+### Julia
+```{julia}
+#| eval: false
+estaciones = [-74.0 4.6 2600; 
+              -75.5 6.2 1495; 
+              -76.5 3.4 1018]
+elevaciones = estaciones[:, 3]
+```
+:::

@@ -1,0 +1,174 @@
+# Guía de Instalación. Opción B: QGIS y PyQGIS {#guia-B}
+
+La **Opción B** realmente se basa en dos alternativas para la instalación de QGIS [@rosas2022qgis]: **OSGeo4W** y **QGIS + GEE usando Pixi.**
+
+## Opción B.1 - OSGeo4W {#sec-osgeo4w}
+
+ **OSGeo4W** es un entorno para Windows que agrupa y facilita la gestión de software geoespacial de código abierto como QGIS [@rosas2022qgis], GDAL/OGR [@mitchell2015introduction], GRASS [@neteler2012grass] y SAGA [@passy2018use].
+
+En este escenario, **Python** [@python_docs] es el motor fundamental, permitiendo la automatización directa de tareas sobre el software de escritorio [@lawhead2017qgis]. Para mantener la estabilidad del sistema, en este entorno nativo no intentaremos vincular R [@rlanguage] o Julia [@bezanson2017julia]; para dicho propósito políglota utilizaremos exclusivamente la **Opción A (Docker)** [@docker2025].
+
+### Instrucciones de Instalación
+
+1. Descargue el [**Network Installer**](https://qgis.org/download/) de QGIS.
+2. Ejecute y seleccione **Advanced Install**.
+3. Mantenga las rutas por defecto (`C:\OSGeo4W`).
+4. En el paso de **Select Packages**, busque los elementos de la tabla y marque únicamente la casilla **Bin** (Binarios).
+
+### Lista de Paquetes Seleccionados
+
+| Grupo | Paquete | Módulo | Propósito / Uso en Clase |
+| --- | --- | --- | --- |
+| **Entorno Core** | `qgis-ltr` / `qgis-ltr-full` | Todo | Software base y metapaquete de dependencias. |
+| **Bases de Datos** | `pgmodeler` | 5 | Diseño visual de modelos para PostGIS. |
+| **Bases de Datos** | `libspatialite` | 5 | Motor de base de datos espacial liviano para verificación en shell. |
+| **Bases de Datos** | `python3-psycopg2` | 5 | Adaptador de Python para PostgreSQL/PostGIS. |
+| **Geoprocesamiento** | `grass` | 6 | Motor para análisis topológico e hidrología. |
+| **Geoprocesamiento** | `saga` | 7 | Algoritmos de terreno y geomorfometría. |
+| **Geoprocesamiento** | `gdal` | 6 | Lectura/escritura de formatos raster y vector. |
+| **Ciencia de Datos** | `python3-numpy` | 2 | Manejo de estructuras Arrays y Matrices. |
+| **Ciencia de Datos** | `python3-pandas` | 3 | Análisis exploratorio de datos (EDA). |
+| **Ciencia de Datos** | `python3-geopandas` | 3 | Extensión espacial para GeoDataFrames. |
+| **Visualización** | `python3-matplotlib` | 3 | Gráficos básicos y mapas estáticos. |
+| **Visualización** | `python3-seaborn` | 3 | Gráficos estadísticos avanzados. |
+| **Desarrollo** | `python3-pip` | 1 | Gestor para instalar librerías adicionales. |
+| **Desarrollo** | `python3-jupyterlab` | Todo | Entorno interactivo para prototipado rápido [@wijayaningrum2022jupyter]. |
+| **Motores SIG** | `proj` / `geos` | 6 | Cálculos de proyecciones y geometría. |
+| **Machine Learning** | `python3-scikit-learn` | 6 | Modelado predictivo espacial. |
+
+::: {.callout-important icon="true"}
+
+### Aceptación de Dependencias Adicionales
+
+Al avanzar, el instalador mostrará la ventana **"Unmet Dependencies"**. Es obligatorio aceptar todos los paquetes sugeridos para contar con los controladores de formatos `.ecw` y `.sid` requeridos por la cartografía oficial nacional. Para que el comando `spatialite` funcione en la shell, asegúrese de marcar el paquete `libspatialite` en la sección **Libs**.
+:::
+
+### Verificación de la Instalación
+
+Abra la **OSGeo4W Shell** y ejecute los comandos para verificar la correcta integración de Python y los motores SIG:
+
+```bash
+python3 --version
+gdalinfo --version
+spatialite --version
+```
+
+#### Corrección de Errores al Lanzar QGIS
+
+Si al iniciar QGIS aparece un error crítico indicando `ModuleNotFoundError: No module named 'gdal'`, se debe a una sintaxis de importación obsoleta en ciertos complementos [@rosas2022qgis].
+
+**Error identificado:**
+`File ".../agknow_utils.py", line 29, in <module> import gdal, osr`
+
+**Solución:**
+Debe modificar el archivo del plugin para usar el espacio de nombres de OSGeo:
+
+1. Localice el archivo en: `%AppData%\QGIS\QGIS3\profiles\default\python\plugins\agknow_qgis\agknow_utils.py`.
+
+2. Reemplace la línea 29:
+   - **Incorrecto:** `import gdal, osr`
+   - **Correcto:** `from osgeo import gdal, osr`
+
+::: {.callout-note}
+
+### Nota sobre R y Julia
+
+Para el uso intensivo de R y Julia, se recomienda la **Opción A (Docker)** [@docker2025] ya que viene con las librerías espaciales pre-configuradas, evitando errores de vinculación de DLLs comunes en instalaciones nativas de Windows.
+:::
+
+## Opción B.2: QGIS + GEE using Pixi {#sec-qgis-gee-pixi}
+
+Antes de comenzar, es indispensable contar con una cuenta de **Google Cloud** habilitada para **Google Earth Engine (GEE)**. Puede dar de alta su cuenta en [earthengine.google.com](https://earthengine.google.com/). 
+
+
+::: {.callout-important}
+### Requisito de Google Cloud
+Asegúrese de haber creado un proyecto en la consola de Google Cloud y de tener activadas las **APIs for Earth Engine** para dicho proyecto; de lo contrario, el proceso de autenticación fallará.
+:::
+
+[Video gúia de creación y registro en GEE](https://youtu.be/LoQwc3ne0FU)
+
+---
+
+### Instalación de Pixi
+**Pixi** es un gestor de paquetes extremadamente rápido basado en el ecosistema de Conda, pero mucho más ligero. Permite crear entornos aislados sin romper las librerías de su sistema operativo.
+
+
+
+#### **En Linux / macOS (bash/zsh)**
+Ejecute el siguiente comando en su terminal:
+```bash
+curl -fsSL https://pixi.sh/install.sh | sh
+```
+**Nota:** Cierre y vuelva a abrir su terminal para que `pixi` se añada a su `PATH`. Confirme la instalación con:
+```bash
+pixi --version
+```
+
+#### **En Windows (PowerShell)**
+Abra **PowerShell** (no requiere permisos de Administrador) y ejecute:
+```powershell
+powershell -ExecutionPolicy Bypass -c "irm -useb https://pixi.sh/install.ps1 | iex"
+```
+Reinicie PowerShell y confirme la versión:
+```powershell
+pixi --version
+```
+
+---
+
+### Creación del Proyecto
+Navegue hasta la carpeta (**diferente a todas las utilizadas hasta el momento**) donde desea guardar sus trabajos y cree un nuevo proyecto llamado `geocd`:
+
+```bash
+pixi init geocd
+cd geocd
+```
+
+---
+
+### Configuración del Entorno Geográfico
+Instalaremos un stack potente que incluye **QGIS** y las herramientas necesarias para trabajar con **Google Earth Engine** y datos ráster/vectoriales en Python.
+
+Desde la carpeta `geocd`, ejecute:
+```bash
+pixi add qgis geemap geopandas xee rioxarray
+```
+
+::: {.callout-note}
+### ¿Qué estamos instalando?
+* **QGIS**: El software SIG profesional de uso libre mas popular.
+* **geemap**: Librería para visualización interactiva de GEE.
+* **geopandas**: Gestión de datos vectoriales.
+* **xee & rioxarray**: Motores para leer cubos de datos y archivos ráster.
+:::
+
+---
+
+### Autenticación de Earth Engine
+
+Finalmente, debe vincular su entorno local con su cuenta de Google Cloud. Este comando abrirá una ventana en su navegador para autorizar el acceso:
+
+```bash
+pixi run earthengine authenticate
+```
+
+Siga las instrucciones en pantalla, seleccione su proyecto de Google Cloud y copie el código de verificación si el sistema se lo solicita. ¡Ya está listo para procesar datos satelitales a escala global!
+
+
+### Trabajar GEE dentro de QGIS
+
+Una vez que el entorno está configurado y autenticado, el siguiente paso es integrar **Google Earth Engine** directamente en la interfaz de QGIS. Para esto, utilizaremos el complemento desarrollado por el equipo de **OpenGeos**: El Plugin: **GEE Data Catalog**. Este complemento permite navegar por los miles de datasets de Earth Engine (Sentinel, Landsat, MODIS, etc.) y cargarlos en el lienzo de QGIS con un solo clic, utilizando el motor de procesamiento en la nube.
+
+### Recursos Adicionales
+
+* **Repositorio oficial:** [opengeos/qgis-gee-data-catalogs-plugin](https://github.com/opengeos/qgis-gee-data-catalogs-plugin)
+
+* Video Guía **Earth Engine Data Catalogs Plugin for QGIS**: [aquí](https://youtu.be/nZ3D6wLKJQw) 
+
+* Video Guía **Time Series Satellite Images in Seconds**: [aquí](https://youtu.be/8IW6XqnUjgg) 
+
+## Otras referencias importantes
+
+- PyQGIS cookbook en markdown y Jupyter notebook formats [@wu2023pyqgis]
+- QGIS Notebook Plugin: Integrate Jupyter Notebooks into QGIS [@wu2023qgisnotebook]
