@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Programación SIG: Python, R y Julia - 4&nbsp; Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</title>
+<title>Programación SIG: Python, R y Julia - Appendix B — Quarto: Orquestación y Configuración</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -30,8 +64,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./05-introduccion_python_r_julia.html" rel="next">
-<link href="./03-guia_instalacion_B_qgis.html" rel="prev">
+<link href="./83-docker_desktop.html" rel="next">
+<link href="./81-infraestructura_instalada.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -81,7 +115,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-introduccion-entornos.html">Instalación y Entornos</a></li><li class="breadcrumb-item"><a href="./04-guia_instalacion_C_ArcGIS.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./81-infraestructura_instalada.html">Appendices</a></li><li class="breadcrumb-item"><a href="./82-quarto.html"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Quarto: Orquestación y Configuración</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -147,7 +181,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-guia_instalacion_C_ArcGIS.html" class="sidebar-item-text sidebar-link active">
+  <a href="./04-guia_instalacion_C_ArcGIS.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</span></span></a>
   </div>
 </li>
@@ -233,7 +267,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./82-quarto.html" class="sidebar-item-text sidebar-link">
+  <a href="./82-quarto.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Quarto: Orquestación y Configuración</span></span></a>
   </div>
 </li>
@@ -309,16 +343,21 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Tabla de Contenidos</h2>
    
   <ul>
-  <li><a href="#section" id="toc-section" class="nav-link active" data-scroll-target="#section"><span class="header-section-number">4.1</span> ..</a></li>
+  <li><a href="#opciones-del-encabezado-yml" id="toc-opciones-del-encabezado-yml" class="nav-link active" data-scroll-target="#opciones-del-encabezado-yml"><span class="header-section-number">B.1</span> Opciones del encabezado yml</a></li>
+  <li><a href="#resumen-de-comandos-quarto" id="toc-resumen-de-comandos-quarto" class="nav-link" data-scroll-target="#resumen-de-comandos-quarto"><span class="header-section-number">B.2</span> Resumen de comandos Quarto</a></li>
+  <li><a href="#sec-opciones-chunks" id="toc-sec-opciones-chunks" class="nav-link" data-scroll-target="#sec-opciones-chunks"><span class="header-section-number">B.3</span> Control de Ejecución en Quarto: Opciones de Chunks</a>
+  <ul class="collapse">
+  <li><a href="#recomendaciones-de-uso-según-el-contexto" id="toc-recomendaciones-de-uso-según-el-contexto" class="nav-link" data-scroll-target="#recomendaciones-de-uso-según-el-contexto">Recomendaciones de Uso según el Contexto</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-introduccion-entornos.html">Instalación y Entornos</a></li><li class="breadcrumb-item"><a href="./04-guia_instalacion_C_ArcGIS.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./81-infraestructura_instalada.html">Appendices</a></li><li class="breadcrumb-item"><a href="./82-quarto.html"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Quarto: Orquestación y Configuración</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="guia-C" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</span></span></h1>
+<h1 class="title"><span id="quarto-ref" class="quarto-section-identifier">Appendix B — Quarto: Orquestación y Configuración</span></h1>
 </div>
 
 
@@ -335,10 +374,181 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="section" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="section"><span class="header-section-number">4.1</span> ..</h2>
+<p>Quarto se basa en un archivo de configuración centralizado donde se definen los parámetros de renderizado, bibliografía y estilos.</p>
+<section id="opciones-del-encabezado-yml" class="level2" data-number="B.1">
+<h2 data-number="B.1" class="anchored" data-anchor-id="opciones-del-encabezado-yml"><span class="header-section-number">B.1</span> Opciones del encabezado yml</h2>
+<p><strong>Ejemplo 1</strong>: Solo HTML</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Título de la Práctica"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Nombre del Estudiante"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> last-modified</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-depth: 3</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-location: left</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">    number-sections: true</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">    theme: lux</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Ejemplo 2</strong>: HTML y Python</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Informe Técnico: Análisis Geoespacial"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "ID Correo UNAL"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> today</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">    number-sections: true</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">    theme: cosmo</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">  pdf:</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-title: "Contenido"</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">    number-sections: true</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">    documentclass: scrreprt</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">    geometry:</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">      - top=25mm</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">      - left=25mm</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">      - right=25mm</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">      - bottom=25mm</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="resumen-de-comandos-quarto" class="level2" data-number="B.2">
+<h2 data-number="B.2" class="anchored" data-anchor-id="resumen-de-comandos-quarto"><span class="header-section-number">B.2</span> Resumen de comandos Quarto</h2>
+<p><code>quarto render guia_instalacion.qmd --to all</code></p>
+<p><code>quarto render guia_instalacion.qmd --to html</code></p>
+<p><code>quarto render guia_instalacion.qmd --to pdf</code></p>
+</section>
+<section id="sec-opciones-chunks" class="level2" data-number="B.3">
+<h2 data-number="B.3" class="anchored" data-anchor-id="sec-opciones-chunks"><span class="header-section-number">B.3</span> Control de Ejecución en Quarto: Opciones de Chunks</h2>
+<p>Para que sus informes técnicos sean profesionales, no basta con que el código funcione; es necesario controlar qué se muestra y qué se oculta al lector final. En Quarto, esto se logra mediante el uso de “opciones de chunk” utilizando la sintaxis de la tubería de comentarios (<code>#|</code>).</p>
+<table class="table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Opción de Chunk</th>
+<th style="text-align: center;">¿Se ejecuta?</th>
+<th style="text-align: center;">¿Muestra el Código?</th>
+<th style="text-align: center;">¿Muestra Resultados / Plots?</th>
+<th style="text-align: left;">Uso Ideal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>#| echo: false</code></strong></td>
+<td style="text-align: center;">✅ SÍ</td>
+<td style="text-align: center;">❌ NO</td>
+<td style="text-align: center;">✅ SÍ</td>
+<td style="text-align: left;"><strong>Para Resultados Finales.</strong> Muestra el mapa/tabla sin la “receta”.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>#| include: false</code></strong></td>
+<td style="text-align: center;">✅ SÍ</td>
+<td style="text-align: center;">❌ NO</td>
+<td style="text-align: center;">❌ NO</td>
+<td style="text-align: left;"><strong>Para el Setup.</strong> Corre todo en secreto, sin mensajes ni advertencias.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>#| code-fold: true</code></strong></td>
+<td style="text-align: center;">✅ SÍ</td>
+<td style="text-align: center;">📂 Plegado</td>
+<td style="text-align: center;">✅ SÍ</td>
+<td style="text-align: left;"><strong>Para el Proceso.</strong> El código se oculta tras un botón “Code”.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>#| eval: false</code></strong></td>
+<td style="text-align: center;">❌ NO</td>
+<td style="text-align: center;">✅ SÍ</td>
+<td style="text-align: center;">❌ NO</td>
+<td style="text-align: left;"><strong>Para Tutoriales.</strong> Solo muestra el texto del código sin procesarlo.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>#| output: false</code></strong></td>
+<td style="text-align: center;">✅ SÍ</td>
+<td style="text-align: center;">✅ SÍ</td>
+<td style="text-align: center;">❌ NO</td>
+<td style="text-align: left;"><strong>Para Debugging.</strong> Ves su código pero no los resultados pesados.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>#| warning: false</code></strong></td>
+<td style="text-align: center;">✅ SÍ</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: left;">Oculta esos textos naranjas de advertencia de las librerías.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>#| message: false</code></strong></td>
+<td style="text-align: center;">✅ SÍ</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: left;">Oculta mensajes de carga (ej: “Loading terra package…”).</td>
+</tr>
+</tbody>
+</table>
+<section id="recomendaciones-de-uso-según-el-contexto" class="level3">
+<h3 class="anchored" data-anchor-id="recomendaciones-de-uso-según-el-contexto">Recomendaciones de Uso según el Contexto</h3>
+<p>Dependiendo de la parte del script en la que se encuentre, existen configuraciones que garantizan un documento más limpio y fluido:</p>
+<table class="table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Tipo de Chunk</th>
+<th style="text-align: left;">Opción recomendada</th>
+<th style="text-align: left;">¿Por qué?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Setup / Librerías</strong></td>
+<td style="text-align: left;"><code>#| include: false</code></td>
+<td style="text-align: left;">Ejecuta todo pero oculta el código y los mensajes de carga de R/Julia/Python.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Limpieza de RAM</strong></td>
+<td style="text-align: left;"><code>#| include: false</code></td>
+<td style="text-align: left;">Borra objetos y vacía el cache en silencio. El lector no necesita ver la “limpieza”.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Procesamiento</strong></td>
+<td style="text-align: left;"><code>#| code-fold: true</code></td>
+<td style="text-align: left;">Muestra el mapa pero esconde el código tras un clic. Ideal para transparencia académica.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Resultados Finales</strong></td>
+<td style="text-align: left;"><code>#| echo: false</code></td>
+<td style="text-align: left;">Muestra solo la tabla comparativa y conclusiones. Es el “veredicto” limpio y profesional.</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Sintaxis Correcta
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Recuerde que las opciones deben ir al inicio del chunk, justo después de los corchetes del lenguaje:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Su código aquí...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -731,13 +941,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./03-guia_instalacion_B_qgis.html" class="pagination-link" aria-label="Guía de Instalación. Opción B: QGIS y PyQGIS">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción B: QGIS y PyQGIS</span></span>
+      <a href="./81-infraestructura_instalada.html" class="pagination-link" aria-label="Infraestructura instalada">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Infraestructura instalada</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./05-introduccion_python_r_julia.html" class="pagination-link" aria-label="Fundamentos: Python, R y Julia">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Fundamentos: Python, R y Julia</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./83-docker_desktop.html" class="pagination-link" aria-label="Docker: Gestión de Contenedores e Imágenes">
+        <span class="nav-page-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Docker: Gestión de Contenedores e Imágenes</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

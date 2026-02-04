@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Programación SIG: Python, R y Julia - Appendix B — Errata</title>
+<title>Programación SIG: Python, R y Julia - Appendix C — Docker: Gestión de Contenedores e Imágenes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -30,8 +64,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./93-referencias.html" rel="next">
-<link href="./91-referencia_tecnica.html" rel="prev">
+<link href="./84-git_github.html" rel="next">
+<link href="./82-quarto.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -81,7 +115,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./91-referencia_tecnica.html">Appendices</a></li><li class="breadcrumb-item"><a href="./92-errata.html"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Errata</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./81-infraestructura_instalada.html">Appendices</a></li><li class="breadcrumb-item"><a href="./83-docker_desktop.html"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Docker: Gestión de Contenedores e Imágenes</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -187,7 +221,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./41-benchmark_raster.html" class="sidebar-item-text sidebar-link">
+  <a href="./41-practica_1_benchmark_raster.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Benchmark de Procesamiento Geoespacial</span></span></a>
   </div>
 </li>
@@ -204,8 +238,14 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./71-presentacion_benchmark.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Benchmark geoespacial: cómo leer los resultados</span></span></a>
+  <a href="./61-presentacion_1_varios.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Temas por Charlar</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./62-presentacion_2_benchmark.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Benchmark geoespacial: cómo leer los resultados</span></span></a>
   </div>
 </li>
       </ul>
@@ -221,19 +261,73 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./91-referencia_tecnica.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Referencia Técnica y Compendio de Comandos</span></span></a>
+  <a href="./81-infraestructura_instalada.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Infraestructura instalada</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./92-errata.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Errata</span></span></a>
+  <a href="./82-quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Quarto: Orquestación y Configuración</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./93-referencias.html" class="sidebar-item-text sidebar-link">
+  <a href="./83-docker_desktop.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Docker: Gestión de Contenedores e Imágenes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./84-git_github.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Git y GitHub: Sincronización Local-Remota</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./85-vscode.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Visual Studio Code: Extensiones e Interfaz</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./86-windows.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Temas Técnicos sobre Windows</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./87-linux_ubuntu.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">Temás Técnicos sobre Linux</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./88-python.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">H</span>&nbsp; <span class="chapter-title">Adicionales Sobre Python</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./89-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">I</span>&nbsp; <span class="chapter-title">Adicionales Sobre R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./90-julia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">J</span>&nbsp; <span class="chapter-title">Adicionales Sobre Julia</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./98-errata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">K</span>&nbsp; <span class="chapter-title">Errata</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./99-referencias.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Referencias Bibliográficas</span></a>
   </div>
 </li>
@@ -245,14 +339,29 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de Contenidos</h2>
+   
+  <ul>
+  <li><a href="#procedimiento-incial" id="toc-procedimiento-incial" class="nav-link active" data-scroll-target="#procedimiento-incial"><span class="header-section-number">C.1</span> Procedimiento Incial</a></li>
+  <li><a href="#comandos-docker" id="toc-comandos-docker" class="nav-link" data-scroll-target="#comandos-docker"><span class="header-section-number">C.2</span> Comandos Docker</a></li>
+  <li><a href="#compilación-avanzada" id="toc-compilación-avanzada" class="nav-link" data-scroll-target="#compilación-avanzada"><span class="header-section-number">C.3</span> Compilación Avanzada</a></li>
+  <li><a href="#cambio-de-ruta-de-almacenamiento-windows" id="toc-cambio-de-ruta-de-almacenamiento-windows" class="nav-link" data-scroll-target="#cambio-de-ruta-de-almacenamiento-windows"><span class="header-section-number">C.4</span> Cambio de Ruta de Almacenamiento (Windows)</a></li>
+  <li><a href="#sec-optimizacion-memoria" id="toc-sec-optimizacion-memoria" class="nav-link" data-scroll-target="#sec-optimizacion-memoria"><span class="header-section-number">C.5</span> Optimización de Memoria y Swap</a>
+  <ul class="collapse">
+  <li><a href="#el-pulmón-de-windows-memoria-virtual" id="toc-el-pulmón-de-windows-memoria-virtual" class="nav-link" data-scroll-target="#el-pulmón-de-windows-memoria-virtual">1. El “Pulmón” de Windows: Memoria Virtual</a></li>
+  <li><a href="#el-túnel-de-docker-swap-de-wsl2" id="toc-el-túnel-de-docker-swap-de-wsl2" class="nav-link" data-scroll-target="#el-túnel-de-docker-swap-de-wsl2">2. El “Túnel” de Docker: Swap de WSL2</a></li>
+  </ul></li>
+  <li><a href="#higiene-y-limpieza-de-choque" id="toc-higiene-y-limpieza-de-choque" class="nav-link" data-scroll-target="#higiene-y-limpieza-de-choque"><span class="header-section-number">C.6</span> Higiene y Limpieza de Choque</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./91-referencia_tecnica.html">Appendices</a></li><li class="breadcrumb-item"><a href="./92-errata.html"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Errata</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./81-infraestructura_instalada.html">Appendices</a></li><li class="breadcrumb-item"><a href="./83-docker_desktop.html"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Docker: Gestión de Contenedores e Imágenes</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Appendix B — Errata</h1>
+<h1 class="title"><span id="docker-ref" class="quarto-section-identifier">Appendix C — Docker: Gestión de Contenedores e Imágenes</span></h1>
 </div>
 
 
@@ -269,9 +378,165 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Esta es la errata</p>
+<section id="procedimiento-incial" class="level2" data-number="C.1">
+<h2 data-number="C.1" class="anchored" data-anchor-id="procedimiento-incial"><span class="header-section-number">C.1</span> Procedimiento Incial</h2>
+<p>Antes de trabajar con Docker debes:</p>
+<ol type="1">
+<li><p>Arrancar Docker Desktop</p></li>
+<li><p>Usando la terminal <strong>PowerShell</strong> de Windows ubicarte sobre la carpeta dónde se encuentran los archivos <code>Dockerfile</code> y <code>docker-compose.html</code></p></li>
+</ol>
+<p>Los siguientes pasos son <strong>compilar</strong> (solo una vez), arrancar las imágenes y detener las imágenes:</p>
+<ol start="3" type="1">
+<li><strong>Compilación Limpia (Sin Cache) con Log:</strong></li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> build <span class="at">--no-cache</span> <span class="at">-t</span> mi_sig_env:v1 . <span class="op">&gt;</span> build_details.log <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li><strong>Arrancar las imágenes:</strong></li>
+</ol>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> compose up <span class="at">-d</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="5" type="1">
+<li><strong>Detener las imágenes:</strong> (opcional: solo para terminar)</li>
+</ol>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> compose down</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Finalmente trabajar con los contenedores dentro de VSCode:</p>
+<ol start="6" type="1">
+<li>“Ctrl + Shif + P”: “Dev Containers: Attach to Running Container…” y seleccionar container <code>image_sig_unal</code> (<code>contenedor_sig_unal</code>)</li>
+</ol>
+</section>
+<section id="comandos-docker" class="level2" data-number="C.2">
+<h2 data-number="C.2" class="anchored" data-anchor-id="comandos-docker"><span class="header-section-number">C.2</span> Comandos Docker</h2>
+<p>Use la siguiente tabla como referencia para gestionar sus contenedores desde la terminal de su sistema anfitrión (Windows/Mac/Linux).</p>
+<table class="table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 40%">
+<col style="width: 40%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Acción</th>
+<th style="text-align: left;">Comando</th>
+<th style="text-align: left;">Propósito</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Construcción Inicial</strong></td>
+<td style="text-align: left;"><code>docker-compose up --build -d</code></td>
+<td style="text-align: left;">Compila el Dockerfile y levanta los servicios (Solo una vez).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Inicio Diario</strong></td>
+<td style="text-align: left;"><code>docker-compose up -d</code></td>
+<td style="text-align: left;">Inicia los servicios de forma instantánea si ya fueron construidos.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Monitoreo de Procesos</strong></td>
+<td style="text-align: left;"><code>docker logs -f entorno_unal_sig</code></td>
+<td style="text-align: left;">Sigue los logs en vivo (ideal para ver pre-compilaciones).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Ver logs recientes</strong></td>
+<td style="text-align: left;"><code>docker logs --tail 20 entorno_unal_sig</code></td>
+<td style="text-align: left;">Muestra las últimas 20 líneas (ideal para buscar el token).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Apagado</strong></td>
+<td style="text-align: left;"><code>docker-compose down</code></td>
+<td style="text-align: left;">Detiene los servicios y libera recursos del sistema.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Prueba de R (sf)</strong></td>
+<td style="text-align: left;"><code>docker exec entorno_unal_sig R -e "library(sf); print('R-Spatial detectado')"</code></td>
+<td style="text-align: left;">Confirmar que R reconoce los drivers geoespaciales del sistema.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Prueba de Python</strong></td>
+<td style="text-align: left;"><code>docker exec entorno_unal_sig python -c "import shapely; import geopandas; print('Python OK')"</code></td>
+<td style="text-align: left;">Confirmar que el stack de Python (GeoPandas/Shapely) está instalado.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Prueba de Julia</strong></td>
+<td style="text-align: left;"><code>docker exec entorno_unal_sig julia -e "using LibGEOS; println('Julia OK')"</code></td>
+<td style="text-align: left;">Confirmar que Julia tiene acceso a los binarios geoespaciales.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="compilación-avanzada" class="level2" data-number="C.3">
+<h2 data-number="C.3" class="anchored" data-anchor-id="compilación-avanzada"><span class="header-section-number">C.3</span> Compilación Avanzada</h2>
+<p>Para trabajar con entornos SIG, a menudo necesitamos reconstruir imágenes sin basura previa.</p>
+<ul>
+<li><strong>Compilación Limpia (Sin Cache) con Log:</strong> Para asegurar que Docker descargue todas las librerías desde cero y guarde un registro detallado de los errores: <code>docker build --no-cache -t mi_sig_env:v1 . --progress=plain &gt; build_details.log 2&gt;&amp;1</code></li>
+<li><strong>Subir Imagen a Repositorio:</strong> <code>docker tag mi_sig_env:v1 usuario_dockerhub/mi_sig_env:v1</code> <code>docker push usuario_dockerhub/mi_sig_env:v1</code></li>
+<li><strong>Cargar en VSCode:</strong> Una vez el contenedor esté corriendo, use la extensión <strong>Dev Containers</strong> -&gt; Botón verde inferior izquierdo -&gt; <em>Attach to Running Container</em>.</li>
+</ul>
+</section>
+<section id="cambio-de-ruta-de-almacenamiento-windows" class="level2" data-number="C.4">
+<h2 data-number="C.4" class="anchored" data-anchor-id="cambio-de-ruta-de-almacenamiento-windows"><span class="header-section-number">C.4</span> Cambio de Ruta de Almacenamiento (Windows)</h2>
+<p>Si el disco <code>C:</code> se agota debido a las imágenes de Docker, siga estos pasos en <strong>Docker Desktop</strong>: 1. Vaya a <strong>Settings</strong> (engranaje). 2. <strong>Resources</strong> &gt; <strong>Advanced</strong>. 3. En <strong>Disk image location</strong>, cambie la ruta a un disco con mayor capacidad (ej. <code>D:\DockerImages</code>). 4. Presione <strong>Apply &amp; Restart</strong>.</p>
+</section>
+<section id="sec-optimizacion-memoria" class="level2" data-number="C.5">
+<h2 data-number="C.5" class="anchored" data-anchor-id="sec-optimizacion-memoria"><span class="header-section-number">C.5</span> Optimización de Memoria y Swap</h2>
+<p>Cuando procesamos datos masivos (como imágenes Sentinel-2 o rásters globales), la RAM física de 16GB suele ser insuficiente. Para evitar que el sistema aborte los procesos con el error <strong>“Killed”</strong>, debemos configurar un “pulmón” de emergencia en dos niveles.</p>
+<section id="el-pulmón-de-windows-memoria-virtual" class="level3">
+<h3 class="anchored" data-anchor-id="el-pulmón-de-windows-memoria-virtual">1. El “Pulmón” de Windows: Memoria Virtual</h3>
+<p>Obligamos a Windows a usar el disco duro como si fuera RAM de reserva. Si tiene un disco sólido (SSD) secundario con mucho espacio libre (ej. Disco D:), es el lugar ideal para configurarlo.</p>
+<ol type="1">
+<li>En el buscador de Windows, escriba: <strong>“Ajustar la apariencia y rendimiento de Windows”</strong>.</li>
+<li>Vaya a la pestaña <strong>Opciones avanzadas</strong> &gt; sección <strong>Memoria virtual</strong> &gt; clic en <strong>Cambiar</strong>.</li>
+<li>Desmarque la opción “Administrar automáticamente el tamaño del archivo de paginación para todas las unidades”.</li>
+<li>Seleccione la unidad de disco (C: o D:) y marque <strong>Tamaño personalizado</strong>.</li>
+<li>Establezca los siguientes valores (recomendados para este curso):
+<ul>
+<li><strong>Tamaño inicial</strong>: <code>16384</code> MB (16 GB).</li>
+<li><strong>Tamaño máximo</strong>: <code>32768</code> MB (32 GB).</li>
+</ul></li>
+<li>Haga clic en <strong>Establecer</strong>, luego en <strong>Aceptar</strong> y <strong>reinicie su computadora</strong> para aplicar los cambios.</li>
+</ol>
+</section>
+<section id="el-túnel-de-docker-swap-de-wsl2" class="level3">
+<h3 class="anchored" data-anchor-id="el-túnel-de-docker-swap-de-wsl2">2. El “Túnel” de Docker: Swap de WSL2</h3>
+<p>Docker Desktop corre sobre WSL2 (<em>Windows Subsystem for Linux</em>), el cual tiene su propio “presupuesto” limitado. Por defecto, este túnel es estrecho (máximo 4GB de Swap). Si no ampliamos esto, el contenedor nunca podrá aprovechar realmente el espacio que le asignamos a Windows.</p>
+<p><strong>Cómo ampliar la tubería:</strong> 1. Presione <code>Win + R</code>, escriba <code>%UserProfile%</code> y presione Enter. 2. Busque el archivo <code>.wslconfig</code>. Si no existe, créelo con el Bloc de Notas. 3. Pegue el siguiente contenido:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode ini code-with-copy"><code class="sourceCode ini"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[wsl2]</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="dt">memory</span><span class="ot">=</span><span class="st">12GB # RAM máxima que le permitimos usar a Linux/Docker</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="dt">swap</span><span class="ot">=</span><span class="st">16GB   # El nuevo tamaño de swap que verá el comando 'top' en la terminal</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li><strong>Aplicar cambios</strong>: Guarde el archivo, abra una terminal (PowerShell) y escriba <code>wsl --shutdown</code>. Luego, inicie Docker Desktop nuevamente.</li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="higiene-y-limpieza-de-choque" class="level2" data-number="C.6">
+<h2 data-number="C.6" class="anchored" data-anchor-id="higiene-y-limpieza-de-choque"><span class="header-section-number">C.6</span> Higiene y Limpieza de Choque</h2>
+<p>Para garantizar que un renderizado de Quarto llegue al 100% sin colapsar el contenedor, aplique estas medidas de higiene:</p>
+<ul>
+<li><strong>Cierre “Vampiros”</strong>: Aplicaciones como Chrome, Edge, Teams y Slack consumen RAM de forma agresiva. Ciérrelas antes de procesos pesados.</li>
+<li><strong>Limpieza de disco</strong>: Use el Liberador de espacio en disco (<code>cleanmgr</code>) para vaciar archivos de volcado de memoria.</li>
+<li><strong>La “Escoba” en el Código</strong>: Use comandos de limpieza entre procesos de diferentes lenguajes:
+<ul>
+<li><strong>R</strong>: <code>rm(obj); gc(full = TRUE)</code></li>
+<li><strong>Python</strong>: <code>del var; gc.collect()</code></li>
+<li><strong>Julia</strong>: <code>GC.gc()</code></li>
+</ul></li>
+</ul>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Importante para Visualización
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En Julia y R, evite generar gráficos interactivos pesados dentro de bucles de procesamiento. La acumulación de objetos visuales en la memoria de VS Code es la causa número uno de colapsos en el contenedor.</p>
+</div>
+</div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -663,13 +928,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./91-referencia_tecnica.html" class="pagination-link" aria-label="Referencia Técnica y Compendio de Comandos">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Referencia Técnica y Compendio de Comandos</span></span>
+      <a href="./82-quarto.html" class="pagination-link" aria-label="Quarto: Orquestación y Configuración">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Quarto: Orquestación y Configuración</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./93-referencias.html" class="pagination-link" aria-label="Referencias Bibliográficas">
-        <span class="nav-page-text">Referencias Bibliográficas</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./84-git_github.html" class="pagination-link" aria-label="Git y GitHub: Sincronización Local-Remota">
+        <span class="nav-page-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Git y GitHub: Sincronización Local-Remota</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

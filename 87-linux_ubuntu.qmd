@@ -1,0 +1,77 @@
+# Temás Técnicos sobre Linux
+
+## Comandos adicionales antes de trabajar con los contenedores
+
+
+## Comandos de Terminal (Sistema Operativo) {#sec-comandos-so}
+
+Al trabajar dentro de un contenedor Docker, la terminal es su línea directa con el sistema operativo (Ubuntu/Debian). Estos comandos le permitirán verificar que los motores geoespaciales y las librerías de sistema están correctamente instalados.
+
+| Comando | Propósito | ¿Para qué sirve en el curso? |
+| :--- | :--- | :--- |
+| `dpkg -l \| grep -E "libpng\|libgdal\|libproj\|libgeos"` | Lista librerías instaladas | Verificar que los drivers de mapas (GDAL, PROJ, GEOS) están activos. |
+| `gdalinfo --version` | Versión de GDAL | Confirmar que el motor de traducción de datos geográficos funciona. |
+| `df -h` | Espacio en disco | Evitar errores de "Disk Full" al descargar imágenes satelitales pesadas. |
+| `htop` (o `top`) | Monitor de recursos | Ver si un proceso de Julia o R está consumiendo toda la RAM o CPU. |
+| `ls -la` | Listado detallado | Revisar permisos de archivos y carpetas (clave para errores de Git). |
+| `psql --version` | Versión de Postgres | Confirmar que el cliente de base de datos está listo para usarse. |
+| `which r` / `which julia` | Ruta del ejecutable | Localizar dónde están instalados los lenguajes para configurar el Path. |
+| `fc-list \| grep -i "Symbola"` | Buscar fuentes del sistema | Localizar la ruta exacta de fuentes necesarias para emojis y símbolos en el PDF. |
+
+## Verificación de Librerías Geoespaciales
+El comando `dpkg -l | grep -E "libpng|libgdal|libproj|libgeos"` es su principal herramienta de diagnóstico. Si al ejecutarlo no obtiene resultados, las funciones de mapeo en R (`sf`), Python (`geopandas`) y Julia (`ArchGDAL`) fallarán, ya que todas dependen de estos binarios del sistema.
+
+::: {.callout-note}
+### Tip de Productividad
+En la terminal de VS Code, puede usar la tecla **Tab** para autocompletar nombres de archivos o comandos, y las **flechas arriba/abajo** para navegar por el historial de comandos ejecutados.
+:::
+
+### ¿Cómo leer la salida de `dpkg`?
+Al ejecutar el comando de verificación, verá una lista con el prefijo `ii`. Esto significa:
+* **i**: *Desired state* (Install)
+* **i**: *Current state* (Installed)
+
+Si ve algo diferente a `ii`, el paquete tiene problemas de instalación.
+
+---
+
+## La Cirugía de Librerías: El "Cambiazo" de OpenSSL {#sec-openssl-surgery}
+
+Al trabajar con contenedores de última generación, a veces nos encontramos con un choque de versiones entre lo que el sistema operativo ofrece y lo que los lenguajes de programación esperan. En nuestro caso, realizamos una "cirugía" técnica utilizando enlaces simbólicos (`ln -sf`).
+
+### 1. El Conflicto: ¿3.0.x o 3.3.x?
+
+La respuesta corta es: **Físicamente tiene instalada la versión 3.0.x, pero le mentimos al software diciéndole que es la 3.3.x.**
+
+* **La Realidad (Sistema)**: Su contenedor corre sobre **Ubuntu 24.04 (Noble Numbat)**. Esta versión viene de fábrica con **OpenSSL 3.0.x**, que es la versión estable y oficial del sistema.
+* **La Expectativa (Julia)**: Algunos paquetes potentes de Julia (como los binarios JLL de `GDAL` o `NCDatasets`) fueron compilados en entornos más recientes que ya usaban **OpenSSL 3.3.x**. 
+
+Cuando Julia intenta arrancar, busca una "etiqueta" interna llamada `OPENSSL_3.3.0`. Al no encontrarla en la librería de Ubuntu, el sistema lanza un error y bloquea la carga de mapas.
+
+
+### 2. La Solución: ¿Qué hace exactamente `ln -sf`?
+
+Imagine que Julia es un guardia de seguridad que busca una llave maestra etiquetada como **"Llave 3.3"**. Al revisar la caja fuerte (el sistema), solo ve la **"Llave 3.0"** y se niega a abrir. Lo que hicimos fue un "cambiazo" estratégico.
+
+Ejecutamos este comando de "cirugía":
+```bash
+find /root/.julia/artifacts -name "libssl.so*" -exec ln -sf /usr/lib/x86_64-linux-gnu/libssl.so.3 {} \;
+```
+
+**Desglose de la operación:**
+1.  **`find ... -name "libssl.so*"`**: Localiza todos los archivos de librería que Julia descargó por su cuenta (sus propios binarios internos).
+2.  **`-exec ln -sf ... {}`**: Por cada archivo encontrado, borra el original (la `-f` de *force*) y crea un **enlace simbólico** (la `-s` de *symbolic*).
+3.  **El Destino**: El enlace apunta directamente a la librería real de Ubuntu (`/usr/lib/.../libssl.so.3`).
+
+### 3. ¿Por qué funciona si las versiones son distintas?
+
+Funciona gracias a que **OpenSSL 3** mantiene algo llamado **compatibilidad binaria** entre sus versiones menores. Las funciones internas se llaman exactamente igual; lo único que cambió fue el "nombre del archivo" que Julia buscaba. 
+
+Al redirigir el nombre, Julia utiliza la librería de Ubuntu pensando que es la suya, y como las instrucciones internas son compatibles, el sistema arranca sin errores y con total estabilidad.
+
+::: {.callout-warning}
+#### Importancia para el SIG
+Sin esta cirugía, paquetes como `ArchGDAL` en Julia no podrían cargar los controladores para leer archivos `.tif` o conectarse a bases de datos espaciales, ya que la comunicación segura (SSL) fallaría al inicio.
+:::
+
+

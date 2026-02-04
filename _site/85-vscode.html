@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Programación SIG: Python, R y Julia - 4&nbsp; Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</title>
+<title>Programación SIG: Python, R y Julia - Appendix E — Visual Studio Code: Extensiones e Interfaz</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./05-introduccion_python_r_julia.html" rel="next">
-<link href="./03-guia_instalacion_B_qgis.html" rel="prev">
+<link href="./86-windows.html" rel="next">
+<link href="./84-git_github.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -81,7 +81,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-introduccion-entornos.html">Instalación y Entornos</a></li><li class="breadcrumb-item"><a href="./04-guia_instalacion_C_ArcGIS.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./81-infraestructura_instalada.html">Appendices</a></li><li class="breadcrumb-item"><a href="./85-vscode.html"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Visual Studio Code: Extensiones e Interfaz</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -147,7 +147,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-guia_instalacion_C_ArcGIS.html" class="sidebar-item-text sidebar-link active">
+  <a href="./04-guia_instalacion_C_ArcGIS.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</span></span></a>
   </div>
 </li>
@@ -251,7 +251,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./85-vscode.html" class="sidebar-item-text sidebar-link">
+  <a href="./85-vscode.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Visual Studio Code: Extensiones e Interfaz</span></span></a>
   </div>
 </li>
@@ -309,16 +309,26 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Tabla de Contenidos</h2>
    
   <ul>
-  <li><a href="#section" id="toc-section" class="nav-link active" data-scroll-target="#section"><span class="header-section-number">4.1</span> ..</a></li>
+  <li><a href="#atajos" id="toc-atajos" class="nav-link active" data-scroll-target="#atajos"><span class="header-section-number">E.1</span> Atajos</a>
+  <ul class="collapse">
+  <li><a href="#sec-command-palette" id="toc-sec-command-palette" class="nav-link" data-scroll-target="#sec-command-palette">La Paleta de Comandos VSCode</a></li>
+  <li><a href="#atajos-de-teclado-rápidos-vscode" id="toc-atajos-de-teclado-rápidos-vscode" class="nav-link" data-scroll-target="#atajos-de-teclado-rápidos-vscode">Atajos de Teclado Rápidos VSCode</a></li>
+  <li><a href="#atajos-de-teclado-jupyter-notebook" id="toc-atajos-de-teclado-jupyter-notebook" class="nav-link" data-scroll-target="#atajos-de-teclado-jupyter-notebook">Atajos de Teclado Jupyter Notebook</a></li>
+  </ul></li>
+  <li><a href="#sec-extensiones-vscode" id="toc-sec-extensiones-vscode" class="nav-link" data-scroll-target="#sec-extensiones-vscode"><span class="header-section-number">E.2</span> Configuración de Extensiones en VSCode</a>
+  <ul class="collapse">
+  <li><a href="#notas-sobre-herramientas-específicas" id="toc-notas-sobre-herramientas-específicas" class="nav-link" data-scroll-target="#notas-sobre-herramientas-específicas">Notas sobre herramientas específicas</a></li>
+  </ul></li>
+  <li><a href="#verificación-de-conectividad" id="toc-verificación-de-conectividad" class="nav-link" data-scroll-target="#verificación-de-conectividad"><span class="header-section-number">E.3</span> Verificación de Conectividad</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-introduccion-entornos.html">Instalación y Entornos</a></li><li class="breadcrumb-item"><a href="./04-guia_instalacion_C_ArcGIS.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./81-infraestructura_instalada.html">Appendices</a></li><li class="breadcrumb-item"><a href="./85-vscode.html"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Visual Studio Code: Extensiones e Interfaz</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="guia-C" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</span></span></h1>
+<h1 class="title"><span id="vscode-ref" class="quarto-section-identifier">Appendix E — Visual Studio Code: Extensiones e Interfaz</span></h1>
 </div>
 
 
@@ -335,8 +345,283 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="section" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="section"><span class="header-section-number">4.1</span> ..</h2>
+<section id="atajos" class="level2" data-number="E.1">
+<h2 data-number="E.1" class="anchored" data-anchor-id="atajos"><span class="header-section-number">E.1</span> Atajos</h2>
+<section id="sec-command-palette" class="level3">
+<h3 class="anchored" data-anchor-id="sec-command-palette">La Paleta de Comandos VSCode</h3>
+<p>La mayoría de las funciones avanzadas de VS Code no tienen un botón visible. Se acceden mediante la <strong>Paleta de Comandos</strong> presionando <code>Ctrl + Shift + P</code>. A continuación, los comandos más utilizados en este curso:</p>
+<table class="table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Comando (Command Palette)</th>
+<th style="text-align: left;">Propósito</th>
+<th style="text-align: left;">¿Cuándo usarlo?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>Developer: Reload Window</code></strong></td>
+<td style="text-align: left;">Reinicia la interfaz de VS Code sin cerrar el contenedor.</td>
+<td style="text-align: left;">Cuando una extensión (como la de R o Julia) deja de responder.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>Dev Containers: Rebuild Container</code></strong></td>
+<td style="text-align: left;">Reconstruye la imagen desde el Dockerfile.</td>
+<td style="text-align: left;">Cuando se realizan cambios en la configuración del entorno.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>Quarto: Preview</code></strong></td>
+<td style="text-align: left;">Abre una ventana lateral con la previsualización del documento.</td>
+<td style="text-align: left;">Para ver los cambios en el <code>.qmd</code> en tiempo real.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>R: Create R terminal</code></strong></td>
+<td style="text-align: left;">Fuerza la apertura de una nueva consola de R vinculada.</td>
+<td style="text-align: left;">Si el prompt <code>&gt;</code> no aparece automáticamente.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>Julia: Start REPL</code></strong></td>
+<td style="text-align: left;">Inicia la consola interactiva de Julia.</td>
+<td style="text-align: left;">Al abrir el contenedor por primera vez para ejecutar código Julia.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>Python: Select Interpreter</code></strong></td>
+<td style="text-align: left;">Permite elegir la versión de Python del contenedor.</td>
+<td style="text-align: left;">Si VS Code no detecta automáticamente <code>/usr/bin/python3</code>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>PostgreSQL: New Query</code></strong></td>
+<td style="text-align: left;">Abre un editor SQL en blanco.</td>
+<td style="text-align: left;">Para realizar consultas a la base de datos espacial.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>Git: Pull</code> / <code>Git: Push</code></strong></td>
+<td style="text-align: left;">Sincroniza cambios con GitHub.</td>
+<td style="text-align: left;">Para actualizar el repositorio de la clase o subir tareas.</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+El comando de “Primer Auxilio”
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si notas que el autocompletado desaparece o que los gráficos no cargan en <strong>httpgd</strong>, el primer paso siempre es ejecutar <strong><code>Developer: Reload Window</code></strong>. Esto refresca todas las conexiones de las extensiones con el contenedor sin interrumpir los procesos que Docker está ejecutando de fondo.</p>
+</div>
+</div>
+</section>
+<section id="atajos-de-teclado-rápidos-vscode" class="level3">
+<h3 class="anchored" data-anchor-id="atajos-de-teclado-rápidos-vscode">Atajos de Teclado Rápidos VSCode</h3>
+<p>Además de la paleta, memorice estos tres para su flujo diario: * <strong><code>Ctrl + Shift +</code> <code></code></strong> (acento grave): Abre una nueva Terminal. * <strong><code>Ctrl + Enter</code></strong>: Envía la línea de código actual desde el editor al REPL (R, Julia o Python). * <strong><code>Ctrl + Shift + V</code></strong>: Previsualiza archivos Markdown (.md) de forma rápida.</p>
+</section>
+<section id="atajos-de-teclado-jupyter-notebook" class="level3">
+<h3 class="anchored" data-anchor-id="atajos-de-teclado-jupyter-notebook">Atajos de Teclado Jupyter Notebook</h3>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Acción</th>
+<th style="text-align: left;">Atajo (Esc Mode)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Ejecutar Celda</td>
+<td style="text-align: left;"><code>Ctrl + Enter</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ejecutar y pasar a la siguiente</td>
+<td style="text-align: left;"><code>Shift + Enter</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Convertir a Markdown</td>
+<td style="text-align: left;"><code>M</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Convertir a Código</td>
+<td style="text-align: left;"><code>Y</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Crear celda arriba / abajo</td>
+<td style="text-align: left;"><code>A</code> / <code>B</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="sec-extensiones-vscode" class="level2" data-number="E.2">
+<h2 data-number="E.2" class="anchored" data-anchor-id="sec-extensiones-vscode"><span class="header-section-number">E.2</span> Configuración de Extensiones en VSCode</h2>
+<p>Para que el entorno de desarrollo sea plenamente funcional, es necesario instalar un conjunto de extensiones específicas. Una vez que haya realizado el proceso de <strong>“Attach to Running Container”</strong>, asegúrese de que estas herramientas estén instaladas <strong>dentro del contenedor</strong> (busque el botón azul <em>Install in Dev Container</em> en la pestaña de extensiones).</p>
+<div id="tbl-extensiones" class="quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-extensiones-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;E.1: Extensiones de VS Code para el entorno de Geomática y Programación SIG
+</figcaption>
+<div aria-describedby="tbl-extensiones-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Categoría</th>
+<th style="text-align: left;">Herramienta</th>
+<th style="text-align: left;">Propósito</th>
+<th style="text-align: left;">ID de la Extensión</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Infraestructura</strong></td>
+<td style="text-align: left;"><strong>Dev Containers</strong></td>
+<td style="text-align: left;">Conexión y gestión del contenedor activo</td>
+<td style="text-align: left;"><code>ms-vscode-remote.remote-containers</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><strong>Docker / Container Tools</strong></td>
+<td style="text-align: left;">Control de imágenes y recursos del contenedor</td>
+<td style="text-align: left;"><code>ms-azuretools.vscode-docker</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Ecosistema R</strong></td>
+<td style="text-align: left;"><strong>R (REditorSupport)</strong></td>
+<td style="text-align: left;">Soporte de sintaxis, LSP y terminal de R</td>
+<td style="text-align: left;"><code>REditorSupport.r</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><strong>R Debugger &amp; Tools</strong></td>
+<td style="text-align: left;">Depuración de scripts y herramientas de desarrollo</td>
+<td style="text-align: left;"><code>RDebugger.r-debugger</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><strong>R Extension Pack</strong></td>
+<td style="text-align: left;">Pack de utilidades (por Yuki Ueda)</td>
+<td style="text-align: left;"><code>yukiueda.r-extension-pack</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Ecosistema Python</strong></td>
+<td style="text-align: left;"><strong>Python (Microsoft)</strong></td>
+<td style="text-align: left;">IntelliSense (Pylance) y depuración avanzada</td>
+<td style="text-align: left;"><code>ms-python.python</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><strong>Python Debugger</strong></td>
+<td style="text-align: left;">Motor de depuración específico para Python</td>
+<td style="text-align: left;"><code>ms-python.debugpy</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><strong>Jupyter (Microsoft)</strong></td>
+<td style="text-align: left;">Soporte para Notebooks e interactividad nativa</td>
+<td style="text-align: left;"><code>ms-toolsai.jupyter</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Ecosistema Julia</strong></td>
+<td style="text-align: left;"><strong>Julia</strong></td>
+<td style="text-align: left;">Soporte integral para ejecución y gráficos</td>
+<td style="text-align: left;"><code>julialang.language-julia</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Base de Datos</strong></td>
+<td style="text-align: left;"><strong>PostgreSQL</strong></td>
+<td style="text-align: left;">Cliente para explorar la DB (Chris Kolkman)</td>
+<td style="text-align: left;"><code>ckolkman.vscode-postgres</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><strong>psql</strong></td>
+<td style="text-align: left;">Herramienta de consulta SQL (doublefint)</td>
+<td style="text-align: left;"><code>doublefint.psql</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Publicación</strong></td>
+<td style="text-align: left;"><strong>Quarto</strong></td>
+<td style="text-align: left;">Renderizado y preview de archivos <code>.qmd</code></td>
+<td style="text-align: left;"><code>quarto.quarto</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Versión</strong></td>
+<td style="text-align: left;"><strong>GitHub Repositories</strong></td>
+<td style="text-align: left;">Manejo de archivos remotos sin clonar todo</td>
+<td style="text-align: left;"><code>github.remotehub</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<section id="notas-sobre-herramientas-específicas" class="level3">
+<h3 class="anchored" data-anchor-id="notas-sobre-herramientas-específicas">Notas sobre herramientas específicas</h3>
+<ul>
+<li><strong>PostgreSQL (Chris Kolkman)</strong>: Esta extensión le permitirá conectarse a la base de datos espacial del contenedor sin salir de VS Code. Podrá ejecutar queries SQL y visualizar tablas directamente.</li>
+<li><strong>Jupyter Ecosystem</strong>: Incluimos el <em>Jupyter Keymap</em> para aquellos acostumbrados a los atajos de teclado de Jupyter Notebooks. Esto facilita la transición al trabajar con kernels de Python dentro de Quarto.</li>
+<li><strong>Sobre <code>psql</code></strong>: La herramienta de línea de comandos <code>psql</code> ya viene preinstalada <strong>dentro del sistema operativo del contenedor</strong> (PostgreSQL Client). No requiere una extensión adicional para funcionar en la terminal.</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Instalación Local vs.&nbsp;Remota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Recuerde que extensiones como <strong>Dev Containers</strong> y <strong>Docker</strong> deben estar instaladas en su VS Code <strong>local</strong> (en Windows), mientras que las de análisis (R, Python, Julia, PostgreSQL) deben estar instaladas <strong>dentro de la sesión del contenedor</strong> para acceder a los compiladores y librerías de la imagen.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Soporte del Lenguaje en R
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Para que el autocompletado y la documentación en tiempo real funcionen, el contenedor requiere el paquete <code>languageserver</code>. Aunque la imagen ya lo incluye por defecto, si nota que el resaltado de sintaxis falla, puede reinstalarlo ejecutando: <code>install.packages("languageserver")</code> en su consola de R.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="verificación-de-conectividad" class="level2" data-number="E.3">
+<h2 data-number="E.3" class="anchored" data-anchor-id="verificación-de-conectividad"><span class="header-section-number">E.3</span> Verificación de Conectividad</h2>
+<p>Una vez instaladas las extensiones, verifique que su entorno esté correctamente configurado siguiendo estos puntos:</p>
+<ul>
+<li><strong>Estado del Contenedor</strong>: En la esquina inferior izquierda de VS Code, debe aparecer un recuadro azul con el texto: <strong>Dev Container: contenedor_sig_unal</strong>.</li>
+<li><strong>Activación de Kernels</strong>: Al abrir un archivo <code>.qmd</code>, en la esquina superior derecha debe poder seleccionar el kernel deseado (R, Python 3 o Julia).</li>
+<li><strong>Terminal Unificada</strong>: Al abrir una nueva terminal (<code>Ctrl + Shift +</code> <code></code>), la línea de comandos debe estar identificada como <code>rstudio@contenedor_sig_unal:/home/rstudio/work$</code>.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Sincronización Automática
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Recuerde que cualquier cambio que realice en la configuración de estas extensiones mientras esté conectado al contenedor se guardará en su perfil local de VS Code, facilitando las conexiones futuras.</p>
+</div>
+</div>
 
 
 </section>
@@ -731,13 +1016,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./03-guia_instalacion_B_qgis.html" class="pagination-link" aria-label="Guía de Instalación. Opción B: QGIS y PyQGIS">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción B: QGIS y PyQGIS</span></span>
+      <a href="./84-git_github.html" class="pagination-link" aria-label="Git y GitHub: Sincronización Local-Remota">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Git y GitHub: Sincronización Local-Remota</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./05-introduccion_python_r_julia.html" class="pagination-link" aria-label="Fundamentos: Python, R y Julia">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Fundamentos: Python, R y Julia</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./86-windows.html" class="pagination-link" aria-label="Temas Técnicos sobre Windows">
+        <span class="nav-page-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Temas Técnicos sobre Windows</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

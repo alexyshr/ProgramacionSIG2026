@@ -1,0 +1,116 @@
+# Adicionales Sobre R
+
+## Versiones Instaladas del Software
+
+Versiones que deben quedar instaladas en el sistema R:
+
+| Software | Tipo | Versión | Comando (desde terminal) | Comando (desde R) |
+|:-|:-|:-|:------|:---------|
+| `R` | Lenguaje | 4.5.2 | `R --version` | `R.version.string` |
+| `GEOS` | Librería sistema | 3.12.1 | `geos-config --version` | `sf::sf_extSoftVersion()["GEOS"]` |
+| `GDAL` | Librería sistema | 3.8.4 | `gdalinfo --version` | `sf::sf_extSoftVersion()["GDAL"]` |
+| `PROJ` | Librería sistema | 9.4.0 | (no aplica / no disponible) | `sf::sf_extSoftVersion()["PROJ"]` |
+| `sf` | Paquete | 1.0.23 | `R -q -e "packageVersion('sf')"` | `packageVersion("sf")` |
+| `terra` | Paquete | 1.8.86 | `R -q -e "packageVersion('terra')"` | `packageVersion("terra")` |
+| `stars` | Paquete | 0.7.0 | `R -q -e "packageVersion('stars')"` | `packageVersion("stars")` |
+
+## Visualización Interactiva con `httpgd` {#sec-httpgd-config}
+
+Dado que nuestro entorno Docker es "headless" (sin monitor propio), utilizamos **`httpgd`** como un servidor gráfico intermedio. Este paquete captura las señales de dibujo de R y las sirve a través de una URL que VS Code puede renderizar.
+
+### Inicio del Servidor Gráfico
+Cada vez que inicie una nueva sesión de R, debe despertar al servidor manualmente:
+
+```r
+# Inicia el motor gráfico
+httpgd::hgd()
+
+# Verifica el estado y el puerto asignado
+httpgd::hgd_details()
+```
+
+### Resolución de Conflictos (El "Fix" del Puerto)
+En nuestro contenedor, el puerto estándar para gráficos está mapeado al **8787**. Si al ejecutar `hgd_details()` nota que el sistema asignó un puerto aleatorio o si el visor aparece en blanco, fuerce la conexión con la siguiente "receta":
+
+```r
+# Forzar host y puerto para compatibilidad con Docker
+httpgd::hgd(host = "0.0.0.0", port = 8787, token = FALSE)
+```
+
+
+### Formas de ver sus Gráficos
+Una vez el servidor está corriendo, tiene dos caminos para visualizar sus mapas:
+
+| Método | Comando / Acción | Ventaja |
+| :--- | :--- | :--- |
+| **Visor Interno** | `Ctrl + Shift + P` -> **Open httpgd viewer** | Mantiene todo dentro de una pestaña de VS Code. |
+| **Navegador Externo** | `httpgd::hgd_browse()` | Ideal si trabaja con dos monitores para ver mapas en pantalla completa. |
+
+::: {.callout-note}
+#### ¿Por qué `token = FALSE`?
+Dentro del entorno seguro del contenedor, desactivamos el *token* para facilitar la conexión inmediata entre el servidor de R y el visor de VS Code sin que el firewall interno bloquee la petición por falta de credenciales.
+:::
+
+### Verificación de Salud
+Si después de iniciar el servidor intenta graficar algo (ej: `plot(1:10)`) y no ve nada, ejecute `httpgd::hgd_details()`. Asegúrese de que:
+1.  **URL**: Apunte a `http://0.0.0.0:8787`.
+2.  **Status**: Indique que está escuchando (*listening*).
+
+### El Entorno Interactivo (REPL) y Motores Gráficos {#sec-repl-concept}
+
+En el desarrollo científico, el **REPL** (*Read-Eval-Print Loop*) es la consola interactiva que permite la "programación exploratoria". Es el ciclo donde el sistema **lee** su instrucción, la **evalúa** mediante el motor correspondiente, **imprime** el resultado y queda en un **bucle** a la espera del siguiente comando.
+
+En nuestro laboratorio políglota, la identidad visual del REPL es su brújula para saber en qué lenguaje está operando:
+
+| Lenguaje | ¿Cómo se ve el REPL? | Características en este curso |
+| :--- | :--- | :--- |
+| **R** | `>` | Consola estándar para procesos geoespaciales con `sf` o `terra`. |
+| **Julia** | `julia>` | Entorno de alto rendimiento con modos de ayuda (`?`) y terminal (`;`). |
+| **Python** | `>>>` | Consola básica; se recomienda el uso de **IPython** para interactividad. |
+
+La experiencia interactiva y el soporte gráfico dentro de **VS Code** dependen de la combinación entre el motor de ejecución y el dispositivo gráfico configurado en el contenedor:
+
+| Lenguaje | Acceso / Contexto | Motor de Ejecución | Dispositivo Gráfico | Soporte Inline |
+| :--- | :--- | :--- | :--- | :---: |
+| **R** | Nativo (Estático) | R Extension | VS Code Plots (Pane) | ✅ |
+| **R** | Nativo (Interactivo) | R Extension | **httpgd** | ✅ |
+| **Julia** | Nativo (REPL) | VSCodeServer | VS Code Plots (Pane) | ✅ |
+| **Julia** | Interop (R-Bridge) | `JuliaConnectoR` | **httpgd** (vía R) | ✅ |
+| **Python** | Interop (R-Bridge) | `reticulate` | R Device (**httpgd**) | ❌ / ⚠️ |
+| **Python** | Nativo (Jupyter) | Jupyter kernel | Jupyter Viewer | ✅ |
+
+### El rol crítico de `httpgd` en R
+Para R, no basta con tener la extensión instalada. El paquete **`httpgd`** actúa como un servidor web interno que captura los gráficos generados en el contenedor y los "proyecta" en VS Code. 
+
+* **¿Por qué lo usamos?** Los dispositivos gráficos tradicionales (como `X11` o `windows()`) no funcionan dentro de un contenedor Docker (*headless*). `httpgd` soluciona esto convirtiendo cada mapa en un elemento interactivo SVG/HTML renderizable.
+* **Activación**: Siempre debe iniciar su sesión de R ejecutando `httpgd::hgd()` para abrir este canal de comunicación.
+
+---
+
+## Paquetes para Comunicación con Julia y Python {#sec-interoperabilidad}
+
+Para que este ecosistema funcione, R actúa como el "director de orquesta" utilizando un motor de ejecución y una serie de puentes que permiten la comunicación fluida de datos entre lenguajes.
+
+| Lenguaje / Función | Paquete en R | Motor / Propósito | Estado |
+| :--- | :--- | :--- | :---: |
+| **Renderizado** | **`knitr`** | Motor maestro que orquesta la ejecución de celdas en el documento | ✅ |
+| **Julia** | `JuliaConnectoR` | Comunicación funcional estable con el kernel de Julia | ✅ |
+| **Python** | `reticulate` | Interoperabilidad de objetos y ejecución de Python | ✅ |
+| **LSP (Soporte)** | `languageserver` | Autocompletado, IntelliSense y ayuda en tiempo real | ✅ |
+
+### El Rol de `knitr`
+Mientras que los paquetes actúan como puentes técnicos, **`knitr`** es el encargado de leer el archivo `.qmd`, enviar las instrucciones a los motores respectivos y capturar los resultados (tablas, mapas, gráficos) para integrarlos en el documento final. Sin `knitr`, la integración políglota de Quarto no sería posible.
+
+### Transición Técnica: De `JuliaCall` a `JuliaConnectoR`
+En el diseño de este entorno, se tomó la decisión técnica de descartar el paquete `JuliaCall` en favor de **`JuliaConnectoR`**:
+
+1. **El Problema**: `JuliaCall` presentaba inestabilidades al gestionar dependencias dinámicas compartidas (como `libcurl` o `libstdc++`) dentro del contenedor, causando cierres inesperados (*crashes*) de la sesión de R.
+2. **La Sustitución**: Se seleccionó **`JuliaConnectoR`** por su arquitectura más limpia, que no interfiere con el entorno de Julia ya configurado en el sistema operativo.
+3. **La Solución**: La integración se resolvió mediante una "inyección" de código en el archivo `Rprofile.site`, configurando automáticamente la ruta del ejecutable en `$Sys.BINDIR$` y definiendo las funciones maestras **`j_eval()`** y **`j_plot()`**.
+
+
+::: {.callout-tip}
+#### 🧠 Regla de Oro del Curso
+1.  **Julia y R**: Se operan de manera totalmente **interactiva** en VS Code (envío de líneas con `Ctrl+Enter`).
+2.  **Python vía reticulate**: Se utiliza primordialmente para el **renderizado (vía knitr)** de informes finales. Para una programación interactiva pura en Python, se recomienda el uso de los **Jupyter kernels**.
+:::

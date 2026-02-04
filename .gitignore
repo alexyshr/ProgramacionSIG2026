@@ -8,3 +8,5 @@ data/
 site_libs/
 sample_qmds/
 carrera_sig/
+/.quarto/
+.Rhistory

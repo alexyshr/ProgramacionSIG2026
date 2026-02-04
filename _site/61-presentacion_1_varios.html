@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Laboratorio de Programación SIG">
 
-<title>Programación SIG: Python, R y Julia - 4&nbsp; Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</title>
+<title>Programación SIG: Python, R y Julia - 8&nbsp; Temas por Charlar</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +31,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./05-introduccion_python_r_julia.html" rel="next">
-<link href="./03-guia_instalacion_B_qgis.html" rel="prev">
+<link href="./62-presentacion_2_benchmark.html" rel="next">
+<link href="./41-practica_1_benchmark_raster.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -81,7 +82,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-introduccion-entornos.html">Instalación y Entornos</a></li><li class="breadcrumb-item"><a href="./04-guia_instalacion_C_ArcGIS.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./61-presentacion_1_varios.html">Presentaciones</a></li><li class="breadcrumb-item"><a href="./61-presentacion_1_varios.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Temas por Charlar</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -147,7 +148,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-guia_instalacion_C_ArcGIS.html" class="sidebar-item-text sidebar-link active">
+  <a href="./04-guia_instalacion_C_ArcGIS.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</span></span></a>
   </div>
 </li>
@@ -204,7 +205,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./61-presentacion_1_varios.html" class="sidebar-item-text sidebar-link">
+  <a href="./61-presentacion_1_varios.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Temas por Charlar</span></span></a>
   </div>
 </li>
@@ -309,22 +310,36 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Tabla de Contenidos</h2>
    
   <ul>
-  <li><a href="#section" id="toc-section" class="nav-link active" data-scroll-target="#section"><span class="header-section-number">4.1</span> ..</a></li>
+  <li><a href="#clase-de-hoy-instalación-y-uso-básido-del-software" id="toc-clase-de-hoy-instalación-y-uso-básido-del-software" class="nav-link active" data-scroll-target="#clase-de-hoy-instalación-y-uso-básido-del-software"><span class="header-section-number">8.1</span> Clase de Hoy: Instalación y uso básido del Software</a></li>
+  <li><a href="#contenido---syllabus-actual" id="toc-contenido---syllabus-actual" class="nav-link" data-scroll-target="#contenido---syllabus-actual"><span class="header-section-number">8.2</span> Contenido - Syllabus actual</a></li>
+  <li><a href="#contenido---estructura" id="toc-contenido---estructura" class="nav-link" data-scroll-target="#contenido---estructura"><span class="header-section-number">8.3</span> Contenido - Estructura</a></li>
+  <li><a href="#propuestas-de-estudiantes-para-el-curso" id="toc-propuestas-de-estudiantes-para-el-curso" class="nav-link" data-scroll-target="#propuestas-de-estudiantes-para-el-curso"><span class="header-section-number">8.4</span> Propuestas de Estudiantes para el Curso</a></li>
+  <li><a href="#enfoque-open-science" id="toc-enfoque-open-science" class="nav-link" data-scroll-target="#enfoque-open-science"><span class="header-section-number">8.5</span> Enfoque Open Science</a></li>
+  <li><a href="#seminario-latingeo-al-final-del-curso" id="toc-seminario-latingeo-al-final-del-curso" class="nav-link" data-scroll-target="#seminario-latingeo-al-final-del-curso"><span class="header-section-number">8.6</span> Seminario <strong>LatinGeo</strong> al final del curso</a></li>
+  <li><a href="#temas-para-proyecto-final" id="toc-temas-para-proyecto-final" class="nav-link" data-scroll-target="#temas-para-proyecto-final"><span class="header-section-number">8.7</span> Temas para Proyecto Final</a></li>
+  <li><a href="#paquetes-o-comandos-faltantes-en-dockerfile" id="toc-paquetes-o-comandos-faltantes-en-dockerfile" class="nav-link" data-scroll-target="#paquetes-o-comandos-faltantes-en-dockerfile"><span class="header-section-number">8.8</span> Paquetes o comandos faltantes en Dockerfile</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-introduccion-entornos.html">Instalación y Entornos</a></li><li class="breadcrumb-item"><a href="./04-guia_instalacion_C_ArcGIS.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./61-presentacion_1_varios.html">Presentaciones</a></li><li class="breadcrumb-item"><a href="./61-presentacion_1_varios.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Temas por Charlar</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="guia-C" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</span></span></h1>
+<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Temas por Charlar</span></h1>
+<p class="subtitle lead">Asunto: varios</p>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Laboratorio de Programación SIG </p>
+          </div>
+  </div>
     
   
     
@@ -335,8 +350,175 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="section" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="section"><span class="header-section-number">4.1</span> ..</h2>
+<section id="clase-de-hoy-instalación-y-uso-básido-del-software" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="clase-de-hoy-instalación-y-uso-básido-del-software"><span class="header-section-number">8.1</span> Clase de Hoy: Instalación y uso básido del Software</h2>
+<ul>
+<li><ol type="1">
+<li>Docker Desktop</li>
+</ol></li>
+<li><ol start="2" type="1">
+<li>Instalar nuestros contenedores</li>
+</ol></li>
+<li><ol start="3" type="1">
+<li>VSCode + Extensiones (dentro del nuestros contenerores)</li>
+</ol></li>
+<li><ol start="4" type="1">
+<li>Git + GitHub</li>
+</ol></li>
+<li><ol start="5" type="1">
+<li>Acceso a Jupyter Lab</li>
+</ol></li>
+<li><ol start="6" type="1">
+<li>Creación de archivos Quarto (*.qmd): HTML &amp; PDF</li>
+</ol></li>
+<li><ol start="7" type="1">
+<li>OSGeo4W (QGIS) - QGIS + GEE (Pixi)</li>
+</ol></li>
+<li><ol start="8" type="1">
+<li>Chequeo ArcGIS Pro</li>
+</ol></li>
+</ul>
+<hr>
+</section>
+<section id="contenido---syllabus-actual" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="contenido---syllabus-actual"><span class="header-section-number">8.2</span> Contenido - Syllabus actual</h2>
+<ul>
+<li><ol type="1">
+<li>Principios de Programación.</li>
+</ol></li>
+<li><ol start="2" type="1">
+<li>Fundamentos de Python.</li>
+</ol></li>
+<li><ol start="3" type="1">
+<li>Marcos de Datos.</li>
+</ol></li>
+<li><ol start="4" type="1">
+<li>Programación Orientada a Objetos.</li>
+</ol></li>
+<li><ol start="5" type="1">
+<li>Python y PostgreSQL.</li>
+</ol></li>
+<li><ol start="6" type="1">
+<li>Librerías Geoespaciales.</li>
+</ol></li>
+<li><ol start="7" type="1">
+<li>ArcGIS.</li>
+</ol></li>
+</ul>
+<p>👉 Necesitamos modificarlo.</p>
+<hr>
+</section>
+<section id="contenido---estructura" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="contenido---estructura"><span class="header-section-number">8.3</span> Contenido - Estructura</h2>
+<ul>
+<li><ol type="1">
+<li>Exposiciones del Profesor.</li>
+</ol>
+<ul>
+<li>Teoría.</li>
+<li>Práctica.</li>
+</ul></li>
+<li><ol start="2" type="1">
+<li>Trabajos en Grupo.</li>
+</ol></li>
+<li><ol start="3" type="1">
+<li>Exposiciones de los Estudiantes.</li>
+</ol></li>
+<li><ol start="4" type="1">
+<li>Lecturas.</li>
+</ol></li>
+<li><ol start="5" type="1">
+<li>Prácticas.</li>
+</ol></li>
+<li><ol start="6" type="1">
+<li>Trabajo Final.</li>
+</ol></li>
+</ul>
+<p>👉 Necesitamos concretarlo y asignar porcentajes.</p>
+<hr>
+</section>
+<section id="propuestas-de-estudiantes-para-el-curso" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="propuestas-de-estudiantes-para-el-curso"><span class="header-section-number">8.4</span> Propuestas de Estudiantes para el Curso</h2>
+<p>🎯 Tienes la palabra.</p>
+<hr>
+</section>
+<section id="enfoque-open-science" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="enfoque-open-science"><span class="header-section-number">8.5</span> Enfoque Open Science</h2>
+<ul>
+<li>Material presentado por profesor
+<ul>
+<li>Diapositivas</li>
+<li>Código</li>
+<li>Teoría</li>
+<li>Archivos de configuración</li>
+</ul></li>
+<li>Material de los estudiantes</li>
+<li>HTML, PDF</li>
+<li>GitHub</li>
+</ul>
+<hr>
+</section>
+<section id="seminario-latingeo-al-final-del-curso" class="level2" data-number="8.6">
+<h2 data-number="8.6" class="anchored" data-anchor-id="seminario-latingeo-al-final-del-curso"><span class="header-section-number">8.6</span> Seminario <strong>LatinGeo</strong> al final del curso</h2>
+<ul>
+<li>Organizado por GeoCorp y UNAL.</li>
+<li>Presentar trabajos finales.</li>
+<li>Presentar temas específicos.</li>
+<li>Abierto al público (en línea).</li>
+<li>Formato Open Science.</li>
+<li>Puede contribuir a la nota final.</li>
+<li>Podemos traer invitados.</li>
+</ul>
+<p>🎯 <strong>LatinGeo</strong>: Python, R y Julia</p>
+<hr>
+</section>
+<section id="temas-para-proyecto-final" class="level2" data-number="8.7">
+<h2 data-number="8.7" class="anchored" data-anchor-id="temas-para-proyecto-final"><span class="header-section-number">8.7</span> Temas para Proyecto Final</h2>
+<ul>
+<li><ol type="1">
+<li>Geocomputación en la Nube.</li>
+</ol></li>
+<li><ol start="2" type="1">
+<li>Virtualización.</li>
+</ol></li>
+<li><ol start="3" type="1">
+<li>Librerías Geo: Pipelines Composables.</li>
+</ol></li>
+<li><ol start="4" type="1">
+<li>Creación de Paquetes (R, Python, Julia).</li>
+</ol></li>
+<li><ol start="5" type="1">
+<li>Creación de Extensiones.</li>
+</ol></li>
+<li><ol start="6" type="1">
+<li>GitHub Actions.</li>
+</ol></li>
+<li><ol start="7" type="1">
+<li>DuckDB</li>
+</ol></li>
+<li><ol start="8" type="1">
+<li>GEE - GEEMAP</li>
+</ol></li>
+<li><ol start="9" type="1">
+<li>Temas aplicados</li>
+</ol></li>
+<li><ol start="10" type="1">
+<li>…</li>
+</ol></li>
+</ul>
+<hr>
+</section>
+<section id="paquetes-o-comandos-faltantes-en-dockerfile" class="level2" data-number="8.8">
+<h2 data-number="8.8" class="anchored" data-anchor-id="paquetes-o-comandos-faltantes-en-dockerfile"><span class="header-section-number">8.8</span> Paquetes o comandos faltantes en Dockerfile</h2>
+<ul>
+<li>Opcion B: QGIS OSGeo4W y QGIS para correr el plugin GEE (archivo 03-guia_instalacion_B_qgis.qmd)</li>
+<li>Actualizar código en la guía 02-A (usuario y clave y poner {} a todos menos a Julia)</li>
+<li>Quitar los números <code>### 1.</code> en 03-B</li>
+<li>Actualizar 04-arcgis (está incompleto)</li>
+<li>Guía B (arreglar nivel de subtítulos)</li>
+<li>Semana 3 y 4: Proyecciones con R (Sillabus)</li>
+<li>BD PostGIS (5 y 6)</li>
+</ul>
 
 
 </section>
@@ -731,13 +913,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./03-guia_instalacion_B_qgis.html" class="pagination-link" aria-label="Guía de Instalación. Opción B: QGIS y PyQGIS">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción B: QGIS y PyQGIS</span></span>
+      <a href="./41-practica_1_benchmark_raster.html" class="pagination-link" aria-label="Benchmark de Procesamiento Geoespacial">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Benchmark de Procesamiento Geoespacial</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./05-introduccion_python_r_julia.html" class="pagination-link" aria-label="Fundamentos: Python, R y Julia">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Fundamentos: Python, R y Julia</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./62-presentacion_2_benchmark.html" class="pagination-link" aria-label="Benchmark geoespacial: cómo leer los resultados">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Benchmark geoespacial: cómo leer los resultados</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

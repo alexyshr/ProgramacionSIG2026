@@ -107,15 +107,10 @@ format:
 
 ## Paquetes o comandos faltantes en Dockerfile
 
-- `apt-get update && apt-get install -y fonts-symbola`
-- Julia: `FileIO`, `ImageIO`
 - Opcion B: QGIS OSGeo4W  y QGIS para correr el plugin GEE (archivo 03-guia_instalacion_B_qgis.qmd)
 - Actualizar código en la guía 02-A (usuario y clave y poner {} a todos menos a Julia)
 - Quitar los números `### 1.`  en 03-B
 - Actualizar 04-arcgis (está incompleto)
-- Rscript -e "install.packages('webshot2')" (capturar pantalla en html dinamico para pdf)
-- Dependencia de sistema para capturas (acompaña al anterior)
-- pip3 install selenium
 - Guía B (arreglar nivel de subtítulos)
 - Semana 3 y 4: Proyecciones con R (Sillabus)
 - BD PostGIS (5 y 6)

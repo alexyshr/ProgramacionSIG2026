@@ -1005,8 +1005,9 @@ cat("--- Verificación Finalizada ---\n")
 
 ### Julia
 
-```{julia}
-#| eval: false
+```{r}
+# #| eval: false
+j_plot('
 using LibPQ
 using LibGEOS
 using ArchGDAL
@@ -1058,6 +1059,7 @@ catch e
 end
 
 println("--- Verificación Finalizada ---")
+')
 ```
 :::
 

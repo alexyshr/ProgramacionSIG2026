@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Programación SIG: Python, R y Julia - 4&nbsp; Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</title>
+<title>Programación SIG: Python, R y Julia - Appendix I — Adicionales Sobre R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -30,8 +64,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./05-introduccion_python_r_julia.html" rel="next">
-<link href="./03-guia_instalacion_B_qgis.html" rel="prev">
+<link href="./90-julia.html" rel="next">
+<link href="./88-python.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -81,7 +115,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-introduccion-entornos.html">Instalación y Entornos</a></li><li class="breadcrumb-item"><a href="./04-guia_instalacion_C_ArcGIS.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./81-infraestructura_instalada.html">Appendices</a></li><li class="breadcrumb-item"><a href="./89-r.html"><span class="chapter-number">I</span>&nbsp; <span class="chapter-title">Adicionales Sobre R</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -147,7 +181,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-guia_instalacion_C_ArcGIS.html" class="sidebar-item-text sidebar-link active">
+  <a href="./04-guia_instalacion_C_ArcGIS.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</span></span></a>
   </div>
 </li>
@@ -275,7 +309,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./89-r.html" class="sidebar-item-text sidebar-link">
+  <a href="./89-r.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">I</span>&nbsp; <span class="chapter-title">Adicionales Sobre R</span></span></a>
   </div>
 </li>
@@ -309,16 +343,30 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Tabla de Contenidos</h2>
    
   <ul>
-  <li><a href="#section" id="toc-section" class="nav-link active" data-scroll-target="#section"><span class="header-section-number">4.1</span> ..</a></li>
+  <li><a href="#versiones-instaladas-del-software" id="toc-versiones-instaladas-del-software" class="nav-link active" data-scroll-target="#versiones-instaladas-del-software"><span class="header-section-number">I.1</span> Versiones Instaladas del Software</a></li>
+  <li><a href="#sec-httpgd-config" id="toc-sec-httpgd-config" class="nav-link" data-scroll-target="#sec-httpgd-config"><span class="header-section-number">I.2</span> Visualización Interactiva con <code>httpgd</code></a>
+  <ul class="collapse">
+  <li><a href="#inicio-del-servidor-gráfico" id="toc-inicio-del-servidor-gráfico" class="nav-link" data-scroll-target="#inicio-del-servidor-gráfico">Inicio del Servidor Gráfico</a></li>
+  <li><a href="#resolución-de-conflictos-el-fix-del-puerto" id="toc-resolución-de-conflictos-el-fix-del-puerto" class="nav-link" data-scroll-target="#resolución-de-conflictos-el-fix-del-puerto">Resolución de Conflictos (El “Fix” del Puerto)</a></li>
+  <li><a href="#formas-de-ver-sus-gráficos" id="toc-formas-de-ver-sus-gráficos" class="nav-link" data-scroll-target="#formas-de-ver-sus-gráficos">Formas de ver sus Gráficos</a></li>
+  <li><a href="#verificación-de-salud" id="toc-verificación-de-salud" class="nav-link" data-scroll-target="#verificación-de-salud">Verificación de Salud</a></li>
+  <li><a href="#sec-repl-concept" id="toc-sec-repl-concept" class="nav-link" data-scroll-target="#sec-repl-concept">El Entorno Interactivo (REPL) y Motores Gráficos</a></li>
+  <li><a href="#el-rol-crítico-de-httpgd-en-r" id="toc-el-rol-crítico-de-httpgd-en-r" class="nav-link" data-scroll-target="#el-rol-crítico-de-httpgd-en-r">El rol crítico de <code>httpgd</code> en R</a></li>
+  </ul></li>
+  <li><a href="#sec-interoperabilidad" id="toc-sec-interoperabilidad" class="nav-link" data-scroll-target="#sec-interoperabilidad"><span class="header-section-number">I.3</span> Paquetes para Comunicación con Julia y Python</a>
+  <ul class="collapse">
+  <li><a href="#el-rol-de-knitr" id="toc-el-rol-de-knitr" class="nav-link" data-scroll-target="#el-rol-de-knitr">El Rol de <code>knitr</code></a></li>
+  <li><a href="#transición-técnica-de-juliacall-a-juliaconnector" id="toc-transición-técnica-de-juliacall-a-juliaconnector" class="nav-link" data-scroll-target="#transición-técnica-de-juliacall-a-juliaconnector">Transición Técnica: De <code>JuliaCall</code> a <code>JuliaConnectoR</code></a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-introduccion-entornos.html">Instalación y Entornos</a></li><li class="breadcrumb-item"><a href="./04-guia_instalacion_C_ArcGIS.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./81-infraestructura_instalada.html">Appendices</a></li><li class="breadcrumb-item"><a href="./89-r.html"><span class="chapter-number">I</span>&nbsp; <span class="chapter-title">Adicionales Sobre R</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="guia-C" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</span></span></h1>
+<h1 class="title">Appendix I — Adicionales Sobre R</h1>
 </div>
 
 
@@ -335,10 +383,329 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="section" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="section"><span class="header-section-number">4.1</span> ..</h2>
+<section id="versiones-instaladas-del-software" class="level2" data-number="I.1">
+<h2 data-number="I.1" class="anchored" data-anchor-id="versiones-instaladas-del-software"><span class="header-section-number">I.1</span> Versiones Instaladas del Software</h2>
+<p>Versiones que deben quedar instaladas en el sistema R:</p>
+<table class="table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 30%">
+<col style="width: 43%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Software</th>
+<th style="text-align: left;">Tipo</th>
+<th style="text-align: left;">Versión</th>
+<th style="text-align: left;">Comando (desde terminal)</th>
+<th style="text-align: left;">Comando (desde R)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>R</code></td>
+<td style="text-align: left;">Lenguaje</td>
+<td style="text-align: left;">4.5.2</td>
+<td style="text-align: left;"><code>R --version</code></td>
+<td style="text-align: left;"><code>R.version.string</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>GEOS</code></td>
+<td style="text-align: left;">Librería sistema</td>
+<td style="text-align: left;">3.12.1</td>
+<td style="text-align: left;"><code>geos-config --version</code></td>
+<td style="text-align: left;"><code>sf::sf_extSoftVersion()["GEOS"]</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>GDAL</code></td>
+<td style="text-align: left;">Librería sistema</td>
+<td style="text-align: left;">3.8.4</td>
+<td style="text-align: left;"><code>gdalinfo --version</code></td>
+<td style="text-align: left;"><code>sf::sf_extSoftVersion()["GDAL"]</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>PROJ</code></td>
+<td style="text-align: left;">Librería sistema</td>
+<td style="text-align: left;">9.4.0</td>
+<td style="text-align: left;">(no aplica / no disponible)</td>
+<td style="text-align: left;"><code>sf::sf_extSoftVersion()["PROJ"]</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>sf</code></td>
+<td style="text-align: left;">Paquete</td>
+<td style="text-align: left;">1.0.23</td>
+<td style="text-align: left;"><code>R -q -e "packageVersion('sf')"</code></td>
+<td style="text-align: left;"><code>packageVersion("sf")</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>terra</code></td>
+<td style="text-align: left;">Paquete</td>
+<td style="text-align: left;">1.8.86</td>
+<td style="text-align: left;"><code>R -q -e "packageVersion('terra')"</code></td>
+<td style="text-align: left;"><code>packageVersion("terra")</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>stars</code></td>
+<td style="text-align: left;">Paquete</td>
+<td style="text-align: left;">0.7.0</td>
+<td style="text-align: left;"><code>R -q -e "packageVersion('stars')"</code></td>
+<td style="text-align: left;"><code>packageVersion("stars")</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="sec-httpgd-config" class="level2" data-number="I.2">
+<h2 data-number="I.2" class="anchored" data-anchor-id="sec-httpgd-config"><span class="header-section-number">I.2</span> Visualización Interactiva con <code>httpgd</code></h2>
+<p>Dado que nuestro entorno Docker es “headless” (sin monitor propio), utilizamos <strong><code>httpgd</code></strong> como un servidor gráfico intermedio. Este paquete captura las señales de dibujo de R y las sirve a través de una URL que VS Code puede renderizar.</p>
+<section id="inicio-del-servidor-gráfico" class="level3">
+<h3 class="anchored" data-anchor-id="inicio-del-servidor-gráfico">Inicio del Servidor Gráfico</h3>
+<p>Cada vez que inicie una nueva sesión de R, debe despertar al servidor manualmente:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Inicia el motor gráfico</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>httpgd<span class="sc">::</span><span class="fu">hgd</span>()</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Verifica el estado y el puerto asignado</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>httpgd<span class="sc">::</span><span class="fu">hgd_details</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="resolución-de-conflictos-el-fix-del-puerto" class="level3">
+<h3 class="anchored" data-anchor-id="resolución-de-conflictos-el-fix-del-puerto">Resolución de Conflictos (El “Fix” del Puerto)</h3>
+<p>En nuestro contenedor, el puerto estándar para gráficos está mapeado al <strong>8787</strong>. Si al ejecutar <code>hgd_details()</code> nota que el sistema asignó un puerto aleatorio o si el visor aparece en blanco, fuerce la conexión con la siguiente “receta”:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Forzar host y puerto para compatibilidad con Docker</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>httpgd<span class="sc">::</span><span class="fu">hgd</span>(<span class="at">host =</span> <span class="st">"0.0.0.0"</span>, <span class="at">port =</span> <span class="dv">8787</span>, <span class="at">token =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="formas-de-ver-sus-gráficos" class="level3">
+<h3 class="anchored" data-anchor-id="formas-de-ver-sus-gráficos">Formas de ver sus Gráficos</h3>
+<p>Una vez el servidor está corriendo, tiene dos caminos para visualizar sus mapas:</p>
+<table class="table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Método</th>
+<th style="text-align: left;">Comando / Acción</th>
+<th style="text-align: left;">Ventaja</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Visor Interno</strong></td>
+<td style="text-align: left;"><code>Ctrl + Shift + P</code> -&gt; <strong>Open httpgd viewer</strong></td>
+<td style="text-align: left;">Mantiene todo dentro de una pestaña de VS Code.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Navegador Externo</strong></td>
+<td style="text-align: left;"><code>httpgd::hgd_browse()</code></td>
+<td style="text-align: left;">Ideal si trabaja con dos monitores para ver mapas en pantalla completa.</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+¿Por qué <code>token = FALSE</code>?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Dentro del entorno seguro del contenedor, desactivamos el <em>token</em> para facilitar la conexión inmediata entre el servidor de R y el visor de VS Code sin que el firewall interno bloquee la petición por falta de credenciales.</p>
+</div>
+</div>
+</section>
+<section id="verificación-de-salud" class="level3">
+<h3 class="anchored" data-anchor-id="verificación-de-salud">Verificación de Salud</h3>
+<p>Si después de iniciar el servidor intenta graficar algo (ej: <code>plot(1:10)</code>) y no ve nada, ejecute <code>httpgd::hgd_details()</code>. Asegúrese de que: 1. <strong>URL</strong>: Apunte a <code>http://0.0.0.0:8787</code>. 2. <strong>Status</strong>: Indique que está escuchando (<em>listening</em>).</p>
+</section>
+<section id="sec-repl-concept" class="level3">
+<h3 class="anchored" data-anchor-id="sec-repl-concept">El Entorno Interactivo (REPL) y Motores Gráficos</h3>
+<p>En el desarrollo científico, el <strong>REPL</strong> (<em>Read-Eval-Print Loop</em>) es la consola interactiva que permite la “programación exploratoria”. Es el ciclo donde el sistema <strong>lee</strong> su instrucción, la <strong>evalúa</strong> mediante el motor correspondiente, <strong>imprime</strong> el resultado y queda en un <strong>bucle</strong> a la espera del siguiente comando.</p>
+<p>En nuestro laboratorio políglota, la identidad visual del REPL es su brújula para saber en qué lenguaje está operando:</p>
+<table class="table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Lenguaje</th>
+<th style="text-align: left;">¿Cómo se ve el REPL?</th>
+<th style="text-align: left;">Características en este curso</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>R</strong></td>
+<td style="text-align: left;"><code>&gt;</code></td>
+<td style="text-align: left;">Consola estándar para procesos geoespaciales con <code>sf</code> o <code>terra</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Julia</strong></td>
+<td style="text-align: left;"><code>julia&gt;</code></td>
+<td style="text-align: left;">Entorno de alto rendimiento con modos de ayuda (<code>?</code>) y terminal (<code>;</code>).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Python</strong></td>
+<td style="text-align: left;"><code>&gt;&gt;&gt;</code></td>
+<td style="text-align: left;">Consola básica; se recomienda el uso de <strong>IPython</strong> para interactividad.</td>
+</tr>
+</tbody>
+</table>
+<p>La experiencia interactiva y el soporte gráfico dentro de <strong>VS Code</strong> dependen de la combinación entre el motor de ejecución y el dispositivo gráfico configurado en el contenedor:</p>
+<table class="table">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 19%">
+<col style="width: 19%">
+<col style="width: 19%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Lenguaje</th>
+<th style="text-align: left;">Acceso / Contexto</th>
+<th style="text-align: left;">Motor de Ejecución</th>
+<th style="text-align: left;">Dispositivo Gráfico</th>
+<th style="text-align: center;">Soporte Inline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>R</strong></td>
+<td style="text-align: left;">Nativo (Estático)</td>
+<td style="text-align: left;">R Extension</td>
+<td style="text-align: left;">VS Code Plots (Pane)</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>R</strong></td>
+<td style="text-align: left;">Nativo (Interactivo)</td>
+<td style="text-align: left;">R Extension</td>
+<td style="text-align: left;"><strong>httpgd</strong></td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Julia</strong></td>
+<td style="text-align: left;">Nativo (REPL)</td>
+<td style="text-align: left;">VSCodeServer</td>
+<td style="text-align: left;">VS Code Plots (Pane)</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Julia</strong></td>
+<td style="text-align: left;">Interop (R-Bridge)</td>
+<td style="text-align: left;"><code>JuliaConnectoR</code></td>
+<td style="text-align: left;"><strong>httpgd</strong> (vía R)</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Python</strong></td>
+<td style="text-align: left;">Interop (R-Bridge)</td>
+<td style="text-align: left;"><code>reticulate</code></td>
+<td style="text-align: left;">R Device (<strong>httpgd</strong>)</td>
+<td style="text-align: center;">❌ / ⚠️</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Python</strong></td>
+<td style="text-align: left;">Nativo (Jupyter)</td>
+<td style="text-align: left;">Jupyter kernel</td>
+<td style="text-align: left;">Jupyter Viewer</td>
+<td style="text-align: center;">✅</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="el-rol-crítico-de-httpgd-en-r" class="level3">
+<h3 class="anchored" data-anchor-id="el-rol-crítico-de-httpgd-en-r">El rol crítico de <code>httpgd</code> en R</h3>
+<p>Para R, no basta con tener la extensión instalada. El paquete <strong><code>httpgd</code></strong> actúa como un servidor web interno que captura los gráficos generados en el contenedor y los “proyecta” en VS Code.</p>
+<ul>
+<li><strong>¿Por qué lo usamos?</strong> Los dispositivos gráficos tradicionales (como <code>X11</code> o <code>windows()</code>) no funcionan dentro de un contenedor Docker (<em>headless</em>). <code>httpgd</code> soluciona esto convirtiendo cada mapa en un elemento interactivo SVG/HTML renderizable.</li>
+<li><strong>Activación</strong>: Siempre debe iniciar su sesión de R ejecutando <code>httpgd::hgd()</code> para abrir este canal de comunicación.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="sec-interoperabilidad" class="level2" data-number="I.3">
+<h2 data-number="I.3" class="anchored" data-anchor-id="sec-interoperabilidad"><span class="header-section-number">I.3</span> Paquetes para Comunicación con Julia y Python</h2>
+<p>Para que este ecosistema funcione, R actúa como el “director de orquesta” utilizando un motor de ejecución y una serie de puentes que permiten la comunicación fluida de datos entre lenguajes.</p>
+<table class="table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 29%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Lenguaje / Función</th>
+<th style="text-align: left;">Paquete en R</th>
+<th style="text-align: left;">Motor / Propósito</th>
+<th style="text-align: center;">Estado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Renderizado</strong></td>
+<td style="text-align: left;"><strong><code>knitr</code></strong></td>
+<td style="text-align: left;">Motor maestro que orquesta la ejecución de celdas en el documento</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Julia</strong></td>
+<td style="text-align: left;"><code>JuliaConnectoR</code></td>
+<td style="text-align: left;">Comunicación funcional estable con el kernel de Julia</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Python</strong></td>
+<td style="text-align: left;"><code>reticulate</code></td>
+<td style="text-align: left;">Interoperabilidad de objetos y ejecución de Python</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>LSP (Soporte)</strong></td>
+<td style="text-align: left;"><code>languageserver</code></td>
+<td style="text-align: left;">Autocompletado, IntelliSense y ayuda en tiempo real</td>
+<td style="text-align: center;">✅</td>
+</tr>
+</tbody>
+</table>
+<section id="el-rol-de-knitr" class="level3">
+<h3 class="anchored" data-anchor-id="el-rol-de-knitr">El Rol de <code>knitr</code></h3>
+<p>Mientras que los paquetes actúan como puentes técnicos, <strong><code>knitr</code></strong> es el encargado de leer el archivo <code>.qmd</code>, enviar las instrucciones a los motores respectivos y capturar los resultados (tablas, mapas, gráficos) para integrarlos en el documento final. Sin <code>knitr</code>, la integración políglota de Quarto no sería posible.</p>
+</section>
+<section id="transición-técnica-de-juliacall-a-juliaconnector" class="level3">
+<h3 class="anchored" data-anchor-id="transición-técnica-de-juliacall-a-juliaconnector">Transición Técnica: De <code>JuliaCall</code> a <code>JuliaConnectoR</code></h3>
+<p>En el diseño de este entorno, se tomó la decisión técnica de descartar el paquete <code>JuliaCall</code> en favor de <strong><code>JuliaConnectoR</code></strong>:</p>
+<ol type="1">
+<li><strong>El Problema</strong>: <code>JuliaCall</code> presentaba inestabilidades al gestionar dependencias dinámicas compartidas (como <code>libcurl</code> o <code>libstdc++</code>) dentro del contenedor, causando cierres inesperados (<em>crashes</em>) de la sesión de R.</li>
+<li><strong>La Sustitución</strong>: Se seleccionó <strong><code>JuliaConnectoR</code></strong> por su arquitectura más limpia, que no interfiere con el entorno de Julia ya configurado en el sistema operativo.</li>
+<li><strong>La Solución</strong>: La integración se resolvió mediante una “inyección” de código en el archivo <code>Rprofile.site</code>, configurando automáticamente la ruta del ejecutable en <code>$Sys.BINDIR$</code> y definiendo las funciones maestras <strong><code>j_eval()</code></strong> y <strong><code>j_plot()</code></strong>.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🧠 Regla de Oro del Curso
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><strong>Julia y R</strong>: Se operan de manera totalmente <strong>interactiva</strong> en VS Code (envío de líneas con <code>Ctrl+Enter</code>).</li>
+<li><strong>Python vía reticulate</strong>: Se utiliza primordialmente para el <strong>renderizado (vía knitr)</strong> de informes finales. Para una programación interactiva pura en Python, se recomienda el uso de los <strong>Jupyter kernels</strong>.</li>
+</ol>
+</div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -731,13 +1098,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./03-guia_instalacion_B_qgis.html" class="pagination-link" aria-label="Guía de Instalación. Opción B: QGIS y PyQGIS">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción B: QGIS y PyQGIS</span></span>
+      <a href="./88-python.html" class="pagination-link" aria-label="Adicionales Sobre Python">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">H</span>&nbsp; <span class="chapter-title">Adicionales Sobre Python</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./05-introduccion_python_r_julia.html" class="pagination-link" aria-label="Fundamentos: Python, R y Julia">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Fundamentos: Python, R y Julia</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./90-julia.html" class="pagination-link" aria-label="Adicionales Sobre Julia">
+        <span class="nav-page-text"><span class="chapter-number">J</span>&nbsp; <span class="chapter-title">Adicionales Sobre Julia</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

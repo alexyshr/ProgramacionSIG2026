@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="72-varios_files/libs/clipboard/clipboard.min.js"></script>
-<script src="72-varios_files/libs/quarto-html/tabby.min.js"></script>
-<script src="72-varios_files/libs/quarto-html/popper.min.js"></script>
-<script src="72-varios_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="72-varios_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="72-varios_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="72-varios_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="72-varios_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="62-presentacion_2_benchmark_files/libs/clipboard/clipboard.min.js"></script>
+<script src="62-presentacion_2_benchmark_files/libs/quarto-html/tabby.min.js"></script>
+<script src="62-presentacion_2_benchmark_files/libs/quarto-html/popper.min.js"></script>
+<script src="62-presentacion_2_benchmark_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="62-presentacion_2_benchmark_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="62-presentacion_2_benchmark_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="62-presentacion_2_benchmark_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="62-presentacion_2_benchmark_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.4.550">
 
   <meta name="author" content="Laboratorio de Programación SIG">
-  <title>Temas por Charlar</title>
+  <title>Benchmark geoespacial: cómo leer los resultados</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="72-varios_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="72-varios_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="62-presentacion_2_benchmark_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="62-presentacion_2_benchmark_files/libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -30,11 +30,11 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="72-varios_files/libs/revealjs/dist/theme/quarto.css">
-  <link href="72-varios_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="72-varios_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="72-varios_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="72-varios_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link rel="stylesheet" href="62-presentacion_2_benchmark_files/libs/revealjs/dist/theme/quarto.css">
+  <link href="62-presentacion_2_benchmark_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="62-presentacion_2_benchmark_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="62-presentacion_2_benchmark_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="62-presentacion_2_benchmark_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -326,8 +326,8 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Temas por Charlar</h1>
-  <p class="subtitle">Asunto: varios</p>
+  <h1 class="title">Benchmark geoespacial: cómo leer los resultados</h1>
+  <p class="subtitle">Una comparación de stacks, no de lenguajes</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -338,173 +338,226 @@ Laboratorio de Programación SIG
 </div>
 
 </section>
-<section id="clase-de-hoy-instalación-y-uso-básido-del-software" class="slide level2 center">
-<h2>Clase de Hoy: Instalación y uso básido del Software</h2>
+<section id="qué-estamos-comparando" class="slide level2 center">
+<h2>¿Qué estamos comparando?</h2>
+<p>Este ejercicio <strong>no compara lenguajes de programación</strong>.</p>
+<p>Evalúa el rendimiento del <strong>stack completo</strong>:</p>
 <ul>
-<li class="fragment"><ol type="1">
-<li class="fragment">Docker Desktop</li>
-</ol></li>
-<li class="fragment"><ol start="2" type="1">
-<li class="fragment">Instalar nuestros contenedores</li>
-</ol></li>
-<li class="fragment"><ol start="3" type="1">
-<li class="fragment">VSCode + Extensiones (dentro del nuestros contenerores)</li>
-</ol></li>
-<li class="fragment"><ol start="4" type="1">
-<li class="fragment">Git + GitHub</li>
-</ol></li>
-<li class="fragment"><ol start="5" type="1">
-<li class="fragment">Acceso a Jupyter Lab</li>
-</ol></li>
-<li class="fragment"><ol start="6" type="1">
-<li class="fragment">Creación de archivos Quarto (*.qmd): HTML &amp; PDF</li>
-</ol></li>
-<li class="fragment"><ol start="7" type="1">
-<li class="fragment">OSGeo4W (QGIS) - QGIS + GEE (Pixi)</li>
-</ol></li>
-<li class="fragment"><ol start="8" type="1">
-<li class="fragment">Chequeo ArcGIS Pro</li>
-</ol></li>
+<li class="fragment">GDAL (Geospatial Data Abstraction Library): raster (GDAL) + vector (OGR: Open GIS Reference (Simple Features))</li>
+<li class="fragment">Librerías raster</li>
+<li class="fragment">Modelo de ejecución</li>
+<li class="fragment">Nivel de abstracción</li>
+</ul>
+<p>👉 El lenguaje es solo una parte del sistema.</p>
+</section>
+<section id="qué-hace-exactamente-el-benchmark" class="slide level2 center">
+<h2>¿Qué hace exactamente el benchmark?</h2>
+<p>El benchmark ejecuta un <strong>caso extremo y muy simplificado</strong>:</p>
+<ul>
+<li class="fragment">Usa <strong>una sola banda raster</strong></li>
+<li class="fragment">Aplica <strong>una operación matemática simple</strong> (× 1.5)</li>
+<li class="fragment">Calcula <strong>una media global</strong></li>
+</ul>
+<p>🎯 Diseñado para forzar la lectura completa de los datos.</p>
+</section>
+<section id="qué-no-evalúa" class="slide level2 center">
+<h2>¿Qué NO evalúa?</h2>
+<p>Este benchmark <strong>no evalúa</strong>:</p>
+<ul>
+<li class="fragment">Análisis multibanda</li>
+<li class="fragment">Operaciones espaciales complejas</li>
+<li class="fragment">Vecindarios, máscaras o reproyecciones</li>
+<li class="fragment">Flujos iterativos o modelos estadísticos</li>
+</ul>
+<p>🚫 No representa un flujo SIG real completo.</p>
+</section>
+<section id="por-qué-usamos-mean" class="slide level2 center">
+<h2>¿Por qué usamos <code>mean()</code>?</h2>
+<p>El cálculo de la media es clave porque:</p>
+<ul>
+<li class="fragment">Obliga a <strong>recorrer todos los píxeles</strong></li>
+<li class="fragment">Garantiza que la operación aritmética fue ejecutada</li>
+<li class="fragment">Fuerza la evaluación completa del raster</li>
+</ul>
+<p>⚠️ Cada motor implementa este paso de forma distinta.</p>
+</section>
+<section id="modelos-de-ejecución-comparados" class="slide level2 center">
+<h2>Modelos de ejecución comparados</h2>
+<p>Cada stack sigue una filosofía diferente:</p>
+<ul>
+<li class="fragment"><p><strong>Python / rasterio + NumPy</strong><br>
+Lectura completa a memoria + ejecución inmediata</p></li>
+<li class="fragment"><p><strong>R / terra</strong><br>
+Raster algebra optimizado en C++ y procesamiento por bloques, pero sin exponer un pipeline diferido composable</p></li>
+<li class="fragment"><p><strong>R / stars</strong><br>
+Manejo de cubos de datos multidimensionales y metadatos ricos; el modo <code>proxy</code> difiere la lectura, pero <strong>no construye un DAG composable completo</strong></p></li>
+<li class="fragment"><p><strong>Julia / Rasters.jl</strong><br>
+Flujos <em>lazy</em> y <strong>pipelines composables</strong>, evaluados al final como un plan coherente</p></li>
 </ul>
 </section>
-<section id="contenido---syllabus-actual" class="slide level2 center">
-<h2>Contenido - Syllabus actual</h2>
+<section id="qué-favorece-este-benchmark" class="slide level2 center">
+<h2>¿Qué favorece este benchmark?</h2>
+<p>Este escenario favorece motores optimizados para:</p>
 <ul>
-<li class="fragment"><ol type="1">
-<li class="fragment">Principios de Programación.</li>
-</ol></li>
-<li class="fragment"><ol start="2" type="1">
-<li class="fragment">Fundamentos de Python.</li>
-</ol></li>
-<li class="fragment"><ol start="3" type="1">
-<li class="fragment">Marcos de Datos.</li>
-</ol></li>
-<li class="fragment"><ol start="4" type="1">
-<li class="fragment">Programación Orientada a Objetos.</li>
-</ol></li>
-<li class="fragment"><ol start="5" type="1">
-<li class="fragment">Python y PostgreSQL.</li>
-</ol></li>
-<li class="fragment"><ol start="6" type="1">
-<li class="fragment">Librerías Geoespaciales.</li>
-</ol></li>
-<li class="fragment"><ol start="7" type="1">
-<li class="fragment">ArcGIS.</li>
-</ol></li>
+<li class="fragment">Recorridos contiguos de memoria</li>
+<li class="fragment">Operaciones simples en una sola pasada</li>
+<li class="fragment">Reducciones globales monolíticas</li>
 </ul>
-<p>👉 Necesitamos modificarlo.</p>
+<p>👉 No todos los motores están diseñados para este patrón.</p>
 </section>
-<section id="contenido---estructura" class="slide level2 center">
-<h2>Contenido - Estructura</h2>
+<section id="abstracción-vs-rendimiento" class="slide level2 center">
+<h2>Abstracción vs rendimiento</h2>
+<p>Más abstracción implica:</p>
 <ul>
-<li class="fragment"><ol type="1">
-<li class="fragment">Exposiciones del Profesor.</li>
-</ol>
-<ul>
-<li class="fragment">Teoría.</li>
-<li class="fragment">Práctica.</li>
-</ul></li>
-<li class="fragment"><ol start="2" type="1">
-<li class="fragment">Trabajos en Grupo.</li>
-</ol></li>
-<li class="fragment"><ol start="3" type="1">
-<li class="fragment">Exposiciones de los Estudiantes.</li>
-</ol></li>
-<li class="fragment"><ol start="4" type="1">
-<li class="fragment">Lecturas.</li>
-</ol></li>
-<li class="fragment"><ol start="5" type="1">
-<li class="fragment">Prácticas.</li>
-</ol></li>
-<li class="fragment"><ol start="6" type="1">
-<li class="fragment">Trabajo Final.</li>
-</ol></li>
+<li class="fragment">Más metadatos</li>
+<li class="fragment">Más coordinación interna</li>
+<li class="fragment">Más costo administrativo</li>
 </ul>
-<p>👉 Necesitamos concretarlo y asignar porcentajes.</p>
-</section>
-<section id="propuestas-de-estudiantes-para-el-curso" class="slide level2 center">
-<h2>Propuestas de Estudiantes para el Curso</h2>
-<p>🎯 Tienes la palabra.</p>
-</section>
-<section id="enfoque-open-science" class="slide level2 center">
-<h2>Enfoque Open Science</h2>
+<p>Pero también ofrece:</p>
 <ul>
-<li class="fragment">Material presentado por profesor
-<ul>
-<li class="fragment">Diapositivas</li>
-<li class="fragment">Código</li>
-<li class="fragment">Teoría</li>
-<li class="fragment">Archivos de configuración</li>
-</ul></li>
-<li class="fragment">Material de los estudiantes</li>
-<li class="fragment">HTML, PDF</li>
-<li class="fragment">GitHub</li>
+<li class="fragment">Código más claro</li>
+<li class="fragment">Menos errores</li>
+<li class="fragment">Mayor expresividad analítica</li>
 </ul>
+<p>⚖️ Es un intercambio inevitable.</p>
 </section>
-<section id="seminario-latingeo-al-final-del-curso" class="slide level2 center">
-<h2>Seminario <strong>LatinGeo</strong> al final del curso</h2>
-<ul>
-<li class="fragment">Organizado por GeoCorp y UNAL.</li>
-<li class="fragment">Presentar trabajos finales.</li>
-<li class="fragment">Presentar temas específicos.</li>
-<li class="fragment">Abierto al público (en línea).</li>
-<li class="fragment">Formato Open Science.</li>
-<li class="fragment">Puede contribuir a la nota final.</li>
-<li class="fragment">Podemos traer invitados.</li>
-</ul>
-<p>🎯 <strong>LatinGeo</strong>: Python, R y Julia</p>
+<section id="niveles-de-abstracción-por-motor" class="slide level2 center">
+<h2>Niveles de abstracción por motor</h2>
+<table>
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Motor</th>
+<th>Nivel de abstracción</th>
+<th>Forma de trabajar</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>NumPy / rasterio</strong></td>
+<td>Baja</td>
+<td>“Aquí tienes un array, calcula ahora”</td>
+</tr>
+<tr class="even">
+<td><strong>terra (R)</strong></td>
+<td>Media</td>
+<td>“Yo optimizo internamente en C++”</td>
+</tr>
+<tr class="odd">
+<td><strong>stars (R)</strong></td>
+<td>Alta</td>
+<td>“Gestiono dimensiones, tiempo y metadatos”</td>
+</tr>
+<tr class="even">
+<td><strong>Rasters.jl (Julia)</strong></td>
+<td>Flexible</td>
+<td>“Defino un pipeline que se evalúa al final”</td>
+</tr>
+</tbody>
+</table>
+<p>📌 Más abstracción = más expresividad, pero más costo administrativo.</p>
 </section>
-<section id="temas-para-proyecto-final" class="slide level2 center">
-<h2>Temas para Proyecto Final</h2>
+<section id="paralelismo-y-pipelines-composables" class="slide level2 center">
+<h2>Paralelismo y pipelines composables</h2>
+<p>Solo algunos stacks permiten <strong>componer operaciones</strong> y ejecutarlas al final:</p>
 <ul>
-<li class="fragment"><ol type="1">
-<li class="fragment">Geocomputación en la Nube.</li>
-</ol></li>
-<li class="fragment"><ol start="2" type="1">
-<li class="fragment">Virtualización.</li>
-</ol></li>
-<li class="fragment"><ol start="3" type="1">
-<li class="fragment">Librerías Geo: Pipelines Composables.</li>
-</ol></li>
-<li class="fragment"><ol start="4" type="1">
-<li class="fragment">Creación de Paquetes (R, Python, Julia).</li>
-</ol></li>
-<li class="fragment"><ol start="5" type="1">
-<li class="fragment">Creación de Extensiones.</li>
-</ol></li>
-<li class="fragment"><ol start="6" type="1">
-<li class="fragment">GitHub Actions.</li>
-</ol></li>
-<li class="fragment"><ol start="7" type="1">
-<li class="fragment">DuckDB</li>
-</ol></li>
-<li class="fragment"><ol start="8" type="1">
-<li class="fragment">GEE - GEEMAP</li>
-</ol></li>
-<li class="fragment"><ol start="9" type="1">
-<li class="fragment">Temas aplicados</li>
-</ol></li>
-<li class="fragment"><ol start="10" type="1">
-<li class="fragment">…</li>
-</ol></li>
+<li class="fragment"><p><strong>Julia (Rasters.jl)</strong><br>
+Pipelines composables + <strong>paralelismo multihilo nativo</strong>,<br>
+sin librerías externas adicionales</p></li>
+<li class="fragment"><p><strong>Python (xarray + Dask)</strong><br>
+Pipelines lazy con ejecución distribuida explícita</p></li>
+<li class="fragment"><p><strong>R (dplyr + dbplyr)</strong><br>
+Lenguaje de pipelines, <strong>no espacial por sí mismo</strong>;<br>
+requiere backends como PostGIS, DuckDB o Spark</p></li>
 </ul>
+<p>📌 Optimización interna <strong>no equivale</strong> a pipeline composable.</p>
 </section>
-<section id="paquetes-o-comandos-faltantes-en-dockerfile" class="slide level2 center">
-<h2>Paquetes o comandos faltantes en Dockerfile</h2>
+<section id="no-hay-un-ganador-universal" class="slide level2 center">
+<h2>No hay un ganador universal</h2>
+<p>Este benchmark mide:</p>
+<blockquote>
+<p>Rendimiento bajo un patrón específico de acceso y reducción global</p>
+</blockquote>
+<p>No mide:</p>
 <ul>
-<li class="fragment"><code>apt-get update &amp;&amp; apt-get install -y fonts-symbola</code></li>
-<li class="fragment">Julia: <code>FileIO</code>, <code>ImageIO</code></li>
-<li class="fragment">Opcion B: QGIS OSGeo4W y QGIS para correr el plugin GEE (archivo 03-guia_instalacion_B_qgis.qmd)</li>
-<li class="fragment">Actualizar código en la guía 02-A (usuario y clave y poner {} a todos menos a Julia)</li>
-<li class="fragment">Quitar los números <code>### 1.</code> en 03-B</li>
-<li class="fragment">Actualizar 04-arcgis (está incompleto)</li>
-<li class="fragment">Rscript -e “install.packages(‘webshot2’)” (capturar pantalla en html dinamico para pdf)</li>
-<li class="fragment">Dependencia de sistema para capturas (acompaña al anterior)</li>
-<li class="fragment">pip3 install selenium</li>
-<li class="fragment">Guía B (arreglar nivel de subtítulos)</li>
-<li class="fragment">Semana 3 y 4: Proyecciones con R (Sillabus)</li>
-<li class="fragment">BD PostGIS (5 y 6)</li>
+<li class="fragment">Calidad general del lenguaje</li>
+<li class="fragment">Flexibilidad analítica</li>
+<li class="fragment">Escalabilidad en flujos SIG complejos</li>
 </ul>
+<p>📍 Los resultados deben interpretarse con contexto.</p>
+</section>
+<section id="escalando-a-datos-realmente-grandes" class="slide level2 center">
+<h2>Escalando a datos realmente grandes</h2>
+<p>En proyectos reales con grandes volúmenes de datos se consideran:</p>
+<ul>
+<li class="fragment">Cloud Optimized GeoTIFF (COG)</li>
+<li class="fragment">Zarr</li>
+<li class="fragment">GeoParquet</li>
+<li class="fragment">Procesamiento por bloques</li>
+<li class="fragment">Infraestructura virtualizada - cloud / HPC - High-Performance Computing (AWS - GCP - Azure)</li>
+</ul>
+<p>👉 La <strong>arquitectura de datos</strong> suele importar más que el lenguaje.</p>
+</section>
+<section id="mensaje-final-del-benchmark" class="slide level2 center">
+<h2>Mensaje final del Benchmark</h2>
+<p>Este ejercicio sirve para:</p>
+<ul>
+<li class="fragment">Entender costos reales de lectura y abstracción</li>
+<li class="fragment">Leer benchmarks de forma crítica</li>
+<li class="fragment">Elegir herramientas según el problema</li>
+</ul>
+<p>🎯 No existe el “lenguaje más rápido”<br>
+existe el <strong>stack adecuado para cada tarea</strong>.</p>
+</section>
+<section id="qué-es-lo-importante-hoy-y-qué-no" class="slide level2 center">
+<h2>¿Qué es lo importante hoy (y qué no)?</h2>
+<p>En este punto del curso:</p>
+<p>❌ <strong>No es importante</strong> entender cada línea de código<br>
+❌ No es importante memorizar sintaxis<br>
+❌ No es importante “ser rápido programando”</p>
+<p>✅ <strong>Sí es importante</strong>:</p>
+<ul>
+<li class="fragment">Ver el <strong>panorama completo</strong> de la programación SIG actual<br>
+</li>
+<li class="fragment">Entender que existen <strong>múltiples stacks y enfoques</strong></li>
+<li class="fragment">Reconocer que el rendimiento depende de <strong>arquitectura</strong>, no solo del lenguaje</li>
+</ul>
+<p>👉 El código lo aprenderemos paso a paso.</p>
+</section>
+<section id="qué-estamos-aprendiendo-realmente" class="slide level2 center">
+<h2>¿Qué estamos aprendiendo realmente?</h2>
+<p>Más allá del benchmark, este laboratorio busca que ustedes aprendan a:</p>
+<ul>
+<li class="fragment">Usar <strong>GitHub</strong> como bitácora de trabajo</li>
+<li class="fragment">Documentar con <strong>Quarto</strong></li>
+<li class="fragment">Ejecutar análisis en <strong>Jupyter Lab</strong></li>
+<li class="fragment">Trabajar en <strong>VS Code</strong></li>
+<li class="fragment">Usar la <strong>terminal</strong> (Windows / Linux)</li>
+<li class="fragment">Ejecutar entornos reproducibles con <strong>Docker</strong></li>
+<li class="fragment">Correr el mismo proceso <strong>de muchas formas distintas</strong></li>
+</ul>
+<p>🎯 Programar SIG hoy es saber <strong>orquestar herramientas</strong>, no solo escribir código.</p>
+</section>
+<section id="el-límite-lo-ponen-ustedes" class="slide level2 center">
+<h2>El límite lo ponen ustedes</h2>
+<p>En clase aprenderemos:</p>
+<ul>
+<li class="fragment">Los conceptos fundamentales</li>
+<li class="fragment">Las herramientas base</li>
+<li class="fragment">Los patrones comunes de trabajo</li>
+</ul>
+<p>Pero el verdadero aprendizaje vendrá de:</p>
+<ul>
+<li class="fragment">Sus <strong>proyectos</strong></li>
+<li class="fragment">Su <strong>trabajo individual</strong></li>
+<li class="fragment">Lo que decidan explorar más allá del aula</li>
+</ul>
+<p>🚀 En programación SIG,<br>
+<strong>el límite no lo pone el lenguaje, lo pone la curiosidad y el problema que quieran resolver.</strong></p>
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
@@ -515,19 +568,19 @@ Laboratorio de Programación SIG
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="72-varios_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="62-presentacion_2_benchmark_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="72-varios_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="72-varios_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="72-varios_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="72-varios_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="72-varios_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="62-presentacion_2_benchmark_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="62-presentacion_2_benchmark_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="62-presentacion_2_benchmark_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="62-presentacion_2_benchmark_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="62-presentacion_2_benchmark_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="72-varios_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="72-varios_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="72-varios_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="72-varios_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="62-presentacion_2_benchmark_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="62-presentacion_2_benchmark_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="62-presentacion_2_benchmark_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="62-presentacion_2_benchmark_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>

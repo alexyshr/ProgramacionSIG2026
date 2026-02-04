@@ -1,0 +1,15 @@
+# Adicionales Sobre Julia
+
+## Versiones Instaladas del Software
+
+Versiones de paquetes `Julia` en el sistema:
+
+| Software | Tipo | Versión | Comando (desde terminal) | Comando (desde Julia) |
+|:-|:-|:-|:-------|:-----|
+| `Julia` | Lenguaje | 1.10.4 | `julia --version` | `VERSION` |
+| `LibPQ` | Paquete | 1.18.0 | `julia -e "using LibPQ; println(pkgversion(LibPQ))"` | `using LibPQ; pkgversion(LibPQ)` |
+| `ArchGDAL` | Paquete | 0.10.11 | `julia -e "using ArchGDAL; println(pkgversion(ArchGDAL))"` | `using ArchGDAL; pkgversion(ArchGDAL)` |
+| `LibGEOS` | Paquete | 0.9.7 | `julia -e "using LibGEOS; println(pkgversion(LibGEOS))"` | `using LibGEOS; pkgversion(LibGEOS)` |
+| `Plots` | Paquete | 1.41.4 | `julia -e "using Plots; println(pkgversion(Plots))"` | `using Plots; pkgversion(Plots)` |
+| `DataFrames` | Paquete | 1.8.1 | `julia -e "using DataFrames; println(pkgversion(DataFrames))"` | `using DataFrames; pkgversion(DataFrames)` |
+

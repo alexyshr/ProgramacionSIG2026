@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Laboratorio de Programación SIG">
 
-<title>Programación SIG: Python, R y Julia - 4&nbsp; Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</title>
+<title>Programación SIG: Python, R y Julia - 9&nbsp; Benchmark geoespacial: cómo leer los resultados</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +31,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./05-introduccion_python_r_julia.html" rel="next">
-<link href="./03-guia_instalacion_B_qgis.html" rel="prev">
+<link href="./81-infraestructura_instalada.html" rel="next">
+<link href="./61-presentacion_1_varios.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -81,7 +82,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-introduccion-entornos.html">Instalación y Entornos</a></li><li class="breadcrumb-item"><a href="./04-guia_instalacion_C_ArcGIS.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./61-presentacion_1_varios.html">Presentaciones</a></li><li class="breadcrumb-item"><a href="./62-presentacion_2_benchmark.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Benchmark geoespacial: cómo leer los resultados</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -147,7 +148,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-guia_instalacion_C_ArcGIS.html" class="sidebar-item-text sidebar-link active">
+  <a href="./04-guia_instalacion_C_ArcGIS.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</span></span></a>
   </div>
 </li>
@@ -210,7 +211,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./62-presentacion_2_benchmark.html" class="sidebar-item-text sidebar-link">
+  <a href="./62-presentacion_2_benchmark.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Benchmark geoespacial: cómo leer los resultados</span></span></a>
   </div>
 </li>
@@ -309,22 +310,43 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Tabla de Contenidos</h2>
    
   <ul>
-  <li><a href="#section" id="toc-section" class="nav-link active" data-scroll-target="#section"><span class="header-section-number">4.1</span> ..</a></li>
+  <li><a href="#qué-estamos-comparando" id="toc-qué-estamos-comparando" class="nav-link active" data-scroll-target="#qué-estamos-comparando"><span class="header-section-number">9.1</span> ¿Qué estamos comparando?</a></li>
+  <li><a href="#qué-hace-exactamente-el-benchmark" id="toc-qué-hace-exactamente-el-benchmark" class="nav-link" data-scroll-target="#qué-hace-exactamente-el-benchmark"><span class="header-section-number">9.2</span> ¿Qué hace exactamente el benchmark?</a></li>
+  <li><a href="#qué-no-evalúa" id="toc-qué-no-evalúa" class="nav-link" data-scroll-target="#qué-no-evalúa"><span class="header-section-number">9.3</span> ¿Qué NO evalúa?</a></li>
+  <li><a href="#por-qué-usamos-mean" id="toc-por-qué-usamos-mean" class="nav-link" data-scroll-target="#por-qué-usamos-mean"><span class="header-section-number">9.4</span> ¿Por qué usamos <code>mean()</code>?</a></li>
+  <li><a href="#modelos-de-ejecución-comparados" id="toc-modelos-de-ejecución-comparados" class="nav-link" data-scroll-target="#modelos-de-ejecución-comparados"><span class="header-section-number">9.5</span> Modelos de ejecución comparados</a></li>
+  <li><a href="#qué-favorece-este-benchmark" id="toc-qué-favorece-este-benchmark" class="nav-link" data-scroll-target="#qué-favorece-este-benchmark"><span class="header-section-number">9.6</span> ¿Qué favorece este benchmark?</a></li>
+  <li><a href="#abstracción-vs-rendimiento" id="toc-abstracción-vs-rendimiento" class="nav-link" data-scroll-target="#abstracción-vs-rendimiento"><span class="header-section-number">9.7</span> Abstracción vs rendimiento</a></li>
+  <li><a href="#niveles-de-abstracción-por-motor" id="toc-niveles-de-abstracción-por-motor" class="nav-link" data-scroll-target="#niveles-de-abstracción-por-motor"><span class="header-section-number">9.8</span> Niveles de abstracción por motor</a></li>
+  <li><a href="#paralelismo-y-pipelines-composables" id="toc-paralelismo-y-pipelines-composables" class="nav-link" data-scroll-target="#paralelismo-y-pipelines-composables"><span class="header-section-number">9.9</span> Paralelismo y pipelines composables</a></li>
+  <li><a href="#no-hay-un-ganador-universal" id="toc-no-hay-un-ganador-universal" class="nav-link" data-scroll-target="#no-hay-un-ganador-universal"><span class="header-section-number">9.10</span> No hay un ganador universal</a></li>
+  <li><a href="#escalando-a-datos-realmente-grandes" id="toc-escalando-a-datos-realmente-grandes" class="nav-link" data-scroll-target="#escalando-a-datos-realmente-grandes"><span class="header-section-number">9.11</span> Escalando a datos realmente grandes</a></li>
+  <li><a href="#mensaje-final-del-benchmark" id="toc-mensaje-final-del-benchmark" class="nav-link" data-scroll-target="#mensaje-final-del-benchmark"><span class="header-section-number">9.12</span> Mensaje final del Benchmark</a></li>
+  <li><a href="#qué-es-lo-importante-hoy-y-qué-no" id="toc-qué-es-lo-importante-hoy-y-qué-no" class="nav-link" data-scroll-target="#qué-es-lo-importante-hoy-y-qué-no"><span class="header-section-number">9.13</span> ¿Qué es lo importante hoy (y qué no)?</a></li>
+  <li><a href="#qué-estamos-aprendiendo-realmente" id="toc-qué-estamos-aprendiendo-realmente" class="nav-link" data-scroll-target="#qué-estamos-aprendiendo-realmente"><span class="header-section-number">9.14</span> ¿Qué estamos aprendiendo realmente?</a></li>
+  <li><a href="#el-límite-lo-ponen-ustedes" id="toc-el-límite-lo-ponen-ustedes" class="nav-link" data-scroll-target="#el-límite-lo-ponen-ustedes"><span class="header-section-number">9.15</span> El límite lo ponen ustedes</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-introduccion-entornos.html">Instalación y Entornos</a></li><li class="breadcrumb-item"><a href="./04-guia_instalacion_C_ArcGIS.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./61-presentacion_1_varios.html">Presentaciones</a></li><li class="breadcrumb-item"><a href="./62-presentacion_2_benchmark.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Benchmark geoespacial: cómo leer los resultados</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="guia-C" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</span></span></h1>
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Benchmark geoespacial: cómo leer los resultados</span></h1>
+<p class="subtitle lead">Una comparación de stacks, no de lenguajes</p>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Laboratorio de Programación SIG </p>
+          </div>
+  </div>
     
   
     
@@ -335,8 +357,240 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="section" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="section"><span class="header-section-number">4.1</span> ..</h2>
+<section id="qué-estamos-comparando" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="qué-estamos-comparando"><span class="header-section-number">9.1</span> ¿Qué estamos comparando?</h2>
+<p>Este ejercicio <strong>no compara lenguajes de programación</strong>.</p>
+<p>Evalúa el rendimiento del <strong>stack completo</strong>:</p>
+<ul>
+<li>GDAL (Geospatial Data Abstraction Library): raster (GDAL) + vector (OGR: Open GIS Reference (Simple Features))</li>
+<li>Librerías raster</li>
+<li>Modelo de ejecución</li>
+<li>Nivel de abstracción</li>
+</ul>
+<p>👉 El lenguaje es solo una parte del sistema.</p>
+<hr>
+</section>
+<section id="qué-hace-exactamente-el-benchmark" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="qué-hace-exactamente-el-benchmark"><span class="header-section-number">9.2</span> ¿Qué hace exactamente el benchmark?</h2>
+<p>El benchmark ejecuta un <strong>caso extremo y muy simplificado</strong>:</p>
+<ul>
+<li>Usa <strong>una sola banda raster</strong></li>
+<li>Aplica <strong>una operación matemática simple</strong> (× 1.5)</li>
+<li>Calcula <strong>una media global</strong></li>
+</ul>
+<p>🎯 Diseñado para forzar la lectura completa de los datos.</p>
+<hr>
+</section>
+<section id="qué-no-evalúa" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="qué-no-evalúa"><span class="header-section-number">9.3</span> ¿Qué NO evalúa?</h2>
+<p>Este benchmark <strong>no evalúa</strong>:</p>
+<ul>
+<li>Análisis multibanda</li>
+<li>Operaciones espaciales complejas</li>
+<li>Vecindarios, máscaras o reproyecciones</li>
+<li>Flujos iterativos o modelos estadísticos</li>
+</ul>
+<p>🚫 No representa un flujo SIG real completo.</p>
+<hr>
+</section>
+<section id="por-qué-usamos-mean" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="por-qué-usamos-mean"><span class="header-section-number">9.4</span> ¿Por qué usamos <code>mean()</code>?</h2>
+<p>El cálculo de la media es clave porque:</p>
+<ul>
+<li>Obliga a <strong>recorrer todos los píxeles</strong></li>
+<li>Garantiza que la operación aritmética fue ejecutada</li>
+<li>Fuerza la evaluación completa del raster</li>
+</ul>
+<p>⚠️ Cada motor implementa este paso de forma distinta.</p>
+<hr>
+</section>
+<section id="modelos-de-ejecución-comparados" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="modelos-de-ejecución-comparados"><span class="header-section-number">9.5</span> Modelos de ejecución comparados</h2>
+<p>Cada stack sigue una filosofía diferente:</p>
+<ul>
+<li><p><strong>Python / rasterio + NumPy</strong><br>
+Lectura completa a memoria + ejecución inmediata</p></li>
+<li><p><strong>R / terra</strong><br>
+Raster algebra optimizado en C++ y procesamiento por bloques, pero sin exponer un pipeline diferido composable</p></li>
+<li><p><strong>R / stars</strong><br>
+Manejo de cubos de datos multidimensionales y metadatos ricos; el modo <code>proxy</code> difiere la lectura, pero <strong>no construye un DAG composable completo</strong></p></li>
+<li><p><strong>Julia / Rasters.jl</strong><br>
+Flujos <em>lazy</em> y <strong>pipelines composables</strong>, evaluados al final como un plan coherente</p></li>
+</ul>
+<hr>
+</section>
+<section id="qué-favorece-este-benchmark" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="qué-favorece-este-benchmark"><span class="header-section-number">9.6</span> ¿Qué favorece este benchmark?</h2>
+<p>Este escenario favorece motores optimizados para:</p>
+<ul>
+<li>Recorridos contiguos de memoria</li>
+<li>Operaciones simples en una sola pasada</li>
+<li>Reducciones globales monolíticas</li>
+</ul>
+<p>👉 No todos los motores están diseñados para este patrón.</p>
+<hr>
+</section>
+<section id="abstracción-vs-rendimiento" class="level2" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="abstracción-vs-rendimiento"><span class="header-section-number">9.7</span> Abstracción vs rendimiento</h2>
+<p>Más abstracción implica:</p>
+<ul>
+<li>Más metadatos</li>
+<li>Más coordinación interna</li>
+<li>Más costo administrativo</li>
+</ul>
+<p>Pero también ofrece:</p>
+<ul>
+<li>Código más claro</li>
+<li>Menos errores</li>
+<li>Mayor expresividad analítica</li>
+</ul>
+<p>⚖️ Es un intercambio inevitable.</p>
+<hr>
+</section>
+<section id="niveles-de-abstracción-por-motor" class="level2" data-number="9.8">
+<h2 data-number="9.8" class="anchored" data-anchor-id="niveles-de-abstracción-por-motor"><span class="header-section-number">9.8</span> Niveles de abstracción por motor</h2>
+<table class="table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Motor</th>
+<th>Nivel de abstracción</th>
+<th>Forma de trabajar</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>NumPy / rasterio</strong></td>
+<td>Baja</td>
+<td>“Aquí tienes un array, calcula ahora”</td>
+</tr>
+<tr class="even">
+<td><strong>terra (R)</strong></td>
+<td>Media</td>
+<td>“Yo optimizo internamente en C++”</td>
+</tr>
+<tr class="odd">
+<td><strong>stars (R)</strong></td>
+<td>Alta</td>
+<td>“Gestiono dimensiones, tiempo y metadatos”</td>
+</tr>
+<tr class="even">
+<td><strong>Rasters.jl (Julia)</strong></td>
+<td>Flexible</td>
+<td>“Defino un pipeline que se evalúa al final”</td>
+</tr>
+</tbody>
+</table>
+<p>📌 Más abstracción = más expresividad, pero más costo administrativo.</p>
+<hr>
+</section>
+<section id="paralelismo-y-pipelines-composables" class="level2" data-number="9.9">
+<h2 data-number="9.9" class="anchored" data-anchor-id="paralelismo-y-pipelines-composables"><span class="header-section-number">9.9</span> Paralelismo y pipelines composables</h2>
+<p>Solo algunos stacks permiten <strong>componer operaciones</strong> y ejecutarlas al final:</p>
+<ul>
+<li><p><strong>Julia (Rasters.jl)</strong><br>
+Pipelines composables + <strong>paralelismo multihilo nativo</strong>,<br>
+sin librerías externas adicionales</p></li>
+<li><p><strong>Python (xarray + Dask)</strong><br>
+Pipelines lazy con ejecución distribuida explícita</p></li>
+<li><p><strong>R (dplyr + dbplyr)</strong><br>
+Lenguaje de pipelines, <strong>no espacial por sí mismo</strong>;<br>
+requiere backends como PostGIS, DuckDB o Spark</p></li>
+</ul>
+<p>📌 Optimización interna <strong>no equivale</strong> a pipeline composable.</p>
+<hr>
+</section>
+<section id="no-hay-un-ganador-universal" class="level2" data-number="9.10">
+<h2 data-number="9.10" class="anchored" data-anchor-id="no-hay-un-ganador-universal"><span class="header-section-number">9.10</span> No hay un ganador universal</h2>
+<p>Este benchmark mide:</p>
+<blockquote class="blockquote">
+<p>Rendimiento bajo un patrón específico de acceso y reducción global</p>
+</blockquote>
+<p>No mide:</p>
+<ul>
+<li>Calidad general del lenguaje</li>
+<li>Flexibilidad analítica</li>
+<li>Escalabilidad en flujos SIG complejos</li>
+</ul>
+<p>📍 Los resultados deben interpretarse con contexto.</p>
+<hr>
+</section>
+<section id="escalando-a-datos-realmente-grandes" class="level2" data-number="9.11">
+<h2 data-number="9.11" class="anchored" data-anchor-id="escalando-a-datos-realmente-grandes"><span class="header-section-number">9.11</span> Escalando a datos realmente grandes</h2>
+<p>En proyectos reales con grandes volúmenes de datos se consideran:</p>
+<ul>
+<li>Cloud Optimized GeoTIFF (COG)</li>
+<li>Zarr</li>
+<li>GeoParquet</li>
+<li>Procesamiento por bloques</li>
+<li>Infraestructura virtualizada - cloud / HPC - High-Performance Computing (AWS - GCP - Azure)</li>
+</ul>
+<p>👉 La <strong>arquitectura de datos</strong> suele importar más que el lenguaje.</p>
+<hr>
+</section>
+<section id="mensaje-final-del-benchmark" class="level2" data-number="9.12">
+<h2 data-number="9.12" class="anchored" data-anchor-id="mensaje-final-del-benchmark"><span class="header-section-number">9.12</span> Mensaje final del Benchmark</h2>
+<p>Este ejercicio sirve para:</p>
+<ul>
+<li>Entender costos reales de lectura y abstracción</li>
+<li>Leer benchmarks de forma crítica</li>
+<li>Elegir herramientas según el problema</li>
+</ul>
+<p>🎯 No existe el “lenguaje más rápido”<br>
+existe el <strong>stack adecuado para cada tarea</strong>.</p>
+<hr>
+</section>
+<section id="qué-es-lo-importante-hoy-y-qué-no" class="level2" data-number="9.13">
+<h2 data-number="9.13" class="anchored" data-anchor-id="qué-es-lo-importante-hoy-y-qué-no"><span class="header-section-number">9.13</span> ¿Qué es lo importante hoy (y qué no)?</h2>
+<p>En este punto del curso:</p>
+<p>❌ <strong>No es importante</strong> entender cada línea de código<br>
+❌ No es importante memorizar sintaxis<br>
+❌ No es importante “ser rápido programando”</p>
+<p>✅ <strong>Sí es importante</strong>:</p>
+<ul>
+<li>Ver el <strong>panorama completo</strong> de la programación SIG actual<br>
+</li>
+<li>Entender que existen <strong>múltiples stacks y enfoques</strong></li>
+<li>Reconocer que el rendimiento depende de <strong>arquitectura</strong>, no solo del lenguaje</li>
+</ul>
+<p>👉 El código lo aprenderemos paso a paso.</p>
+<hr>
+</section>
+<section id="qué-estamos-aprendiendo-realmente" class="level2" data-number="9.14">
+<h2 data-number="9.14" class="anchored" data-anchor-id="qué-estamos-aprendiendo-realmente"><span class="header-section-number">9.14</span> ¿Qué estamos aprendiendo realmente?</h2>
+<p>Más allá del benchmark, este laboratorio busca que ustedes aprendan a:</p>
+<ul>
+<li>Usar <strong>GitHub</strong> como bitácora de trabajo</li>
+<li>Documentar con <strong>Quarto</strong></li>
+<li>Ejecutar análisis en <strong>Jupyter Lab</strong></li>
+<li>Trabajar en <strong>VS Code</strong></li>
+<li>Usar la <strong>terminal</strong> (Windows / Linux)</li>
+<li>Ejecutar entornos reproducibles con <strong>Docker</strong></li>
+<li>Correr el mismo proceso <strong>de muchas formas distintas</strong></li>
+</ul>
+<p>🎯 Programar SIG hoy es saber <strong>orquestar herramientas</strong>, no solo escribir código.</p>
+<hr>
+</section>
+<section id="el-límite-lo-ponen-ustedes" class="level2" data-number="9.15">
+<h2 data-number="9.15" class="anchored" data-anchor-id="el-límite-lo-ponen-ustedes"><span class="header-section-number">9.15</span> El límite lo ponen ustedes</h2>
+<p>En clase aprenderemos:</p>
+<ul>
+<li>Los conceptos fundamentales</li>
+<li>Las herramientas base</li>
+<li>Los patrones comunes de trabajo</li>
+</ul>
+<p>Pero el verdadero aprendizaje vendrá de:</p>
+<ul>
+<li>Sus <strong>proyectos</strong></li>
+<li>Su <strong>trabajo individual</strong></li>
+<li>Lo que decidan explorar más allá del aula</li>
+</ul>
+<p>🚀 En programación SIG,<br>
+<strong>el límite no lo pone el lenguaje, lo pone la curiosidad y el problema que quieran resolver.</strong></p>
 
 
 </section>
@@ -731,13 +985,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./03-guia_instalacion_B_qgis.html" class="pagination-link" aria-label="Guía de Instalación. Opción B: QGIS y PyQGIS">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción B: QGIS y PyQGIS</span></span>
+      <a href="./61-presentacion_1_varios.html" class="pagination-link" aria-label="Temas por Charlar">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Temas por Charlar</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./05-introduccion_python_r_julia.html" class="pagination-link" aria-label="Fundamentos: Python, R y Julia">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Fundamentos: Python, R y Julia</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./81-infraestructura_instalada.html" class="pagination-link" aria-label="Infraestructura instalada">
+        <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Infraestructura instalada</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

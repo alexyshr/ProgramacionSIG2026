@@ -45,8 +45,10 @@ plot(pol1)
 ### Julia
 En Julia, la eficiencia se logra mediante `LibGEOS.jl`.
 
-```{julia}
-#| eval: false
+```{r}
+# #| eval: false
+
+j_plot('
 # 1. Configuración del entorno (Ejecutar en la primera celda del Notebook)
 using Pkg
 
@@ -72,8 +74,10 @@ println("WKT: ", pol1)
 # Imprimir/Visualizar gráfico
 # Esto requiere que Plots.jl esté instalado y cargado
 plot(pol1, title="Polígono en Julia", fillalpha=0.5,fillcolor=:green, aspect_ratio=:equal)
+')
 
 ```
+
 :::
 
 ---
@@ -117,12 +121,15 @@ ciudades[[3]] <- st_point(c(-76.52, 3.43))
 ### Julia
 Julia destaca por su manejo de tipos en arreglos.
 
-```{julia}
-#| eval: false
-using LibGEOS
-ciudades = [LibGEOS.Point(-74.07, 4.60), LibGEOS.Point(-75.56, 6.25)]
-push!(ciudades, LibGEOS.Point(-76.52, 3.43))
+```{r}
+# #| eval: false
+j_eval('
+    using LibGEOS
+    ciudades = [LibGEOS.Point(-74.07, 4.60), LibGEOS.Point(-75.56, 6.25)]
+    push!(ciudades, LibGEOS.Point(-76.52, 3.43))
+')
 ```
+
 :::
 
 ### Diccionarios (Metadatos de Capas)
@@ -152,14 +159,17 @@ print(departamento$nombre)
 ```
 
 ### Julia
-```{julia}
-#| eval: false
-departamento = Dict(
-    "nombre" => "Cundinamarca",
-    "centroide" => LibGEOS.Point(-74.1, 4.8),
-    "codigo_dane" => 25
-)
+```{r}
+# #| eval: false
+j_eval('
+    departamento = Dict(
+        "nombre" => "Cundinamarca",
+        "centroide" => LibGEOS.Point(-74.1, 4.8),
+        "codigo_dane" => 25
+    )
+')
 ```
+
 :::
 
 ---
@@ -189,9 +199,11 @@ crear_zona_influencia <- function(geom, radio = 0.01) {
 ```
 
 ### Julia
-```{julia}
-#| eval: false
-crear_zona_influencia(geom, radio=0.01) = LibGEOS.buffer(geom, radio)
+```{r}
+# #| eval: false
+j_eval('
+    crear_zona_influencia(geom, radio=0.01) = LibGEOS.buffer(geom, radio)
+')
 ```
 :::
 
@@ -225,11 +237,13 @@ elevaciones <- estaciones[, 3]
 ```
 
 ### Julia
-```{julia}
-#| eval: false
-estaciones = [-74.0 4.6 2600; 
-              -75.5 6.2 1495; 
-              -76.5 3.4 1018]
-elevaciones = estaciones[:, 3]
+```{r}
+# #| eval: false
+j_eval('
+    estaciones = [-74.0 4.6 2600; 
+                -75.5 6.2 1495; 
+                -76.5 3.4 1018]
+    elevaciones = estaciones[:, 3]
+')
 ```
 :::

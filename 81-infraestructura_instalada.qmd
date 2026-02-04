@@ -1,0 +1,126 @@
+# Infraestructura instalada {#anexo-infraestructura}
+
+## Configuración Inicial del Entorno (Pre-flight) {#sec-preflight}
+
+Para automatizar el soporte de gráficos y capturas sin configurar cada archivo individualmente, ejecute estos comandos en la terminal del contenedor `contenedor_sig_unal` inmediatamente después de iniciar los servicios con `docker compose up -d`:
+
+| Categoría | Comando de Configuración | Propósito |
+|:--- |:--- |:--- |
+| **Soporte Base** | `apt-get update && apt-get install -y fonts-symbola wget` | Fuentes para emojis y herramienta de descarga de paquetes externos. |
+| **Navegador** | `wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && apt install -y ./google-chrome-stable_current_amd64.deb` | Instala Google Chrome (Bypass de Snap). Obligatorio para capturas de mapas en Docker. |
+| **Automatización R** | `echo 'Sys.setenv(CHROMOTE_CHROME = "/usr/bin/google-chrome")' >> /usr/local/lib/R/etc/Rprofile.site` | Configura la ruta de Chrome para todo el sistema R de forma persistente. |
+| **Seguridad Root** | `echo 'options(chromote.args = c("--no-sandbox", "--disable-gpu", "--headless"))' >> /usr/local/lib/R/etc/Rprofile.site` | Habilita el modo *headless* y evita bloqueos de *sandbox* al ejecutar como root. |
+| **Librerías R** | `Rscript -e "install.packages('webshot2', repos='https://cloud.r-project.org/')"` | Instala el motor de captura de widgets HTML y mapas de Leaflet. |
+| **Librerías Python**| `pip3 install selenium` | Habilita la automatización de capturas para visualizaciones dinámicas de Python. |
+| **Librerías Julia** | `julia -e 'using Pkg; Pkg.add(["FileIO", "ImageIO"])'` | Soporte esencial para procesar y exportar gráficos en el ecosistema Julia. |
+
+: Comandos de configuración global del contenedor {#tbl-preflight}
+
+
+
+### Ventajas de esta configuración {#sec-ventajas}
+
+Al usar el archivo `Rprofile.site`, hemos logrado que:
+
+1.  **Limpieza:** Sus archivos `.qmd` solo contendrán código de análisis geográfico, eliminando bloques de configuración de sistema repetitivos.
+2.  **Persistencia:** Cualquier usuario o script que inicie una sesión de R dentro de este contenedor heredará automáticamente la capacidad de tomar capturas de pantalla.
+3.  **Compatibilidad:** Quarto detectará `webshot2` y el navegador Chrome de forma nativa al renderizar a PDF.
+
+### Notas de Implementación {#sec-notas-tecnicas}
+
+::: {.callout-note}
+#### ¿Por qué Google Chrome y no Chromium?
+En distribuciones basadas en Ubuntu 22.04 o superiores, el comando `apt install chromium-browser` instala una versión ligada a **Snap**, la cual no puede ejecutarse dentro de un contenedor Docker por restricciones de seguridad del kernel. La instalación manual del paquete `.deb` de Google Chrome garantiza un binario funcional en `/usr/bin/google-chrome`.
+:::
+
+::: {.callout-important}
+#### Importancia de ImageIO y FileIO en Julia
+En Julia, estas librerías actúan como los "drivers" de imagen. Sin ellas, aunque el código genere un mapa o gráfico, Quarto no podrá convertirlo a un formato que LaTeX entienda (como PNG), resultando en bloques vacíos en el PDF final.
+:::
+
+## Introducción a la Infraestructura de Datos
+
+Este anexo constituye la guía técnico para la gestión del entorno de desarrollo instalado. Es decir, información que describe y detalla los contenedores instalados (instalación opción A), su estructura y funcionamiento, así mismo como la descripción y detalles adicionales de las dos instalaciones de QGIS (Instalación Opción B) 
+
+## Contenedores Instalados (Instalación Opción A)
+
+### Resumen de Infraestructura Docker {#sec-resumen-infra}
+
+Antes de entrar en los detalles técnicos, es vital entender el rol de los dos archivos maestros que sostienen su laboratorio geográfico. 
+
+| Archivo | Rol Crítico |
+|:---|:--- |
+| **`Dockerfile`** | **El "Qué" (La Receta):** Crea el entorno políglota desde cero, instala las librerías de NASA/Copernicus y aplica la **"cirugía" de OpenSSL** para que Julia sea estable en Ubuntu Noble. |
+| **`docker-compose.yml`** | **El "Cómo" (La Orquesta):** Despliega los servicios, mapea los puertos externos (**8889**, **8788**, **5434**) y asegura que sus mapas y bases de datos no se borren gracias al volumen persistente (`postgis_data_unal`). |
+
+
+::: {.callout-important}
+#### Persistencia de Datos
+Gracias al `docker-compose`, si su contenedor se apaga o se reinicia, los datos de su base de datos PostGIS **no se pierden**. El volumen nombrado actúa como un disco duro externo que sobrevive a cualquier caída del sistema.
+:::
+
+### 🧪 Batería de Pruebas de Integridad del Docker (Health Checks)
+
+| ID | Comando de Verificación (Docker) | Descripción |
+|:---|:---|:---|
+| 01 | `docker exec contenedor_sig_unal gdalinfo --version` | Verifica que el núcleo de GDAL está activo. |
+| 02 | `docker exec contenedor_sig_unal R -e "library(sf); st_point(c(0,0))"` | Prueba la librería `sf` y el motor de geometría en R. |
+| 03 | `docker exec contenedor_sig_unal python3 -c "import geopandas; print(geopandas.__version__)"` | Verifica el stack espacial de Python. |
+| 04 | `docker exec contenedor_sig_unal R -e "j_eval('sum([1, 2, 3])')"` | **Test Crítico:** Verifica la función personalizada y el puente R -> Julia. |
+| 05 | `docker exec contenedor_sig_unal R -e "j_plot('plot(rand(10))')"` | Prueba la generación de gráficos Julia capturados por R. |
+| 06 | `docker exec contenedor_sig_unal julia -e 'using ArchGDAL; println(ArchGDAL.GDAL.gdalversioninfo("RELEASE_NAME"))'` | **Cirugía Exitosa:** Confirma que Julia accede a GDAL del sistema (v3.12.1). |
+| 07 | `docker exec contenedor_sig_unal R -e "library(RPostgres); dbConnect(Postgres(), host='db-postgis', dbname='sig_db_unal', user='profe_unal', password='geomatica2025')"` | Prueba la conexión R -> PostGIS (Interna). |
+| 08 | `docker exec contenedor_sig_unal python3 -c "import psycopg2; conn = psycopg2.connect(host='db-postgis', dbname='sig_db_unal', user='profe_unal', password='geomatica2025'); print('Python PostGIS conectado ✅'); conn.close()"` | Prueba la conexión Python -> PostGIS (Interna). |
+| 09 | `docker exec contenedor_sig_unal R -e "cat(whitebox::wbt_version())"` | Verifica que los binarios de WhiteboxTools están instalados y accesibles. |
+| 10 | `docker exec contenedor_sig_unal R -e "library(httpgd); print('Visor OK')"` | Verifica que el motor gráfico para VS Code está listo en el puerto `8787`. |
+
+### Configuración de Puertos y Conectividad {#sec-puertos}
+
+Para que su computadora (Host) pueda comunicarse con los servicios dentro del contenedor, hemos diseñado un sistema de "puentes" o mapeo de puertos. Esto evita conflictos si ya tiene instalados otros servidores de bases de datos o Jupyter en su PC.
+
+| Servicio | Puerto en su PC (Host) | Puerto en Contenedor | Propósito | Acceso / Conexión |
+|:---|:---:|:---:|:---|:---|
+| **Jupyter Lab** | `8889` | `8888` | Programación y Notebooks | `http://localhost:8889` |
+| **Visor R (httpgd)** | `8788` | `8787` | Gráficos de R y VS Code | `http://localhost:8788` |
+| **PostGIS (DB)** | `5434` | `5432` | Base de Datos Espacial | `localhost:5434` |
+
+
+### 🔑 Credenciales de la Base de Datos {#sec-credenciales}
+
+Utilice estos datos para configurar sus conexiones en QGIS, DBeaver o mediante código (R/Python/Julia):
+
+* **Base de Datos:** `sig_db_unal`
+* **Usuario:** `profe_unal`
+* **Contraseña:** `geomatica2025`
+* **Host Interno:** `db-postgis` (Use este nombre únicamente para conexiones **dentro** de sus scripts).
+
+
+### Lógica de Arquitectura (Dockerfile y Compose) {#sec-arquitectura-puertos}
+
+La configuración del entorno se ha "blindado" técnicamente para garantizar la estabilidad:
+
+1.  **En el Dockerfile**: Se usan las instrucciones `EXPOSE 8888` y `EXPOSE 8787`. Esto le avisa a Docker que el contenedor tiene dos "puertas" abiertas internamente. Al fijar `httpgd.port = 8787`, nos aseguramos de que el visor de gráficos de R no pelee con Jupyter por el mismo canal.
+2.  **En el Docker-Compose**: 
+    * **`8889:8888`**: Permite que este curso conviva con otras instalaciones de Jupyter (que suelen usar el 8888).
+    * **`8788:8787`**: Habilita la conexión independiente de VS Code al visor de gráficos de R.
+    * **`5434:5432`**: Evita el choque con bases de datos locales (Postgres suele usar el 5432 o 5433).
+
+
+### Guía de Acceso: El concepto de "Lados" {#sec-guia-acceso}
+
+Es fundamental entender desde dónde está intentando conectar:
+
+> #### 🌐 Desde afuera (Su PC / Host)
+> Es lo que usted configura en su navegador o en QGIS. Usted ve los puertos mapeados:
+> * **Jupyter/Notebooks**: `http://localhost:8889` (usando el token `geomatica2025`).
+> * **Base de Datos (QGIS/DBeaver)**: Host: `localhost`, Puerto: `5434`.
+
+> #### 🐳 Desde adentro (El Contenedor)
+> Sus scripts de Python, R y Julia no saben que existe un mapeo externo. Dentro de su "casa" Docker, nada ha cambiado:
+> * **PostGIS**: El código debe buscar el puerto estándar `5432` y el host `db-postgis`.
+> * **httpgd**: El servidor de gráficos sigue escuchando en el puerto interno `8787`.
+
+::: {.callout-note}
+#### Tip de Conexión
+Si intenta conectar QGIS usando el puerto `5432` y falla, recuerde que el "puente" hacia el contenedor se construyó específicamente sobre el puerto **`5434`**.
+:::

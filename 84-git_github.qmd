@@ -1,0 +1,328 @@
+# Git y GitHub: Sincronización Local-Remota {#git-ref}
+
+## Control de Versiones: Flujo de Trabajo en Terminal {#sec-git-terminal}
+
+Para gestionar el repositorio de forma robusta y tener control total sobre el historial de cambios, utilice la siguiente secuencia de comandos desde la terminal del contenedor:
+
+| Acción | Comando | Propósito |
+|:--- |:--- |:--- |
+| **Verificar estado** | `git status` | Muestra la "verdad absoluta" local: archivos modificados o listos para commit. |
+| **Sincronizar índices**| `git remote update` | Consulta el servidor para saber si hay cambios nuevos en la nube sin descargarlos aún. |
+| **Preparar cambios** | `git add .` | Agrega todos los cambios detectados al área de preparación (*Staging*). |
+| **Confirmar versión**| `git commit -m "mensaje"` | Crea un punto de control permanente en el historial local. |
+| **Enviar al remoto** | `git push` | Sube los *commits* locales al servidor (GitHub). |
+| **Actualizar local** | `git pull` | Descarga y fusiona los cambios del servidor en su entorno de trabajo. |
+| **Ver historial** | `git log --oneline` | Muestra un resumen simplificado de la línea de tiempo del proyecto. |
+
+: Comandos esenciales para la gestión de Git en terminal {#tbl-git-terminal}
+
+
+
+## Diagnóstico de archivos "invisibles" o errores de rastreo {#sec-git-diagnostico}
+
+Si ha modificado un archivo pero este no aparece listado tras ejecutar `git status`, las causas técnicas suelen ser las siguientes:
+
+1. **Interferencia de Repositorios Anidados:** Si clonó una carpeta que ya contenía un directorio `.git`, el repositorio principal la tratará como un objeto opaco (submódulo) y no rastreará sus archivos internos. 
+   * **Solución:** Verifique la presencia de carpetas ocultas con `ls -a` y elimine la carpeta `.git` interna si desea que el repositorio raíz tome el control: `rm -rf nombre_carpeta/.git`.
+
+2. **Filtros en el archivo `.gitignore`:** El archivo puede tener reglas que excluyan carpetas enteras por nombre o extensión. 
+   * **Verificación:** Use el comando `git status --ignored` para listar todos los archivos que Git está omitiendo deliberadamente.
+
+3. **Estado del sistema de archivos:** Git opera sobre los datos escritos en el disco duro. Asegúrese de que el editor de texto haya guardado efectivamente los cambios en el archivo físico antes de consultar el estado.
+
+::: {.callout-important}
+### Persistencia de credenciales
+Si la terminal le solicita usuario y contraseña en cada `push` o `pull`, puede configurar Git para que recuerde sus credenciales temporalmente en la memoria del contenedor con el siguiente comando:
+`git config --global credential.helper cache`
+:::
+
+## Subír el contenido existende de una carpeta local a un repositorio vacío en GitHub
+
+Si ya tiene sus archivos en Windows y quiere subirlos a un repositorio recién creado en GitHub:
+
+1. **Instalar Git**
+
+* **Descarga**: Acceda a [git-scm.com/download/win](https://git-scm.com/download/win).
+* **Instalación**: Ejecute el instalador manteniendo las opciones por defecto; asegúrese de que la opción **"Git from the command line and also from 3rd-party software"** esté activa.
+* **Verificación**: Ejecute `git --version` en una terminal para confirmar la instalación.
+
+2. **Crear una cuenta en GitHub**
+
+3.  **Abrir Terminal en la carpeta local:**
+
+4. **Incicializar Git** en la carpeta local:
+```powershell
+git init
+```
+
+5. Ver el **estado actual** del repositorio Git:
+```powershell
+git status
+```
+
+6. **Archivo `.gitignore`**: Crear un archivo de texto `.gitignore` para indicarle a Git los archivos y carperas que nunca deben ser registrados con Git cuando se use el comando `git add` (siguiente item del procedimiento). Estos archivos que pueden estar en la raíz de la carpeta o dentro de otras sub-carpetas no se registrarán automáticamente cuando ejecute el comando `git add .` (ver [mas adelante](ancla-git_add_punto)). Sin embargo puede forzar una carpeta o algunos tipos de archivos que estén marcados para ignorar dentro del `.gitignore` (ver [mas adelante](ancla-git_add_minus_f)).  
+
+
+```text
+.quarto/
+_freeze/
+.ipynb_checkpoints/
+__pycache__/
+*.pdf
+*.html
+notebooks/
+scripts/
+data/
+```
+
+7. **Registrar (add)** el archivo `.gitignore` con Git:
+
+```powershell
+git add .gitignore
+```
+
+8. Revise nuevamente el **estátus** y verifique cambios. Puede incluir el listado de los ignorados:
+
+```powershell
+git status --ignored
+```
+
+9. **Salvar (commit)** el archivo en Git (local). Note que en el comando, el texto "*Archivo .gitignore*" es un comentario que describe lo que está salvando:
+```powershell
+git commit -m "Archivo .gitignore"
+```
+
+10. Cambiar al nombre de **rama (branch)** a **principal (main)**. Pueden haber diferentes ramas con diferentes versiones del mismo archivo. Para cambiar a **main**:
+
+```powershell
+git branch -M main
+```
+
+11. **Conectar** el repositorio local (Git) con nuestro repositorio en GitHub. 
+
+Para conectar Git con GitHub, puede hacerlo con SSH (debe realizar el proceso de instalación de llaves @sec-ssh-github) o con HTTPS (debe generar un PAT desde `github.com` que usará como clave de autenticación). En este caso usaremos HTTPS.
+
+Cree un nuevo repositorio en GitHub y copie la url HTTP del repositorio. Es algo como: `https://github.com/usuario/repositorio.git`
+
+
+```powershell
+git remote add origin https://github.com/usuario/repositorio.git
+```
+
+12. Procedimiento para **generar el PAT** (Personal Access Token) en GitHub.com {#ancla-github_pat}
+
+- En lugar de escribir tu contraseña cuando el terminal te la pida, debes pegar un token generado en tu cuenta.
+- Ve a tu cuenta de GitHub.com: `Settings` > `Developer settings` > `Personal access tokens` > `Tokens (classic)`.
+- Genera un nuevo token **con el permiso repo activado.**
+- Copia el token (no lo volverás a ver).
+
+
+13. **Subir (push)** la información guardada localmente en Git a nuestro repositorio en GitHub:
+
+```powershell
+git push -u origin main   
+# Cuanto solicite el password use el PAT/token generado previamente en github.com
+```
+
+Puedes ver el estatus `git status` y realizar un procedimiento similar para registrar (`add`), salvar (`commit`) y subir (`push`) mas archivos. Otras opciones de Git se describen a continuación:
+
+* Registrar archivos específicos con Git (local):
+
+```powershell
+git add file1 file2 ...
+```
+
+* **Forzar archivos** y/o carpetas que están marcados para ignorar (bandera `-f`): el comando a continuación sincronizará con Git toda la carpeta `_site/site_libs/` y su contenido, así contenga archivos `pdf` o `html` (marcados para ignorar en `.gitignore`) {#ancla-git_add_minus_f}
+
+```powershell
+git add -f _site/site_libs/
+```
+
+* Registrar **todos los archivos y carpetas** disponibles y sin registrar, sin embargo todos los archivos y carpetas dentro de `.gitignore` no serán tenidos en cuenta {#ancla-git_add_punto}:
+
+```powershell
+git add .
+```
+
+* En **resumen** estos son los comandos que comúnmente usarás para mentener sincronizados tus archivos con Git y tu Git con GitHub, es decir el proceso de subir (push) archivos a la nube.
+
+    - `git add` (agregar archivos a Git)
+    - `git commit` (guardar archivos en Git)
+    - `git push` (subir archivos a GitHub)
+
+* Los otros comandos vistos solo se ejecutan **una vez** o de acuerdo con **necesitades específicas**:
+
+    - `git init` (una vez)
+    - `git remote add origin` (una vez)
+    - `git branch -M main` (lo debes usar para cambiar a main en caso de tener múltiples ramas)
+
+
+## Autenticación Segura: Configuración de Llaves SSH en GitHub {#sec-ssh-github}
+
+La autenticación mediante SSH permite interactuar con GitHub de forma segura sin necesidad de ingresar credenciales manualmente en cada operación. Siga este procedimiento detallado para configurar su acceso.
+
+
+### Requitiso Previo: Creación de Cuenta en GitHub
+
+El correo que use para crear esta cuenta **debe ser el mismo correo** usado para crear las llaves SSH para conexión automática.
+
+### Requisito Previo: Instalación de Git
+
+Es indispensable que su sistema operativo cuente con el motor de Git antes de iniciar la configuración:
+
+
+### Preparación del Entorno Local
+
+* **Navegación**: Diríjase mediante el Explorador de Archivos a la carpeta raíz de su proyecto (ejemplo: carpeta `ID Unal`).
+* **Terminal**: Abra una ventana de PowerShell en esa ubicación (clic derecho -> **"Abrir en Terminal"**).
+* **Inicialización**: Prepare el repositorio local mediante el comando:
+
+```powershell
+git init
+```
+
+
+### Gestión de Llaves SSH en Windows
+
+
+**SSH** (*Secure Shell*) es un protocolo de red diseñado para el acceso, administración y transferencia de datos entre un equipo local y un servidor remoto mediante un canal cifrado. En nuestro flujo de trabajo, implementamos el algoritmo **Ed25519**, un estándar de vanguardia basado en criptografía de curva elíptica (EdDSA). Este método no solo ofrece un nivel de seguridad superior frente a ataques de fuerza bruta, sino que permite una **autenticación transparente y sin contraseña**, actuando como un "pasaporte digital" que vincula de forma única su estación de trabajo con GitHub.
+
+::: {.callout-note}
+#### ¿Por qué Ed25519?
+A diferencia de los estándares antiguos (como RSA), **Ed25519** genera llaves más cortas, rápidas y significativamente más seguras, optimizando la latencia en cada comunicación con el repositorio.
+:::
+
+
+* **Comprobación de llaves existentes**: Verifique si su usuario ya posee llaves configuradas:
+
+```powershell
+ls ~/.ssh
+```
+    * Si el directorio está vacío o solo contiene `known_hosts`, proceda a generar una nueva.
+    * Si visualiza los archivos `id_ed25519` e `id_ed25519.pub`, puede saltar al paso de registro en GitHub.
+
+* **Generación de llaves**: Cree un par de llaves seguras utilizando el algoritmo Ed25519:
+
+El correo que use en el siguiente paso, **debe** ser el correo con el que creó la cuenta de GitHub: "su_correo@domimio.com"
+
+```powershell
+ssh-keygen -t ed25519 -C "su_correo@domimio.com"
+```
+    * **Nota**: Presione `ENTER` en todas las solicitudes para aceptar las rutas por defecto y no asignar una *passphrase*.
+
+::: {.callout-note}
+#### Seguridad de la Identidad
+La **llave pública** (`id_ed25519.pub`) es la que se entrega a GitHub, mientras que la **llave privada** (`id_ed25519`) funciona como su sello personal secreto y nunca debe salir de su equipo.
+:::
+
+
+### Registro de la Identidad en GitHub
+
+* **Copiar la firma pública**: Obtenga el contenido de su llave para registrarla:
+
+```powershell
+cat $env:USERPROFILE\.ssh\id_ed25519.pub
+```
+    *Seleccione y copie toda la cadena de texto resultante.*
+
+* **Configuración en la plataforma**:
+    * Acceda a su cuenta en [GitHub.com](https://github.com).
+    * Entre a **Settings** -> **SSH and GPG keys**.
+    * Seleccione **New SSH key**.
+    * Asigne el título `Windows-UNAL-2025`, pegue el contenido en el campo **Key** y presione **Add SSH key**.
+
+
+### Activación del Agente SSH del Sistema
+
+Para que Windows gestione su identidad de forma transparente, debe habilitar el servicio correspondiente:
+
+* **Modo Administrador**: Cierre su terminal actual y abra una nueva sesión de **PowerShell como Administrador**.
+* **Habilitar Servicio**: Ejecute los siguientes comandos para automatizar el arranque del agente:
+```powershell
+Set-Service ssh-agent -StartupType Automatic
+Start-Service ssh-agent
+```
+
+* **Cargar la llave privada**: Registre su llave en el agente activo:
+```powershell
+ssh-add $env:USERPROFILE\.ssh\id_ed25519
+```
+
+### Verificación de la Autenticación
+
+* **Prueba de conexión**: Compruebe que el túnel de comunicación con los servidores de GitHub funciona correctamente:
+```powershell
+ssh -T git@github.com
+```
+* **Resultado esperado**: Si la configuración es exitosa, recibirá un mensaje similar a: `Hi usuario! You've successfully authenticated, but GitHub does not provide shell access.`
+
+::: {.callout-success}
+#### ¡Túnel SSH Activo y Configurado!
+
+Has establecido una identidad digital segura entre tu equipo y GitHub. A partir de este momento, la comunicación para sincronizar tus repositorios será transparente y automática.
+
+* **Identidad Permanente**: Esta configuración se realiza **una sola vez** por computador; tu "firma digital" ya reside en el sistema.
+* **Adiós a las Interrupciones**: GitHub ya no solicitará tu usuario, contraseña o tokens personales de acceso en cada operación.
+* **Compatibilidad Total**: Esta llave es reconocida automáticamente por **PowerShell**, **VS Code**, **Positron**, **RStudio** y cualquier otra terminal científica que utilices.
+* **Seguridad de Grado Profesional**: Tus envíos (`push`) viajan ahora por un canal cifrado bajo el estándar Ed25519.
+
+:::
+
+
+## Vinculación del Repositorio de Contenidos de la Clase{#sec-vinculacion-clase}
+
+Los contenidos de la clase están en `https://github.com/alexyshr/ProgramacionSIG2026.git` (HTTPS) o `git@github.com:alexyshr/ProgramacionSIG2026.git` (SSH). La elección de uno de estos dos protocolos (HTTPS o SSH), depende de si ha configurado su identidad digital, ver @sec-ssh-github.
+
+::: {.callout-warning}
+### ¡Advertencia sobre la Estructura de Carpetas!
+
+Es fundamental para el orden del curso que el repositorio con los contenidos de la clase se conecte a una **carpeta independiente**. 
+
+**No sincronice estos archivos dentro de su carpeta local con los contenedores `ID UNAL`**. Mantener directorios separados garantiza que sus ejercicios personales y los materiales de lectura del profesor no se mezclen, evitando errores de sobreescritura y conflictos de Git al realizar actualizaciones del material.
+:::
+
+
+### Opción A: Sincronizar mediante SSH (Recomendado)
+
+Utilice este método si ya configuró sus llaves siguiendo los pasos de la @sec-ssh-github.
+
+* **URL de la Clase**: `git@github.com:alexyshr/ProgramacionSIG2026.git`
+
+* **Vincular el repositorio remoto**:
+    Si ya inicializó su carpeta local (no la de sus contenedores Docker) con `git init`, ejecute el siguiente comando para establecer el origen:
+```powershell
+git remote add origin git@github.com:alexyshr/ProgramacionSIG2026.git
+```
+
+* **Descargar el contenido (Pull)**:
+    Para traer los archivos del servidor a su computadora por primera vez:
+```powershell
+git pull origin main
+```
+
+* **Verificación de estado**:
+    Confirme que la carpeta local está sincronizada correctamente:
+```powershell
+git status
+```
+    *Resultado esperado: `On branch main. Your branch is up to date. working tree clean.`*
+
+### Opción B: Sincronizar mediante HTTPS
+
+Utilice este método si aún no ha configurado llaves SSH o prefiere una descarga rápida. A diferencia del método anterior, este suele solicitar un **Personal Access Token (PAT)** (ver [líneas arriba](ancla-github_pat)) para realizar operaciones de subida (*push*).
+
+* **URL de la Clase**: `https://github.com/alexyshr/ProgramacionSIG2026.git`
+* **Instrucción**: Este comando descarga el repositorio completo y crea automáticamente una subcarpeta con el nombre del proyecto:
+```powershell
+git clone https://github.com/alexyshr/ProgramacionSIG2026.git
+```
+
+## Notas de Flujo de Trabajo
+
+* **Persistencia**: Una vez clonado o vinculado el repositorio, Git recordará la ruta del servidor (ya sea SSH o HTTPS). No es necesario repetir los comandos de `remote add` o `clone` en sesiones futuras.
+* **Seguridad**: Si opta por HTTPS, recuerde que GitHub ya no acepta contraseñas básicas por terminal; deberá generar un Token en la configuración de su cuenta. Por esta razón, se recomienda priorizar el uso de **SSH**.
+
+::: {.callout-tip}
+### Siguiente Paso
+Con el repositorio sincronizado y el contenedor de Docker activo (como se vio en la @sec-infraestructura), ya puede comenzar a trabajar en sus archivos `.qmd` y ver los cambios reflejados en tiempo real.
+:::

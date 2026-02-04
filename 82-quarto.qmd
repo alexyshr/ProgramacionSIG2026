@@ -1,0 +1,92 @@
+# Quarto: Orquestación y Configuración {#quarto-ref}
+
+Quarto se basa en un archivo de configuración centralizado donde se definen los parámetros de renderizado, bibliografía y estilos.
+
+## Opciones del encabezado yml
+
+**Ejemplo 1**: Solo HTML
+
+```markdown
+---
+title: "Título de la Práctica"
+author: "Nombre del Estudiante"
+date: last-modified
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    toc-location: left
+    number-sections: true
+    theme: lux
+---
+```
+
+**Ejemplo 2**: HTML y Python
+
+```markdown
+---
+title: "Informe Técnico: Análisis Geoespacial"
+author: "ID Correo UNAL"
+date: today
+format:
+  html:
+    toc: true
+    number-sections: true
+    theme: cosmo
+  pdf:
+    toc: true
+    toc-title: "Contenido"
+    number-sections: true
+    documentclass: scrreprt
+    geometry:
+      - top=25mm
+      - left=25mm
+      - right=25mm
+      - bottom=25mm
+---
+```
+## Resumen de comandos Quarto
+
+`quarto render guia_instalacion.qmd --to all`
+
+`quarto render guia_instalacion.qmd --to html`
+
+`quarto render guia_instalacion.qmd --to pdf`
+
+## Control de Ejecución en Quarto: Opciones de Chunks {#sec-opciones-chunks}
+
+Para que sus informes técnicos sean profesionales, no basta con que el código funcione; es necesario controlar qué se muestra y qué se oculta al lector final. En Quarto, esto se logra mediante el uso de "opciones de chunk" utilizando la sintaxis de la tubería de comentarios (`#|`).
+
+| Opción de Chunk | ¿Se ejecuta? | ¿Muestra el Código? | ¿Muestra Resultados / Plots? | Uso Ideal |
+|:--- |:---:|:---:|:---:|:--- |
+| **`#| echo: false`** | ✅ SÍ | ❌ NO | ✅ SÍ | **Para Resultados Finales.** Muestra el mapa/tabla sin la "receta". |
+| **`#| include: false`** | ✅ SÍ | ❌ NO | ❌ NO | **Para el Setup.** Corre todo en secreto, sin mensajes ni advertencias. |
+| **`#| code-fold: true`** | ✅ SÍ | 📂 Plegado | ✅ SÍ | **Para el Proceso.** El código se oculta tras un botón "Code". |
+| **`#| eval: false`** | ❌ NO | ✅ SÍ | ❌ NO | **Para Tutoriales.** Solo muestra el texto del código sin procesarlo. |
+| **`#| output: false`** | ✅ SÍ | ✅ SÍ | ❌ NO | **Para Debugging.** Ves su código pero no los resultados pesados. |
+| **`#| warning: false`** | ✅ SÍ | - | - | Oculta esos textos naranjas de advertencia de las librerías. |
+| **`#| message: false`** | ✅ SÍ | - | - | Oculta mensajes de carga (ej: "Loading terra package..."). |
+
+
+### Recomendaciones de Uso según el Contexto
+
+Dependiendo de la parte del script en la que se encuentre, existen configuraciones que garantizan un documento más limpio y fluido:
+
+| Tipo de Chunk | Opción recomendada | ¿Por qué? |
+|:--- |:--- |:--- |
+| **Setup / Librerías** | `#| include: false` | Ejecuta todo pero oculta el código y los mensajes de carga de R/Julia/Python. |
+| **Limpieza de RAM** | `#| include: false` | Borra objetos y vacía el cache en silencio. El lector no necesita ver la "limpieza". |
+| **Procesamiento** | `#| code-fold: true` | Muestra el mapa pero esconde el código tras un clic. Ideal para transparencia académica. |
+| **Resultados Finales** | `#| echo: false` | Muestra solo la tabla comparativa y conclusiones. Es el "veredicto" limpio y profesional. |
+
+::: {.callout-tip}
+#### Sintaxis Correcta
+Recuerde que las opciones deben ir al inicio del chunk, justo después de los corchetes del lenguaje:
+```r
+#| echo: false
+#| warning: false
+library(terra)
+# Su código aquí...
+```
+:::
+

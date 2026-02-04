@@ -1,0 +1,119 @@
+
+# Docker: Gestión de Contenedores e Imágenes {#docker-ref}
+
+## Procedimiento Incial
+
+Antes de trabajar con Docker debes:
+
+1. Arrancar Docker Desktop
+
+2. Usando la terminal **PowerShell** de Windows ubicarte sobre la carpeta dónde se encuentran los archivos `Dockerfile` y  `docker-compose.html`
+
+Los siguientes pasos son **compilar** (solo una vez), arrancar las imágenes y detener las imágenes:
+
+3. **Compilación Limpia (Sin Cache) con Log:**
+
+```bash
+docker build --no-cache -t mi_sig_env:v1 . > build_details.log 2>&1
+```
+4. **Arrancar las imágenes:**
+
+```bash
+docker compose up -d
+```
+
+5. **Detener las imágenes:** (opcional: solo para terminar)
+
+```bash
+docker compose down
+```
+
+Finalmente trabajar con los contenedores dentro de VSCode:
+
+6. "Ctrl + Shif + P": "Dev Containers: Attach to Running Container..." y seleccionar container `image_sig_unal` (`contenedor_sig_unal`)
+
+## Comandos Docker
+
+Use la siguiente tabla como referencia para gestionar sus contenedores desde la terminal de su sistema anfitrión (Windows/Mac/Linux).
+
+| Acción | Comando | Propósito |
+| :- | :--- | :--- |
+| **Construcción Inicial** | `docker-compose up --build -d` | Compila el Dockerfile y levanta los servicios (Solo una vez). |
+| **Inicio Diario** | `docker-compose up -d` | Inicia los servicios de forma instantánea si ya fueron construidos. |
+| **Monitoreo de Procesos** | `docker logs -f entorno_unal_sig` | Sigue los logs en vivo (ideal para ver pre-compilaciones). |
+| **Ver logs recientes** | `docker logs --tail 20 entorno_unal_sig` | Muestra las últimas 20 líneas (ideal para buscar el token). |
+| **Apagado** | `docker-compose down` | Detiene los servicios y libera recursos del sistema. |
+| **Prueba de R (sf)** | `docker exec entorno_unal_sig R -e "library(sf); print('R-Spatial detectado')"` | Confirmar que R reconoce los drivers geoespaciales del sistema. |
+| **Prueba de Python** | `docker exec entorno_unal_sig python -c "import shapely; import geopandas; print('Python OK')"` | Confirmar que el stack de Python (GeoPandas/Shapely) está instalado. |
+| **Prueba de Julia** | `docker exec entorno_unal_sig julia -e "using LibGEOS; println('Julia OK')"` | Confirmar que Julia tiene acceso a los binarios geoespaciales. |
+
+## Compilación Avanzada
+Para trabajar con entornos SIG, a menudo necesitamos reconstruir imágenes sin basura previa.
+
+* **Compilación Limpia (Sin Cache) con Log:**
+    Para asegurar que Docker descargue todas las librerías desde cero y guarde un registro detallado de los errores:
+    `docker build --no-cache -t mi_sig_env:v1 . --progress=plain > build_details.log 2>&1`
+* **Subir Imagen a Repositorio:**
+    `docker tag mi_sig_env:v1 usuario_dockerhub/mi_sig_env:v1`
+    `docker push usuario_dockerhub/mi_sig_env:v1`
+* **Cargar en VSCode:**
+    Una vez el contenedor esté corriendo, use la extensión **Dev Containers** -> Botón verde inferior izquierdo -> *Attach to Running Container*.
+
+## Cambio de Ruta de Almacenamiento (Windows)
+Si el disco `C:` se agota debido a las imágenes de Docker, siga estos pasos en **Docker Desktop**:
+1.  Vaya a **Settings** (engranaje).
+2.  **Resources** > **Advanced**.
+3.  En **Disk image location**, cambie la ruta a un disco con mayor capacidad (ej. `D:\DockerImages`).
+4.  Presione **Apply & Restart**.
+
+
+## Optimización de Memoria y Swap {#sec-optimizacion-memoria}
+
+Cuando procesamos datos masivos (como imágenes Sentinel-2 o rásters globales), la RAM física de 16GB suele ser insuficiente. Para evitar que el sistema aborte los procesos con el error **"Killed"**, debemos configurar un "pulmón" de emergencia en dos niveles.
+
+### 1. El "Pulmón" de Windows: Memoria Virtual
+Obligamos a Windows a usar el disco duro como si fuera RAM de reserva. Si tiene un disco sólido (SSD) secundario con mucho espacio libre (ej. Disco D:), es el lugar ideal para configurarlo.
+
+1.  En el buscador de Windows, escriba: **"Ajustar la apariencia y rendimiento de Windows"**.
+2.  Vaya a la pestaña **Opciones avanzadas** > sección **Memoria virtual** > clic en **Cambiar**.
+3.  Desmarque la opción "Administrar automáticamente el tamaño del archivo de paginación para todas las unidades".
+4.  Seleccione la unidad de disco (C: o D:) y marque **Tamaño personalizado**.
+5.  Establezca los siguientes valores (recomendados para este curso):
+    * **Tamaño inicial**: `16384` MB (16 GB).
+    * **Tamaño máximo**: `32768` MB (32 GB).
+6.  Haga clic en **Establecer**, luego en **Aceptar** y **reinicie su computadora** para aplicar los cambios.
+
+### 2. El "Túnel" de Docker: Swap de WSL2
+Docker Desktop corre sobre WSL2 (*Windows Subsystem for Linux*), el cual tiene su propio "presupuesto" limitado. Por defecto, este túnel es estrecho (máximo 4GB de Swap). Si no ampliamos esto, el contenedor nunca podrá aprovechar realmente el espacio que le asignamos a Windows.
+
+**Cómo ampliar la tubería:**
+1.  Presione `Win + R`, escriba `%UserProfile%` y presione Enter.
+2.  Busque el archivo `.wslconfig`. Si no existe, créelo con el Bloc de Notas.
+3.  Pegue el siguiente contenido:
+
+```ini
+[wsl2]
+memory=12GB # RAM máxima que le permitimos usar a Linux/Docker
+swap=16GB   # El nuevo tamaño de swap que verá el comando 'top' en la terminal
+```
+
+4.  **Aplicar cambios**: Guarde el archivo, abra una terminal (PowerShell) y escriba `wsl --shutdown`. Luego, inicie Docker Desktop nuevamente.
+
+---
+
+## Higiene y Limpieza de Choque
+
+Para garantizar que un renderizado de Quarto llegue al 100% sin colapsar el contenedor, aplique estas medidas de higiene:
+
+* **Cierre "Vampiros"**: Aplicaciones como Chrome, Edge, Teams y Slack consumen RAM de forma agresiva. Ciérrelas antes de procesos pesados.
+* **Limpieza de disco**: Use el Liberador de espacio en disco (`cleanmgr`) para vaciar archivos de volcado de memoria.
+* **La "Escoba" en el Código**: Use comandos de limpieza entre procesos de diferentes lenguajes:
+    * **R**: `rm(obj); gc(full = TRUE)`
+    * **Python**: `del var; gc.collect()`
+    * **Julia**: `GC.gc()`
+
+::: {.callout-warning}
+### Importante para Visualización
+En Julia y R, evite generar gráficos interactivos pesados dentro de bucles de procesamiento. La acumulación de objetos visuales en la memoria de VS Code es la causa número uno de colapsos en el contenedor.
+:::
+

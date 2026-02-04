@@ -26,17 +26,26 @@ book:
         - 06-estructuras_datos_geo.qmd
     - part: "Prácticas"        # Tercera parte
       chapters:
-        - 41-benchmark_raster.qmd
-        #- 00-prefacio.qmd
+        - 41-practica_1_benchmark_raster.qmd
     - part: "Presentaciones"        # Tercera parte
       chapters:
-        - 71-presentacion_benchmark.qmd
+        - 61-presentacion_1_varios.qmd
+        - 62-presentacion_2_benchmark.qmd
         
   # APÉNDICES (aparecen después de los capítulos)
   appendices:
-    - 91-referencia_tecnica.qmd  # Comandos y guías técnicas
-    - 92-errata.qmd              # Apéndice B: Erratas
-    - 93-referencias.qmd         # Apéndice C: Referencias bibliográficas
+    - 81-infraestructura_instalada.qmd  # Información sobre contenedores y software instalado
+    - 82-quarto.qmd              # A. Información Adicional Quarto
+    - 83-docker_desktop.qmd      # B. Información sogre Docker Desktop
+    - 84-git_github.qmd          # C. Informaión sobre Git y GitHub
+    - 85-vscode.qmd              # D. Información sobre VSCode
+    - 86-windows.qmd             # E. Información sobre Windows
+    - 87-linux_ubuntu.qmd        # F. Información sobre Linux Ubuntu
+    - 88-python.qmd              # G. Adicionales sobre Python
+    - 89-r.qmd                   # H. Información adicional sobre R
+    - 90-julia.qmd               # I. Información adicional sobre Julia
+    - 98-errata.qmd              # J. Erratas
+    - 99-referencias.qmd         # K. Referencias bibliográficas
     # IMPORTANTE: Este archivo crea la sección de referencias al final
     # Si se quita, las referencias aparecerán sin título en cada capítulo (HTML)
     # o no aparecerán agrupadas al final (PDF)

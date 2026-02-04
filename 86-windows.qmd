@@ -1,0 +1,33 @@
+# Temas Técnicos sobre Windows
+
+## Herramientas de admon de Windows
+
+| Acceso Directo | Parámetro / Comando | Descripción |
+|:--- |:--- |:--- |
+| **Windows + R** | `%UserProfile%` | Abre tu carpeta personal de usuario (donde se crea el archivo `.wslconfig`). |
+| **Windows + R** | `cleanmgr` | Abre el **Liberador de espacio en disco** para purgar basura del sistema. |
+| **Windows + R** | `taskmgr` | **[Ctrl + Shift + Esc]** Abre el **Administrador de Tareas** para ver procesos. |
+| **Windows + R** | `resmon` | Abre el **Monitor de Recursos** (ideal para ver el uso real de RAM y Swap). |
+| **Windows + R** | `sysdm.cpl` | **[Win + Pausa]** Propiedades del sistema (configuración de Memoria Virtual). |
+| **Windows + R** | `%temp%` | Abre la carpeta de **Archivos temporales del usuario** actual. |
+| **Windows + R** | `temp` | Abre la carpeta de **Archivos temporales del sistema** (raíz). |
+| **Windows + R** | `prefetch` | Carpeta de precarga de Windows (caché que puedes vaciar para liberar espacio). |
+| **Windows + R** | `diskmgmt.msc` | Abre la **Administración de discos** (para vigilar tus unidades C: y D:). |
+| **Windows + R** | `appdata` | Acceso a carpetas de configuración de aplicaciones (Roaming/Local). |
+| **Windows + R** | `cmd` | **[Win + X, luego C]** Abre el Símbolo del Sistema (Terminal clásica). |
+| **Windows + R** | `powershell` | **[Win + X, luego A]** Abre PowerShell con permisos de administrador. |
+| **Windows + R** | `control` | Abre el **Panel de Control clásico** de Windows. |
+| **Windows + R** | `msconfig` | Configuración del sistema (gestión de servicios y arranque). |
+| **Windows + R** | `ncpa.cpl` | Panel de **Conexiones de red** (configuración de adaptadores e IPs). |
+| **Nativo** | **Win + E** | Abre instantáneamente el **Explorador de Archivos**. |
+| **Nativo** | **Win + I** | Abre el panel de **Configuración de Windows** (Settings). |
+| **Nativo** | **Win + D** | **Minimiza/Restaura todo** para ir al Escritorio rápidamente. |
+| **Nativo** | **Win + V** | Abre el **Historial del Portapapeles** (muy útil para copiar varios códigos). |
+
+* Procesos de **WSL2** (Windows Subsystem for Linux 2): Docker y Vmmem
+
+## Comandos de Windows (PowerShell/CMD)
+
+* **Ver uso de RAM:** `Get-Process | Sort-Object WorkingSet -Descending | Select-Object -First 10`
+* **Ver estado de WSL:** `wsl --list --verbose`
+* **Limpiar Cache de DNS:** `ipconfig /flushdns`

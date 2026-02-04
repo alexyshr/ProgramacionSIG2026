@@ -49,14 +49,16 @@ print(plaza_bolivar)
 
 ### Julia (LibGEOS)
 
-```{julia}
-#| eval: false
-using LibGEOS
+```{r}
+# #| eval: false
+j_eval('
+  using LibGEOS
 
-# Crear punto desde formato WKT
-plaza_bolivar = LibGEOS.readgeom("POINT (-74.076 4.598)")
+  # Crear punto desde formato WKT
+  plaza_bolivar = LibGEOS.readgeom("POINT (-74.076 4.598)")
 
-println("Tipo: ", typeof(plaza_bolivar))
+  println("Tipo: ", typeof(plaza_bolivar))
+')
 ```
 
 :::
@@ -115,15 +117,17 @@ print(gdf)
 
 ### Julia (GeoTables)
 
-```{julia}
-#| eval: false
-using GeoTables, GeometryBasics, DataFrames
+```{r}
+# #| eval: false
+j_eval('
+  using GeoTables, GeometryBasics, DataFrames
 
-df = DataFrame(Ciudad = ["Bogotá", "Medellín", "Cali"], Pob = [7.9, 2.5, 2.2])
-puntos = [Point2f(-74.08, 4.60), Point2f(-75.56, 6.25), Point2f(-76.52, 3.42)]
+  df = DataFrame(Ciudad = ["Bogotá", "Medellín", "Cali"], Pob = [7.9, 2.5, 2.2])
+  puntos = [Point2f(-74.08, 4.60), Point2f(-75.56, 6.25), Point2f(-76.52, 3.42)]
 
-gt = GeoTable(df, geometry = puntos)
-println(gt)
+  gt = GeoTable(df, geometry = puntos)
+  println(gt)
+')
 ```
 
 :::
