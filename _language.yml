@@ -1,0 +1,8 @@
+chapter-label-single: "Capítulo"
+chapter-label-plural: "Capítulos"
+appendices-title: "Apéndices"
+# Añadimos estas para asegurar el HTML
+toc-title-document: "Tabla de contenidos"
+section-title-abstract: "Resumen"
+lof-title-document: "Lista de Figuras"
+lot-title-document: "Lista de Tablas"

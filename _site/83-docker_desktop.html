@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.4.550">
@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Programación SIG: Python, R y Julia - Appendix C — Docker: Gestión de Contenedores e Imágenes</title>
+<title>Programación SIG: Python, R y Julia - Apéndice C — Docker: Gestión de Contenedores e Imágenes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -89,17 +89,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
+    "search-no-results-text": "Sin resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
     "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
   }
 }</script>
 
@@ -112,11 +112,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./81-infraestructura_instalada.html">Appendices</a></li><li class="breadcrumb-item"><a href="./83-docker_desktop.html"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Docker: Gestión de Contenedores e Imágenes</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./81-infraestructura_instalada.html">Apéndices</a></li><li class="breadcrumb-item"><a href="./83-docker_desktop.html"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Docker: Gestión de Contenedores e Imágenes</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
@@ -135,7 +135,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
+        <div id="quarto-search" class="" title="Buscar"></div>
         </div>
         </div>
     <div class="sidebar-menu-container"> 
@@ -156,7 +156,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
  <span class="menu-text">Instalación y Entornos</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -191,7 +191,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
  <span class="menu-text">Fundamentos</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -214,7 +214,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
  <span class="menu-text">Prácticas</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -222,7 +222,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./41-practica_1_benchmark_raster.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Benchmark de Procesamiento Geoespacial</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Evaluación Comparativa de Procesamiento Geoespacial</span></span></a>
   </div>
 </li>
       </ul>
@@ -231,14 +231,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
  <span class="menu-text">Presentaciones</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./61-presentacion_1_varios.html" class="sidebar-item-text sidebar-link">
+  <a href="./61-presentacion_1_clase1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Temas por Charlar</span></span></a>
   </div>
 </li>
@@ -253,8 +253,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
- <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+ <span class="menu-text">Apéndices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -262,7 +262,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./81-infraestructura_instalada.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Infraestructura instalada</span></span></a>
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Infraestructura Instalada</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -292,13 +292,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./86-windows.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Temas Técnicos sobre Windows</span></span></a>
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Temas técnicos sobre Windows</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./87-linux_ubuntu.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">Temás Técnicos sobre Linux</span></span></a>
+ <span class="menu-text"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">Temas Técnicos sobre Linux</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -343,25 +343,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Tabla de Contenidos</h2>
    
   <ul>
-  <li><a href="#procedimiento-incial" id="toc-procedimiento-incial" class="nav-link active" data-scroll-target="#procedimiento-incial"><span class="header-section-number">C.1</span> Procedimiento Incial</a></li>
-  <li><a href="#comandos-docker" id="toc-comandos-docker" class="nav-link" data-scroll-target="#comandos-docker"><span class="header-section-number">C.2</span> Comandos Docker</a></li>
-  <li><a href="#compilación-avanzada" id="toc-compilación-avanzada" class="nav-link" data-scroll-target="#compilación-avanzada"><span class="header-section-number">C.3</span> Compilación Avanzada</a></li>
-  <li><a href="#cambio-de-ruta-de-almacenamiento-windows" id="toc-cambio-de-ruta-de-almacenamiento-windows" class="nav-link" data-scroll-target="#cambio-de-ruta-de-almacenamiento-windows"><span class="header-section-number">C.4</span> Cambio de Ruta de Almacenamiento (Windows)</a></li>
-  <li><a href="#sec-optimizacion-memoria" id="toc-sec-optimizacion-memoria" class="nav-link" data-scroll-target="#sec-optimizacion-memoria"><span class="header-section-number">C.5</span> Optimización de Memoria y Swap</a>
+  <li><a href="#procedimiento-incial" id="toc-procedimiento-incial" class="nav-link active" data-scroll-target="#procedimiento-incial"><span class="header-section-number">C.1</span> Procedimiento incial</a></li>
+  <li><a href="#comandos-docker" id="toc-comandos-docker" class="nav-link" data-scroll-target="#comandos-docker"><span class="header-section-number">C.2</span> Comandos docker</a></li>
+  <li><a href="#compilación-avanzada" id="toc-compilación-avanzada" class="nav-link" data-scroll-target="#compilación-avanzada"><span class="header-section-number">C.3</span> Compilación avanzada</a></li>
+  <li><a href="#cambio-de-ruta-de-almacenamiento-windows" id="toc-cambio-de-ruta-de-almacenamiento-windows" class="nav-link" data-scroll-target="#cambio-de-ruta-de-almacenamiento-windows"><span class="header-section-number">C.4</span> Cambio de ruta de almacenamiento (Windows)</a></li>
+  <li><a href="#sec-optimizacion-memoria" id="toc-sec-optimizacion-memoria" class="nav-link" data-scroll-target="#sec-optimizacion-memoria"><span class="header-section-number">C.5</span> Optimización de memoria RAM y swap</a>
   <ul class="collapse">
-  <li><a href="#el-pulmón-de-windows-memoria-virtual" id="toc-el-pulmón-de-windows-memoria-virtual" class="nav-link" data-scroll-target="#el-pulmón-de-windows-memoria-virtual">1. El “Pulmón” de Windows: Memoria Virtual</a></li>
-  <li><a href="#el-túnel-de-docker-swap-de-wsl2" id="toc-el-túnel-de-docker-swap-de-wsl2" class="nav-link" data-scroll-target="#el-túnel-de-docker-swap-de-wsl2">2. El “Túnel” de Docker: Swap de WSL2</a></li>
+  <li><a href="#el-pulmón-de-windows-memoria-virtual" id="toc-el-pulmón-de-windows-memoria-virtual" class="nav-link" data-scroll-target="#el-pulmón-de-windows-memoria-virtual">1. El “pulmón” de Windows: memoria virtual</a></li>
+  <li><a href="#el-túnel-de-docker-swap-de-wsl2" id="toc-el-túnel-de-docker-swap-de-wsl2" class="nav-link" data-scroll-target="#el-túnel-de-docker-swap-de-wsl2">2. El “túnel” de docker: swap de WSL2</a></li>
   </ul></li>
-  <li><a href="#higiene-y-limpieza-de-choque" id="toc-higiene-y-limpieza-de-choque" class="nav-link" data-scroll-target="#higiene-y-limpieza-de-choque"><span class="header-section-number">C.6</span> Higiene y Limpieza de Choque</a></li>
+  <li><a href="#higiene-y-limpieza-de-choque" id="toc-higiene-y-limpieza-de-choque" class="nav-link" data-scroll-target="#higiene-y-limpieza-de-choque"><span class="header-section-number">C.6</span> Higiene y limpieza de choque</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./81-infraestructura_instalada.html">Appendices</a></li><li class="breadcrumb-item"><a href="./83-docker_desktop.html"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Docker: Gestión de Contenedores e Imágenes</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./81-infraestructura_instalada.html">Apéndices</a></li><li class="breadcrumb-item"><a href="./83-docker_desktop.html"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Docker: Gestión de Contenedores e Imágenes</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="docker-ref" class="quarto-section-identifier">Appendix C — Docker: Gestión de Contenedores e Imágenes</span></h1>
+<h1 class="title"><span id="docker-ref" class="quarto-section-identifier">Apéndice C — Docker: Gestión de Contenedores e Imágenes</span></h1>
 </div>
 
 
@@ -379,7 +379,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <section id="procedimiento-incial" class="level2" data-number="C.1">
-<h2 data-number="C.1" class="anchored" data-anchor-id="procedimiento-incial"><span class="header-section-number">C.1</span> Procedimiento Incial</h2>
+<h2 data-number="C.1" class="anchored" data-anchor-id="procedimiento-incial"><span class="header-section-number">C.1</span> Procedimiento incial</h2>
 <p>Antes de trabajar con Docker debes:</p>
 <ol type="1">
 <li><p>Arrancar Docker Desktop</p></li>
@@ -389,22 +389,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol start="3" type="1">
 <li><strong>Compilación Limpia (Sin Cache) con Log:</strong></li>
 </ol>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> build <span class="at">--no-cache</span> <span class="at">-t</span> mi_sig_env:v1 . <span class="op">&gt;</span> build_details.log <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> build <span class="at">--no-cache</span> <span class="at">-t</span> mi_sig_env:v1 . <span class="op">&gt;</span> build_details.log <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="4" type="1">
 <li><strong>Arrancar las imágenes:</strong></li>
 </ol>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> compose up <span class="at">-d</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> compose up <span class="at">-d</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="5" type="1">
 <li><strong>Detener las imágenes:</strong> (opcional: solo para terminar)</li>
 </ol>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> compose down</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> compose down</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Finalmente trabajar con los contenedores dentro de VSCode:</p>
 <ol start="6" type="1">
 <li>“Ctrl + Shif + P”: “Dev Containers: Attach to Running Container…” y seleccionar container <code>image_sig_unal</code> (<code>contenedor_sig_unal</code>)</li>
 </ol>
 </section>
 <section id="comandos-docker" class="level2" data-number="C.2">
-<h2 data-number="C.2" class="anchored" data-anchor-id="comandos-docker"><span class="header-section-number">C.2</span> Comandos Docker</h2>
+<h2 data-number="C.2" class="anchored" data-anchor-id="comandos-docker"><span class="header-section-number">C.2</span> Comandos docker</h2>
 <p>Use la siguiente tabla como referencia para gestionar sus contenedores desde la terminal de su sistema anfitrión (Windows/Mac/Linux).</p>
 <table class="table">
 <colgroup>
@@ -464,7 +464,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 </section>
 <section id="compilación-avanzada" class="level2" data-number="C.3">
-<h2 data-number="C.3" class="anchored" data-anchor-id="compilación-avanzada"><span class="header-section-number">C.3</span> Compilación Avanzada</h2>
+<h2 data-number="C.3" class="anchored" data-anchor-id="compilación-avanzada"><span class="header-section-number">C.3</span> Compilación avanzada</h2>
 <p>Para trabajar con entornos SIG, a menudo necesitamos reconstruir imágenes sin basura previa.</p>
 <ul>
 <li><strong>Compilación Limpia (Sin Cache) con Log:</strong> Para asegurar que Docker descargue todas las librerías desde cero y guarde un registro detallado de los errores: <code>docker build --no-cache -t mi_sig_env:v1 . --progress=plain &gt; build_details.log 2&gt;&amp;1</code></li>
@@ -473,14 +473,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 </section>
 <section id="cambio-de-ruta-de-almacenamiento-windows" class="level2" data-number="C.4">
-<h2 data-number="C.4" class="anchored" data-anchor-id="cambio-de-ruta-de-almacenamiento-windows"><span class="header-section-number">C.4</span> Cambio de Ruta de Almacenamiento (Windows)</h2>
+<h2 data-number="C.4" class="anchored" data-anchor-id="cambio-de-ruta-de-almacenamiento-windows"><span class="header-section-number">C.4</span> Cambio de ruta de almacenamiento (Windows)</h2>
 <p>Si el disco <code>C:</code> se agota debido a las imágenes de Docker, siga estos pasos en <strong>Docker Desktop</strong>: 1. Vaya a <strong>Settings</strong> (engranaje). 2. <strong>Resources</strong> &gt; <strong>Advanced</strong>. 3. En <strong>Disk image location</strong>, cambie la ruta a un disco con mayor capacidad (ej. <code>D:\DockerImages</code>). 4. Presione <strong>Apply &amp; Restart</strong>.</p>
 </section>
 <section id="sec-optimizacion-memoria" class="level2" data-number="C.5">
-<h2 data-number="C.5" class="anchored" data-anchor-id="sec-optimizacion-memoria"><span class="header-section-number">C.5</span> Optimización de Memoria y Swap</h2>
+<h2 data-number="C.5" class="anchored" data-anchor-id="sec-optimizacion-memoria"><span class="header-section-number">C.5</span> Optimización de memoria RAM y swap</h2>
 <p>Cuando procesamos datos masivos (como imágenes Sentinel-2 o rásters globales), la RAM física de 16GB suele ser insuficiente. Para evitar que el sistema aborte los procesos con el error <strong>“Killed”</strong>, debemos configurar un “pulmón” de emergencia en dos niveles.</p>
 <section id="el-pulmón-de-windows-memoria-virtual" class="level3">
-<h3 class="anchored" data-anchor-id="el-pulmón-de-windows-memoria-virtual">1. El “Pulmón” de Windows: Memoria Virtual</h3>
+<h3 class="anchored" data-anchor-id="el-pulmón-de-windows-memoria-virtual">1. El “pulmón” de Windows: memoria virtual</h3>
 <p>Obligamos a Windows a usar el disco duro como si fuera RAM de reserva. Si tiene un disco sólido (SSD) secundario con mucho espacio libre (ej. Disco D:), es el lugar ideal para configurarlo.</p>
 <ol type="1">
 <li>En el buscador de Windows, escriba: <strong>“Ajustar la apariencia y rendimiento de Windows”</strong>.</li>
@@ -496,12 +496,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 </section>
 <section id="el-túnel-de-docker-swap-de-wsl2" class="level3">
-<h3 class="anchored" data-anchor-id="el-túnel-de-docker-swap-de-wsl2">2. El “Túnel” de Docker: Swap de WSL2</h3>
+<h3 class="anchored" data-anchor-id="el-túnel-de-docker-swap-de-wsl2">2. El “túnel” de docker: swap de WSL2</h3>
 <p>Docker Desktop corre sobre WSL2 (<em>Windows Subsystem for Linux</em>), el cual tiene su propio “presupuesto” limitado. Por defecto, este túnel es estrecho (máximo 4GB de Swap). Si no ampliamos esto, el contenedor nunca podrá aprovechar realmente el espacio que le asignamos a Windows.</p>
 <p><strong>Cómo ampliar la tubería:</strong> 1. Presione <code>Win + R</code>, escriba <code>%UserProfile%</code> y presione Enter. 2. Busque el archivo <code>.wslconfig</code>. Si no existe, créelo con el Bloc de Notas. 3. Pegue el siguiente contenido:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode ini code-with-copy"><code class="sourceCode ini"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[wsl2]</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="dt">memory</span><span class="ot">=</span><span class="st">12GB # RAM máxima que le permitimos usar a Linux/Docker</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="dt">swap</span><span class="ot">=</span><span class="st">16GB   # El nuevo tamaño de swap que verá el comando 'top' en la terminal</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="dt">swap</span><span class="ot">=</span><span class="st">16GB   # El nuevo tamaño de swap que verá el comando 'top' en la terminal</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="4" type="1">
 <li><strong>Aplicar cambios</strong>: Guarde el archivo, abra una terminal (PowerShell) y escriba <code>wsl --shutdown</code>. Luego, inicie Docker Desktop nuevamente.</li>
 </ol>
@@ -509,7 +509,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 </section>
 <section id="higiene-y-limpieza-de-choque" class="level2" data-number="C.6">
-<h2 data-number="C.6" class="anchored" data-anchor-id="higiene-y-limpieza-de-choque"><span class="header-section-number">C.6</span> Higiene y Limpieza de Choque</h2>
+<h2 data-number="C.6" class="anchored" data-anchor-id="higiene-y-limpieza-de-choque"><span class="header-section-number">C.6</span> Higiene y limpieza de choque</h2>
 <p>Para garantizar que un renderizado de Quarto llegue al 100% sin colapsar el contenedor, aplique estas medidas de higiene:</p>
 <ul>
 <li><strong>Cierre “Vampiros”</strong>: Aplicaciones como Chrome, Edge, Teams y Slack consumen RAM de forma agresiva. Ciérrelas antes de procesos pesados.</li>
@@ -531,7 +531,7 @@ Importante para Visualización
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>En Julia y R, evite generar gráficos interactivos pesados dentro de bucles de procesamiento. La acumulación de objetos visuales en la memoria de VS Code es la causa número uno de colapsos en el contenedor.</p>
+<p>En Julia y R, evite generar gráficos interactivos pesados dentro de bucles de procesamiento. La acumulación de objetos visuales en la memoria de VSCode es la causa número uno de colapsos en el contenedor.</p>
 </div>
 </div>
 
@@ -593,12 +593,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
+    button.setAttribute("title", "Copiado");
     let tooltip;
     if (window.bootstrap) {
       button.setAttribute("data-bs-toggle", "tooltip");
       button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
+      button.setAttribute("data-bs-title", "Copiado");
       tooltip = new bootstrap.Tooltip(button, 
         { trigger: "manual", 
           customClass: "code-copy-button-tooltip",

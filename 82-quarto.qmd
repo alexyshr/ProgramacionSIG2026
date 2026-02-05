@@ -2,7 +2,7 @@
 
 Quarto se basa en un archivo de configuración centralizado donde se definen los parámetros de renderizado, bibliografía y estilos.
 
-## Opciones del encabezado yml
+## Opciones del encabezado `yml`
 
 **Ejemplo 1**: Solo HTML
 
@@ -53,7 +53,7 @@ format:
 
 `quarto render guia_instalacion.qmd --to pdf`
 
-## Control de Ejecución en Quarto: Opciones de Chunks {#sec-opciones-chunks}
+## Control de ejecución en Quarto - opciones de `chunks` {#sec-opciones-chunks}
 
 Para que sus informes técnicos sean profesionales, no basta con que el código funcione; es necesario controlar qué se muestra y qué se oculta al lector final. En Quarto, esto se logra mediante el uso de "opciones de chunk" utilizando la sintaxis de la tubería de comentarios (`#|`).
 
@@ -68,7 +68,7 @@ Para que sus informes técnicos sean profesionales, no basta con que el código 
 | **`#| message: false`** | ✅ SÍ | - | - | Oculta mensajes de carga (ej: "Loading terra package..."). |
 
 
-### Recomendaciones de Uso según el Contexto
+### Recomendaciones de uso según el contexto
 
 Dependiendo de la parte del script en la que se encuentre, existen configuraciones que garantizan un documento más limpio y fluido:
 

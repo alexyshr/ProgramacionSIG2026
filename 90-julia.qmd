@@ -1,6 +1,6 @@
 # Adicionales Sobre Julia
 
-## Versiones Instaladas del Software
+## Versiones instaladas del software
 
 Versiones de paquetes `Julia` en el sistema:
 

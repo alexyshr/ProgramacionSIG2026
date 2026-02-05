@@ -1,0 +1,9 @@
+# Listas de apoyo {.unnumbered}
+
+## Lista de figuras
+::: {#refs-figs}
+:::
+
+## Lista de tablas
+::: {#refs-tbls}
+:::

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.4.550">
@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Programación SIG: Python, R y Julia - Appendix I — Adicionales Sobre R</title>
+<title>Programación SIG: Python, R y Julia - Apéndice I — Adicionales Sobre R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -89,17 +89,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
+    "search-no-results-text": "Sin resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
     "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
   }
 }</script>
 
@@ -112,11 +112,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./81-infraestructura_instalada.html">Appendices</a></li><li class="breadcrumb-item"><a href="./89-r.html"><span class="chapter-number">I</span>&nbsp; <span class="chapter-title">Adicionales Sobre R</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./81-infraestructura_instalada.html">Apéndices</a></li><li class="breadcrumb-item"><a href="./89-r.html"><span class="chapter-number">I</span>&nbsp; <span class="chapter-title">Adicionales Sobre R</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
@@ -135,7 +135,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
+        <div id="quarto-search" class="" title="Buscar"></div>
         </div>
         </div>
     <div class="sidebar-menu-container"> 
@@ -156,7 +156,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
  <span class="menu-text">Instalación y Entornos</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -191,7 +191,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
  <span class="menu-text">Fundamentos</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -214,7 +214,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
  <span class="menu-text">Prácticas</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -222,7 +222,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./41-practica_1_benchmark_raster.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Benchmark de Procesamiento Geoespacial</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Evaluación Comparativa de Procesamiento Geoespacial</span></span></a>
   </div>
 </li>
       </ul>
@@ -231,14 +231,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
  <span class="menu-text">Presentaciones</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./61-presentacion_1_varios.html" class="sidebar-item-text sidebar-link">
+  <a href="./61-presentacion_1_clase1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Temas por Charlar</span></span></a>
   </div>
 </li>
@@ -253,8 +253,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
- <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+ <span class="menu-text">Apéndices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -262,7 +262,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./81-infraestructura_instalada.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Infraestructura instalada</span></span></a>
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Infraestructura Instalada</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -292,13 +292,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./86-windows.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Temas Técnicos sobre Windows</span></span></a>
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Temas técnicos sobre Windows</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./87-linux_ubuntu.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">Temás Técnicos sobre Linux</span></span></a>
+ <span class="menu-text"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">Temas Técnicos sobre Linux</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -343,20 +343,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Tabla de Contenidos</h2>
    
   <ul>
-  <li><a href="#versiones-instaladas-del-software" id="toc-versiones-instaladas-del-software" class="nav-link active" data-scroll-target="#versiones-instaladas-del-software"><span class="header-section-number">I.1</span> Versiones Instaladas del Software</a></li>
-  <li><a href="#sec-httpgd-config" id="toc-sec-httpgd-config" class="nav-link" data-scroll-target="#sec-httpgd-config"><span class="header-section-number">I.2</span> Visualización Interactiva con <code>httpgd</code></a>
+  <li><a href="#versiones-instaladas-del-software" id="toc-versiones-instaladas-del-software" class="nav-link active" data-scroll-target="#versiones-instaladas-del-software"><span class="header-section-number">I.1</span> Versiones instaladas del software</a></li>
+  <li><a href="#sec-httpgd-config" id="toc-sec-httpgd-config" class="nav-link" data-scroll-target="#sec-httpgd-config"><span class="header-section-number">I.2</span> Visualización interactiva con <code>httpgd</code></a>
   <ul class="collapse">
-  <li><a href="#inicio-del-servidor-gráfico" id="toc-inicio-del-servidor-gráfico" class="nav-link" data-scroll-target="#inicio-del-servidor-gráfico">Inicio del Servidor Gráfico</a></li>
-  <li><a href="#resolución-de-conflictos-el-fix-del-puerto" id="toc-resolución-de-conflictos-el-fix-del-puerto" class="nav-link" data-scroll-target="#resolución-de-conflictos-el-fix-del-puerto">Resolución de Conflictos (El “Fix” del Puerto)</a></li>
-  <li><a href="#formas-de-ver-sus-gráficos" id="toc-formas-de-ver-sus-gráficos" class="nav-link" data-scroll-target="#formas-de-ver-sus-gráficos">Formas de ver sus Gráficos</a></li>
-  <li><a href="#verificación-de-salud" id="toc-verificación-de-salud" class="nav-link" data-scroll-target="#verificación-de-salud">Verificación de Salud</a></li>
-  <li><a href="#sec-repl-concept" id="toc-sec-repl-concept" class="nav-link" data-scroll-target="#sec-repl-concept">El Entorno Interactivo (REPL) y Motores Gráficos</a></li>
+  <li><a href="#inicio-del-servidor-gráfico" id="toc-inicio-del-servidor-gráfico" class="nav-link" data-scroll-target="#inicio-del-servidor-gráfico">Inicio del servidor gráfico</a></li>
+  <li><a href="#resolución-de-conflictos-el-fix-del-puerto" id="toc-resolución-de-conflictos-el-fix-del-puerto" class="nav-link" data-scroll-target="#resolución-de-conflictos-el-fix-del-puerto">Resolución de conflictos (el “fix” del puerto)</a></li>
+  <li><a href="#formas-de-ver-sus-gráficos" id="toc-formas-de-ver-sus-gráficos" class="nav-link" data-scroll-target="#formas-de-ver-sus-gráficos">Formas de ver sus gráficos</a></li>
+  <li><a href="#verificación-de-salud" id="toc-verificación-de-salud" class="nav-link" data-scroll-target="#verificación-de-salud">Verificación de salud</a></li>
+  <li><a href="#sec-repl-concept" id="toc-sec-repl-concept" class="nav-link" data-scroll-target="#sec-repl-concept">El Entorno interactivo (REPL) y motores gráficos</a></li>
   <li><a href="#el-rol-crítico-de-httpgd-en-r" id="toc-el-rol-crítico-de-httpgd-en-r" class="nav-link" data-scroll-target="#el-rol-crítico-de-httpgd-en-r">El rol crítico de <code>httpgd</code> en R</a></li>
   </ul></li>
-  <li><a href="#sec-interoperabilidad" id="toc-sec-interoperabilidad" class="nav-link" data-scroll-target="#sec-interoperabilidad"><span class="header-section-number">I.3</span> Paquetes para Comunicación con Julia y Python</a>
+  <li><a href="#sec-interoperabilidad" id="toc-sec-interoperabilidad" class="nav-link" data-scroll-target="#sec-interoperabilidad"><span class="header-section-number">I.3</span> Paquetes para comunicación con Julia y Python</a>
   <ul class="collapse">
-  <li><a href="#el-rol-de-knitr" id="toc-el-rol-de-knitr" class="nav-link" data-scroll-target="#el-rol-de-knitr">El Rol de <code>knitr</code></a></li>
-  <li><a href="#transición-técnica-de-juliacall-a-juliaconnector" id="toc-transición-técnica-de-juliacall-a-juliaconnector" class="nav-link" data-scroll-target="#transición-técnica-de-juliacall-a-juliaconnector">Transición Técnica: De <code>JuliaCall</code> a <code>JuliaConnectoR</code></a></li>
+  <li><a href="#el-rol-de-knitr" id="toc-el-rol-de-knitr" class="nav-link" data-scroll-target="#el-rol-de-knitr">El rol de <code>knitr</code></a></li>
+  <li><a href="#transición-técnica-de-juliacall-a-juliaconnector" id="toc-transición-técnica-de-juliacall-a-juliaconnector" class="nav-link" data-scroll-target="#transición-técnica-de-juliacall-a-juliaconnector">Transición técnica: De <code>JuliaCall</code> a <code>JuliaConnectoR</code></a></li>
   </ul></li>
   </ul>
 </nav>
@@ -364,9 +364,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./81-infraestructura_instalada.html">Appendices</a></li><li class="breadcrumb-item"><a href="./89-r.html"><span class="chapter-number">I</span>&nbsp; <span class="chapter-title">Adicionales Sobre R</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./81-infraestructura_instalada.html">Apéndices</a></li><li class="breadcrumb-item"><a href="./89-r.html"><span class="chapter-number">I</span>&nbsp; <span class="chapter-title">Adicionales Sobre R</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Appendix I — Adicionales Sobre R</h1>
+<h1 class="title">Apéndice I — Adicionales Sobre R</h1>
 </div>
 
 
@@ -384,7 +384,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <section id="versiones-instaladas-del-software" class="level2" data-number="I.1">
-<h2 data-number="I.1" class="anchored" data-anchor-id="versiones-instaladas-del-software"><span class="header-section-number">I.1</span> Versiones Instaladas del Software</h2>
+<h2 data-number="I.1" class="anchored" data-anchor-id="versiones-instaladas-del-software"><span class="header-section-number">I.1</span> Versiones instaladas del software</h2>
 <p>Versiones que deben quedar instaladas en el sistema R:</p>
 <table class="table">
 <colgroup>
@@ -457,25 +457,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 </section>
 <section id="sec-httpgd-config" class="level2" data-number="I.2">
-<h2 data-number="I.2" class="anchored" data-anchor-id="sec-httpgd-config"><span class="header-section-number">I.2</span> Visualización Interactiva con <code>httpgd</code></h2>
-<p>Dado que nuestro entorno Docker es “headless” (sin monitor propio), utilizamos <strong><code>httpgd</code></strong> como un servidor gráfico intermedio. Este paquete captura las señales de dibujo de R y las sirve a través de una URL que VS Code puede renderizar.</p>
+<h2 data-number="I.2" class="anchored" data-anchor-id="sec-httpgd-config"><span class="header-section-number">I.2</span> Visualización interactiva con <code>httpgd</code></h2>
+<p>Dado que nuestro entorno Docker es “headless” (sin monitor propio), utilizamos <strong><code>httpgd</code></strong> como un servidor gráfico intermedio. Este paquete captura las señales de dibujo de R y las sirve a través de una URL que VSCode puede renderizar.</p>
 <section id="inicio-del-servidor-gráfico" class="level3">
-<h3 class="anchored" data-anchor-id="inicio-del-servidor-gráfico">Inicio del Servidor Gráfico</h3>
+<h3 class="anchored" data-anchor-id="inicio-del-servidor-gráfico">Inicio del servidor gráfico</h3>
 <p>Cada vez que inicie una nueva sesión de R, debe despertar al servidor manualmente:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Inicia el motor gráfico</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>httpgd<span class="sc">::</span><span class="fu">hgd</span>()</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Verifica el estado y el puerto asignado</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>httpgd<span class="sc">::</span><span class="fu">hgd_details</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>httpgd<span class="sc">::</span><span class="fu">hgd_details</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="resolución-de-conflictos-el-fix-del-puerto" class="level3">
-<h3 class="anchored" data-anchor-id="resolución-de-conflictos-el-fix-del-puerto">Resolución de Conflictos (El “Fix” del Puerto)</h3>
+<h3 class="anchored" data-anchor-id="resolución-de-conflictos-el-fix-del-puerto">Resolución de conflictos (el “fix” del puerto)</h3>
 <p>En nuestro contenedor, el puerto estándar para gráficos está mapeado al <strong>8787</strong>. Si al ejecutar <code>hgd_details()</code> nota que el sistema asignó un puerto aleatorio o si el visor aparece en blanco, fuerce la conexión con la siguiente “receta”:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Forzar host y puerto para compatibilidad con Docker</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>httpgd<span class="sc">::</span><span class="fu">hgd</span>(<span class="at">host =</span> <span class="st">"0.0.0.0"</span>, <span class="at">port =</span> <span class="dv">8787</span>, <span class="at">token =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>httpgd<span class="sc">::</span><span class="fu">hgd</span>(<span class="at">host =</span> <span class="st">"0.0.0.0"</span>, <span class="at">port =</span> <span class="dv">8787</span>, <span class="at">token =</span> <span class="cn">FALSE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="formas-de-ver-sus-gráficos" class="level3">
-<h3 class="anchored" data-anchor-id="formas-de-ver-sus-gráficos">Formas de ver sus Gráficos</h3>
+<h3 class="anchored" data-anchor-id="formas-de-ver-sus-gráficos">Formas de ver sus gráficos</h3>
 <p>Una vez el servidor está corriendo, tiene dos caminos para visualizar sus mapas:</p>
 <table class="table">
 <colgroup>
@@ -494,7 +494,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;"><strong>Visor Interno</strong></td>
 <td style="text-align: left;"><code>Ctrl + Shift + P</code> -&gt; <strong>Open httpgd viewer</strong></td>
-<td style="text-align: left;">Mantiene todo dentro de una pestaña de VS Code.</td>
+<td style="text-align: left;">Mantiene todo dentro de una pestaña de VSCode.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><strong>Navegador Externo</strong></td>
@@ -513,16 +513,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Dentro del entorno seguro del contenedor, desactivamos el <em>token</em> para facilitar la conexión inmediata entre el servidor de R y el visor de VS Code sin que el firewall interno bloquee la petición por falta de credenciales.</p>
+<p>Dentro del entorno seguro del contenedor, desactivamos el <em>token</em> para facilitar la conexión inmediata entre el servidor de R y el visor de VSCode sin que el firewall interno bloquee la petición por falta de credenciales.</p>
 </div>
 </div>
 </section>
 <section id="verificación-de-salud" class="level3">
-<h3 class="anchored" data-anchor-id="verificación-de-salud">Verificación de Salud</h3>
+<h3 class="anchored" data-anchor-id="verificación-de-salud">Verificación de salud</h3>
 <p>Si después de iniciar el servidor intenta graficar algo (ej: <code>plot(1:10)</code>) y no ve nada, ejecute <code>httpgd::hgd_details()</code>. Asegúrese de que: 1. <strong>URL</strong>: Apunte a <code>http://0.0.0.0:8787</code>. 2. <strong>Status</strong>: Indique que está escuchando (<em>listening</em>).</p>
 </section>
 <section id="sec-repl-concept" class="level3">
-<h3 class="anchored" data-anchor-id="sec-repl-concept">El Entorno Interactivo (REPL) y Motores Gráficos</h3>
+<h3 class="anchored" data-anchor-id="sec-repl-concept">El Entorno interactivo (REPL) y motores gráficos</h3>
 <p>En el desarrollo científico, el <strong>REPL</strong> (<em>Read-Eval-Print Loop</em>) es la consola interactiva que permite la “programación exploratoria”. Es el ciclo donde el sistema <strong>lee</strong> su instrucción, la <strong>evalúa</strong> mediante el motor correspondiente, <strong>imprime</strong> el resultado y queda en un <strong>bucle</strong> a la espera del siguiente comando.</p>
 <p>En nuestro laboratorio políglota, la identidad visual del REPL es su brújula para saber en qué lenguaje está operando:</p>
 <table class="table">
@@ -556,7 +556,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
-<p>La experiencia interactiva y el soporte gráfico dentro de <strong>VS Code</strong> dependen de la combinación entre el motor de ejecución y el dispositivo gráfico configurado en el contenedor:</p>
+<p>La experiencia interactiva y el soporte gráfico dentro de <strong>VSCode</strong> dependen de la combinación entre el motor de ejecución y el dispositivo gráfico configurado en el contenedor:</p>
 <table class="table">
 <colgroup>
 <col style="width: 19%">
@@ -579,7 +579,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;"><strong>R</strong></td>
 <td style="text-align: left;">Nativo (Estático)</td>
 <td style="text-align: left;">R Extension</td>
-<td style="text-align: left;">VS Code Plots (Pane)</td>
+<td style="text-align: left;">VSCode Plots (Pane)</td>
 <td style="text-align: center;">✅</td>
 </tr>
 <tr class="even">
@@ -593,7 +593,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;"><strong>Julia</strong></td>
 <td style="text-align: left;">Nativo (REPL)</td>
 <td style="text-align: left;">VSCodeServer</td>
-<td style="text-align: left;">VS Code Plots (Pane)</td>
+<td style="text-align: left;">VSCode Plots (Pane)</td>
 <td style="text-align: center;">✅</td>
 </tr>
 <tr class="even">
@@ -622,7 +622,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="el-rol-crítico-de-httpgd-en-r" class="level3">
 <h3 class="anchored" data-anchor-id="el-rol-crítico-de-httpgd-en-r">El rol crítico de <code>httpgd</code> en R</h3>
-<p>Para R, no basta con tener la extensión instalada. El paquete <strong><code>httpgd</code></strong> actúa como un servidor web interno que captura los gráficos generados en el contenedor y los “proyecta” en VS Code.</p>
+<p>Para R, no basta con tener la extensión instalada. El paquete <strong><code>httpgd</code></strong> actúa como un servidor web interno que captura los gráficos generados en el contenedor y los “proyecta” en VSCode.</p>
 <ul>
 <li><strong>¿Por qué lo usamos?</strong> Los dispositivos gráficos tradicionales (como <code>X11</code> o <code>windows()</code>) no funcionan dentro de un contenedor Docker (<em>headless</em>). <code>httpgd</code> soluciona esto convirtiendo cada mapa en un elemento interactivo SVG/HTML renderizable.</li>
 <li><strong>Activación</strong>: Siempre debe iniciar su sesión de R ejecutando <code>httpgd::hgd()</code> para abrir este canal de comunicación.</li>
@@ -631,7 +631,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 </section>
 <section id="sec-interoperabilidad" class="level2" data-number="I.3">
-<h2 data-number="I.3" class="anchored" data-anchor-id="sec-interoperabilidad"><span class="header-section-number">I.3</span> Paquetes para Comunicación con Julia y Python</h2>
+<h2 data-number="I.3" class="anchored" data-anchor-id="sec-interoperabilidad"><span class="header-section-number">I.3</span> Paquetes para comunicación con Julia y Python</h2>
 <p>Para que este ecosistema funcione, R actúa como el “director de orquesta” utilizando un motor de ejecución y una serie de puentes que permiten la comunicación fluida de datos entre lenguajes.</p>
 <table class="table">
 <colgroup>
@@ -676,11 +676,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <section id="el-rol-de-knitr" class="level3">
-<h3 class="anchored" data-anchor-id="el-rol-de-knitr">El Rol de <code>knitr</code></h3>
+<h3 class="anchored" data-anchor-id="el-rol-de-knitr">El rol de <code>knitr</code></h3>
 <p>Mientras que los paquetes actúan como puentes técnicos, <strong><code>knitr</code></strong> es el encargado de leer el archivo <code>.qmd</code>, enviar las instrucciones a los motores respectivos y capturar los resultados (tablas, mapas, gráficos) para integrarlos en el documento final. Sin <code>knitr</code>, la integración políglota de Quarto no sería posible.</p>
 </section>
 <section id="transición-técnica-de-juliacall-a-juliaconnector" class="level3">
-<h3 class="anchored" data-anchor-id="transición-técnica-de-juliacall-a-juliaconnector">Transición Técnica: De <code>JuliaCall</code> a <code>JuliaConnectoR</code></h3>
+<h3 class="anchored" data-anchor-id="transición-técnica-de-juliacall-a-juliaconnector">Transición técnica: De <code>JuliaCall</code> a <code>JuliaConnectoR</code></h3>
 <p>En el diseño de este entorno, se tomó la decisión técnica de descartar el paquete <code>JuliaCall</code> en favor de <strong><code>JuliaConnectoR</code></strong>:</p>
 <ol type="1">
 <li><strong>El Problema</strong>: <code>JuliaCall</code> presentaba inestabilidades al gestionar dependencias dinámicas compartidas (como <code>libcurl</code> o <code>libstdc++</code>) dentro del contenedor, causando cierres inesperados (<em>crashes</em>) de la sesión de R.</li>
@@ -698,7 +698,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-body-container callout-body">
 <ol type="1">
-<li><strong>Julia y R</strong>: Se operan de manera totalmente <strong>interactiva</strong> en VS Code (envío de líneas con <code>Ctrl+Enter</code>).</li>
+<li><strong>Julia y R</strong>: Se operan de manera totalmente <strong>interactiva</strong> en VSCode (envío de líneas con <code>Ctrl+Enter</code>).</li>
 <li><strong>Python vía reticulate</strong>: Se utiliza primordialmente para el <strong>renderizado (vía knitr)</strong> de informes finales. Para una programación interactiva pura en Python, se recomienda el uso de los <strong>Jupyter kernels</strong>.</li>
 </ol>
 </div>
@@ -763,12 +763,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
+    button.setAttribute("title", "Copiado");
     let tooltip;
     if (window.bootstrap) {
       button.setAttribute("data-bs-toggle", "tooltip");
       button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
+      button.setAttribute("data-bs-title", "Copiado");
       tooltip = new bootstrap.Tooltip(button, 
         { trigger: "manual", 
           customClass: "code-copy-button-tooltip",

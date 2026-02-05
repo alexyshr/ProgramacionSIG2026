@@ -104,7 +104,7 @@ RUN julia -e 'using Pkg; Pkg.add(["Preferences", "Suppressor", "RCall", "LibGEOS
 RUN find /root/.julia/artifacts -name "libssl.so*" -exec ln -sf /usr/lib/x86_64-linux-gnu/libssl.so.3 {} \; && \
     find /root/.julia/artifacts -name "libcrypto.so*" -exec ln -sf /usr/lib/x86_64-linux-gnu/libcrypto.so.3 {} \;
 
-# Precompilación total: Esto garantiza que el arranque sea instantáneo en VS Code
+# Precompilación total: Esto garantiza que el arranque sea instantáneo en VSCode
 RUN julia -e 'using Pkg; Pkg.precompile()'
 
 # Y asegurar que en el runtime use los núcleos (ej. 8 núcleos)
@@ -179,7 +179,7 @@ library(png)
 library(grid)
 
 if (interactive()) {
-  # Visor httpgd para VS Code
+  # Visor httpgd para VSCode
   if (requireNamespace("httpgd", quietly = TRUE)) {
     options(device = "httpgd", httpgd.host = "0.0.0.0", httpgd.port = 8787, httpgd.token = FALSE)
   }

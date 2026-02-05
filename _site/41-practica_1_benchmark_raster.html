@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.4.550">
@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Programación SIG: Python, R y Julia - 7&nbsp; Benchmark de Procesamiento Geoespacial</title>
+<title>Programación SIG: Python, R y Julia - 7&nbsp; Evaluación Comparativa de Procesamiento Geoespacial</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./61-presentacion_1_varios.html" rel="next">
+<link href="./61-presentacion_1_clase1.html" rel="next">
 <link href="./06-estructuras_datos_geo.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -89,17 +89,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
+    "search-no-results-text": "Sin resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
     "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
   }
 }</script>
 <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
@@ -143,11 +143,11 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./41-practica_1_benchmark_raster.html">Prácticas</a></li><li class="breadcrumb-item"><a href="./41-practica_1_benchmark_raster.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Benchmark de Procesamiento Geoespacial</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./41-practica_1_benchmark_raster.html">Prácticas</a></li><li class="breadcrumb-item"><a href="./41-practica_1_benchmark_raster.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Evaluación Comparativa de Procesamiento Geoespacial</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
@@ -166,7 +166,7 @@ window.Quarto = {
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
+        <div id="quarto-search" class="" title="Buscar"></div>
         </div>
         </div>
     <div class="sidebar-menu-container"> 
@@ -187,7 +187,7 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
  <span class="menu-text">Instalación y Entornos</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -222,7 +222,7 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
  <span class="menu-text">Fundamentos</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -245,7 +245,7 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
  <span class="menu-text">Prácticas</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -253,7 +253,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./41-practica_1_benchmark_raster.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Benchmark de Procesamiento Geoespacial</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Evaluación Comparativa de Procesamiento Geoespacial</span></span></a>
   </div>
 </li>
       </ul>
@@ -262,14 +262,14 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
  <span class="menu-text">Presentaciones</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./61-presentacion_1_varios.html" class="sidebar-item-text sidebar-link">
+  <a href="./61-presentacion_1_clase1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Temas por Charlar</span></span></a>
   </div>
 </li>
@@ -284,8 +284,8 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
- <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+ <span class="menu-text">Apéndices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -293,7 +293,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./81-infraestructura_instalada.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Infraestructura instalada</span></span></a>
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Infraestructura Instalada</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -323,13 +323,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./86-windows.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Temas Técnicos sobre Windows</span></span></a>
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Temas técnicos sobre Windows</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./87-linux_ubuntu.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">Temás Técnicos sobre Linux</span></span></a>
+ <span class="menu-text"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">Temas Técnicos sobre Linux</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -380,14 +380,14 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#anatomía-de-la-imagen" id="toc-anatomía-de-la-imagen" class="nav-link" data-scroll-target="#anatomía-de-la-imagen">Anatomía de la Imagen</a></li>
   </ul></li>
-  <li><a href="#metodología-del-benchmark" id="toc-metodología-del-benchmark" class="nav-link" data-scroll-target="#metodología-del-benchmark"><span class="header-section-number">7.4</span> Metodología del Benchmark</a>
+  <li><a href="#metodología-de-la-evaluación-comparativa-benchmarking" id="toc-metodología-de-la-evaluación-comparativa-benchmarking" class="nav-link" data-scroll-target="#metodología-de-la-evaluación-comparativa-benchmarking"><span class="header-section-number">7.4</span> Metodología de la evaluación comparativa (benchmarking)</a>
   <ul class="collapse">
   <li><a href="#dimensión-del-problema" id="toc-dimensión-del-problema" class="nav-link" data-scroll-target="#dimensión-del-problema">Dimensión del problema</a></li>
   <li><a href="#exclusiones-deliberadas" id="toc-exclusiones-deliberadas" class="nav-link" data-scroll-target="#exclusiones-deliberadas">Exclusiones deliberadas</a></li>
   <li><a href="#etapas-del-proceso-evaluado" id="toc-etapas-del-proceso-evaluado" class="nav-link" data-scroll-target="#etapas-del-proceso-evaluado">Etapas del proceso evaluado</a></li>
   <li><a href="#interpretación-clave-del-paso-de-reducción-mean" id="toc-interpretación-clave-del-paso-de-reducción-mean" class="nav-link" data-scroll-target="#interpretación-clave-del-paso-de-reducción-mean">Interpretación clave del paso de reducción (<code>mean</code>)</a></li>
   <li><a href="#diferencias-estructurales-entre-motores" id="toc-diferencias-estructurales-entre-motores" class="nav-link" data-scroll-target="#diferencias-estructurales-entre-motores">Diferencias estructurales entre motores</a></li>
-  <li><a href="#limitaciones-inevitables-del-benchmark" id="toc-limitaciones-inevitables-del-benchmark" class="nav-link" data-scroll-target="#limitaciones-inevitables-del-benchmark">Limitaciones inevitables del benchmark</a></li>
+  <li><a href="#limitaciones-inevitables-del-benchmarking" id="toc-limitaciones-inevitables-del-benchmarking" class="nav-link" data-scroll-target="#limitaciones-inevitables-del-benchmarking">Limitaciones inevitables del benchmarking</a></li>
   <li><a href="#interpretación-del-benchmark" id="toc-interpretación-del-benchmark" class="nav-link" data-scroll-target="#interpretación-del-benchmark">Interpretación del benchmark</a></li>
   </ul></li>
   <li><a href="#análisis-de-rendimiento-y-paralelismo" id="toc-análisis-de-rendimiento-y-paralelismo" class="nav-link" data-scroll-target="#análisis-de-rendimiento-y-paralelismo"><span class="header-section-number">7.5</span> Análisis de Rendimiento y Paralelismo</a>
@@ -395,35 +395,35 @@ window.Quarto = {
   <li><a href="#benchmark-en-python-vs.-julia" id="toc-benchmark-en-python-vs.-julia" class="nav-link" data-scroll-target="#benchmark-en-python-vs.-julia">Benchmark en Python vs.&nbsp;Julia</a></li>
   <li><a href="#benchmark-en-r-terra-vs-stars" id="toc-benchmark-en-r-terra-vs-stars" class="nav-link" data-scroll-target="#benchmark-en-r-terra-vs-stars">Benchmark en R: Terra vs Stars</a></li>
   </ul></li>
-  <li><a href="#resultados-finales" id="toc-resultados-finales" class="nav-link" data-scroll-target="#resultados-finales"><span class="header-section-number">7.6</span> Resultados Finales</a>
+  <li><a href="#resultados-finales" id="toc-resultados-finales" class="nav-link" data-scroll-target="#resultados-finales"><span class="header-section-number">7.6</span> Resultados finales</a>
   <ul class="collapse">
   <li><a href="#julia-paralelismo-y-pipelines-composables" id="toc-julia-paralelismo-y-pipelines-composables" class="nav-link" data-scroll-target="#julia-paralelismo-y-pipelines-composables">Julia: paralelismo y pipelines composables</a></li>
   </ul></li>
-  <li><a href="#más-allá-del-benchmark-optimización-y-virtualización-de-datos-geoespaciales" id="toc-más-allá-del-benchmark-optimización-y-virtualización-de-datos-geoespaciales" class="nav-link" data-scroll-target="#más-allá-del-benchmark-optimización-y-virtualización-de-datos-geoespaciales"><span class="header-section-number">7.7</span> Más allá del benchmark: optimización y virtualización de datos geoespaciales</a>
+  <li><a href="#más-allá-del-benchmarking-optimización-y-virtualización-de-datos-geoespaciales" id="toc-más-allá-del-benchmarking-optimización-y-virtualización-de-datos-geoespaciales" class="nav-link" data-scroll-target="#más-allá-del-benchmarking-optimización-y-virtualización-de-datos-geoespaciales"><span class="header-section-number">7.7</span> Más allá del benchmarking: optimización y virtualización de datos geoespaciales</a>
   <ul class="collapse">
   <li><a href="#formatos-optimizados-para-alto-volumen" id="toc-formatos-optimizados-para-alto-volumen" class="nav-link" data-scroll-target="#formatos-optimizados-para-alto-volumen">Formatos optimizados para alto volumen</a></li>
   <li><a href="#virtualización-y-acceso-remoto" id="toc-virtualización-y-acceso-remoto" class="nav-link" data-scroll-target="#virtualización-y-acceso-remoto">Virtualización y acceso remoto</a></li>
   <li><a href="#paralelismo-y-ejecución-distribuida" id="toc-paralelismo-y-ejecución-distribuida" class="nav-link" data-scroll-target="#paralelismo-y-ejecución-distribuida">Paralelismo y ejecución distribuida</a></li>
   <li><a href="#mensaje-clave" id="toc-mensaje-clave" class="nav-link" data-scroll-target="#mensaje-clave">Mensaje clave</a></li>
   </ul></li>
-  <li><a href="#desafío-de-laboratorio-primer-día" id="toc-desafío-de-laboratorio-primer-día" class="nav-link" data-scroll-target="#desafío-de-laboratorio-primer-día"><span class="header-section-number">7.8</span> 🏁 Desafío de Laboratorio: Primer Día</a>
+  <li><a href="#desafío-de-laboratorio-primer-día" id="toc-desafío-de-laboratorio-primer-día" class="nav-link" data-scroll-target="#desafío-de-laboratorio-primer-día"><span class="header-section-number">7.8</span> 🏁 Desafío de laboratorio: primer día</a>
   <ul class="collapse">
-  <li><a href="#instrucciones-de-entrega" id="toc-instrucciones-de-entrega" class="nav-link" data-scroll-target="#instrucciones-de-entrega">🛠️ Instrucciones de Entrega</a></li>
-  <li><a href="#parte-a-ejecución-en-jupyterlab-notebooks" id="toc-parte-a-ejecución-en-jupyterlab-notebooks" class="nav-link" data-scroll-target="#parte-a-ejecución-en-jupyterlab-notebooks">⚙️ Parte A — Ejecución en JupyterLab (Notebooks)</a></li>
-  <li><a href="#parte-b-ejecución-desde-vs-code-terminal-integrada" id="toc-parte-b-ejecución-desde-vs-code-terminal-integrada" class="nav-link" data-scroll-target="#parte-b-ejecución-desde-vs-code-terminal-integrada">🖥️ Parte B — Ejecución desde VS Code (Terminal Integrada)</a></li>
-  <li><a href="#parte-c-ejecución-desde-windows-terminal-powershell" id="toc-parte-c-ejecución-desde-windows-terminal-powershell" class="nav-link" data-scroll-target="#parte-c-ejecución-desde-windows-terminal-powershell">🪟 Parte C — Ejecución desde Windows Terminal (PowerShell)</a></li>
-  <li><a href="#preguntas-de-análisis" id="toc-preguntas-de-análisis" class="nav-link" data-scroll-target="#preguntas-de-análisis">❓ Preguntas de Análisis</a></li>
+  <li><a href="#instrucciones-de-entrega" id="toc-instrucciones-de-entrega" class="nav-link" data-scroll-target="#instrucciones-de-entrega">🛠️ Instrucciones de entrega</a></li>
+  <li><a href="#parte-a-ejecución-en-jupyterlab-notebooks" id="toc-parte-a-ejecución-en-jupyterlab-notebooks" class="nav-link" data-scroll-target="#parte-a-ejecución-en-jupyterlab-notebooks">⚙️ Parte A — Ejecución en JupyterLab (notebooks)</a></li>
+  <li><a href="#parte-b-ejecución-desde-vscode-terminal-integrada" id="toc-parte-b-ejecución-desde-vscode-terminal-integrada" class="nav-link" data-scroll-target="#parte-b-ejecución-desde-vscode-terminal-integrada">🖥️ Parte B — Ejecución desde VSCode (terminal integrada)</a></li>
+  <li><a href="#parte-c-ejecución-desde-el-termina-de-windows-powershell" id="toc-parte-c-ejecución-desde-el-termina-de-windows-powershell" class="nav-link" data-scroll-target="#parte-c-ejecución-desde-el-termina-de-windows-powershell">🪟 Parte C — Ejecución desde el Termina de Windows (PowerShell)</a></li>
+  <li><a href="#preguntas-de-análisis" id="toc-preguntas-de-análisis" class="nav-link" data-scroll-target="#preguntas-de-análisis">❓ Preguntas de análisis</a></li>
   </ul></li>
-  <li><a href="#limpieza-de-recursos" id="toc-limpieza-de-recursos" class="nav-link" data-scroll-target="#limpieza-de-recursos"><span class="header-section-number">7.9</span> Limpieza de Recursos</a></li>
+  <li><a href="#limpieza-de-recursos" id="toc-limpieza-de-recursos" class="nav-link" data-scroll-target="#limpieza-de-recursos"><span class="header-section-number">7.9</span> Limpieza de recursos</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./41-practica_1_benchmark_raster.html">Prácticas</a></li><li class="breadcrumb-item"><a href="./41-practica_1_benchmark_raster.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Benchmark de Procesamiento Geoespacial</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./41-practica_1_benchmark_raster.html">Prácticas</a></li><li class="breadcrumb-item"><a href="./41-practica_1_benchmark_raster.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Evaluación Comparativa de Procesamiento Geoespacial</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Benchmark de Procesamiento Geoespacial</span></h1>
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Evaluación Comparativa de Procesamiento Geoespacial</span></h1>
 </div>
 
 
@@ -491,7 +491,7 @@ window.Quarto = {
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  val_limpio <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">'"'</span>, <span class="st">''</span>, resultado_final)</span>
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  num_val <span class="ot">&lt;-</span> <span class="fu">suppressWarnings</span>(<span class="fu">as.numeric</span>(val_limpio))</span>
 <span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.na</span>(num_val)) num_val <span class="cf">else</span> val_limpio)</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -587,16 +587,16 @@ window.Quarto = {
 <span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Ruta generada:"</span>, s2_path, <span class="at">fill =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Guardamos la ruta en un archivo compartido para que Python y Julia la lean</span></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(s2_path, <span class="st">"s2_shared_path.txt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(s2_path, <span class="st">"s2_shared_path.txt"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 </div>
 <div class="cell">
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Código</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(starsdata)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>terra 1.8.93</code></pre>
@@ -611,8 +611,8 @@ Attaching package: 'terra'</code></pre>
     depth</code></pre>
 </div>
 <details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stars)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: abind</code></pre>
@@ -624,46 +624,46 @@ Attaching package: 'terra'</code></pre>
 <pre><code>Linking to GEOS 3.12.1, GDAL 3.8.4, PROJ 9.4.0; sf_use_s2() is TRUE</code></pre>
 </div>
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Código</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Localización del ZIP dentro del paquete starsdata</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="st">"sentinel/S2A_MSIL1C_20180220T105051_N0206_R051_T32ULE_20180221T134037.zip"</span></span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>granule <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="at">file =</span> f, <span class="at">package =</span> <span class="st">"starsdata"</span>)</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>granule</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>granule</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "/usr/local/lib/R/site-library/starsdata/sentinel/S2A_MSIL1C_20180220T105051_N0206_R051_T32ULE_20180221T134037.zip"</code></pre>
 </div>
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Código</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>base_name <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(<span class="fu">basename</span>(granule), <span class="st">".zip"</span>)[[<span class="dv">1</span>]]</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>base_name</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>base_name</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "S2A_MSIL1C_20180220T105051_N0206_R051_T32ULE_20180221T134037"</code></pre>
 </div>
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Código</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Construcción de la ruta Virtual de GDAL (/vsizip/)</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Esta ruta permite leer directamente el XML de metadatos dentro del ZIP sin descomprimir.</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>s2_path <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"SENTINEL2_L1C:/vsizip/"</span>, granule, <span class="st">"/"</span>, base_name, <span class="st">".SAFE/MTD_MSIL1C.xml:10m:EPSG_32632"</span>)</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>s2_path</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>s2_path</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "SENTINEL2_L1C:/vsizip//usr/local/lib/R/site-library/starsdata/sentinel/S2A_MSIL1C_20180220T105051_N0206_R051_T32ULE_20180221T134037.zip/S2A_MSIL1C_20180220T105051_N0206_R051_T32ULE_20180221T134037.SAFE/MTD_MSIL1C.xml:10m:EPSG_32632"</code></pre>
 </div>
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Código</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Guardamos la ruta en un archivo compartido para que Python y Julia la lean</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(s2_path, <span class="st">"s2_shared_path.txt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(s2_path, <span class="st">"s2_shared_path.txt"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
 </section>
 </section>
-<section id="metodología-del-benchmark" class="level2" data-number="7.4">
-<h2 data-number="7.4" class="anchored" data-anchor-id="metodología-del-benchmark"><span class="header-section-number">7.4</span> Metodología del Benchmark</h2>
+<section id="metodología-de-la-evaluación-comparativa-benchmarking" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="metodología-de-la-evaluación-comparativa-benchmarking"><span class="header-section-number">7.4</span> Metodología de la evaluación comparativa (benchmarking)</h2>
 <p>Este experimento evalúa el rendimiento de cuatro motores geoespaciales ampliamente utilizados —<code>terra</code> (<strong>R</strong>), <code>stars</code> (<strong>R</strong>), <code>rasterio</code> (<strong>Python</strong>) y <code>Rasters.jl</code> (<strong>Julia</strong>)— frente a una operación numéricamente simple pero computacionalmente exigente sobre datos raster de gran tamaño.</p>
 <p>El flujo de trabajo consiste en:</p>
 <ol type="1">
@@ -785,8 +785,8 @@ Attaching package: 'terra'</code></pre>
 </table>
 <hr>
 </section>
-<section id="limitaciones-inevitables-del-benchmark" class="level3">
-<h3 class="anchored" data-anchor-id="limitaciones-inevitables-del-benchmark">Limitaciones inevitables del benchmark</h3>
+<section id="limitaciones-inevitables-del-benchmarking" class="level3">
+<h3 class="anchored" data-anchor-id="limitaciones-inevitables-del-benchmarking">Limitaciones inevitables del benchmarking</h3>
 <p>Este benchmark <strong>no mide qué lenguaje es “más rápido”</strong>, sino cómo funciona <strong>todo el conjunto de herramientas</strong> que usa cada uno (librerías, forma de leer datos y manera de calcular).</p>
 <p>En particular:</p>
 <ul>
@@ -800,7 +800,6 @@ Attaching package: 'terra'</code></pre>
 <p><em>Miden el rendimiento para una tarea específica (leer un raster y calcular una media),<br>
 No un ranking general de lenguajes de programación.</em></p>
 </blockquote>
-<hr>
 </section>
 <section id="interpretación-del-benchmark" class="level3">
 <h3 class="anchored" data-anchor-id="interpretación-del-benchmark">Interpretación del benchmark</h3>
@@ -941,14 +940,14 @@ Estas capas se encargan de:</p>
 <span id="cb18-45"><a href="#cb18-45" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Limpieza</span></span>
 <span id="cb18-46"><a href="#cb18-46" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------</span></span>
 <span id="cb18-47"><a href="#cb18-47" aria-hidden="true" tabindex="-1"></a><span class="kw">del</span> b4, res</span>
-<span id="cb18-48"><a href="#cb18-48" aria-hidden="true" tabindex="-1"></a><span class="co">#gc.collect()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-48"><a href="#cb18-48" aria-hidden="true" tabindex="-1"></a><span class="co">#gc.collect()</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 </div>
 <div class="cell">
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Código</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rasterio</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -967,13 +966,13 @@ Estas capas se encargan de:</p>
 <span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> rasterio.<span class="bu">open</span>(s2_path) <span class="im">as</span> src:</span>
 <span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    _ <span class="op">=</span> (src.read(<span class="dv">1</span>) <span class="op">*</span> <span class="fl">1.5</span>).mean()</span>
 <span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>gc.collect()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>gc.collect()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>480</code></pre>
 </div>
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Código</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. BENCHMARK REAL</span></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------</span></span>
@@ -986,38 +985,38 @@ Estas capas se encargan de:</p>
 <span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>t_python <span class="op">=</span> time.perf_counter() <span class="op">-</span> t0</span>
 <span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"🐍 Python: </span><span class="sc">{</span>t_python<span class="sc">:.3f}</span><span class="ss"> seg | mean = </span><span class="sc">{</span>m_py<span class="sc">:.6f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"🐍 Python: </span><span class="sc">{</span>t_python<span class="sc">:.3f}</span><span class="ss"> seg | mean = </span><span class="sc">{</span>m_py<span class="sc">:.6f}</span><span class="ss">"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>🐍 Python: 2.479 seg | mean = 3766.624630</code></pre>
+<pre><code>🐍 Python: 2.490 seg | mean = 3766.624630</code></pre>
 </div>
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Código</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Plot (FUERA DEL BENCHMARK)</span></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>plt.imshow(res, cmap<span class="op">=</span><span class="st">"terrain"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>plt.imshow(res, cmap<span class="op">=</span><span class="st">"terrain"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>&lt;matplotlib.image.AxesImage object at 0x7fde773a9d90&gt;</code></pre>
+<pre><code>&lt;matplotlib.image.AxesImage object at 0x7fbe2e9c9dc0&gt;</code></pre>
 </div>
 <details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Python: Banda 4 × 1.5"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Python: Banda 4 × 1.5"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Text(0.5, 1.0, 'Python: Banda 4 × 1.5')</code></pre>
 </div>
 <details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>plt.axis(<span class="st">"off"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>plt.axis(<span class="st">"off"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>(np.float64(-0.5), np.float64(10979.5), np.float64(10979.5), np.float64(-0.5))</code></pre>
 </div>
 <details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -1027,13 +1026,13 @@ Estas capas se encargan de:</p>
 </div>
 </div>
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Código</summary>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------</span></span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Limpieza</span></span>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------</span></span>
 <span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="kw">del</span> b4, res</span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="co">#gc.collect()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="co">#gc.collect()</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
@@ -1055,23 +1054,23 @@ Estas capas se encargan de:</p>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>t_python <span class="ot">&lt;-</span> py<span class="sc">$</span>t_python</span>
 <span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="co">#t_python &lt;- 0</span></span>
 <span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"🐍 Tiempo capturado de Python:"</span>, <span class="fu">round</span>(t_python, <span class="dv">3</span>), <span class="st">"seg."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"🐍 Tiempo capturado de Python:"</span>, <span class="fu">round</span>(t_python, <span class="dv">3</span>), <span class="st">"seg."</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 </div>
 <div class="cell">
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Código</summary>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aquí es donde creamos t_python para R de la variable t_python en Python. Lo necesitamos en R para la tabla final.</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraemos el valor desde el objeto 'py'</span></span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>t_python <span class="ot">&lt;-</span> py<span class="sc">$</span>t_python</span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co">#t_python &lt;- 0</span></span>
 <span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"🐍 Tiempo capturado de Python:"</span>, <span class="fu">round</span>(t_python, <span class="dv">3</span>), <span class="st">"seg."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"🐍 Tiempo capturado de Python:"</span>, <span class="fu">round</span>(t_python, <span class="dv">3</span>), <span class="st">"seg."</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>🐍 Tiempo capturado de Python: 2.479 seg.</code></pre>
+<pre><code>🐍 Tiempo capturado de Python: 2.49 seg.</code></pre>
 </div>
 </div>
 </div>
@@ -1142,14 +1141,14 @@ Estas capas se encargan de:</p>
 <span id="cb34-50"><a href="#cb34-50" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
 <span id="cb34-51"><a href="#cb34-51" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-52"><a href="#cb34-52" aria-hidden="true" tabindex="-1"></a><span class="co"># Debe ser la última para que j_eval en R capture solo el número</span></span>
-<span id="cb34-53"><a href="#cb34-53" aria-hidden="true" tabindex="-1"></a>t_julia</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb34-53"><a href="#cb34-53" aria-hidden="true" tabindex="-1"></a>t_julia</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 </div>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Código</summary>
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Desde R, llamamos a julia con j_eval (la función al inicio de este archivo o en el Rprofile)</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Ejecutamos dos veces: </span></span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   la primera compila "costo de arranque" (JIT), </span></span>
@@ -1208,7 +1207,7 @@ Estas capas se encargan de:</p>
 <span id="cb35-56"><a href="#cb35-56" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-57"><a href="#cb35-57" aria-hidden="true" tabindex="-1"></a><span class="st"># Debe ser la última para que j_eval en R capture solo el número</span></span>
 <span id="cb35-58"><a href="#cb35-58" aria-hidden="true" tabindex="-1"></a><span class="st">t_julia</span></span>
-<span id="cb35-59"><a href="#cb35-59" aria-hidden="true" tabindex="-1"></a><span class="st">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb35-59"><a href="#cb35-59" aria-hidden="true" tabindex="-1"></a><span class="st">'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Starting Julia ...</code></pre>
@@ -1263,19 +1262,19 @@ julia&gt; # 4. BENCHMARK REAL
 julia&gt; # ------------------------------------------------
 
 julia&gt; t0 = time_ns()
-0x00000fd876d38f9b
+0x00001a6768bd5da0
 
 julia&gt; m_julia = process_band_mean(path)
 3766.6246303263756
 
 julia&gt; t1 = time_ns()
-0x00000fdb25fbd08b
+0x00001a6a18ae40d6
 
 julia&gt; t_julia = (t1 - t0) / 1e9
-11.528585456
+11.541734198
 
 julia&gt; println("🟣 Julia: ", round(t_julia, digits=3), " seg | mean = ", round(m_julia, digits=6))
-🟣 Julia: 11.529 seg | mean = 3766.62463
+🟣 Julia: 11.542 seg | mean = 3766.62463
 
 julia&gt; # ------------------------------------------------
 
@@ -1295,12 +1294,12 @@ end
 julia&gt; # Debe ser la última para que j_eval en R capture solo el número
 
 julia&gt; t_julia
-11.528585456</code></pre>
+11.541734198</code></pre>
 </div>
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Código</summary>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. R muestra la imagen guardada por Julia en el HTML</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"julia_plot.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"julia_plot.png"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -1311,12 +1310,12 @@ julia&gt; t_julia
 </div>
 </div>
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Código</summary>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Impresión desde R</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"⚡ Tiempo capturado en R:"</span>, t_julia, <span class="st">" seg."</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"⚡ Tiempo capturado en R:"</span>, t_julia, <span class="st">" seg."</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "⚡ Tiempo capturado en R: 11.528585456  seg."</code></pre>
+<pre><code>[1] "⚡ Tiempo capturado en R: 11.541734198  seg."</code></pre>
 </div>
 </div>
 </div>
@@ -1389,14 +1388,14 @@ julia&gt; t_julia
 <span id="cb41-44"><a href="#cb41-44" aria-hidden="true" tabindex="-1"></a><span class="co"># 7. Limpieza</span></span>
 <span id="cb41-45"><a href="#cb41-45" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------</span></span>
 <span id="cb41-46"><a href="#cb41-46" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(r, b4, res_terra)</span>
-<span id="cb41-47"><a href="#cb41-47" aria-hidden="true" tabindex="-1"></a><span class="fu">gc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb41-47"><a href="#cb41-47" aria-hidden="true" tabindex="-1"></a><span class="fu">gc</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 </div>
 <div class="cell">
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Código</summary>
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(terra)</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------</span></span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 0. Inicio del cronómetro</span></span>
@@ -1430,18 +1429,18 @@ julia&gt; t_julia
 <span id="cb42-31"><a href="#cb42-31" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-32"><a href="#cb42-32" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"🟤 Terra:"</span>,</span>
 <span id="cb42-33"><a href="#cb42-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(t_terra, <span class="dv">3</span>), <span class="st">"seg |"</span>,</span>
-<span id="cb42-34"><a href="#cb42-34" aria-hidden="true" tabindex="-1"></a>    <span class="st">"mean ="</span>, <span class="fu">round</span>(m_terra, <span class="dv">6</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb42-34"><a href="#cb42-34" aria-hidden="true" tabindex="-1"></a>    <span class="st">"mean ="</span>, <span class="fu">round</span>(m_terra, <span class="dv">6</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>🟤 Terra: 4.386 seg | mean = 3766.625 </code></pre>
+<pre><code>🟤 Terra: 4.789 seg | mean = 3766.625 </code></pre>
 </div>
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Código</summary>
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 6. Plot (FUERA DEL BENCHMARK, proxy)</span></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------</span></span>
 <span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res_terra, <span class="at">col =</span> <span class="fu">terrain.colors</span>(<span class="dv">100</span>),</span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Terra: Banda 4 × 1.5"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Terra: Banda 4 × 1.5"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -1451,17 +1450,17 @@ julia&gt; t_julia
 </div>
 </div>
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Código</summary>
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------</span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 7. Limpieza</span></span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------</span></span>
 <span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(r, b4, res_terra)</span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="fu">gc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="fu">gc</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>          used  (Mb) gc trigger  (Mb) max used  (Mb)
-Ncells 2611046 139.5    4973960 265.7  4973960 265.7
-Vcells 5096344  38.9   10146329  77.5  8322556  63.5</code></pre>
+Ncells 2611000 139.5    4973800 265.7  4973800 265.7
+Vcells 5096525  38.9   10146329  77.5  8322671  63.5</code></pre>
 </div>
 </div>
 </div>
@@ -1540,14 +1539,14 @@ Vcells 5096344  38.9   10146329  77.5  8322556  63.5</code></pre>
 <span id="cb47-50"><a href="#cb47-50" aria-hidden="true" tabindex="-1"></a><span class="co"># 8. Limpieza</span></span>
 <span id="cb47-51"><a href="#cb47-51" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------</span></span>
 <span id="cb47-52"><a href="#cb47-52" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(s, b4, res_stars)</span>
-<span id="cb47-53"><a href="#cb47-53" aria-hidden="true" tabindex="-1"></a><span class="fu">gc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb47-53"><a href="#cb47-53" aria-hidden="true" tabindex="-1"></a><span class="fu">gc</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 </div>
 <div class="cell">
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Código</summary>
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(stars)</span></span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------</span></span>
@@ -1587,18 +1586,18 @@ Vcells 5096344  38.9   10146329  77.5  8322556  63.5</code></pre>
 <span id="cb48-37"><a href="#cb48-37" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb48-38"><a href="#cb48-38" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"🌟 Stars:"</span>,</span>
 <span id="cb48-39"><a href="#cb48-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(t_stars, <span class="dv">3</span>), <span class="st">"seg |"</span>,</span>
-<span id="cb48-40"><a href="#cb48-40" aria-hidden="true" tabindex="-1"></a>    <span class="st">"mean ="</span>, <span class="fu">round</span>(m_stars, <span class="dv">6</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb48-40"><a href="#cb48-40" aria-hidden="true" tabindex="-1"></a>    <span class="st">"mean ="</span>, <span class="fu">round</span>(m_stars, <span class="dv">6</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>🌟 Stars: 9.065 seg | mean = 3766.625 </code></pre>
+<pre><code>🌟 Stars: 9.628 seg | mean = 3766.625 </code></pre>
 </div>
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Código</summary>
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------</span></span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 7. Plot (FUERA DEL BENCHMARK, proxy)</span></span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------</span></span>
 <span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res_stars, <span class="at">col =</span> <span class="fu">terrain.colors</span>(<span class="dv">100</span>),</span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Stars: Banda 4 × 1.5"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Stars: Banda 4 × 1.5"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>downsample set to 8</code></pre>
@@ -1611,17 +1610,17 @@ Vcells 5096344  38.9   10146329  77.5  8322556  63.5</code></pre>
 </div>
 </div>
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Código</summary>
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------</span></span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 8. Limpieza</span></span>
 <span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------</span></span>
 <span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(s, b4, res_stars)</span>
-<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="fu">gc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="fu">gc</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>            used  (Mb) gc trigger   (Mb)  max used   (Mb)
-Ncells   2662592 142.2    4973960  265.7   4973960  265.7
-Vcells 127748033 974.7  562386494 4290.7 702621380 5360.6</code></pre>
+Ncells   2662546 142.2    4973800  265.7   4973800  265.7
+Vcells 127748214 974.7  562386704 4290.7 702621561 5360.6</code></pre>
 </div>
 </div>
 </div>
@@ -1630,7 +1629,7 @@ Vcells 127748033 974.7  562386494 4290.7 702621380 5360.6</code></pre>
 </section>
 </section>
 <section id="resultados-finales" class="level2" data-number="7.6">
-<h2 data-number="7.6" class="anchored" data-anchor-id="resultados-finales"><span class="header-section-number">7.6</span> Resultados Finales</h2>
+<h2 data-number="7.6" class="anchored" data-anchor-id="resultados-finales"><span class="header-section-number">7.6</span> Resultados finales</h2>
 <p>A continuación, se presenta la comparativa de rendimiento para procesar la Banda 4 (Red) de 10m desde el archivo comprimido original.</p>
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
@@ -1668,7 +1667,7 @@ Vcells 127748033 974.7  562386494 4290.7 702621380 5360.6</code></pre>
 <span id="cb54-21"><a href="#cb54-21" aria-hidden="true" tabindex="-1"></a>      <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Motor"</span>, <span class="st">"Lenguaje"</span>, <span class="st">"Paralelismo"</span>, <span class="st">"Tiempo (s)"</span>, <span class="st">"Eficiencia (X)"</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb54-22"><a href="#cb54-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>, <span class="st">"condensed"</span>), </span>
 <span id="cb54-23"><a href="#cb54-23" aria-hidden="true" tabindex="-1"></a>                <span class="at">full_width =</span> F) <span class="sc">%&gt;%</span></span>
-<span id="cb54-24"><a href="#cb54-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="fu">which.min</span>(resultados<span class="sc">$</span>Tiempo_Seg), <span class="at">bold =</span> T, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">background =</span> <span class="st">"#2c3e50"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb54-24"><a href="#cb54-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="fu">which.min</span>(resultados<span class="sc">$</span>Tiempo_Seg), <span class="at">bold =</span> T, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">background =</span> <span class="st">"#2c3e50"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -1676,10 +1675,10 @@ Vcells 127748033 974.7  562386494 4290.7 702621380 5360.6</code></pre>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>              Motor           Lenguaje          Paralelismo Tiempo_Seg
-1          R: terra            R (C++)             Monohilo   4.386053
-2          R: stars                  R             Monohilo   9.065462
-3  Python: rasterio Python (C++/NumPy)   SIMD (Vectorizado)   2.478776
-4 Julia: Rasters.jl     Julia (Nativo) Multihilo (12 hilos)  11.528585</code></pre>
+1          R: terra            R (C++)             Monohilo   4.789059
+2          R: stars                  R             Monohilo   9.627500
+3  Python: rasterio Python (C++/NumPy)   SIMD (Vectorizado)   2.489701
+4 Julia: Rasters.jl     Julia (Nativo) Multihilo (12 hilos)  11.541734</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
@@ -1699,28 +1698,28 @@ Vcells 127748033 974.7  562386494 4290.7 702621380 5360.6</code></pre>
 <td style="text-align: left;">R: terra</td>
 <td style="text-align: left;">R (C++)</td>
 <td style="text-align: left;">Monohilo</td>
-<td style="text-align: right;">4.386</td>
-<td style="text-align: right;">2.63</td>
+<td style="text-align: right;">4.789</td>
+<td style="text-align: right;">2.41</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">R: stars</td>
 <td style="text-align: left;">R</td>
 <td style="text-align: left;">Monohilo</td>
-<td style="text-align: right;">9.065</td>
-<td style="text-align: right;">1.27</td>
+<td style="text-align: right;">9.628</td>
+<td style="text-align: right;">1.20</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; font-weight: bold; color: white !important; background-color: rgba(44, 62, 80, 255) !important;">Python: rasterio</td>
 <td style="text-align: left; font-weight: bold; color: white !important; background-color: rgba(44, 62, 80, 255) !important;">Python (C++/NumPy)</td>
 <td style="text-align: left; font-weight: bold; color: white !important; background-color: rgba(44, 62, 80, 255) !important;">SIMD (Vectorizado)</td>
-<td style="text-align: right; font-weight: bold; color: white !important; background-color: rgba(44, 62, 80, 255) !important;">2.479</td>
-<td style="text-align: right; font-weight: bold; color: white !important; background-color: rgba(44, 62, 80, 255) !important;">4.65</td>
+<td style="text-align: right; font-weight: bold; color: white !important; background-color: rgba(44, 62, 80, 255) !important;">2.490</td>
+<td style="text-align: right; font-weight: bold; color: white !important; background-color: rgba(44, 62, 80, 255) !important;">4.64</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Julia: Rasters.jl</td>
 <td style="text-align: left;">Julia (Nativo)</td>
 <td style="text-align: left;">Multihilo (12 hilos)</td>
-<td style="text-align: right;">11.529</td>
+<td style="text-align: right;">11.542</td>
 <td style="text-align: right;">1.00</td>
 </tr>
 </tbody>
@@ -1803,8 +1802,8 @@ No es una solución espacial por sí misma. El pipeline composable existe, pero 
 Aunque puede trabajar con <code>proxy = TRUE</code>, <code>stars</code> <strong>no implementa un pipeline composable tipo tidyverse</strong>, ni un DAG diferido completo. Las operaciones tienden a materializar datos relativamente pronto y no se integran con <code>dplyr/dbplyr</code> para optimización global del flujo.</p>
 </section>
 </section>
-<section id="más-allá-del-benchmark-optimización-y-virtualización-de-datos-geoespaciales" class="level2" data-number="7.7">
-<h2 data-number="7.7" class="anchored" data-anchor-id="más-allá-del-benchmark-optimización-y-virtualización-de-datos-geoespaciales"><span class="header-section-number">7.7</span> Más allá del benchmark: optimización y virtualización de datos geoespaciales</h2>
+<section id="más-allá-del-benchmarking-optimización-y-virtualización-de-datos-geoespaciales" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="más-allá-del-benchmarking-optimización-y-virtualización-de-datos-geoespaciales"><span class="header-section-number">7.7</span> Más allá del benchmarking: optimización y virtualización de datos geoespaciales</h2>
 <p>Este benchmark evalúa un caso simple y controlado, pero <strong>los proyectos reales con grandes volúmenes de datos geoespaciales</strong> rara vez dependen de un solo archivo raster leído de forma local. Hoy en día existen múltiples estrategias para <strong>optimizar el rendimiento</strong>, muchas de las cuales se basan en <strong>virtualización del acceso a datos</strong> y <strong>formatos eficientes</strong>.</p>
 <p>Algunas de las principales alternativas que deben considerarse en proyectos de gran escala son:</p>
 <section id="formatos-optimizados-para-alto-volumen" class="level3">
@@ -1849,7 +1848,7 @@ Facilita la búsqueda y acceso estructurado a grandes catálogos de datos espaci
 </section>
 </section>
 <section id="desafío-de-laboratorio-primer-día" class="level2" data-number="7.8">
-<h2 data-number="7.8" class="anchored" data-anchor-id="desafío-de-laboratorio-primer-día"><span class="header-section-number">7.8</span> 🏁 Desafío de Laboratorio: Primer Día</h2>
+<h2 data-number="7.8" class="anchored" data-anchor-id="desafío-de-laboratorio-primer-día"><span class="header-section-number">7.8</span> 🏁 Desafío de laboratorio: primer día</h2>
 <p>Para cerrar esta sesión del <strong>“Duelo de Titanes”</strong>, deberán resolver el siguiente desafío práctico.<br>
 Pueden apoyarse en herramientas de IA para investigar, pero recuerden:</p>
 <blockquote class="blockquote">
@@ -1858,7 +1857,7 @@ Pueden apoyarse en herramientas de IA para investigar, pero recuerden:</p>
 <p>Este laboratorio incluye ejecución real de código en <strong>distintos entornos</strong>.</p>
 <hr>
 <section id="instrucciones-de-entrega" class="level3">
-<h3 class="anchored" data-anchor-id="instrucciones-de-entrega">🛠️ Instrucciones de Entrega</h3>
+<h3 class="anchored" data-anchor-id="instrucciones-de-entrega">🛠️ Instrucciones de entrega</h3>
 <ol type="1">
 <li>Creen un nuevo repositorio en su <strong>GitHub personal</strong> llamado <code>taller1-sig</code>.</li>
 <li>Todas las respuestas escritas deben estar en un archivo <code>respuestas.qmd</code>.</li>
@@ -1874,7 +1873,7 @@ Pueden apoyarse en herramientas de IA para investigar, pero recuerden:</p>
 <hr>
 </section>
 <section id="parte-a-ejecución-en-jupyterlab-notebooks" class="level3">
-<h3 class="anchored" data-anchor-id="parte-a-ejecución-en-jupyterlab-notebooks">⚙️ Parte A — Ejecución en JupyterLab (Notebooks)</h3>
+<h3 class="anchored" data-anchor-id="parte-a-ejecución-en-jupyterlab-notebooks">⚙️ Parte A — Ejecución en JupyterLab (notebooks)</h3>
 <p>Ejecuten los <strong>cuatro procesos del benchmark</strong> desde <strong>JupyterLab</strong>, usando el kernel adecuado para cada lenguaje.</p>
 <section id="notebooks-obligatorios" class="level4">
 <h4 class="anchored" data-anchor-id="notebooks-obligatorios">📒 Notebooks obligatorios</h4>
@@ -1899,9 +1898,9 @@ Pueden apoyarse en herramientas de IA para investigar, pero recuerden:</p>
 <hr>
 </section>
 </section>
-<section id="parte-b-ejecución-desde-vs-code-terminal-integrada" class="level3">
-<h3 class="anchored" data-anchor-id="parte-b-ejecución-desde-vs-code-terminal-integrada">🖥️ Parte B — Ejecución desde VS Code (Terminal Integrada)</h3>
-<p>Ahora repitan el benchmark <strong>fuera de Jupyter</strong>, usando la terminal integrada de <strong>VS Code</strong>.</p>
+<section id="parte-b-ejecución-desde-vscode-terminal-integrada" class="level3">
+<h3 class="anchored" data-anchor-id="parte-b-ejecución-desde-vscode-terminal-integrada">🖥️ Parte B — Ejecución desde VSCode (terminal integrada)</h3>
+<p>Ahora repitan el benchmark <strong>fuera de Jupyter</strong>, usando la terminal integrada de <strong>VSCode</strong>.</p>
 <section id="scripts-obligatorios" class="level4">
 <h4 class="anchored" data-anchor-id="scripts-obligatorios">📄 Scripts obligatorios</h4>
 <p>Creen los siguientes archivos:</p>
@@ -1925,18 +1924,18 @@ Pueden apoyarse en herramientas de IA para investigar, pero recuerden:</p>
 </section>
 <section id="ejecución-esperada" class="level4">
 <h4 class="anchored" data-anchor-id="ejecución-esperada">▶️ Ejecución esperada</h4>
-<p>Desde la terminal de VS Code:</p>
+<p>Desde la terminal de VSCode:</p>
 <div class="sourceCode" id="cb56"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> benchmark_terra.R</span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> benchmark_stars.R</span>
 <span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> benchmark_rasterio.py</span>
-<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="ex">julia</span> benchmark_rasters.jl</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="ex">julia</span> benchmark_rasters.jl</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>📌 <strong>Entrega</strong>: - Suban los <strong>cuatro scripts</strong> al repositorio. - Reporten los tiempos obtenidos en <code>respuestas.qmd</code>.</p>
 <hr>
 </section>
 </section>
-<section id="parte-c-ejecución-desde-windows-terminal-powershell" class="level3">
-<h3 class="anchored" data-anchor-id="parte-c-ejecución-desde-windows-terminal-powershell">🪟 Parte C — Ejecución desde Windows Terminal (PowerShell)</h3>
-<p>Finalmente, ejecuten los procesos <strong>sin usar VS Code ni Jupyter</strong>, directamente desde <strong>Windows Terminal (PowerShell)</strong>, trabajando con Docker.</p>
+<section id="parte-c-ejecución-desde-el-termina-de-windows-powershell" class="level3">
+<h3 class="anchored" data-anchor-id="parte-c-ejecución-desde-el-termina-de-windows-powershell">🪟 Parte C — Ejecución desde el Termina de Windows (PowerShell)</h3>
+<p>Finalmente, ejecuten los procesos <strong>sin usar VSCode ni Jupyter</strong>, directamente desde <strong>Windows Terminal (PowerShell)</strong>, trabajando con Docker.</p>
 <p>Pueden usar <strong>una o ambas opciones</strong>.</p>
 <hr>
 <section id="opción-1-entrando-al-intérprete" class="level4">
@@ -1944,7 +1943,7 @@ Pueden apoyarse en herramientas de IA para investigar, pero recuerden:</p>
 <p>Ejemplos:</p>
 <div class="sourceCode" id="cb57"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>docker exec <span class="op">-</span>it contenedor_sig_unal <span class="fu">R</span></span>
 <span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>docker exec <span class="op">-</span>it contenedor_sig_unal python3</span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>docker exec <span class="op">-</span>it contenedor_sig_unal julia</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>docker exec <span class="op">-</span>it contenedor_sig_unal julia</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Y luego ejecutar el script correspondiente dentro del intérprete.</p>
 <hr>
 </section>
@@ -1954,20 +1953,20 @@ Pueden apoyarse en herramientas de IA para investigar, pero recuerden:</p>
 <div class="sourceCode" id="cb58"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>docker exec contenedor_sig_unal Rscript benchmark_terra<span class="op">.</span><span class="fu">R</span></span>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>docker exec contenedor_sig_unal Rscript benchmark_stars<span class="op">.</span><span class="fu">R</span></span>
 <span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>docker exec contenedor_sig_unal python3 benchmark_rasterio<span class="op">.</span><span class="fu">py</span></span>
-<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>docker exec contenedor_sig_unal julia benchmark_rasters<span class="op">.</span><span class="fu">jl</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>📌 <strong>Entrega</strong>: - Indiquen en <code>respuestas.qmd</code>: - Qué opción usaron - Los tiempos obtenidos - Si notaron diferencias frente a JupyterLab o VS Code</p>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>docker exec contenedor_sig_unal julia benchmark_rasters<span class="op">.</span><span class="fu">jl</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>📌 <strong>Entrega</strong>: - Indiquen en <code>respuestas.qmd</code>: - Qué opción usaron - Los tiempos obtenidos - Si notaron diferencias frente a JupyterLab o VSCode</p>
 <hr>
 </section>
 </section>
 <section id="preguntas-de-análisis" class="level3">
-<h3 class="anchored" data-anchor-id="preguntas-de-análisis">❓ Preguntas de Análisis</h3>
+<h3 class="anchored" data-anchor-id="preguntas-de-análisis">❓ Preguntas de análisis</h3>
 <section id="entorno-de-ejecución" class="level4">
 <h4 class="anchored" data-anchor-id="entorno-de-ejecución">1. 📍 Entorno de ejecución</h4>
 <p>¿Notaron diferencias de tiempo entre:</p>
 <ul>
 <li>JupyterLab<br>
 </li>
-<li>VS Code (terminal integrada)<br>
+<li>VSCode (terminal integrada)<br>
 </li>
 <li>Windows Terminal (PowerShell)</li>
 </ul>
@@ -1978,10 +1977,9 @@ Pueden apoyarse en herramientas de IA para investigar, pero recuerden:</p>
 <h4 class="anchored" data-anchor-id="abstracción-en-la-práctica">2. 🧱 Abstracción en la práctica</h4>
 <p>¿En qué motor creen que el <strong>costo de las abstracciones</strong> es más visible?<br>
 Relacionen su respuesta con los tiempos observados.</p>
-<hr>
 </section>
-<section id="julia-y-el-calentamiento" class="level4">
-<h4 class="anchored" data-anchor-id="julia-y-el-calentamiento">3. 🔥 Julia y el calentamiento</h4>
+<section id="julia-y-el-costo-de-compilación-warm-up" class="level4">
+<h4 class="anchored" data-anchor-id="julia-y-el-costo-de-compilación-warm-up">3. 🔥 Julia y el costo de compilación (Warm-up)</h4>
 <p>¿El efecto del <em>warm-up</em> de Julia se notó más en algún entorno específico?<br>
 Expliquen brevemente por qué.</p>
 <hr>
@@ -2001,7 +1999,7 @@ sino que entiendan que <strong>el rendimiento depende del stack completo</strong
 </section>
 </section>
 <section id="limpieza-de-recursos" class="level2" data-number="7.9">
-<h2 data-number="7.9" class="anchored" data-anchor-id="limpieza-de-recursos"><span class="header-section-number">7.9</span> Limpieza de Recursos</h2>
+<h2 data-number="7.9" class="anchored" data-anchor-id="limpieza-de-recursos"><span class="header-section-number">7.9</span> Limpieza de recursos</h2>
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -2023,7 +2021,7 @@ sino que entiendan que <strong>el rendimiento depende del stack completo</strong
 <span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a><span class="fu">gc</span>()</span>
 <span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Borrar archivo con la ruta</span></span>
-<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">file.exists</span>(<span class="st">"s2_shared_path.txt"</span>)) <span class="fu">file.remove</span>(<span class="st">"s2_shared_path.txt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">file.exists</span>(<span class="st">"s2_shared_path.txt"</span>)) <span class="fu">file.remove</span>(<span class="st">"s2_shared_path.txt"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -2087,12 +2085,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
+    button.setAttribute("title", "Copiado");
     let tooltip;
     if (window.bootstrap) {
       button.setAttribute("data-bs-toggle", "tooltip");
       button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
+      button.setAttribute("data-bs-title", "Copiado");
       tooltip = new bootstrap.Tooltip(button, 
         { trigger: "manual", 
           customClass: "code-copy-button-tooltip",
@@ -2427,7 +2425,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./61-presentacion_1_varios.html" class="pagination-link" aria-label="Temas por Charlar">
+      <a href="./61-presentacion_1_clase1.html" class="pagination-link" aria-label="Temas por Charlar">
         <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Temas por Charlar</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>

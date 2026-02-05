@@ -8,15 +8,15 @@ Esta guía establece un entorno de **Reproducibilidad Científica**. Utilizaremo
 
 Para preparar su equipo de trabajo, instale las siguientes herramientas básicas:
 
-1.  **VSCode IDE**: Su interfaz principal para editar archivos `.qmd` y gestionar código [@vscode2026]. En el anexo de referencia técnica encontrará las principales extensiones (@sec-extensiones-vscode)necesarias a instalar en VSCode.
+1.  **VSCode IDE**: Su interfaz principal para editar archivos `.qmd` y gestionar código [@vscode2026]. En el anexo de referencia técnica encontrará las principales extensiones (@sec-extensiones-vscode) necesarias a instalar en VSCode.
 3.  **Docker Desktop**: Motor de virtualización que ejecutará nuestro laboratorio SIG [@docker2025]. Durante la instalación, asegúrese de activar la opción **"Use WSL 2 instead of Hyper-V"**.
 
 
-Siguiendo los pasos detallados a continuación para instalar dos contenedores Docker, en resumen ellos contendrán (no es necesario instalarlos manualmente):
+Siguiendo los pasos detallados a continuación para instalar dos contenedores Docker, en resumen, ellos contendrán (no es necesario instalarlos manualmente):
 
 1. **Python**, **R** y **Julia** con los principales paquetes/librerías para geoprocesamiento.
 2. **Quarto**.
-3.  **TinyTeX**: Motor ligero de LaTeX necesario para compilar reportes profesionales (ej: en Quarto) en formato PDF [@xie2019tinytex]. Si desea instalar TinyTeX para generar PDF por fuera del entorno Docker, desde la terminal de VSCode use el comando (opcional: fuera de clase):
+3.  **TinyTeX**: Motor ligero de LaTeX necesario para compilar reportes profesionales (ej. en Quarto) en formato PDF [@xie2019tinytex]. Si desea instalar TinyTeX para generar PDF por fuera del entorno Docker, desde la terminal de VSCode use el comando (opcional: fuera de clase):
 ```bash
   quarto install tinytex
 ````
@@ -31,11 +31,11 @@ Descargue e instale las versiones oficiales desde los siguientes enlaces:
     -   **Instalación**: Seleccione el instalador `.exe` más reciente para Windows.
 -   **Docker Desktop**:
     -   **URL**: <https://www.docker.com/products/docker-desktop/>
-    -   **Instalación**: Ejecute el instalador y asegúrese de aceptar la actualización del kernel de WSL 2 si el sistema lo solicita.
+    -   **Instalación**: Ejecute el instalador y asegúrese de aceptar la actualización del kernel de WSL 2 si el sistema lo solicita, o previamente usar en el terminal `wsl --update`.
 
 ---
 
-## Infraestructura con Docker y Docker Compose {#sec-infraestructura}
+## Infraestructura a instalar {#sec-infraestructura}
 
 Para garantizar un entorno de análisis SIG reproducible y políglota, utilizaremos la orquestación de contenedores. Este enfoque permite ejecutar, de forma aislada y coordinada, tanto el motor de procesamiento como el servidor de datos.
 
@@ -48,7 +48,8 @@ Para automatizar el despliegue de los dos contenedores del curso (`analisis-geo`
 Para este proceso, utilizaremos dos archivos clave: **docker-compose.yml** y **Dockerfile**.
 :::
 
-1. Cree una carpeta utilizando su **ID de usuario de correo institucional** como nombre (el identificador que aparece antes del `@unal.edu.co`). Por ejemplo, si su correo es `juperez@unal.edu.co`, la carpeta deberá llamarse `juperez`. En adelante llamaremos a esa carpeta `su_carpeta`.
+1. Cree una carpeta utilizando su **ID de usuario de correo institucional** como nombre (el identificador que aparece antes del `@unal.edu.co`). Por ejemplo, si su correo es `juperez@unal.edu.co`, la carpeta deberá llamarse `juperez`. En adelante llamaremos a esa carpeta `su_carpeta` o la carpeta `ID UNAL`.
+
 2. Dentro de ella, guarde los archivos que se presentan a continuación.
 
 #### Archivo `docker-compose.yml` (Orquestación)
@@ -390,7 +391,7 @@ RUN find /root/.julia/artifacts -name "libssl.so*" -exec ln -sf /usr/lib/x86_64-
 # Precompilación total de Julia
 # ------------------------------------------------------------
 # Garantiza arranque instantáneo en:
-# - VS Code
+# - VSCode
 # - Jupyter
 # - IJulia
 # ============================================================
@@ -408,7 +409,7 @@ ENV JULIA_NUM_THREADS=auto
 # 10. CONFIGURACIÓN MAESTRA Rprofile.site
 # ------------------------------------------------------------
 # Este archivo se ejecuta automáticamente cada vez que inicia R.
-# Centraliza la integración R ↔ Julia ↔ Python ↔ VS Code.
+# Centraliza la integración R ↔ Julia ↔ Python ↔ VSCode.
 #
 # Build 47.42:
 # - Control de DPI, tamaño y fuentes
@@ -529,7 +530,7 @@ library(grid)
 if (interactive()) {
 
   # ==========================================================
-  # Visor gráfico httpgd (VS Code / navegador)
+  # Visor gráfico httpgd (VSCode / navegador)
   # ----------------------------------------------------------
   # Permite gráficos interactivos persistentes
   # ==========================================================
@@ -605,7 +606,7 @@ Para el análisis geoespacial avanzado, es necesario instalar un conjunto de lib
 
 Como veremos, estos paquetes dependen unos de otros. Las dependencias principales se muestran en la @fig-python-package-deps:
 
-![Main dependencies between the Python packages we are going to learn](images/dependencias_python.png){#fig-python-package-deps}
+![Principales dependencias entre los paquetes de Python que vamos a estudiar. Adaptado de @dorman2025spatial.](images/dependencias_python.png){#fig-python-package-deps}
 
 -   **`geopandas`**: Capa superior que integra a `pandas`, `shapely`, `fiona` y `pyproj`. Permite realizar consultas espaciales complejas y gestionar GeoDataFrames con una sintaxis simplificada.
 -   **`rasterio`**: Basada en la librería **GDAL**, es el estándar para la lectura, escritura y manipulación de formatos ráster (como GeoTIFF), permitiendo gestionar metadatos y arreglos de píxeles con alta eficiencia.
@@ -629,7 +630,7 @@ La siguiente tabla vincula las librerías de Python con los motores de cálculo 
 
 #### Stack de R
 
-Para el análisis geoespacial en `R`, utilizaremos un ecosistema robusto basado en el estándar *Simple Features* y motores de alto rendimiento para datos ráster (rejilla - grids).
+Para el análisis geoespacial en `R`, utilizaremos un ecosistema robusto basado en el estándar *Simple Features* y motores de alto rendimiento para datos ráster (rejilla - cuadrículas).
 
 | Paquete | Funcionalidad | Sitio web |
 |:----------:|:------------------:|:--------------------------------:|
@@ -673,7 +674,7 @@ Siga este procedimiento para iniciar su laboratorio por primera vez:
 
 * **Configuración de Almacenamiento**: Debido a que la imagen políglota y la base de datos requieren un espacio considerable, asegúrese de que el disco de destino tenga al menos **30 GB de espacio libre**. 
 
-* **Procedimiento para cambiar la ubicación de las imágenes**: Si su disco principal (`C:`) está sin espacio, mueva Docker a otro disco:
+* **Procedimiento para cambiar la ubicación de las imágenes** (archivos con extensión `.vhdx`): Si su disco principal (`C:`) está sin espacio, mueva Docker a otro disco:
     a. Diríjase a **Settings** (engranaje) -> **Resources** -> **Advanced**.
     b. Localice **Disk image location**.
     c. Haga clic en `Browse` y seleccione una carpeta en un disco con mayor capacidad.
@@ -701,7 +702,7 @@ swap=32GB   # Memoria de intercambio para evitar el cierre de contenedores
 
 ::: {.callout-tip}
 ### Importante
-Si desea verificar si estos cambios surtieron efecto dentro de su laboratorio, puede ejecutar el comando `free -h` en la terminal de Jupyter o VS Code. Esto le mostrará la memoria total y el espacio de Swap disponible tal como se configuró en el [Anexo de Referencia Técnica](#swap-ref).
+Si desea verificar si estos cambios surtieron efecto dentro de su laboratorio, puede ejecutar el comando `free -h` en la terminal de Jupyter o VSCode. Esto le mostrará la memoria total y el espacio de Swap disponible tal como se configuró en el [Anexo de Referencia Técnica](#swap-ref).
 :::
 
 2.  **Organización de Archivos**: Copie los archivos `docker-compose.yml` y `Dockerfile` dentro de su carpeta de trabajo (nombrada con su ID de correo UNAL).
@@ -719,14 +720,14 @@ Si desea verificar si estos cambios surtieron efecto dentro de su laboratorio, p
 docker compose build --no-cache 2>&1 | tee build_sig_unal.log
 ```
 
-5.  **Arrancar Contenedores**: El comando `build` una vez se termina satisfactoriamente, no necesita volver a ejecutarse. El principal comando para subir el servicio de las imagenes instaladas se muestra a continuación. Use este comando siempre antes de inciar a trabajar con los contenedores instalados:
+5.  **Arrancar Contenedores**: El comando `build` una vez se termina satisfactoriamente, no necesita volver a ejecutarse. El principal comando para subir el servicio de las imágenes instaladas se muestra a continuación. Use este comando siempre antes de iniciar a trabajar con los contenedores instalados:
 
 ```bash
 docker compose up -d
 ```
 
 
-6.  **Verificación de Logs**: Si desea ver el progreso o verificar errores, revise el archivo `.log` generado o ejecute el siguiente comando, sin embargo la url de acceso a **JupyterLab** mostranda después de ejecutar este comando puede estar errónea. Para acceder a **JupyterLab** vea la siguiente instrucción (**Ingreso a JupyterLab**)
+6.  **Verificación de Logs**: Si desea ver el progreso o verificar errores, revise el archivo `.log` generado o ejecute el siguiente comando, sin embargo la url de acceso a **JupyterLab** mostrada después de ejecutar este comando puede estar errónea. Para acceder a **JupyterLab** vea la siguiente instrucción (**Ingreso a JupyterLab**)
 
 ```bash
 docker logs contenedor_sig_unal
@@ -739,25 +740,25 @@ docker logs contenedor_sig_unal
 8.  **Localización de Archivos y Persistencia**: En el contenedor, su carpeta de Windows se encuentra vinculada a la ruta **/home/rstudio/work**. 
     * Cualquier archivo guardado en esa ruta dentro de Jupyter aparecerá en su carpeta de Windows.
     * Se recomienda organizar su trabajo en las subcarpetas: `notebooks`, `scripts`, y `data`.
-    * La carpeta `imagenes` (provista para las guías Quarto) debe residir también en esta ruta para un renderizado correcto.
+    * La carpeta `imagenes` (sin tílde y provista para las guías Quarto) debe residir también en esta ruta para un renderizado correcto.
 
-9.  **Acceso y Configuración en VS Code**: 
+9.  **Acceso y Configuración en VSCode**: 
 
-    Para una experiencia de desarrollo profesional, conecte VS Code directamente al contenedor:
+    Para una experiencia de desarrollo profesional, conecte VSCode directamente al contenedor:
     * Ejecute `Ctrl + Shift + P` y seleccione **Dev Containers: Attach to Running Container...**.
     * Seleccione el contenedor **`contenedor_sig_unal`**.
-    * **Extensiones**: Una vez conectado "dentro" del contenedor, debe habilitar/instalar las extensiones (*'Install in Container'*) de **R** (REditorSupport), **R Debugger**, **R Extension Pack** (Yuki Ueda), **Julia**, **Python**, **Quarto**, **PostgreSQL** (Chris Kolman), **psql** (doublefint), **GitHub Repositories**, **Container Tools**, **Python** (Microsoft), **Jupyter** (Microsoft). Ver @sec-extensiones-vscode.
+    * **Extensiones**: Una vez conectado "dentro" del contenedor, debe habilitar/instalar las extensiones (*'Install in Container'*) de **R** (REditorSupport), **R Debugger**, **R Extension Pack** (Yuki Ueda), **Julia**, **Python**, **Quarto**, **PostgreSQL** (Chris Kolman), **psql** (doublefint), **GitHub Repositories**, **Container Tools**, **Python** (Microsoft), **Jupyter** (Microsoft). Para un listado completo ver @sec-extensiones-vscode.
 
     * **Inicialización del Visor Gráfico** (Solo la primera vez por sesión)
     
-    Para que los gráficos de R (y los puentes de Python/Julia) se visualicen correctamente en VS Code, debe inicializar el dispositivo gráfico. En su terminal de R, ejecute:
+    Para que los gráficos de R (y los puentes de Python/Julia) se visualicen correctamente en VSCode, debe inicializar el dispositivo gráfico. En su terminal de R, ejecute:
 
     ```r
     # Lanza el servidor de gráficos httpgd
     httpgd::hgd()
     ```
 
-    * **Acceso al Visor**: VS Code debería abrir automáticamente una pestaña con el visor. Si esto no sucede o prefiere usar su navegador externo (Chrome/Edge), acceda a la dirección: **`http://127.0.0.1:8788`**.
+    * **Acceso al Visor**: VSCode debería abrir automáticamente una pestaña con el visor. Si esto no sucede o prefiere usar su navegador externo (Chrome/Edge), acceda a la dirección: **`http://127.0.0.1:8788`**.
     * **Nota sobre Puertos**: Aunque el comando en R pueda imprimir una URL interna con el puerto `8787` o un token aleatorio, **ignore esa dirección**. Gracias a nuestro archivo `docker-compose.yml`, el puerto **8788** de su Windows está "cableado" permanentemente al visor, eliminando la necesidad de buscar tokens o puertos dinámicos.
 
 
@@ -801,37 +802,53 @@ Al ingresar, se encontrará con el centro de mando de sus kernels, donde podrá 
 
 En el panel izquierdo de la @fig-jupyterlab, la carpeta **`/home/rstudio/work/`** es el espejo de su directorio local en Windows. Gracias a la configuración de volúmenes en el archivo `docker-compose.yml`, existe un puente directo: todo cambio realizado en Jupyter se refleja en su disco duro y viceversa, garantizando que su trabajo no se pierda al apagar el contenedor.
 
-## Compilación de la guía (documento quarto `qmd`)
+## Compilación de la guía completa o documentos individuales {#sec-compilacion}
 
-Para generar el reporte, ejecute los comandos según el formato requerido:
+La guía del curso está organizada a partir de un **archivo orquestador** `_quarto.yml`, el cual contiene una referencia explícita a cada uno de los archivos Quarto (`.qmd`) que definen los capítulos, las presentaciones, los talleres y los anexos. Este archivo centraliza la organización y el formato de la guía tanto en **PDF** como en **HTML**.
 
-**Generar todos los formatos (HTML y PDF):**
+### Compilación del proyecto completo
 
-``` bash
-quarto render guia_instalacion.qmd --to all
+Si desea compilar la guía completa del curso y generar todos los formatos, simplemente ejecute el comando `quarto render` en la carpeta raíz (donde se encuentra el archivo `_quarto.yml`):
+
+```bash
+# Desde la carpeta raíz donde reside el archivo '_quarto.yml'
+quarto render
 ```
 
-**Generar solo formato HTML:**
+### Compilación de archivos individuales
 
-``` bash
-quarto render guia_instalacion.qmd --to html
+En ocasiones, querrá trabajar en un solo capítulo sin procesar el libro entero. Para compilar un archivo específico (ej. `archivo.qmd`) de manera independiente y evitar que Quarto aplique las reglas de numeración y referencias del proyecto global, siga estos pasos:
+
+1.  **Renombrar temporalmente el orquestador:** Cambie el nombre de `_quarto.yml` a **`_quarto.yml.back`**. Esto hace que Quarto trate al archivo como un documento "solitario".
+2.  **Ejecutar el renderizado específico:**
+
+* **Generar todos los formatos (HTML y PDF):**
+```bash
+quarto render archivo.qmd --to all
+```
+* **Generar solo formato HTML:**
+```bash
+quarto render archivo.qmd --to html
+```
+* **Generar solo formato PDF:**
+```bash
+quarto render archivo.qmd --to pdf
 ```
 
-**Generar solo formato PDF:**
-
-``` bash
-quarto render guia_instalacion.qmd --to pdf
-```
+### Notas de estudio y personalización
 
 ::: {.callout-tip icon="true"}
-En Quarto, puedes agregar tus **notas de estudio** usando esta sintaxis:
+#### ¡Personaliza tu aprendizaje!
+En Quarto, puedes agregar tus propias **notas de estudio** usando la sintaxis de "callouts". Recuerda que este documento está en proceso de **construcción** y sufrirá cambios permanentes hasta terminar el curso. 
 
-```` quarto
+Puedes buscar **ayuda en Internet** para personalizar la apariencia de tus notas. La sintaxis básica es:
+
+```markdown
 ::: {.callout-tip icon="true"}
-Escribe acá!
+### ¡Escribe tu nota aquí!
+Este es un espacio para tus observaciones personales y recordatorios.
 :::
-````
-
+```
 :::
 
 ## Mantenimiento y Limpieza del Entorno {#sec-limpieza}

@@ -11,7 +11,7 @@ Para el desarrollo del curso, utilizaremos tres enfoques que permiten equilibrar
 | **Tecnología** | Docker [@docker2025] Compose (JupyterLab). | OSGeo4W - QGIS [@rosas2022qgis] LTR. | ArcGIS Pro [@law2019getting] (Conda Environment). |
 | **Uso Principal** | Análisis masivo y Ciencia de Datos. | Automatización SIG con PyQGIS [@lawhead2017qgis]. | Geoprocesamiento y ArcPy  [@toms2015arcpy]. |
 | **Ventaja** | Entorno idéntico y reproducible. | Acceso a drivers locales y QGIS. | Herramientas comerciales avanzadas. |
-| **Lenguajes** | **Python [@python2021python], R [@rlanguage] y Julia [@bezanson2017julia]** (Pre-configurados). | **Python (PyQGIS)**. | **Python (ArcPy)**. |
+| **Lenguajes** | **Python [@python2021python], R [@rlanguage] y Julia [@bezanson2017julia]** (Preconfigurados). | **Python (PyQGIS)**. | **Python (ArcPy)**. |
 
 ### Secuencia Didáctica y Uso de Entornos
 

@@ -17,7 +17,7 @@ Este ejercicio **no compara lenguajes de programación**.
 
 Evalúa el rendimiento del **stack completo**:
 
-- GDAL (Geospatial Data Abstraction Library): raster (GDAL) + vector (OGR: Open GIS Reference (Simple Features))
+- GDAL (Geospatial Data Abstraction Library): raster (GDAL) + vector (OGR: OpenGIS Simple Features Reference Implementation)
 - Librerías raster
 - Modelo de ejecución
 - Nivel de abstracción
@@ -71,7 +71,7 @@ Cada stack sigue una filosofía diferente:
   Lectura completa a memoria + ejecución inmediata
 
 - **R / terra**  
-  Raster algebra optimizado en C++ y procesamiento por bloques, pero sin exponer un pipeline diferido composable
+  Álgebra de ráster optimizado en C++ y procesamiento por bloques, pero sin exponer un pipeline diferido composable
 
 - **R / stars**  
   Manejo de cubos de datos multidimensionales y metadatos ricos; el modo `proxy` difiere la lectura, pero **no construye un DAG composable completo**
@@ -115,7 +115,7 @@ Pero también ofrece:
 
 | Motor | Nivel de abstracción | Forma de trabajar |
 |---|---|---|
-| **NumPy / rasterio** | Baja | “Aquí tienes un array, calcula ahora” |
+| **NumPy / rasterio** | Baja | “Aquí tienes un arreglo, calcula ahora” |
 | **terra (R)** | Media | “Yo optimizo internamente en C++” |
 | **stars (R)** | Alta | “Gestiono dimensiones, tiempo y metadatos” |
 | **Rasters.jl (Julia)** | Flexible | “Defino un pipeline que se evalúa al final” |
@@ -212,7 +212,7 @@ Más allá del benchmark, este laboratorio busca que ustedes aprendan a:
 - Usar **GitHub** como bitácora de trabajo
 - Documentar con **Quarto**
 - Ejecutar análisis en **Jupyter Lab**
-- Trabajar en **VS Code**
+- Trabajar en **VSCode**
 - Usar la **terminal** (Windows / Linux)
 - Ejecutar entornos reproducibles con **Docker**
 - Correr el mismo proceso **de muchas formas distintas**

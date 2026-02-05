@@ -3,13 +3,32 @@ project:
   type: book                     # Tipo: libro (genera estructura de capítulos)
   output-dir: _site              # Carpeta de salida para archivos generados
 
+lang: es  # <--- VITAL: Esto activa el español para todo el proyecto (HTML y PDF)
+
 # CONFIGURACIÓN DEL LIBRO
 book:
   title: "Programación SIG: Python, R y Julia"
   author: "Alexys H. Rodríguez-Avellaneda Ph.D."
   date: today                    # Fecha automática
-  language: es                   # Idioma: español
-  
+  #language: es                   # Idioma: español
+  #language:
+  #    chapter-label-single: "Capítulo"
+  #    chapter-label-plural: "Capítulos"
+  #    appendices-title: "Apéndices"
+  #lang: es
+  language: _language.yml  # <--- Aquí apuntas al archivo
+
+  # FUSIONAMOS TODO AQUÍ (Sin repetir la palabra 'language')
+  #language:
+  #  chapter-label-single: "Capítulo"
+  #  chapter-label-plural: "Capítulos"
+  #  appendices-title: "Apéndices"
+  #  # Añadimos estas para asegurar el HTML
+  #  toc-title-document: "Tabla de contenidos"
+  #  section-title-abstract: "Resumen"
+  #  lof-title-document: "Lista de Figuras"
+  #  lot-title-document: "Lista de Tablas"
+
   # ESTRUCTURA DEL LIBRO
   chapters:
     - index.qmd                  # Portada/índice
@@ -29,7 +48,7 @@ book:
         - 41-practica_1_benchmark_raster.qmd
     - part: "Presentaciones"        # Tercera parte
       chapters:
-        - 61-presentacion_1_varios.qmd
+        - 61-presentacion_1_clase1.qmd
         - 62-presentacion_2_benchmark.qmd
         
   # APÉNDICES (aparecen después de los capítulos)
@@ -50,6 +69,12 @@ book:
     # Si se quita, las referencias aparecerán sin título en cada capítulo (HTML)
     # o no aparecerán agrupadas al final (PDF)
 
+crossref:  # <--- PERSONALIZACIÓN DE REFERENCIAS
+  fig-title: "Figura"
+  tbl-title: "Tabla"
+  sec-prefix: "Sección"
+  eq-prefix: "Ecuación"
+
 # CONFIGURACIÓN DE BIBLIOGRAFÍA (GLOBAL)
 bibliography: referencias.bib     # Archivo BibTeX con todas las referencias
 csl: https://www.zotero.org/styles/apa  # Estilo de citación: APA
@@ -67,17 +92,21 @@ format:
     toc-depth: 3                 # Profundidad del TOC: hasta nivel 3 (###)
     #number-sections: true        # Numeración automática de secciones
     number-depth: 2              # Numerar hasta nivel 2 (##)
+    #lof: true  # <--- Fuerza la Lista de Figuras
+    #lot: true  # <--- Fuerza la Lista de Tablas
     # reference-location: section # NO FUNCIONA con bibliografía global
     # Opciones: 'section' (final de sección) o 'document' (final del documento)
     # Con bibliografía global, las referencias solo aparecen en el apéndice 93_references.qmd
     # TÍTULO EN ESPAÑOL PARA HTML
     toc-title: "Tabla de Contenidos"
+    lof-title: "Lista de Figuras"
+    lot-title: "Lista de Tablas"
 
   # FORMATO PDF (para impresión)
   pdf:
     documentclass: book          # Clase LaTeX: libro. Puedes usar "scrreport" (usa arabigo en la numeración inicial) o "book" (usa romanos en la paginación inicial)
     papersize: letter            # Tamaño de papel: carta
-    
+    prefer-html: true      # <--- Lo que activamos para los mapas
     # MOTOR PDF MEJORADO - DEL OTRO YAML (xelatex puede manejar mejor caracteres especiales)
     # PRUEBA CON: lualatex (actual) o xelatex (alternativa)
     pdf-engine: lualatex         # o xelatex para probar si hay problemas
@@ -202,6 +231,8 @@ format:
     linestretch: 1.25            # Espaciado entre líneas
     toc: true                    # Tabla de contenidos en PDF
     toc-depth: 3                 # Profundidad del TOC en PDF
+    lof: true  # <--- Fuerza la Lista de Figuras
+    lot: true  # <--- Fuerza la Lista de Tablas    
     #number-sections: true        # Numerar secciones en PDF
     colorlinks: true             # Enlaces en color (no cajas)
     fig-cap-location: bottom     # Ubicación de leyendas de figuras: abajo

@@ -24,11 +24,59 @@ Utiliza las pestañas superiores en los bloques de código para cambiar entre **
 
 Para seguir este curso, se proveen guías de instalación de:
 - Docker Desktop (para el entorno unificado).
-- Editor de código VS Code.
+- Editor de código VSCode.
 - QGIS
 - ArcGIS Pro
 - Conocimientos básicos de Sistemas de Información Geográfica (SIG) y manejo de datos vectoriales/raster.
 
-## Licencia {.unnumbered}
+## Licencia y citación del material {.unnumbered #sec-licencia}
 
-Este material es de uso académico para la Universidad Nacional de Colombia. Está pendiente la definición de la licencia (...).
+### Licencia de uso
+
+Este material de curso se distribuye bajo una licencia **Creative Commons Atribución-NoComercial 4.0 Internacional (CC BY-NC 4.0)**. 
+
+::: {.callout-note}
+#### Lo que esto significa para el estudiante:
+Bajo los principios de **Open Science**, usted es libre de:
+1. **Compartir**: Copiar y redistribuir el material en cualquier medio o formato.
+2. **Adaptar**: Remezclar, transformar y construir sobre el material para fines académicos e investigativos.
+
+**Bajo las siguientes condiciones:**
+* **Atribución**: Debe dar crédito de manera adecuada, brindar un enlace a la licencia e indicar si se han realizado cambios.
+* **No comercial**: No puede hacer uso del material con fines comerciales o de lucro.
+:::
+
+---
+
+### Cómo citar este material
+
+Si utiliza este código, las guías o los datos en sus propios proyectos o investigaciones, por favor incluya las siguientes referencias:
+
+#### Referencia en formato APA (7ma edición)
+> Rodríguez-Avellaneda, A. H. (2026). *Programación en SIG: R, Python y Julia* [Material de curso]. Maestría en Geomática, Universidad Nacional de Colombia. Recuperado de https://github.com/alexyshr/ProgramacionSIG2026
+
+#### Referencia en formato BibTeX (Para LaTeX/Zotero)
+```bibtex
+@misc{rodriguez2026sig,
+  author = {Rodriguez-Avellaneda, Alexys H.},
+  title = {Programación en SIG: R, Python y Julia},
+  year = {2026},
+  howpublished = {Material de curso, Maestría en Geomática},
+  publisher = {Universidad Nacional de Colombia},
+  url = {[https://github.com/alexyshr/ProgramacionSIG2026](https://github.com/alexyshr/ProgramacionSIG2026)},
+  note = {Licencia CC BY-NC 4.0}
+}
+```
+
+## Contacto y colaboración {.unnumbered #sec-contacto}
+
+Este documento es una obra en construcción permanente en el marco de la ciencia abierta. Si encuentra errores, omisiones o desea proponer mejoras técnicas en los flujos de **R**, **Python** o **Julia**, puede colaborar de las siguientes formas:
+
+1.  **Abrir un Issue**: Para reportar errores en el código o en la redacción.
+2.  **Enviar un Pull Request**: Si desea proponer una corrección directa o una nueva funcionalidad.
+
+
+::: {.callout-tip}
+### Reconocimiento a herramientas de IA
+Gran parte de la orquestación técnica de este entorno (especialmente la resolución de conflictos de librerías en **Docker** y la creación de funciones puente como `j_eval`) ha sido refinada con el apoyo de herramientas de Inteligencia Artificial, bajo la supervisión y validación del autor principal.
+:::

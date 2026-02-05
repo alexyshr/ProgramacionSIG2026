@@ -1,9 +1,10 @@
-# Temás Técnicos sobre Linux
+# Temas Técnicos sobre Linux
 
 ## Comandos adicionales antes de trabajar con los contenedores
 
+Ver @sec-preflight.
 
-## Comandos de Terminal (Sistema Operativo) {#sec-comandos-so}
+## Comandos comúnes de terminal {#sec-comandos-so}
 
 Al trabajar dentro de un contenedor Docker, la terminal es su línea directa con el sistema operativo (Ubuntu/Debian). Estos comandos le permitirán verificar que los motores geoespaciales y las librerías de sistema están correctamente instalados.
 
@@ -18,12 +19,12 @@ Al trabajar dentro de un contenedor Docker, la terminal es su línea directa con
 | `which r` / `which julia` | Ruta del ejecutable | Localizar dónde están instalados los lenguajes para configurar el Path. |
 | `fc-list \| grep -i "Symbola"` | Buscar fuentes del sistema | Localizar la ruta exacta de fuentes necesarias para emojis y símbolos en el PDF. |
 
-## Verificación de Librerías Geoespaciales
+## Verificación de librerías geoespaciales
 El comando `dpkg -l | grep -E "libpng|libgdal|libproj|libgeos"` es su principal herramienta de diagnóstico. Si al ejecutarlo no obtiene resultados, las funciones de mapeo en R (`sf`), Python (`geopandas`) y Julia (`ArchGDAL`) fallarán, ya que todas dependen de estos binarios del sistema.
 
 ::: {.callout-note}
 ### Tip de Productividad
-En la terminal de VS Code, puede usar la tecla **Tab** para autocompletar nombres de archivos o comandos, y las **flechas arriba/abajo** para navegar por el historial de comandos ejecutados.
+En la terminal de VSCode, puede usar la tecla **Tab** para autocompletar nombres de archivos o comandos, y las **flechas arriba/abajo** para navegar por el historial de comandos ejecutados.
 :::
 
 ### ¿Cómo leer la salida de `dpkg`?
@@ -35,11 +36,11 @@ Si ve algo diferente a `ii`, el paquete tiene problemas de instalación.
 
 ---
 
-## La Cirugía de Librerías: El "Cambiazo" de OpenSSL {#sec-openssl-surgery}
+## La cirugía de librerías: el "cambiazo" de OpenSSL {#sec-openssl-surgery}
 
 Al trabajar con contenedores de última generación, a veces nos encontramos con un choque de versiones entre lo que el sistema operativo ofrece y lo que los lenguajes de programación esperan. En nuestro caso, realizamos una "cirugía" técnica utilizando enlaces simbólicos (`ln -sf`).
 
-### 1. El Conflicto: ¿3.0.x o 3.3.x?
+### El conflicto: ¿3.0.x o 3.3.x?
 
 La respuesta corta es: **Físicamente tiene instalada la versión 3.0.x, pero le mentimos al software diciéndole que es la 3.3.x.**
 
@@ -49,7 +50,7 @@ La respuesta corta es: **Físicamente tiene instalada la versión 3.0.x, pero le
 Cuando Julia intenta arrancar, busca una "etiqueta" interna llamada `OPENSSL_3.3.0`. Al no encontrarla en la librería de Ubuntu, el sistema lanza un error y bloquea la carga de mapas.
 
 
-### 2. La Solución: ¿Qué hace exactamente `ln -sf`?
+### La solución: ¿qué hace exactamente `ln -sf`?
 
 Imagine que Julia es un guardia de seguridad que busca una llave maestra etiquetada como **"Llave 3.3"**. Al revisar la caja fuerte (el sistema), solo ve la **"Llave 3.0"** y se niega a abrir. Lo que hicimos fue un "cambiazo" estratégico.
 
@@ -63,7 +64,7 @@ find /root/.julia/artifacts -name "libssl.so*" -exec ln -sf /usr/lib/x86_64-linu
 2.  **`-exec ln -sf ... {}`**: Por cada archivo encontrado, borra el original (la `-f` de *force*) y crea un **enlace simbólico** (la `-s` de *symbolic*).
 3.  **El Destino**: El enlace apunta directamente a la librería real de Ubuntu (`/usr/lib/.../libssl.so.3`).
 
-### 3. ¿Por qué funciona si las versiones son distintas?
+### ¿por qué funciona si las versiones son distintas?
 
 Funciona gracias a que **OpenSSL 3** mantiene algo llamado **compatibilidad binaria** entre sus versiones menores. Las funciones internas se llaman exactamente igual; lo único que cambió fue el "nombre del archivo" que Julia buscaba. 
 
@@ -75,3 +76,21 @@ Sin esta cirugía, paquetes como `ArchGDAL` en Julia no podrían cargar los cont
 :::
 
 
+### La "factura" de la cirugía: el adiós a `JuliaCall` {#sec-openssl-side-effects}
+
+Como en toda operación de emergencia, el "cambiazo" de librerías tuvo un efecto secundario importante: la ruptura definitiva de la compatibilidad con **`JuliaCall`**, el puente más común entre R y Julia.
+
+* **El Conflicto**: `JuliaCall` intenta embeber a Julia directamente dentro del proceso de R (comparten la misma memoria). Al detectar que las librerías de OpenSSL han sido redirigidas mediante enlaces simbólicos, el proceso de R entra en un conflicto de seguridad y colapsa inmediatamente (*Segmentation Fault*), impidiendo cualquier comunicación.
+* **La Solución**: Para no renunciar a la integración de ambos lenguajes, cambiamos de estrategia y adoptamos **`JuliaConnectoR`**. A diferencia del método anterior, este paquete trata a Julia como un servicio independiente que se comunica mediante *sockets*. Esto lo hace inmune al conflicto de OpenSSL, ya que cada lenguaje corre en su propia parcela de memoria.
+
+### El nacimiento de `j_eval` y `j_plot`
+
+Para que este cambio de arquitectura fuera invisible para el usuario final, se desarrollaron dos funciones "envolventes" (*wrappers*) que automatizan la traducción entre lenguajes:
+
+1.  **`j_eval()`**: Toma comandos escritos en R, los envía al motor de Julia de forma segura y captura el resultado (numérico o textual) para devolverlo a la consola de R. Es el cerebro detrás de nuestros benchmarks.
+2.  **`j_plot()`**: Resuelve el problema del renderizado. Julia genera la visualización geoespacial "tras bambalinas", y esta función captura la salida gráfica para insertarla automáticamente en el reporte de Quarto.
+
+::: {.callout-tip}
+#### Conclusión Técnica
+Gracias a esta combinación estratégica (**Cirugía OpenSSL** + **JuliaConnectoR** + **Funciones j_**), logramos lo que parecía imposible en un entorno Docker restrictivo: un ecosistema donde **R, Python y Julia conviven en paz**, permitiéndonos procesar datos masivos sin colapsos de memoria ni errores de librerías.
+:::

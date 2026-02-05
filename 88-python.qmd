@@ -1,6 +1,6 @@
 # Adicionales Sobre Python
 
-## Versiones Instaladas del Software
+## Versiones instaladas del software
 
 Para verificar las versiones instaladas, puede ejecutar `pip3 list` en la terminal. Las versiones instaladas deben coincidir con la siguiente tabla:
 

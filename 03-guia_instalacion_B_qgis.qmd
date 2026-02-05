@@ -76,7 +76,7 @@ Debe modificar el archivo del plugin para usar el espacio de nombres de OSGeo:
 Para el uso intensivo de R y Julia, se recomienda la **Opción A (Docker)** [@docker2025] ya que viene con las librerías espaciales pre-configuradas, evitando errores de vinculación de DLLs comunes en instalaciones nativas de Windows.
 :::
 
-## Opción B.2: QGIS + GEE using Pixi {#sec-qgis-gee-pixi}
+## Opción B.2: QGIS + GEE usando Pixi {#sec-qgis-gee-pixi}
 
 Antes de comenzar, es indispensable contar con una cuenta de **Google Cloud** habilitada para **Google Earth Engine (GEE)**. Puede dar de alta su cuenta en [earthengine.google.com](https://earthengine.google.com/). 
 

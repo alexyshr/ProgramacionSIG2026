@@ -2,18 +2,18 @@
 
 ## Atajos 
 
-### La Paleta de Comandos VSCode {#sec-command-palette}
+### La paleta de comandos VSCode {#sec-command-palette}
 
-La mayoría de las funciones avanzadas de VS Code no tienen un botón visible. Se acceden mediante la **Paleta de Comandos** presionando `Ctrl + Shift + P`. A continuación, los comandos más utilizados en este curso:
+La mayoría de las funciones avanzadas de VSCode no tienen un botón visible. Se acceden mediante la **Paleta de Comandos** presionando `Ctrl + Shift + P`. A continuación, los comandos más utilizados en este curso:
 
 | Comando (Command Palette) | Propósito | ¿Cuándo usarlo? |
 | :--- | :--- | :--- |
-| **`Developer: Reload Window`** | Reinicia la interfaz de VS Code sin cerrar el contenedor. | Cuando una extensión (como la de R o Julia) deja de responder. |
+| **`Developer: Reload Window`** | Reinicia la interfaz de VSCode sin cerrar el contenedor. | Cuando una extensión (como la de R o Julia) deja de responder. |
 | **`Dev Containers: Rebuild Container`** | Reconstruye la imagen desde el Dockerfile. | Cuando se realizan cambios en la configuración del entorno. |
 | **`Quarto: Preview`** | Abre una ventana lateral con la previsualización del documento. | Para ver los cambios en el `.qmd` en tiempo real. |
 | **`R: Create R terminal`** | Fuerza la apertura de una nueva consola de R vinculada. | Si el prompt `>` no aparece automáticamente. |
 | **`Julia: Start REPL`** | Inicia la consola interactiva de Julia. | Al abrir el contenedor por primera vez para ejecutar código Julia. |
-| **`Python: Select Interpreter`** | Permite elegir la versión de Python del contenedor. | Si VS Code no detecta automáticamente `/usr/bin/python3`. |
+| **`Python: Select Interpreter`** | Permite elegir la versión de Python del contenedor. | Si VSCode no detecta automáticamente `/usr/bin/python3`. |
 | **`PostgreSQL: New Query`** | Abre un editor SQL en blanco. | Para realizar consultas a la base de datos espacial. |
 | **`Git: Pull` / `Git: Push`** | Sincroniza cambios con GitHub. | Para actualizar el repositorio de la clase o subir tareas. |
 
@@ -22,14 +22,15 @@ La mayoría de las funciones avanzadas de VS Code no tienen un botón visible. S
 Si notas que el autocompletado desaparece o que los gráficos no cargan en **httpgd**, el primer paso siempre es ejecutar **`Developer: Reload Window`**. Esto refresca todas las conexiones de las extensiones con el contenedor sin interrumpir los procesos que Docker está ejecutando de fondo.
 :::
 
-### Atajos de Teclado Rápidos VSCode
+### Atajos de teclado rápidos VSCode
 
 Además de la paleta, memorice estos tres para su flujo diario:
 * **`Ctrl + Shift + ` ` `** (acento grave): Abre una nueva Terminal.
+* **`Ctrl + J`**: Mostrar la terminal/consola existente.
 * **`Ctrl + Enter`**: Envía la línea de código actual desde el editor al REPL (R, Julia o Python).
 * **`Ctrl + Shift + V`**: Previsualiza archivos Markdown (.md) de forma rápida.
 
-### Atajos de Teclado Jupyter Notebook
+### Atajos de teclado JupyterLab (notebooks)
 
 | Acción | Atajo (Esc Mode) |
 | :--- | :--- |
@@ -40,7 +41,7 @@ Además de la paleta, memorice estos tres para su flujo diario:
 | Crear celda arriba / abajo | `A` / `B` |
 
 
-## Configuración de Extensiones en VSCode {#sec-extensiones-vscode}
+## Instalación de extensiones en VSCode {#sec-extensiones-vscode}
 
 Para que el entorno de desarrollo sea plenamente funcional, es necesario instalar un conjunto de extensiones específicas. Una vez que haya realizado el proceso de **"Attach to Running Container"**, asegúrese de que estas herramientas estén instaladas **dentro del contenedor** (busque el botón azul *Install in Dev Container* en la pestaña de extensiones).
 
@@ -59,18 +60,20 @@ Para que el entorno de desarrollo sea plenamente funcional, es necesario instala
 | | **psql** | Herramienta de consulta SQL (doublefint) | `doublefint.psql` |
 | **Publicación** | **Quarto** | Renderizado y preview de archivos `.qmd` | `quarto.quarto` |
 | **Versión** | **GitHub Repositories** | Manejo de archivos remotos sin clonar todo | `github.remotehub` |
+| **Utilidad** | **Live Server** | Servidor local con recarga automática para previsualizar HTML | `ritwickdey.liveserver` |
 
-: Extensiones de VS Code para el entorno de Geomática y Programación SIG {#tbl-extensiones}
+: Extensiones de VSCode para el entorno de Geomática y Programación SIG {#tbl-extensiones}
 
 ### Notas sobre herramientas específicas
 
-* **PostgreSQL (Chris Kolkman)**: Esta extensión le permitirá conectarse a la base de datos espacial del contenedor sin salir de VS Code. Podrá ejecutar queries SQL y visualizar tablas directamente.
+* **PostgreSQL (Chris Kolkman)**: Esta extensión le permitirá conectarse a la base de datos espacial del contenedor sin salir de VSCode. Podrá ejecutar queries SQL y visualizar tablas directamente.
 * **Jupyter Ecosystem**: Incluimos el *Jupyter Keymap* para aquellos acostumbrados a los atajos de teclado de Jupyter Notebooks. Esto facilita la transición al trabajar con kernels de Python dentro de Quarto.
-* **Sobre `psql`**: La herramienta de línea de comandos `psql` ya viene preinstalada **dentro del sistema operativo del contenedor** (PostgreSQL Client). No requiere una extensión adicional para funcionar en la terminal.
+* **Sobre `psql`**: La herramienta de línea de comandos `psql` ya viene preinstalada **dentro del sistema operativo del contenedor** (PostgreSQL Client). No requiere instalación adicional para funcionar en la terminal del contenedor. Sin embargo, la instalación de `psql` y dentro de VSCode garantiza soporte adicional, ver @sec-sinergia-psql líneas abajo.
+* **Live Server (Ritwick Dey)**: Esta extensión le permite lanzar un servidor de desarrollo local con un solo clic. Es extremadamente útil para previsualizar exportaciones de mapas interactivos (**Leaflet** u **OpenLayers**) o sitios web estáticos generados por **Quarto**. La ventaja principal es la "recarga en vivo" (*live reload*): cada vez que guarde un cambio en su archivo HTML o CSS, el navegador se actualizará automáticamente sin necesidad de recargar la página manualmente.
 
 ::: {.callout-important}
 #### Instalación Local vs. Remota
-Recuerde que extensiones como **Dev Containers** y **Docker** deben estar instaladas en su VS Code **local** (en Windows), mientras que las de análisis (R, Python, Julia, PostgreSQL) deben estar instaladas **dentro de la sesión del contenedor** para acceder a los compiladores y librerías de la imagen.
+Recuerde que extensiones como **Dev Containers** y **Docker** deben estar instaladas en su VSCode **local** (en Windows), mientras que las de análisis (R, Python, Julia, PostgreSQL) deben estar instaladas **dentro de la sesión del contenedor** para acceder a los compiladores y librerías de la imagen.
 :::
 
 
@@ -80,15 +83,47 @@ Para que el autocompletado y la documentación en tiempo real funcionen, el cont
 `install.packages("languageserver")` en su consola de R.
 :::
 
-## Verificación de Conectividad
+::: {.callout-tip}
+#### ¿Cuándo usar Live Server?
+Úselo cuando necesite probar cómo se comporta un mapa interactivo exportado fuera del entorno de **Quarto**. Simplemente haga clic derecho sobre su archivo `.html` en el explorador de **VSCode** y seleccione **"Open with Live Server"**. La opción de búsqueda en la página del curso (archivo `_site\index.html`) solo funcionará si la ejecuta dentro de **Live Server**.
+:::
+
+
+## Sinergia de las extensiones de PostgreSQL en VSCode {#sec-sinergia-psql}
+
+Contar con ambas extensiones instaladas dentro del contenedor no es redundancia, sino una estrategia para optimizar el flujo de trabajo con datos espaciales. Cada una ofrece una "capa" de interacción distinta que, al combinarse, potencia la productividad.
+
+| Extensión | Fortaleza técnica | Utilidad principal |
+|:--- |:--- |:--- |
+| **PostgreSQL (Chris Kolkman)** | Exploración de objetos | Navegar visualmente por esquemas, ver la lista de tablas y verificar columnas de **PostGIS**. |
+| **psql (doublefint)** | Ejecución de consultas | Ejecutar bloques de código SQL directamente desde scripts `.sql` con atajos de teclado rápidos. |
+
+### Ventajas de la instalación dual {#sec-ventajas-dual}
+
+* **Validación visual inmediata**: Mientras escribe una consulta compleja en el editor (usando la extensión de **doublefint**), puede consultar el panel lateral de **Chris Kolkman** para verificar nombres de columnas o tipos de datos geográficos sin tener que hacer un `SELECT *`.
+* **Soporte de sintaxis robusto**: La combinación garantiza que **VSCode** reconozca perfectamente las palabras clave de **SQL** y proporcione sugerencias automáticas (IntelliSense) precisas.
+* **Resultados en pestañas independientes**: Permite mantener los resultados de una consulta abiertos en una pestaña mientras se sigue editando el código en otra, algo fundamental cuando se comparan estadísticas de diferentes capas ráster o vectoriales.
+
+::: {.callout-note}
+### Recomendación de flujo
+1. Use el panel de **Chris Kolkman** para conectarse y "ver" qué hay en la base de datos.
+2. Escriba sus scripts de análisis espacial en archivos `.sql` y ejecútelos usando la extensión de **doublefint** para obtener una respuesta rápida en la consola.
+:::
+
+::: {.callout-tip}
+### Atajo de teclado (Shortcut)
+Para la mayoría de estas extensiones, puede resaltar una consulta SQL y presionar `Ctrl + E` (o `Cmd + E` en Mac) para ejecutarla inmediatamente y ver los resultados en una tabla formateada.
+:::
+
+## Verificación de conectividad
 
 Una vez instaladas las extensiones, verifique que su entorno esté correctamente configurado siguiendo estos puntos:
 
-* **Estado del Contenedor**: En la esquina inferior izquierda de VS Code, debe aparecer un recuadro azul con el texto: **Dev Container: contenedor_sig_unal**.
+* **Estado del Contenedor**: En la esquina inferior izquierda de VSCode, debe aparecer un recuadro azul con el texto: **Dev Container: contenedor_sig_unal**.
 * **Activación de Kernels**: Al abrir un archivo `.qmd`, en la esquina superior derecha debe poder seleccionar el kernel deseado (R, Python 3 o Julia).
 * **Terminal Unificada**: Al abrir una nueva terminal (`Ctrl + Shift + ` ` `), la línea de comandos debe estar identificada como `rstudio@contenedor_sig_unal:/home/rstudio/work$`.
 
 ::: {.callout-tip}
 ### Sincronización Automática
-Recuerde que cualquier cambio que realice en la configuración de estas extensiones mientras esté conectado al contenedor se guardará en su perfil local de VS Code, facilitando las conexiones futuras.
+Recuerde que cualquier cambio que realice en la configuración de estas extensiones mientras esté conectado al contenedor se guardará en su perfil local de VSCode, facilitando las conexiones futuras.
 :::

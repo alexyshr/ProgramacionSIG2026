@@ -1,4 +1,4 @@
-# Benchmark de Procesamiento Geoespacial
+# Evaluación Comparativa de Procesamiento Geoespacial
 
 
 ## Introducción
@@ -175,7 +175,7 @@ writeLines(s2_path, "s2_shared_path.txt")
 ```
 
 
-## Metodología del Benchmark
+## Metodología de la evaluación comparativa (benchmarking)
 
 Este experimento evalúa el rendimiento de cuatro motores geoespaciales ampliamente utilizados —`terra` (**R**), `stars` (**R**), `rasterio` (**Python**) y `Rasters.jl` (**Julia**)— frente a una operación numéricamente simple pero computacionalmente exigente sobre datos raster de gran tamaño.
 
@@ -253,7 +253,7 @@ Cada motor está optimizado para un tipo distinto de análisis. `terra` y `raste
 
 ---
 
-### Limitaciones inevitables del benchmark
+### Limitaciones inevitables del benchmarking
 
 Este benchmark **no mide qué lenguaje es “más rápido”**, sino cómo funciona **todo el conjunto de herramientas** que usa cada uno (librerías, forma de leer datos y manera de calcular).
 
@@ -268,9 +268,6 @@ Por eso, estos resultados deben interpretarse así:
 
 > *Miden el rendimiento para una tarea específica (leer un raster y calcular una media),  
 > No un ranking general de lenguajes de programación.*
-
-
----
 
 ### Interpretación del benchmark
 
@@ -865,7 +862,7 @@ gc()
 :::
 
 
-## Resultados Finales
+## Resultados finales
 
 A continuación, se presenta la comparativa de rendimiento para procesar la Banda 4 (Red) de 10m desde el archivo comprimido original.
 
@@ -974,7 +971,7 @@ No es una solución espacial por sí misma. El pipeline composable existe, pero 
 Aunque puede trabajar con `proxy = TRUE`, `stars` **no implementa un pipeline composable tipo tidyverse**, ni un DAG diferido completo. Las operaciones tienden a materializar datos relativamente pronto y no se integran con `dplyr/dbplyr` para optimización global del flujo.
 
 
-## Más allá del benchmark: optimización y virtualización de datos geoespaciales
+## Más allá del benchmarking: optimización y virtualización de datos geoespaciales
 
 Este benchmark evalúa un caso simple y controlado, pero **los proyectos reales con grandes volúmenes de datos geoespaciales** rara vez dependen de un solo archivo raster leído de forma local. Hoy en día existen múltiples estrategias para **optimizar el rendimiento**, muchas de las cuales se basan en **virtualización del acceso a datos** y **formatos eficientes**.
 
@@ -1017,7 +1014,7 @@ Este ejercicio muestra los **costos mínimos inevitables** de leer, abstraer y r
 En resumen:  
 > *Cuando los datos crecen, la arquitectura y el formato importan tanto o más que el lenguaje.*
 
-## 🏁 Desafío de Laboratorio: Primer Día
+## 🏁 Desafío de laboratorio: primer día
 
 Para cerrar esta sesión del **“Duelo de Titanes”**, deberán resolver el siguiente desafío práctico.  
 Pueden apoyarse en herramientas de IA para investigar, pero recuerden:
@@ -1028,7 +1025,7 @@ Este laboratorio incluye ejecución real de código en **distintos entornos**.
 
 ---
 
-### 🛠️ Instrucciones de Entrega
+### 🛠️ Instrucciones de entrega
 
 1. Creen un nuevo repositorio en su **GitHub personal** llamado `taller1-sig`.
 2. Todas las respuestas escritas deben estar en un archivo `respuestas.qmd`.
@@ -1041,7 +1038,7 @@ Este laboratorio incluye ejecución real de código en **distintos entornos**.
 
 ---
 
-### ⚙️ Parte A — Ejecución en JupyterLab (Notebooks)
+### ⚙️ Parte A — Ejecución en JupyterLab (notebooks)
 
 Ejecuten los **cuatro procesos del benchmark** desde **JupyterLab**, usando el kernel adecuado para cada lenguaje.
 
@@ -1069,9 +1066,9 @@ Cada notebook debe:
 
 ---
 
-### 🖥️ Parte B — Ejecución desde VS Code (Terminal Integrada)
+### 🖥️ Parte B — Ejecución desde VSCode (terminal integrada)
 
-Ahora repitan el benchmark **fuera de Jupyter**, usando la terminal integrada de **VS Code**.
+Ahora repitan el benchmark **fuera de Jupyter**, usando la terminal integrada de **VSCode**.
 
 #### 📄 Scripts obligatorios
 
@@ -1093,7 +1090,7 @@ Cada script debe:
 
 #### ▶️ Ejecución esperada
 
-Desde la terminal de VS Code:
+Desde la terminal de VSCode:
 
 ```bash
 Rscript benchmark_terra.R
@@ -1108,9 +1105,9 @@ julia benchmark_rasters.jl
 
 ---
 
-### 🪟 Parte C — Ejecución desde Windows Terminal (PowerShell)
+### 🪟 Parte C — Ejecución desde el Termina de Windows (PowerShell)
 
-Finalmente, ejecuten los procesos **sin usar VS Code ni Jupyter**, directamente desde **Windows Terminal (PowerShell)**, trabajando con Docker.
+Finalmente, ejecuten los procesos **sin usar VSCode ni Jupyter**, directamente desde **Windows Terminal (PowerShell)**, trabajando con Docker.
 
 Pueden usar **una o ambas opciones**.
 
@@ -1145,17 +1142,17 @@ docker exec contenedor_sig_unal julia benchmark_rasters.jl
 - Indiquen en `respuestas.qmd`:
   - Qué opción usaron
   - Los tiempos obtenidos
-  - Si notaron diferencias frente a JupyterLab o VS Code
+  - Si notaron diferencias frente a JupyterLab o VSCode
 
 ---
 
-### ❓ Preguntas de Análisis
+### ❓ Preguntas de análisis
 
 #### 1. 📍 Entorno de ejecución  
 ¿Notaron diferencias de tiempo entre:
 
 - JupyterLab  
-- VS Code (terminal integrada)  
+- VSCode (terminal integrada)  
 - Windows Terminal (PowerShell)
 
 Den **una razón técnica posible** (overhead del kernel, entorno, proceso, etc.).
@@ -1166,9 +1163,7 @@ Den **una razón técnica posible** (overhead del kernel, entorno, proceso, etc.
 ¿En qué motor creen que el **costo de las abstracciones** es más visible?  
 Relacionen su respuesta con los tiempos observados.
 
----
-
-#### 3. 🔥 Julia y el calentamiento  
+#### 3. 🔥 Julia y el costo de compilación (Warm-up)  
 ¿El efecto del *warm-up* de Julia se notó más en algún entorno específico?  
 Expliquen brevemente por qué.
 
@@ -1189,7 +1184,7 @@ Justifiquen en **máximo 5 líneas**.
 > lenguaje, librerías, entorno y forma de ejecución.
 
 
-## Limpieza de Recursos
+## Limpieza de recursos
 
 ::: {.content-visible when-format="html"}
 ::: {.callout-tip collapse="true" icon="false"}

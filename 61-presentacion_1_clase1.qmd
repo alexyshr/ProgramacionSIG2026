@@ -11,7 +11,7 @@ format:
     center: true
 ---
 
-## Clase de Hoy: Instalación y uso básido del Software
+## Clase 1: Instalación y uso básico del software
 
 
 - 1. Docker Desktop
@@ -27,7 +27,7 @@ format:
 ---
 
 
-## Contenido - Syllabus actual
+## Syllabus anterior - Contenido
 
 - 1. Principios de Programación.
 - 2. Fundamentos de Python.
@@ -41,7 +41,7 @@ format:
 
 ---
 
-## Contenido - Estructura
+## Syllabus anterior - Estructura
 
 - 1. Exposiciones del Profesor.
     - Teoría.
@@ -62,7 +62,7 @@ format:
 
 ---
 
-## Enfoque Open Science
+## Curso: Enfoque Open Science
 
 - Material presentado por profesor
     - Diapositivas
@@ -75,7 +75,7 @@ format:
 
 ---
 
-## Seminario **LatinGeo** al final del curso
+## Seminario **LatinGeo**
 
 
 - Organizado por GeoCorp y UNAL.
@@ -105,7 +105,7 @@ format:
 
 ---
 
-## Paquetes o comandos faltantes en Dockerfile
+<!-- ## Paquetes o comandos faltantes en Dockerfile
 
 - Opcion B: QGIS OSGeo4W  y QGIS para correr el plugin GEE (archivo 03-guia_instalacion_B_qgis.qmd)
 - Actualizar código en la guía 02-A (usuario y clave y poner {} a todos menos a Julia)
@@ -113,4 +113,4 @@ format:
 - Actualizar 04-arcgis (está incompleto)
 - Guía B (arreglar nivel de subtítulos)
 - Semana 3 y 4: Proyecciones con R (Sillabus)
-- BD PostGIS (5 y 6)
+- BD PostGIS (5 y 6) -->

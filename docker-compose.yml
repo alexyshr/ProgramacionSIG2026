@@ -16,7 +16,7 @@ services:
       - LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libcurl.so.4:/usr/lib/x86_64-linux-gnu/libstdc++.so.6
       - GKSwstype=100
     ports:
-      # Forzamos IPv4 para que VS Code no se pierda en el limbo del [::1]
+      # Forzamos IPv4 para que VSCode no se pierda en el limbo del [::1]
       # JUPYTER: El 8889 de tu PC va al 8888 del contenedor
       - "127.0.0.1:8889:8888" # <----- cambiado 8889 #Para programar en Python/Notebooks localhost:8889
       # R VISOR (httpgd): El 8788 de tu PC va al 8787 del contenedor 

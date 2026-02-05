@@ -1,6 +1,6 @@
-# Temas Técnicos sobre Windows
+# Temas técnicos sobre Windows
 
-## Herramientas de admon de Windows
+## Herramientas de administración
 
 | Acceso Directo | Parámetro / Comando | Descripción |
 |:--- |:--- |:--- |
@@ -26,7 +26,7 @@
 
 * Procesos de **WSL2** (Windows Subsystem for Linux 2): Docker y Vmmem
 
-## Comandos de Windows (PowerShell/CMD)
+## Comandos (PowerShell)
 
 * **Ver uso de RAM:** `Get-Process | Sort-Object WorkingSet -Descending | Select-Object -First 10`
 * **Ver estado de WSL:** `wsl --list --verbose`

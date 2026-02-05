@@ -4,7 +4,7 @@ Este documento constituye el material de apoyo principal para el curso de **Prog
 
 ## Filosofía del curso: El enfoque "Políglota" {.unnumbered}
 
-A diferencia de los cursos tradicionales centrados exclusivamente en un software o un solo lenguaje, este curso adopta una visión inspirada en el trabajo de Edzer Pebesma y Roger Bivand en *Spatial Data Science*. 
+A diferencia de los cursos tradicionales centrados exclusivamente en un software o un solo lenguaje, este curso adopta una visión inspirada en el trabajo de Edzer Pebesma y Roger Bivand en *Spatial Data Science* [@sdsrp; @sds].
 
 Nuestro enfoque es **Python-céntrico**, reconociendo su dominio en la industria y la inteligencia artificial, pero integramos **R** y **Julia** como aliados estratégicos:
 
@@ -19,6 +19,7 @@ El objetivo no es que el estudiante sea un experto programador en los tres, sino
 ## Datos de Colombia como eje central {.unnumbered}
 
 La teoría es universal, pero la práctica es local. Todos los ejemplos y ejercicios de este curso están diseñados utilizando datos reales del contexto colombiano:
+
 - Capas vectoriales del **IGAC** y límites administrativos del **DANE**.
 - Modelos Digitales de Elevación y productos satelitales sobre la geografía nacional.
 - Sistemas de Referencia de Coordenadas basados en **MAGNA-SIRGAS**.
@@ -29,18 +30,18 @@ Para facilitar el aprendizaje comparado, esta guía utiliza un sistema de pesta�
 
 ::: {.panel-tabset}
 
-### Python (Principal) {.unnumbered}
+### Python (principal) {-}
 Explicación de la implementación en Python usando librerías como `geopandas`, `rasterio` o `shapely`.
 
-### R (Alternativa) {.unnumbered}
+### R (alternativa) {-}
 Equivalente funcional utilizando `sf`, `terra` o `stars`.
 
-### Julia (Alto Rendimiento) {.unnumbered}
+### Julia (alto rendimiento) {-}
 Implementación moderna usando `ArchGDAL.jl`, `GeomStats.jl` o `Rasters.jl`.
 
 :::
 
 ## Reproducibilidad {.unnumbered}
 
-Siguiendo los estándares de la ciencia abierta, todo el entorno de este curso está pre-configurado en contenedores **Docker**. Esto garantiza que el código que funciona en el computador del profesor, funcionará exactamente igual en el del estudiante, eliminando el "infierno de las dependencias" de instalación.
+Siguiendo los estándares de la ciencia abierta, todo el entorno de este curso está preconfigurado en contenedores **Docker**. Esto garantiza que el código que funciona en el computador del profesor funcionará exactamente igual en el del estudiante, eliminando el "infierno de las dependencias" de instalación.
 
