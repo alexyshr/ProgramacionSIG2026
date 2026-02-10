@@ -1,0 +1,16 @@
+*********************************************************
+Archivo: sig_unal_completo.zip
+
+1) Descomprima sig_unal_completo.zip
+2) Después de descomprimir 
+	cambiar la extensión:
+	sig_unal_completo.txt por sig_unal_completo.zip
+3) Descomprima sig_unal_completo.zip
+4) Quedan dos archivos:
+	- sig_unal_completo.tar
+	- docker-compose.yml
+
+Link:
+https://drive.google.com/file/d/1J7ssf72-F5EwjoekkexwKUgD1DxyA1xk/view?usp=drive_link
+
+*********************************************************
