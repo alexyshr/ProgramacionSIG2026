@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -141,14 +175,20 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./02.a-guia_instalacion_A_docker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción A: Instalación vía Paquete Preconfigurado (Docker)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./03-guia_instalacion_B_qgis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción B: QGIS y PyQGIS</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción B: QGIS y PyQGIS</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04-guia_instalacion_C_ArcGIS.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</span></span></a>
   </div>
 </li>
       </ul>
@@ -165,13 +205,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-introduccion_python_r_julia.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Fundamentos: Python, R y Julia</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introducción</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./06-estructuras_datos_geo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Estructuras de Datos Geoespaciales</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Estructuras de Datos Geoespaciales</span></span></a>
   </div>
 </li>
       </ul>
@@ -188,7 +228,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./41-practica_1_benchmark_raster.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Evaluación Comparativa de Procesamiento Geoespacial</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Evaluación Comparativa de Procesamiento Geoespacial</span></span></a>
   </div>
 </li>
       </ul>
@@ -205,13 +245,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./61-presentacion_1_clase1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Temas por Charlar</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Temas por Charlar</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./62-presentacion_2_benchmark.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Benchmark geoespacial: cómo leer los resultados</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Benchmark geoespacial: cómo leer los resultados</span></span></a>
   </div>
 </li>
       </ul>
@@ -571,6 +611,18 @@ Tabla&nbsp;E.1: Extensiones de VSCode para el entorno de Geomática y Programaci
 <td style="text-align: left;">Servidor local con recarga automática para previsualizar HTML</td>
 <td style="text-align: left;"><code>ritwickdey.liveserver</code></td>
 </tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><strong>Code Spell Checker</strong></td>
+<td style="text-align: left;">Corrector ortográfico para código y comentarios</td>
+<td style="text-align: left;"><code>streetsidesoftware.code-spell-checker</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><strong>Spanish - Code Spell Checker</strong></td>
+<td style="text-align: left;">Diccionario en español para el corrector ortográfico</td>
+<td style="text-align: left;"><code>streetsidesoftware.code-spell-checker-spanish</code></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -583,6 +635,7 @@ Tabla&nbsp;E.1: Extensiones de VSCode para el entorno de Geomática y Programaci
 <li><strong>Jupyter Ecosystem</strong>: Incluimos el <em>Jupyter Keymap</em> para aquellos acostumbrados a los atajos de teclado de Jupyter Notebooks. Esto facilita la transición al trabajar con kernels de Python dentro de Quarto.</li>
 <li><strong>Sobre <code>psql</code></strong>: La herramienta de línea de comandos <code>psql</code> ya viene preinstalada <strong>dentro del sistema operativo del contenedor</strong> (PostgreSQL Client). No requiere instalación adicional para funcionar en la terminal del contenedor. Sin embargo, la instalación de <code>psql</code> y dentro de VSCode garantiza soporte adicional, ver <a href="#sec-sinergia-psql" class="quarto-xref"><span>Sección E.3</span></a> líneas abajo.</li>
 <li><strong>Live Server (Ritwick Dey)</strong>: Esta extensión le permite lanzar un servidor de desarrollo local con un solo clic. Es extremadamente útil para previsualizar exportaciones de mapas interactivos (<strong>Leaflet</strong> u <strong>OpenLayers</strong>) o sitios web estáticos generados por <strong>Quarto</strong>. La ventaja principal es la “recarga en vivo” (<em>live reload</em>): cada vez que guarde un cambio en su archivo HTML o CSS, el navegador se actualizará automáticamente sin necesidad de recargar la página manualmente.</li>
+<li><strong>Code Spell Checker</strong>: Esta extensión es esencial para evitar errores tipográficos en el código y, sobre todo, en la documentación de archivos <code>.qmd</code>. Para que reconozca términos en nuestro idioma, se recomienda instalar también el paquete <strong>Spanish - Code Spell Checker</strong> (<code>streetsidesoftware.code-spell-checker-spanish</code>).</li>
 </ul>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -623,6 +676,33 @@ Soporte del Lenguaje en R
 <p>Úselo cuando necesite probar cómo se comporta un mapa interactivo exportado fuera del entorno de <strong>Quarto</strong>. Simplemente haga clic derecho sobre su archivo <code>.html</code> en el explorador de <strong>VSCode</strong> y seleccione <strong>“Open with Live Server”</strong>. La opción de búsqueda en la página del curso (archivo <code>_site\index.html</code>) solo funcionará si la ejecuta dentro de <strong>Live Server</strong>.</p>
 </div>
 </div>
+<section id="configuración-del-corrector-ortográfico" class="level4">
+<h4 class="anchored" data-anchor-id="configuración-del-corrector-ortográfico">Configuración del corrector ortográfico</h4>
+<p>Para habilitar corrección ortográfica en idioma español:</p>
+<ul>
+<li>Active el idioma: Presione <code>Ctrl + Shift + P</code>, escriba “Spell”, seleccione <code>Enable Spanish Spell Checker Dictionary</code> y finalmente seleccione <code>User</code> de la lista.</li>
+</ul>
+<p>Para que el corrector funcione simultáneamente con términos técnicos en inglés y redacción en español, puede añadir la siguiente configuración en su archivo <code>settings.json</code> de <strong>VSCode</strong>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"cSpell.language"</span><span class="fu">:</span> <span class="st">"en,es"</span><span class="fu">,</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"cSpell.enabled"</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"cSpell.spellCheckDelayMs"</span><span class="fu">:</span> <span class="dv">500</span><span class="fu">,</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"cSpell.diagnosticLevel"</span><span class="fu">:</span> <span class="st">"Information"</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Diccionario técnico
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A medida que trabaje con librerías como <code>geopandas</code> o <code>ArchGDAL</code>, es posible que el corrector marque estas palabras como errores. Puede agregarlas a su “Diccionario de Usuario” haciendo clic derecho sobre la palabra y seleccionando <strong>Add to User Dictionary</strong>.</p>
+</div>
+</div>
+</section>
 </section>
 </section>
 <section id="sec-sinergia-psql" class="level2" data-number="E.3">

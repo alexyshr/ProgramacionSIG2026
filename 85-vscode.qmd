@@ -61,6 +61,8 @@ Para que el entorno de desarrollo sea plenamente funcional, es necesario instala
 | **Publicación** | **Quarto** | Renderizado y preview de archivos `.qmd` | `quarto.quarto` |
 | **Versión** | **GitHub Repositories** | Manejo de archivos remotos sin clonar todo | `github.remotehub` |
 | **Utilidad** | **Live Server** | Servidor local con recarga automática para previsualizar HTML | `ritwickdey.liveserver` |
+|| **Code Spell Checker** | Corrector ortográfico para código y comentarios | `streetsidesoftware.code-spell-checker` |
+| | **Spanish - Code Spell Checker** | Diccionario en español para el corrector ortográfico | `streetsidesoftware.code-spell-checker-spanish` |
 
 : Extensiones de VSCode para el entorno de Geomática y Programación SIG {#tbl-extensiones}
 
@@ -70,6 +72,7 @@ Para que el entorno de desarrollo sea plenamente funcional, es necesario instala
 * **Jupyter Ecosystem**: Incluimos el *Jupyter Keymap* para aquellos acostumbrados a los atajos de teclado de Jupyter Notebooks. Esto facilita la transición al trabajar con kernels de Python dentro de Quarto.
 * **Sobre `psql`**: La herramienta de línea de comandos `psql` ya viene preinstalada **dentro del sistema operativo del contenedor** (PostgreSQL Client). No requiere instalación adicional para funcionar en la terminal del contenedor. Sin embargo, la instalación de `psql` y dentro de VSCode garantiza soporte adicional, ver @sec-sinergia-psql líneas abajo.
 * **Live Server (Ritwick Dey)**: Esta extensión le permite lanzar un servidor de desarrollo local con un solo clic. Es extremadamente útil para previsualizar exportaciones de mapas interactivos (**Leaflet** u **OpenLayers**) o sitios web estáticos generados por **Quarto**. La ventaja principal es la "recarga en vivo" (*live reload*): cada vez que guarde un cambio en su archivo HTML o CSS, el navegador se actualizará automáticamente sin necesidad de recargar la página manualmente.
+* **Code Spell Checker**: Esta extensión es esencial para evitar errores tipográficos en el código y, sobre todo, en la documentación de archivos `.qmd`. Para que reconozca términos en nuestro idioma, se recomienda instalar también el paquete **Spanish - Code Spell Checker** (`streetsidesoftware.code-spell-checker-spanish`).
 
 ::: {.callout-important}
 #### Instalación Local vs. Remota
@@ -88,6 +91,27 @@ Para que el autocompletado y la documentación en tiempo real funcionen, el cont
 Úselo cuando necesite probar cómo se comporta un mapa interactivo exportado fuera del entorno de **Quarto**. Simplemente haga clic derecho sobre su archivo `.html` en el explorador de **VSCode** y seleccione **"Open with Live Server"**. La opción de búsqueda en la página del curso (archivo `_site\index.html`) solo funcionará si la ejecuta dentro de **Live Server**.
 :::
 
+#### Configuración del corrector ortográfico
+
+Para habilitar corrección ortográfica en idioma español:
+
+* Active el idioma: Presione `Ctrl + Shift + P`, escriba "Spell", seleccione `Enable Spanish Spell Checker Dictionary` y finalmente seleccione `User` de la lista.
+
+Para que el corrector funcione simultáneamente con términos técnicos en inglés y redacción en español, puede añadir la siguiente configuración en su archivo `settings.json` de **VSCode**:
+
+```json
+{
+    "cSpell.language": "en,es",
+    "cSpell.enabled": true,
+    "cSpell.spellCheckDelayMs": 500,
+    "cSpell.diagnosticLevel": "Information"
+}
+```
+
+::: {.callout-tip}
+#### Diccionario técnico
+A medida que trabaje con librerías como `geopandas` o `ArchGDAL`, es posible que el corrector marque estas palabras como errores. Puede agregarlas a su "Diccionario de Usuario" haciendo clic derecho sobre la palabra y seleccionando **Add to User Dictionary**.
+:::
 
 ## Sinergia de las extensiones de PostgreSQL en VSCode {#sec-sinergia-psql}
 

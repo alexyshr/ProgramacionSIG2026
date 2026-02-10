@@ -37,6 +37,7 @@ book:
       chapters:                  # Capítulos de esta parte
         - 01-introduccion-entornos.qmd
         - 02-guia_instalacion_A_docker.qmd
+        - 02.a-guia_instalacion_A_docker.qmd
         - 03-guia_instalacion_B_qgis.qmd
         - 04-guia_instalacion_C_ArcGIS.qmd
     - part: "Fundamentos"        # Segunda parte

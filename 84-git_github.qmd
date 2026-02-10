@@ -155,7 +155,7 @@ git add .
     - `git branch -M main` (lo debes usar para cambiar a main en caso de tener múltiples ramas)
 
 
-## Autenticación segura SSH {#sec-ssh-github}
+## Autenticación segura SSH - Windows {#sec-ssh-github}
 
 La autenticación mediante SSH permite interactuar con GitHub de forma segura sin necesidad de ingresar credenciales manualmente en cada operación. Siga este procedimiento detallado para configurar su acceso.
 
@@ -266,6 +266,92 @@ Has establecido una identidad digital segura entre tu equipo y GitHub. A partir 
 
 :::
 
+
+## Autenticación segura SSH - Linux (Docker) {#sec-ssh-linux}
+
+La autenticación mediante **SSH** permite interactuar con GitHub de forma segura sin ingresar credenciales manualmente. En contenedores Docker, esto soluciona errores de validación SSL y facilita el uso de extensiones de Quarto.
+
+
+### Preparación del Entorno Global
+
+Antes de generar las llaves, configura tu identidad de Git y verifica que el contenedor tenga salida a internet.
+
+* **Configurar identidad**:
+```bash
+git config --global user.email "correo@dominio.com"
+git config --global user.name "usuario_github"
+```
+
+* **Verificar conexión**:
+```bash
+curl -I https://github.com
+```
+
+::: {.callout-warning}
+Si recibes el error * "Could not resolve host"*, revisa la configuración de red de tu contenedor.
+:::
+
+
+### Gestión de llaves SSH (Algoritmo Ed25519)
+
+Implementamos **Ed25519**, el estándar actual por su seguridad y velocidad.
+
+* **Comprobar llaves existentes**:
+```bash
+ls -la ~/.ssh
+```
+
+* **Generar nueva llave**:
+Ejecuta el comando y presiona `ENTER` en todas las solicitudes (sin contraseña).
+```bash
+ssh-keygen -t ed25519 -C "alexyshr@gmail.com"
+```
+
+::: {.callout-note}
+La **llave pública** (`id_ed25519.pub`) se registra en GitHub; la **llave privada** (`id_ed25519`) es tu firma secreta.
+:::
+
+
+### Registro de Identidad en GitHub
+
+1.  **Visualizar y copiar la llave pública**:
+```bash
+cat ~/.ssh/id_ed25519.pub
+```
+2.  **Configurar en la web**:
+    * Ve a **Settings** -> **SSH and GPG keys** en tu cuenta de GitHub.
+    * Haz clic en **New SSH key**.
+    * Título: `Docker-RStudio-Geomatica`.
+    * Pega el contenido y guarda.
+
+
+### Activación del Agente SSH
+
+Para que el sistema use tu llave automáticamente, inicia el agente y regístrala:
+
+```bash
+# Iniciar agente
+eval "$(ssh-agent -s)"
+
+# Cargar la llave privada
+ssh-add ~/.ssh/id_ed25519
+```
+
+### Verificación Final
+
+Comprueba que el túnel de comunicación funciona correctamente:
+
+```bash
+ssh -T git@github.com
+```
+
+**Resultado esperado**: 
+> `Hi usuario_github! You've successfully authenticated, but GitHub does not provide shell access.`
+
+::: {.callout-success}
+#### ¡Configuración Exitosa!
+Tu contenedor ahora es un entorno de confianza para GitHub. Comandos como `quarto add` o `git push` funcionarán de forma transparente.
+:::
 
 ## Descargar contenido (GitHub hacia carpeta local){#sec-vinculacion-clase}
 

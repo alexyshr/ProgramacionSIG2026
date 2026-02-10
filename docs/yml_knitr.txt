@@ -1,0 +1,21 @@
+---
+title: "Título del Análisis"
+author: "Nombre del Author"
+date: last-modified
+format:
+  html:
+    toc: true
+    code-fold: true
+    embed-resources: true
+    theme: cosmo
+  pdf:
+    toc: true
+    number-sections: true
+    colorlinks: true
+    papersize: letter
+engine: knitr
+execute:
+  echo: true
+  warning: false
+  message: false
+---

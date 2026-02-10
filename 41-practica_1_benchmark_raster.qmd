@@ -6,7 +6,9 @@
 * **Práctica 1**: Sentinel-2 (1GB) - R (`terra`) vs R (`stars`) vs Python (`rasterio`) vs Julia (`ArchGDAL + Raster.jl`)
 * **Autores**: Alexys Rodríguez-Avellaneda Ph.D. & herramientas IA
 
-## Función j_eval en R
+## Función j_eval y j_plot en R
+
+Usada para ejecutar código **Julia** en **R**. `j_eval` ejecuta comandos que no tengan salidas gráficas, y `j_plot` es necesaria cuándo el código Julia produce salidas gráficas.
 
 ::: {.content-visible when-format="html"}
 ::: {.callout-tip collapse="true" icon="false"}
@@ -43,6 +45,51 @@ j_eval <- function(cmd) {
   num_val <- suppressWarnings(as.numeric(val_limpio))
   return(if (!is.na(num_val)) num_val else val_limpio)
 }
+
+j_plot <- function(cmd, n = "tmp_plot.png", dpi = 300, w = 800, h = NULL, ratio = 1.6, fontsize = 12) {
+  .ensure_julia_ready()
+  if (is.null(h)) h <- round(w / ratio)
+  
+  lineas <- strsplit(cmd, "\n")[[1]]
+  buffer_bloque <- ""; en_bloque <- 0
+  
+  for (i in 1:length(lineas)) {
+    l <- lineas[i]
+    if (trimws(l) == "") next
+    buffer_bloque <- paste0(buffer_bloque, l, "\n")
+    
+    # Lógica de detección de bloques (do, function, for, etc.)
+    abrir <- grepl("\\b(do|function|for|if|begin|let|while)\\b", l) & !grepl("\\bend\\b", l)
+    cerrar <- grepl("\\bend\\b", l)
+    en_bloque <- en_bloque + abrir - cerrar
+    
+    # Solo ejecutamos si el bloque está cerrado
+    if (en_bloque <= 0) {
+      # ¿Es el último bloque? Si sí, activamos el guardado de imagen (TRUE)
+      es_ultimo <- (i == length(lineas))
+      
+      log_out <- JuliaConnectoR::juliaCall(
+        "_unal_core_executor", 
+        buffer_bloque, 
+        es_ultimo, # Solo la última ejecución guarda el PNG
+        n, dpi, as.integer(w), as.integer(h), as.integer(fontsize)
+      )
+      
+      if (nchar(log_out) > 0) cat(log_out)
+      buffer_bloque <- ""; en_bloque <- 0
+    }
+  }
+  
+  # Renderizado de la imagen en R (solo si se creó el archivo)
+  if (file.exists(n)) {
+    img <- png::readPNG(n)
+    grid::grid.newpage()
+    grid::grid.raster(img)
+    # Opcional: borrar el temporal después de leerlo para no dejar basura
+    # unlink(n) 
+  }
+}
+
 ```
 :::
 :::
@@ -79,6 +126,50 @@ j_eval <- function(cmd) {
   val_limpio <- gsub('"', '', resultado_final)
   num_val <- suppressWarnings(as.numeric(val_limpio))
   return(if (!is.na(num_val)) num_val else val_limpio)
+}
+
+j_plot <- function(cmd, n = "tmp_plot.png", dpi = 300, w = 800, h = NULL, ratio = 1.6, fontsize = 12) {
+  .ensure_julia_ready()
+  if (is.null(h)) h <- round(w / ratio)
+  
+  lineas <- strsplit(cmd, "\n")[[1]]
+  buffer_bloque <- ""; en_bloque <- 0
+  
+  for (i in 1:length(lineas)) {
+    l <- lineas[i]
+    if (trimws(l) == "") next
+    buffer_bloque <- paste0(buffer_bloque, l, "\n")
+    
+    # Lógica de detección de bloques (do, function, for, etc.)
+    abrir <- grepl("\\b(do|function|for|if|begin|let|while)\\b", l) & !grepl("\\bend\\b", l)
+    cerrar <- grepl("\\bend\\b", l)
+    en_bloque <- en_bloque + abrir - cerrar
+    
+    # Solo ejecutamos si el bloque está cerrado
+    if (en_bloque <= 0) {
+      # ¿Es el último bloque? Si sí, activamos el guardado de imagen (TRUE)
+      es_ultimo <- (i == length(lineas))
+      
+      log_out <- JuliaConnectoR::juliaCall(
+        "_unal_core_executor", 
+        buffer_bloque, 
+        es_ultimo, # Solo la última ejecución guarda el PNG
+        n, dpi, as.integer(w), as.integer(h), as.integer(fontsize)
+      )
+      
+      if (nchar(log_out) > 0) cat(log_out)
+      buffer_bloque <- ""; en_bloque <- 0
+    }
+  }
+  
+  # Renderizado de la imagen en R (solo si se creó el archivo)
+  if (file.exists(n)) {
+    img <- png::readPNG(n)
+    grid::grid.newpage()
+    grid::grid.raster(img)
+    # Opcional: borrar el temporal después de leerlo para no dejar basura
+    # unlink(n) 
+  }
 }
 ```
 

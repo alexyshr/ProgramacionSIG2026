@@ -45,6 +45,7 @@ format:
       - bottom=25mm
 ---
 ```
+
 ## Resumen de comandos Quarto
 
 `quarto render guia_instalacion.qmd --to all`
@@ -90,3 +91,55 @@ library(terra)
 ```
 :::
 
+## Instalación de Extensiones de Quarto
+
+Las extensiones permiten ampliar las funcionalidades nativas de Quarto, añadiendo nuevos formatos de salida, filtros personalizados o librerías de componentes visuales. Para que el proceso de descarga desde repositorios remotos sea exitoso y seguro, es fundamental haber completado previamente la configuración descrita en la @sec-ssh-linux.
+
+
+### El proceso de instalación
+
+Para agregar una extensión a tu proyecto, Quarto utiliza el comando `add` seguido del identificador del repositorio (usualmente `usuario/repositorio`). Este proceso descarga los archivos necesarios dentro de una carpeta local denominada `_extensions/`.
+
+#### Ejemplo práctico: Librería de iconos FontAwesome
+
+Como caso de estudio, instalaremos la extensión oficial para el uso de iconos vectoriales. Ejecuta el siguiente comando en tu terminal:
+
+```bash
+quarto add quarto-ext/fontawesome
+```
+
+::: {.callout-note}
+#### Confianza del Autor
+Al ejecutar el comando, el sistema solicitará confirmar si confías en los autores de la extensión. Escribe `Y` para permitir que Quarto gestione los archivos del filtro en tu directorio de trabajo.
+:::
+
+### Gestión de archivos del proyecto
+
+Una vez finalizada la instalación, notarás que en la raíz de tu proyecto se ha creado la siguiente estructura:
+
+```text
+mi-proyecto/
+├── _extensions/
+│   └── quarto-ext/
+│       └── fontawesome/
+└── tu-archivo.qmd
+```
+
+Es importante **no modificar manualmente** los archivos dentro de la carpeta `_extensions`, ya que Quarto los requiere para procesar el documento final durante el renderizado.
+
+
+### Aplicación en el documento
+
+Tras la instalación exitosa, puedes utilizar las nuevas funcionalidades mediante *shortcodes*. En el caso de nuestra extensión de ejemplo, ahora es posible insertar iconos de la siguiente manera:
+
+```quarto
+Para este análisis utilizaremos:
+
+* {{< fa satellite >}} Datos satelitales.
+* {{< fa location-dot color="red" >}} Puntos de control terrestre.
+```
+
+::: {.callout-tip}
+#### Actualización de extensiones
+Si en el futuro deseas actualizar una extensión instalada a su última versión, simplemente vuelve a ejecutar el mismo comando `quarto add`. El sistema detectará la versión existente y te preguntará si deseas sobrescribirla.
+:::

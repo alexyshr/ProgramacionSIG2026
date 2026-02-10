@@ -8,8 +8,8 @@ Para automatizar el soporte de gráficos y capturas sin configurar cada archivo 
 |:--- |:--- |:--- |
 | **Soporte Base** | `apt-get update && apt-get install -y fonts-symbola wget` | Fuentes para emojis y herramienta de descarga de paquetes externos. |
 | **Navegador** | `wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && apt install -y ./google-chrome-stable_current_amd64.deb` | Instala Google Chrome (Bypass de Snap). Obligatorio para capturas de mapas en Docker. |
-| **Automatización R** | `echo 'Sys.setenv(CHROMOTE_CHROME = "/usr/bin/google-chrome")' >> /usr/local/lib/R/etc/Rprofile.site` | Configura la ruta de Chrome para todo el sistema R de forma persistente. |
-| **Seguridad Root** | `echo 'options(chromote.args = c("--no-sandbox", "--disable-gpu", "--headless"))' >> /usr/local/lib/R/etc/Rprofile.site` | Habilita el modo *headless* y evita bloqueos de *sandbox* al ejecutar como root. |
+| **Automatización R** | `echo 'Sys.setenv(CHROMOTE_CHROME = "/usr/bin/google-chrome")' >> /usr/local/lib/R/etc/Rprofile.site` | Configura la ruta de Chrome para todo el sistema R de forma persistente. (si falla usa `/etc/R/Rprofile.site`)|
+| **Seguridad Root** | `echo 'options(chromote.args = c("--no-sandbox", "--disable-gpu", "--headless"))' >> /usr/local/lib/R/etc/Rprofile.site` | Habilita el modo *headless* y evita bloqueos de *sandbox* al ejecutar como root. (si falla usa `/etc/R/Rprofile.site`)|
 | **Librerías R** | `Rscript -e "install.packages('webshot2', repos='https://cloud.r-project.org/')"` | Instala el motor de captura de widgets HTML y mapas de Leaflet. |
 | **Librerías Python**| `pip3 install selenium` | Habilita la automatización de capturas para visualizaciones dinámicas de Python. |
 | **Librerías Julia** | `julia -e 'using Pkg; Pkg.add(["FileIO", "ImageIO"])'` | Soporte esencial para procesar y exportar gráficos en el ecosistema Julia. |
