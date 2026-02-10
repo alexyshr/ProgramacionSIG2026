@@ -1,0 +1,29 @@
+Ojo: Elimina todo lo que tengan!
+
+✔️ 1️⃣ Detener todos los contenedores
+docker stop $(docker ps -aq)
+
+✔️ 2️⃣ Eliminar todos los contenedores
+docker rm -f $(docker ps -aq)
+``
+✔️ 3️⃣ Eliminar todas las imágenes
+docker rmi -f $(docker images -aq)
+
+✔️ 4️⃣ Eliminar todos los volúmenes (libera MUCHO espacio)
+docker volume rm $(docker volume ls -q)
+
+✔️ 5️⃣ Eliminar redes de usuario (no borra bridge/host/none)
+docker network rm $(docker network ls -q | Select-String -NotMatch "bridge|host|none")
+✔️ 6️⃣ Eliminar caché de construcción (Build cache)
+docker builder prune -a -f
+
+💣 OPCIÓN MÁS SIMPLE (todo en un solo comando)
+Si quieres hacerlo de una sola vez y de forma agresiva:
+
+docker system prune -a --volumes -f
+Este comando borra:
+
+✔ Contenedores\ ✔ Imágenes\ ✔ Volúmenes\ ✔ Caché\ ✔ Redes no usadas\ ✔ Storage temporal
+
+🔍 Verificar cuánto espacio liberaste
+docker system df
