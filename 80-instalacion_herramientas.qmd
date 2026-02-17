@@ -1,0 +1,16 @@
+# Resumen instalación de herramientas {#sec-anexo_instalacion}
+
+## Introducción
+
+Resumen de herramientas requeridas:
+
+|Herramienta | Uso | Detalles |
+|:--|:----|:---|
+|git | - |@sec-anexo_git_github|
+|GitHub + SSH (local y contenedor) | - |@sec-cuenta_github, @sec-ssh-github, @sec-ssh-linux |
+|VSCode + Extensiones + Tinytex (local y contenedor)| - | @sec-anexo_vscode, @sec-extensiones-vscode, @sec-tinytex|
+|Docker Desktop + Preparación inicial| - | @sec-anexo_docker, @sec-preparacion_docker|
+|QGIS (OSGeo4w & PIXI + GEE) | - |@sec-instalacion_osgeo4w, @sec-instalacion_qgis_pixi  |
+|ArcGIS Pro| - | @sec-anexo_arcgispro |
+
+

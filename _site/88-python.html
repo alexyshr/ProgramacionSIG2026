@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Programación SIG: Python, R y Julia - Apéndice H — Adicionales Sobre Python</title>
+<title>Programación SIG: Python, R y Julia - Apéndice I — Adicionales Sobre Python</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -81,7 +101,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./81-infraestructura_instalada.html">Apéndices</a></li><li class="breadcrumb-item"><a href="./88-python.html"><span class="chapter-number">H</span>&nbsp; <span class="chapter-title">Adicionales Sobre Python</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./80-instalacion_herramientas.html">Apéndices</a></li><li class="breadcrumb-item"><a href="./88-python.html"><span class="chapter-number">I</span>&nbsp; <span class="chapter-title">Adicionales Sobre Python</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -136,25 +156,19 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-guia_instalacion_A_docker.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción A: Contenedor Docker (Python, R, Julia)</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./02.a-guia_instalacion_A_docker.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción A: Instalación vía Paquete Preconfigurado (Docker)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción A: Docker (Python, R, Julia)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-guia_instalacion_B_qgis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción B: QGIS y PyQGIS</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción B: QGIS y PyQGIS</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04-guia_instalacion_C_ArcGIS.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</span></span></a>
   </div>
 </li>
       </ul>
@@ -170,14 +184,32 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05-introduccion_python_r_julia.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introducción</span></span></a>
+  <a href="./05-variables_tipos_de_datos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Función j_eval y j_plot en R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06-estructuras_datos_geo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Estructuras de Datos Geoespaciales</span></span></a>
+  <a href="./06-estructuras_datos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Función j_eval y j_plot en R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-operaciones_cadenas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Función j_eval y j_plot en R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-introduccion_python_r_julia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Introducción a Python, R y Julia</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-estructuras_datos_geo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Estructuras de Datos Geoespaciales</span></span></a>
   </div>
 </li>
       </ul>
@@ -194,7 +226,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./41-practica_1_benchmark_raster.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Evaluación Comparativa de Procesamiento Geoespacial</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Evaluación Comparativa de Procesamiento Geoespacial</span></span></a>
   </div>
 </li>
       </ul>
@@ -211,13 +243,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./61-presentacion_1_clase1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Temas por Charlar</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Temas por Charlar</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./62-presentacion_2_benchmark.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Benchmark geoespacial: cómo leer los resultados</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Benchmark geoespacial: cómo leer los resultados</span></span></a>
   </div>
 </li>
       </ul>
@@ -233,68 +265,92 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./81-infraestructura_instalada.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Infraestructura Instalada</span></span></a>
+  <a href="./80-instalacion_herramientas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Resumen instalación de herramientas</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./81-uso_infraestructura_instalada.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Uso de la Infraestructura Instalada</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./82-quarto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Quarto: Orquestación y Configuración</span></span></a>
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Quarto: Orquestación y Configuración</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./83-docker_desktop.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Docker: Gestión de Contenedores e Imágenes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Docker: Gestión de Contenedores e Imágenes</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./84-git_github.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Git y GitHub: Sincronización Local-Remota</span></span></a>
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Git y GitHub: Sincronización Local-Remota</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./85-vscode.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Visual Studio Code: Extensiones e Interfaz</span></span></a>
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Visual Studio Code (VScode): Extensiones e Interfaz</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./86-windows.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Temas técnicos sobre Windows</span></span></a>
+ <span class="menu-text"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">Temas técnicos sobre Windows</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./87-linux_ubuntu.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">Temas Técnicos sobre Linux</span></span></a>
+ <span class="menu-text"><span class="chapter-number">H</span>&nbsp; <span class="chapter-title">Temas Técnicos sobre Linux</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./88-python.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">H</span>&nbsp; <span class="chapter-title">Adicionales Sobre Python</span></span></a>
+ <span class="menu-text"><span class="chapter-number">I</span>&nbsp; <span class="chapter-title">Adicionales Sobre Python</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./89-r.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">I</span>&nbsp; <span class="chapter-title">Adicionales Sobre R</span></span></a>
+ <span class="menu-text"><span class="chapter-number">J</span>&nbsp; <span class="chapter-title">Adicionales Sobre R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./90-julia.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">J</span>&nbsp; <span class="chapter-title">Adicionales Sobre Julia</span></span></a>
+ <span class="menu-text"><span class="chapter-number">K</span>&nbsp; <span class="chapter-title">Adicionales Sobre Julia</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./91-qgis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">L</span>&nbsp; <span class="chapter-title">Adicionales Sobre QGIS</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./92-arcgispro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">M</span>&nbsp; <span class="chapter-title">Adicionales sobre ArcGIS Pro</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./93-postgresql.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">N</span>&nbsp; <span class="chapter-title">Adicionales sobre ArcGIS Pro</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./98-errata.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">K</span>&nbsp; <span class="chapter-title">Errata</span></span></a>
+ <span class="menu-text"><span class="chapter-number">O</span>&nbsp; <span class="chapter-title">Errata</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -315,16 +371,17 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Tabla de Contenidos</h2>
    
   <ul>
-  <li><a href="#versiones-instaladas-del-software" id="toc-versiones-instaladas-del-software" class="nav-link active" data-scroll-target="#versiones-instaladas-del-software"><span class="header-section-number">H.1</span> Versiones instaladas del software</a></li>
+  <li><a href="#stack-instalado-de-python" id="toc-stack-instalado-de-python" class="nav-link active" data-scroll-target="#stack-instalado-de-python"><span class="header-section-number">I.1</span> Stack instalado de Python</a></li>
+  <li><a href="#versiones-instaladas-del-software" id="toc-versiones-instaladas-del-software" class="nav-link" data-scroll-target="#versiones-instaladas-del-software"><span class="header-section-number">I.2</span> Versiones instaladas del software</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./81-infraestructura_instalada.html">Apéndices</a></li><li class="breadcrumb-item"><a href="./88-python.html"><span class="chapter-number">H</span>&nbsp; <span class="chapter-title">Adicionales Sobre Python</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./80-instalacion_herramientas.html">Apéndices</a></li><li class="breadcrumb-item"><a href="./88-python.html"><span class="chapter-number">I</span>&nbsp; <span class="chapter-title">Adicionales Sobre Python</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Apéndice H — Adicionales Sobre Python</h1>
+<h1 class="title"><span id="sec-anexo_python" class="quarto-section-identifier">Apéndice I — Adicionales Sobre Python</span></h1>
 </div>
 
 
@@ -341,9 +398,131 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="versiones-instaladas-del-software" class="level2" data-number="H.1">
-<h2 data-number="H.1" class="anchored" data-anchor-id="versiones-instaladas-del-software"><span class="header-section-number">H.1</span> Versiones instaladas del software</h2>
-<p>Para verificar las versiones instaladas, puede ejecutar <code>pip3 list</code> en la terminal. Las versiones instaladas deben coincidir con la siguiente tabla:</p>
+<section id="stack-instalado-de-python" class="level2" data-number="I.1">
+<h2 data-number="I.1" class="anchored" data-anchor-id="stack-instalado-de-python"><span class="header-section-number">I.1</span> Stack instalado de Python</h2>
+<p>Para el análisis geoespacial avanzado, en los contenedores se instalaron un conjunto de librerías especializadas. El núcleo de este entorno es <strong><code>geopandas</code></strong>, cuya instalación gestiona automáticamente dependencias críticas como <strong><code>numpy</code></strong> (cálculo numérico), <strong><code>pandas</code></strong> (manipulación de datos) y <strong><code>shapely</code></strong> (operaciones geométricas). Complementariamente, se instaló <strong><code>rasterio</code></strong> para la gestión profesional de datos ráster y <strong><code>rasterstats</code></strong> para la extracción de estadísticas zonales.</p>
+<div id="tbl-python-packages" class="quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-python-packages-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;I.1: Paquetes principales de Python
+</figcaption>
+<div aria-describedby="tbl-python-packages-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Paquete</th>
+<th style="text-align: center;">Funcionalidad</th>
+<th style="text-align: center;">Sitio web</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>numpy</code></td>
+<td style="text-align: center;">Arreglos</td>
+<td style="text-align: center;"><a href="https://numpy.org/" class="uri">https://numpy.org/</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>pandas</code></td>
+<td style="text-align: center;">Tablas</td>
+<td style="text-align: center;"><a href="https://pandas.pydata.org/" class="uri">https://pandas.pydata.org/</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>shapely</code></td>
+<td style="text-align: center;">Geometrías vectoriales</td>
+<td style="text-align: center;"><a href="https://shapely.readthedocs.io/" class="uri">https://shapely.readthedocs.io/</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>geopandas</code></td>
+<td style="text-align: center;">Capas vectoriales</td>
+<td style="text-align: center;"><a href="https://geopandas.org/" class="uri">https://geopandas.org/</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>rasterio</code></td>
+<td style="text-align: center;">Ráster</td>
+<td style="text-align: center;"><a href="https://rasterio.readthedocs.io/" class="uri">https://rasterio.readthedocs.io/</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>rasterstats</code></td>
+<td style="text-align: center;">Estadísticas zonales</td>
+<td style="text-align: center;"><a href="https://github.com/perrygeo/python-rasterstats" class="uri">https://github.com/perrygeo/python-rasterstats</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>psycopg2</code></td>
+<td style="text-align: center;">Interfaz a PostgreSQL</td>
+<td style="text-align: center;"><a href="https://www.psycopg.org/docs/" class="uri">https://www.psycopg.org/docs/</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Como veremos, estos paquetes dependen unos de otros. Las dependencias principales se muestran en la <a href="#fig-python-package-deps" class="quarto-xref">Figura&nbsp;<span>I.1</span></a>:</p>
+<div id="fig-python-package-deps" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-python-package-deps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/dependencias_python.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-python-package-deps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;I.1: Principales dependencias entre los paquetes de Python que vamos a estudiar. Adaptado de <span class="citation" data-cites="dorman2025spatial">Dorman (<a href="99-referencias.html#ref-dorman2025spatial" role="doc-biblioref">2025</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong><code>geopandas</code></strong>: Capa superior que integra a <code>pandas</code>, <code>shapely</code>, <code>fiona</code> y <code>pyproj</code>. Permite realizar consultas espaciales complejas y gestionar GeoDataFrames con una sintaxis simplificada.</li>
+<li><strong><code>rasterio</code></strong>: Basada en la librería <strong>GDAL</strong>, es el estándar para la lectura, escritura y manipulación de formatos ráster (como GeoTIFF), permitiendo gestionar metadatos y arreglos de píxeles con alta eficiencia.</li>
+<li><strong><code>scipy</code></strong>: Proporciona algoritmos avanzados de optimización, álgebra lineal y estadística necesarios para procesos de interpolación y análisis de superficies.</li>
+<li><strong><code>rasterstats</code></strong>: Herramienta específica para extraer estadísticas (medias, sumas) a partir de capas ráster basadas en geometrías vectoriales.</li>
+<li><strong><code>shapely</code></strong>: Motor geométrico basado en el estándar <em>Simple Features</em> y puente hacia la librería <strong>GEOS</strong>. Se encarga de la lógica matemática de las geometrías (áreas, intersecciones, buffers y validación topográfica).</li>
+<li><strong><code>pyproj</code></strong>: Interfaz para la librería <strong>PROJ</strong>. Gestiona proyecciones cartográficas, sistemas de referencia (CRS) y transformaciones de datums.</li>
+<li><strong><code>fiona</code> / <code>pyogrio</code></strong>: Motores de acceso a datos vectoriales (SHP, GPKG) que actúan como interfaces hacia la librería <strong>GDAL/OGR</strong>.</li>
+<li><strong><code>xyzservices</code></strong>: Repositorio de metadatos para conectar con servicios de mapas base dinámicos (como OpenStreetMap).</li>
+</ul>
+<p>La siguiente tabla vincula las librerías de Python con los motores de cálculo de bajo nivel (C/C++) integrados en el contenedor Docker:</p>
+<table class="table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 26%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Librería Python</th>
+<th style="text-align: left;">Motor de Sistema (C/C++)</th>
+<th style="text-align: left;">Función Principal en Geomática</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>pyproj</code></strong></td>
+<td style="text-align: left;"><strong>PROJ</strong></td>
+<td style="text-align: left;">Gestión de Proyecciones y Sistemas de Referencia (CRS).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>shapely</code></strong></td>
+<td style="text-align: left;"><strong>GEOS</strong></td>
+<td style="text-align: left;">Álgebra topológica (Intersecciones, Buffers, Áreas).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>fiona</code> / <code>pyogrio</code></strong></td>
+<td style="text-align: left;"><strong>GDAL/OGR</strong></td>
+<td style="text-align: left;">Lectura y escritura de formatos vectoriales.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>rasterio</code></strong></td>
+<td style="text-align: left;"><strong>GDAL</strong></td>
+<td style="text-align: left;">Manejo de datos ráster y metadatos de imágenes.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>geopandas</code></strong></td>
+<td style="text-align: left;"><em>(Integra los 3 motores)</em></td>
+<td style="text-align: left;">Gestión integral de GeoDataFrames espaciales.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="versiones-instaladas-del-software" class="level2" data-number="I.2">
+<h2 data-number="I.2" class="anchored" data-anchor-id="versiones-instaladas-del-software"><span class="header-section-number">I.2</span> Versiones instaladas del software</h2>
+<p>Para verificar las versiones inSstaladas, puede ejecutar <code>pip3 list</code> en la terminal. Las versiones instaladas deben coincidir con la siguiente tabla:</p>
 <table class="table">
 <colgroup>
 <col style="width: 10%">
@@ -429,6 +608,11 @@ ul.task-list li input[type="checkbox"] {
 </table>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
+<div id="ref-dorman2025spatial" class="csl-entry" role="listitem">
+Dorman, M. (2025). <em>Spatial Data Programming with Python</em>. Ben-Gurion University of the Negev. <a href="https://geobgu.xyz/py-2025/">https://geobgu.xyz/py-2025/</a>
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
@@ -822,12 +1006,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./87-linux_ubuntu.html" class="pagination-link" aria-label="Temas Técnicos sobre Linux">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">Temas Técnicos sobre Linux</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">H</span>&nbsp; <span class="chapter-title">Temas Técnicos sobre Linux</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./89-r.html" class="pagination-link" aria-label="Adicionales Sobre R">
-        <span class="nav-page-text"><span class="chapter-number">I</span>&nbsp; <span class="chapter-title">Adicionales Sobre R</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">J</span>&nbsp; <span class="chapter-title">Adicionales Sobre R</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

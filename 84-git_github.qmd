@@ -1,4 +1,8 @@
-# Git y GitHub: Sincronización Local-Remota {#git-ref}
+# Git y GitHub: Sincronización Local-Remota {#sec-anexo_git_github}
+
+## Instalación de Git
+
+## Creación de cuenta en GitHub {#sec-cuenta_github}
 
 ## Control de versiones - flujo de trabajo en PowerShell {#sec-git-terminal}
 
@@ -407,12 +411,24 @@ Utilice este método si aún no ha configurado llaves SSH o prefiere una descarg
 
 #### Opción B-1: Descarga rápida mediante `git clone`
 
-Este comando descarga el repositorio completo y crea automáticamente una subcarpeta con el nombre del proyecto:
+> Nota: Este procedimiento tiene la desventaja que el nombre de la carpeta es definido por el nombre del respositorio en GitHub, no por el usuario (usted).
+
+* Este comando descarga el repositorio completo y crea automáticamente una subcarpeta con el nombre del proyecto:
 ```powershell
 git clone https://github.com/alexyshr/ProgramacionSIG2026.git
 ```
 
-#### Opción B-2: Sincronizar repositorio GitHub a carpeta existente {#sec-git-sync-existente}
+* Para chequear por actualizaciones en el repositorio remoto:
+```powershell
+git remote -v
+```
+
+* Para descargar las actualizaciones a la carpeta local, es decir sincronizar el repositorio remoto con la carpeta local:
+```powershell
+git pull
+```
+
+#### Opción B-2: Sincronizar repositorio GitHub con carpeta local existente {#sec-git-sync-existente}
 
 Utilice este procedimiento si usted ya creó una carpeta localmente (por ejemplo, `ProgramacionSIG2026`) y desea vincularla al repositorio oficial de GitHub para recibir actualizaciones sin perder sus archivos actuales.
 
@@ -457,7 +473,4 @@ Debería ver la URL de su repositorio tanto para `fetch` como para `push`.
 * **Persistencia**: Una vez clonado o vinculado el repositorio, Git recordará la ruta del servidor (ya sea SSH o HTTPS). No es necesario repetir los comandos de `remote add` en sesiones futuras.
 * **Seguridad**: Si opta por HTTPS, recuerde que GitHub ya no acepta contraseñas básicas por terminal; deberá generar un PAT (Personal Access Token) en la configuración de su cuenta. Por esta razón, se recomienda priorizar el uso de **SSH**.
 
-::: {.callout-tip}
-### Siguiente Paso
-Con el repositorio sincronizado y el contenedor de Docker activo (como se vio en la @sec-infraestructura), ya puede comenzar a trabajar en sus archivos `.qmd` y ver los cambios reflejados en tiempo real.
-:::
+

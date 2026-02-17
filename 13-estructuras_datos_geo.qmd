@@ -1,0 +1,377 @@
+# Estructuras de Datos Geoespaciales {#estructuras-geo}
+
+## Función j_eval y j_plot en R
+
+```{r}
+#| label: setup_benchmark
+#| code-fold: true
+#| results: asis
+#| include: false
+source("./docs/j_eval_j_plot.r")
+```
+
+
+## El Estándar Simple Features (ISO 19125)
+
+La mayoría de las librerías modernas de programación SIG (Geopandas en Python, `sf` en R y `LibGEOS`/`ArchGDAL` en Julia) implementan el estándar **Simple Features Access** de la OGC. Este estándar define un modelo común para almacenar y acceder a geometrías en 2D.
+
+Las geometrías fundamentales que utilizaremos son:
+
+* **Point (Punto):** Un par de coordenadas $(x, y)$.
+* **LineString (Línea):** Una secuencia de puntos conectados.
+* **Polygon (Polígono):** Un anillo cerrado que puede contener "huecos" (anillos interiores).
+
+## Creación de Geometrías Básicas
+
+A continuación, definiremos la ubicación de la **Plaza de Bolívar en Bogotá** (aprox. $-74.076, 4.598$) usando los tres lenguajes.
+
+::: {.panel-tabset}
+
+### Python (Shapely)
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{python}
+#| label: python_geoms_basicas_codigo
+#| eval: false
+from shapely.geometry import Point, LineString
+
+# 1. Crear punto (Longitud, Latitud) para la Plaza de Bolívar
+plaza_bolivar = Point(-74.076, 4.598)
+
+# 2. Crear una línea (un segmento de la Carrera Séptima)
+calle_septima = LineString([(-74.076, 4.598), (-74.075, 4.605)])
+
+# 3. Imprimir propiedades
+print(f"Tipo de geometría: {plaza_bolivar.geom_type}")
+print(f"Representación WKT: {plaza_bolivar.wkt}")
+```
+:::
+:::
+
+```{python}
+#| label: python_geoms_basicas
+# 1. Crear punto (Longitud, Latitud) para la Plaza de Bolívar
+from shapely.geometry import Point, LineString
+
+plaza_bolivar = Point(-74.076, 4.598)
+
+# 2. Crear una línea (un segmento de la Carrera Séptima)
+calle_septima = LineString([(-74.076, 4.598), (-74.075, 4.605)])
+
+# 3. Imprimir propiedades
+print(f"Tipo de geometría: {plaza_bolivar.geom_type}")
+print(f"Representación WKT: {plaza_bolivar.wkt}")
+```
+
+### R (sf)
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{r}
+#| label: r_geoms_basicas_codigo
+#| eval: false
+library(sf)
+
+# 1. Crear punto (Longitud, Latitud) para la Plaza de Bolívar
+plaza_bolivar <- st_point(c(-74.076, 4.598))
+
+# 2. Crear una línea (un segmento de la Carrera Séptima)
+calle_septima <- st_linestring(rbind(c(-74.076, 4.598), c(-74.075, 4.605)))
+
+# 3. Imprimir propiedades
+print(plaza_bolivar)
+```
+:::
+:::
+
+```{r}
+#| label: r_geoms_basicas
+library(sf)
+
+# 1. Crear punto (Longitud, Latitud) para la Plaza de Bolívar
+plaza_bolivar <- st_point(c(-74.076, 4.598))
+
+# 2. Crear una línea (un segmento de la Carrera Séptima)
+calle_septima <- st_linestring(rbind(c(-74.076, 4.598), c(-74.075, 4.605)))
+
+# 3. Imprimir propiedades
+print(plaza_bolivar)
+```
+
+### Julia (LibGEOS)
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{julia}
+#| label: julia_geoms_basicas_codigo
+#| eval: false
+using LibGEOS
+
+# 1. Crear punto desde formato WKT (Plaza de Bolívar)
+plaza_bolivar = LibGEOS.readgeom("POINT (-74.076 4.598)")
+
+# 2. Imprimir propiedades
+println("Tipo de geometría: ", typeof(plaza_bolivar))
+```
+:::
+:::
+
+```{r}
+#| label: julia_geoms_basicas
+#| results: asis
+j_eval(r"-(
+using LibGEOS
+
+# 1. Crear punto desde formato WKT (Plaza de Bolívar)
+plaza_bolivar = LibGEOS.readgeom("POINT (-74.076 4.598)")
+
+# 2. Imprimir propiedades
+println("Tipo de geometría: ", typeof(plaza_bolivar))
+)-")
+```
+
+:::
+
+## Atributos y Tablas Espaciales
+
+Un SIG es la unión de **geometría + atributos**. Cada lenguaje tiene una estructura principal para manejar estas tablas:
+
+| Concepto | Python | R | Julia |
+| :--- | :--- | :--- | :--- |
+| **Librería** | `geopandas` | `sf` | `GeoTables.jl` |
+| **Estructura** | `GeoDataFrame` | `sf` (data.frame) | `GeoTable` |
+
+### Ejemplo: Ciudades Principales de Colombia
+
+::: {.panel-tabset}
+
+### Python (GeoPandas)
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{python}
+#| label: python_tablas_espaciales_codigo
+#| eval: false
+import geopandas as gpd
+import pandas as pd
+from shapely.geometry import Point
+
+# 1. Datos alfanuméricos
+df = pd.DataFrame({
+    'Ciudad': ['Bogotá', 'Medellín', 'Cali'],
+    'Pob_Millones': [7.9, 2.5, 2.2]
+})
+
+# 2. Geometrías (Lista de puntos: Longitud, Latitud)
+geoms = [Point(-74.08, 4.60), Point(-75.56, 6.25), Point(-76.52, 3.42)]
+
+# 3. Unión en GeoDataFrame asignando el sistema de referencia
+gdf = gpd.GeoDataFrame(df, geometry=geoms, crs="EPSG:4326")
+print(gdf)
+```
+:::
+:::
+
+```{python}
+#| label: python_tablas_espaciales
+import geopandas as gpd
+import pandas as pd
+from shapely.geometry import Point
+
+# 1. Datos alfanuméricos
+df = pd.DataFrame({
+    'Ciudad': ['Bogotá', 'Medellín', 'Cali'],
+    'Pob_Millones': [7.9, 2.5, 2.2]
+})
+
+# 2. Geometrías (Lista de puntos: Longitud, Latitud)
+geoms = [Point(-74.08, 4.60), Point(-75.56, 6.25), Point(-76.52, 3.42)]
+
+# 3. Unión en GeoDataFrame asignando el sistema de referencia
+gdf = gpd.GeoDataFrame(df, geometry=geoms, crs="EPSG:4326")
+print(gdf)
+```
+
+### R (sf)
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{r}
+#| label: r_tablas_espaciales_codigo
+#| eval: false
+library(sf)
+
+# 1. Datos alfanuméricos y coordenadas en un solo DataFrame
+ciudades <- data.frame(
+  Ciudad = c("Bogotá", "Medellín", "Cali"),
+  Pob_Millones = c(7.9, 2.5, 2.2),
+  lon = c(-74.08, -75.56, -76.52),
+  lat = c(4.60, 6.25, 3.42)
+)
+
+# 2. Convertir a objeto espacial (sf) asignando columnas y CRS
+gdf <- st_as_sf(ciudades, coords = c("lon", "lat"), crs = 4326)
+print(gdf)
+```
+:::
+:::
+
+```{r}
+#| label: r_tablas_espaciales
+library(sf)
+
+# 1. Datos alfanuméricos y coordenadas en un solo DataFrame
+ciudades <- data.frame(
+  Ciudad = c("Bogotá", "Medellín", "Cali"),
+  Pob_Millones = c(7.9, 2.5, 2.2),
+  lon = c(-74.08, -75.56, -76.52),
+  lat = c(4.60, 6.25, 3.42)
+)
+
+# 2. Convertir a objeto espacial (sf) asignando columnas y CRS
+gdf <- st_as_sf(ciudades, coords = c("lon", "lat"), crs = 4326)
+print(gdf)
+```
+
+### Julia (GeoTables)
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{julia}
+#| label: julia_tablas_espaciales_codigo
+#| eval: false
+import Pkg
+Pkg.add(["GeoTables", "Meshes"])
+
+using GeoTables, Meshes, DataFrames
+
+# 1. Datos alfanuméricos
+df = DataFrame(Ciudad = ["Bogotá", "Medellín", "Cali"], Pob_Millones = [7.9, 2.5, 2.2])
+
+# 2. Geometrías (Llamamos a Meshes.Point explícitamente para evitar conflictos en memoria)
+puntos = [Meshes.Point(-74.08, 4.60), Meshes.Point(-75.56, 6.25), Meshes.Point(-76.52, 3.42)]
+
+# 3. Unión en GeoTable usando georef (el constructor estándar)
+gt = georef(df, puntos)
+
+println(gt)
+```
+:::
+:::
+
+```{r}
+#| label: julia_tablas_espaciales
+#| results: asis
+j_eval(r"-(
+import Pkg
+Pkg.add(["GeoTables", "Meshes"])
+
+using GeoTables, Meshes, DataFrames
+
+# 1. Datos alfanuméricos
+df = DataFrame(Ciudad = ["Bogotá", "Medellín", "Cali"], Pob_Millones = [7.9, 2.5, 2.2])
+
+# 2. Geometrías (Llamamos a Meshes.Point explícitamente para evitar conflictos en memoria)
+puntos = [Meshes.Point(-74.08, 4.60), Meshes.Point(-75.56, 6.25), Meshes.Point(-76.52, 3.42)]
+
+# 3. Unión en GeoTable usando georef (el constructor estándar)
+gt = georef(df, puntos)
+
+println(gt)
+)-")
+```
+
+:::
+
+## Sistemas de Referencia de Coordenadas (CRS)
+
+En Colombia, trabajamos principalmente con:
+
+1.  **WGS84 (EPSG:4326):** Grados decimales.
+2.  **MAGNA-SIRGAS / Origen Nacional (EPSG:9377):** Metros.
+
+::: {.callout-warning}
+### Importante
+Nunca realice cálculos de área o distancia usando coordenadas en grados (`EPSG:4326`). Siempre proyecte a `EPSG:9377` para obtener resultados en metros.
+:::
+
+---
+
+## Resumen de Aprendizajes (Cheat Sheet)
+
+En este capítulo sentamos las bases del estándar Simple Features. A continuación, se presenta tu **Hoja de Referencia (Cheat Sheet)** para transitar entre las principales librerías espaciales de los tres lenguajes.
+
+### Funciones Centrales (Simple Features)
+
+| Operación | Python (`shapely`/`geopandas`) | R (`sf`) | Julia (`LibGEOS`/`GeoTables`) |
+|:---|:---|:---|:---|
+| **Crear Punto** | `Point(x, y)` | `st_point(c(x, y))` | `readgeom("POINT(x y)")` |
+| **Crear Línea** | `LineString([(x,y), ...])` | `st_linestring(rbind(...))` | `readgeom("LINESTRING(...)")` |
+| **Crear Tabla Geo**| `GeoDataFrame(df, geometry=g)` | `st_as_sf(df, coords=...)` | `GeoTable(df, geometry=g)` |
+| **Asignar CRS** | `crs="EPSG:4326"` | `crs = 4326` | Implícito / Vía `Proj.jl` |
+
+: Estructuras fundacionales para análisis espacial {#tbl-cheat_estructuras_geo tbl-colwidths="[25,25,25,25]"}
+
+---
+
+::: {.callout-important}
+### Conclusiones Críticas del Módulo
+
+1. **Orden de las Coordenadas:** Históricamente en geografía decimos "Latitud, Longitud" (Y, X). Sin embargo, en el estándar Simple Features y en programación pura, el orden matemático estricto es **siempre (X, Y)**, lo que equivale a **(Longitud, Latitud)**. Intercambiarlos ubicará sus datos en el océano o en otro país.
+2. **Tablas Mágicas:** Un `GeoDataFrame` en Python o un `sf` en R no son más que tablas tradicionales (`DataFrames`) a las que se les ha inyectado una columna especial con "superpoderes" geométricos. Si borra esa columna, pierde las capacidades espaciales.
+:::
+
+## Ejercicios
+
+Para consolidar tu comprensión de las geometrías básicas y las tablas espaciales, deberás resolver los siguientes ejercicios en **Python, R o Julia**.
+
+### Ejercicio 1: Topología del Río Cauca (Líneas y Puntos)
+
+**Contexto:** Estás analizando estaciones de monitoreo de calidad del agua sobre un tramo del Río Cauca. Tienes las coordenadas de las estaciones y necesitas construir los objetos geométricos individuales para luego incluirlos en tu reporte base.
+
+**Instrucciones de código:**
+
+1. Utilizando las herramientas de creación de geometrías nativas de tu lenguaje, crea un **Punto** que represente la Estación Juanchito (Coordenadas aproximadas: `Lon: -76.45, Lat: 3.45`). Guárdalo en la variable `pt_juanchito`.
+2. Crea un segundo **Punto** para la Estación Mediacanoa (`Lon: -76.38, Lat: 3.88`). Guárdalo en la variable `pt_mediacanoa`.
+3. Imagina que el río conecta ambos puntos en línea recta. Crea una geometría tipo **Línea (LineString)** que una la coordenada de Juanchito con la de Mediacanoa. Guárdalo en la variable `tramo_cauca`.
+4. Imprime el tipo de geometría (o la representación en texto/WKT) de tu variable `tramo_cauca`.
+
+### Ejercicio 2: Catastro de Zonas de Riesgo (Tabla Espacial)
+
+**Contexto:** El equipo de Gestión del Riesgo te ha entregado un archivo tabular tradicional (CSV) con los barrios que reportan riesgo de inundación y sus coordenadas. Tu misión es convertir esta tabla "plana" en un objeto espacial oficial con un sistema de referencia.
+
+**Instrucciones de código:**
+
+1. Crea un **DataFrame** clásico con la siguiente información:
+   * Columna `Barrio`: "La Virginia", "Puerto Mallarino"
+   * Columna `Riesgo`: "Alto", "Medio"
+   * Columna `Lon`: -75.88, -76.21
+   * Columna `Lat`: 4.90, 3.95
+2. Utiliza la función apropiada de tu librería espacial (`GeoPandas`, `sf` o `GeoTables`) para convertir ese DataFrame en una **Tabla Espacial**. Asegúrate de mapear las columnas `Lon` y `Lat` como las geometrías.
+3. Al realizar la conversión, asigna explícitamente el sistema de coordenadas geográficas estándar (WGS84), es decir, el código **EPSG:4326**.
+4. Imprime en consola tu nueva tabla espacial.
+
+### Entregables y Criterios de Evaluación
+
+**1. Archivos de Código:**
+Debes desarrollar los algoritmos en al menos uno de los siguientes formatos de archivo:
+* Script tradicional (`.py`, `.R`, `.jl`)
+* Notebook interactivo (`.ipynb`)
+* Documento computacional (`.qmd` con *chunks* de código)
+
+**2. Documento Analítico (Quarto):**
+Independientemente del formato de tu código fuente, **debes redactar un documento en Quarto (`.qmd`) y renderizarlo tanto en HTML como en PDF**. En este documento debes incluir tus bloques de código y responder argumentativamente a las siguientes preguntas:
+
+* **Sobre la Topología (Ejercicio 1):** Basado en la lectura y tu experiencia práctica, ¿por qué es crítico respetar el orden matemático `(X, Y)` o `(Longitud, Latitud)` al momento de construir un `Point` o `LineString` en lugar de usar el orden verbal cotidiano "Latitud, Longitud"?
+* **Sobre la Proyección:** El texto de la lección hace una advertencia sobre calcular áreas usando el `EPSG:4326` (Grados). Explica con tus palabras por qué medir un área en "grados cuadrados" carece de utilidad práctica en la ingeniería o el planeamiento territorial en Colombia, y por qué el `EPSG:9377` soluciona esto.
+
+**3. Repositorio en GitHub:**
+Sube tu carpeta del proyecto a un repositorio público en tu cuenta personal de **GitHub**.
+* **Entrega:** Deberás enviar únicamente el enlace (URL) a tu repositorio de GitHub para la calificación.

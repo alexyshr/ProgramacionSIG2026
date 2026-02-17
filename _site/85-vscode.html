@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Programación SIG: Python, R y Julia - Apéndice E — Visual Studio Code: Extensiones e Interfaz</title>
+<title>Programación SIG: Python, R y Julia - Apéndice F — Visual Studio Code (VScode): Extensiones e Interfaz</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -54,7 +54,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -115,7 +135,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./81-infraestructura_instalada.html">Apéndices</a></li><li class="breadcrumb-item"><a href="./85-vscode.html"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Visual Studio Code: Extensiones e Interfaz</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./80-instalacion_herramientas.html">Apéndices</a></li><li class="breadcrumb-item"><a href="./85-vscode.html"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Visual Studio Code (VScode): Extensiones e Interfaz</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -170,25 +190,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-guia_instalacion_A_docker.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción A: Contenedor Docker (Python, R, Julia)</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./02.a-guia_instalacion_A_docker.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción A: Instalación vía Paquete Preconfigurado (Docker)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción A: Docker (Python, R, Julia)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-guia_instalacion_B_qgis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción B: QGIS y PyQGIS</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción B: QGIS y PyQGIS</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04-guia_instalacion_C_ArcGIS.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</span></span></a>
   </div>
 </li>
       </ul>
@@ -204,14 +218,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05-introduccion_python_r_julia.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introducción</span></span></a>
+  <a href="./05-variables_tipos_de_datos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Función j_eval y j_plot en R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06-estructuras_datos_geo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Estructuras de Datos Geoespaciales</span></span></a>
+  <a href="./06-estructuras_datos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Función j_eval y j_plot en R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-operaciones_cadenas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Función j_eval y j_plot en R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-introduccion_python_r_julia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Introducción a Python, R y Julia</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-estructuras_datos_geo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Estructuras de Datos Geoespaciales</span></span></a>
   </div>
 </li>
       </ul>
@@ -228,7 +260,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./41-practica_1_benchmark_raster.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Evaluación Comparativa de Procesamiento Geoespacial</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Evaluación Comparativa de Procesamiento Geoespacial</span></span></a>
   </div>
 </li>
       </ul>
@@ -245,13 +277,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./61-presentacion_1_clase1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Temas por Charlar</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Temas por Charlar</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./62-presentacion_2_benchmark.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Benchmark geoespacial: cómo leer los resultados</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Benchmark geoespacial: cómo leer los resultados</span></span></a>
   </div>
 </li>
       </ul>
@@ -267,68 +299,92 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./81-infraestructura_instalada.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Infraestructura Instalada</span></span></a>
+  <a href="./80-instalacion_herramientas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Resumen instalación de herramientas</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./81-uso_infraestructura_instalada.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Uso de la Infraestructura Instalada</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./82-quarto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Quarto: Orquestación y Configuración</span></span></a>
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Quarto: Orquestación y Configuración</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./83-docker_desktop.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Docker: Gestión de Contenedores e Imágenes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Docker: Gestión de Contenedores e Imágenes</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./84-git_github.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Git y GitHub: Sincronización Local-Remota</span></span></a>
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Git y GitHub: Sincronización Local-Remota</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./85-vscode.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Visual Studio Code: Extensiones e Interfaz</span></span></a>
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Visual Studio Code (VScode): Extensiones e Interfaz</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./86-windows.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Temas técnicos sobre Windows</span></span></a>
+ <span class="menu-text"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">Temas técnicos sobre Windows</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./87-linux_ubuntu.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">Temas Técnicos sobre Linux</span></span></a>
+ <span class="menu-text"><span class="chapter-number">H</span>&nbsp; <span class="chapter-title">Temas Técnicos sobre Linux</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./88-python.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">H</span>&nbsp; <span class="chapter-title">Adicionales Sobre Python</span></span></a>
+ <span class="menu-text"><span class="chapter-number">I</span>&nbsp; <span class="chapter-title">Adicionales Sobre Python</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./89-r.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">I</span>&nbsp; <span class="chapter-title">Adicionales Sobre R</span></span></a>
+ <span class="menu-text"><span class="chapter-number">J</span>&nbsp; <span class="chapter-title">Adicionales Sobre R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./90-julia.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">J</span>&nbsp; <span class="chapter-title">Adicionales Sobre Julia</span></span></a>
+ <span class="menu-text"><span class="chapter-number">K</span>&nbsp; <span class="chapter-title">Adicionales Sobre Julia</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./91-qgis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">L</span>&nbsp; <span class="chapter-title">Adicionales Sobre QGIS</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./92-arcgispro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">M</span>&nbsp; <span class="chapter-title">Adicionales sobre ArcGIS Pro</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./93-postgresql.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">N</span>&nbsp; <span class="chapter-title">Adicionales sobre ArcGIS Pro</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./98-errata.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">K</span>&nbsp; <span class="chapter-title">Errata</span></span></a>
+ <span class="menu-text"><span class="chapter-number">O</span>&nbsp; <span class="chapter-title">Errata</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -349,30 +405,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Tabla de Contenidos</h2>
    
   <ul>
-  <li><a href="#atajos" id="toc-atajos" class="nav-link active" data-scroll-target="#atajos"><span class="header-section-number">E.1</span> Atajos</a>
+  <li><a href="#instalación" id="toc-instalación" class="nav-link active" data-scroll-target="#instalación"><span class="header-section-number">F.1</span> Instalación</a></li>
+  <li><a href="#acceso-y-configuración-en-vscode" id="toc-acceso-y-configuración-en-vscode" class="nav-link" data-scroll-target="#acceso-y-configuración-en-vscode"><span class="header-section-number">F.2</span> Acceso y configuración en VSCode</a></li>
+  <li><a href="#inicialización-del-visor-gráfico" id="toc-inicialización-del-visor-gráfico" class="nav-link" data-scroll-target="#inicialización-del-visor-gráfico"><span class="header-section-number">F.3</span> Inicialización del visor gráfico</a></li>
+  <li><a href="#atajos" id="toc-atajos" class="nav-link" data-scroll-target="#atajos"><span class="header-section-number">F.4</span> Atajos</a>
   <ul class="collapse">
   <li><a href="#sec-command-palette" id="toc-sec-command-palette" class="nav-link" data-scroll-target="#sec-command-palette">La paleta de comandos VSCode</a></li>
   <li><a href="#atajos-de-teclado-rápidos-vscode" id="toc-atajos-de-teclado-rápidos-vscode" class="nav-link" data-scroll-target="#atajos-de-teclado-rápidos-vscode">Atajos de teclado rápidos VSCode</a></li>
   <li><a href="#atajos-de-teclado-jupyterlab-notebooks" id="toc-atajos-de-teclado-jupyterlab-notebooks" class="nav-link" data-scroll-target="#atajos-de-teclado-jupyterlab-notebooks">Atajos de teclado JupyterLab (notebooks)</a></li>
   </ul></li>
-  <li><a href="#sec-extensiones-vscode" id="toc-sec-extensiones-vscode" class="nav-link" data-scroll-target="#sec-extensiones-vscode"><span class="header-section-number">E.2</span> Instalación de extensiones en VSCode</a>
+  <li><a href="#sec-tinytex" id="toc-sec-tinytex" class="nav-link" data-scroll-target="#sec-tinytex"><span class="header-section-number">F.5</span> Instalación Tinytex</a></li>
+  <li><a href="#sec-extensiones-vscode" id="toc-sec-extensiones-vscode" class="nav-link" data-scroll-target="#sec-extensiones-vscode"><span class="header-section-number">F.6</span> Instalación de extensiones</a>
   <ul class="collapse">
   <li><a href="#notas-sobre-herramientas-específicas" id="toc-notas-sobre-herramientas-específicas" class="nav-link" data-scroll-target="#notas-sobre-herramientas-específicas">Notas sobre herramientas específicas</a></li>
   </ul></li>
-  <li><a href="#sec-sinergia-psql" id="toc-sec-sinergia-psql" class="nav-link" data-scroll-target="#sec-sinergia-psql"><span class="header-section-number">E.3</span> Sinergia de las extensiones de PostgreSQL en VSCode</a>
+  <li><a href="#sec-sinergia-psql" id="toc-sec-sinergia-psql" class="nav-link" data-scroll-target="#sec-sinergia-psql"><span class="header-section-number">F.7</span> Sinergia de las extensiones de PostgreSQL en VSCode</a>
   <ul class="collapse">
   <li><a href="#sec-ventajas-dual" id="toc-sec-ventajas-dual" class="nav-link" data-scroll-target="#sec-ventajas-dual">Ventajas de la instalación dual</a></li>
   </ul></li>
-  <li><a href="#verificación-de-conectividad" id="toc-verificación-de-conectividad" class="nav-link" data-scroll-target="#verificación-de-conectividad"><span class="header-section-number">E.4</span> Verificación de conectividad</a></li>
+  <li><a href="#verificación-de-conectividad" id="toc-verificación-de-conectividad" class="nav-link" data-scroll-target="#verificación-de-conectividad"><span class="header-section-number">F.8</span> Verificación de conectividad</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./81-infraestructura_instalada.html">Apéndices</a></li><li class="breadcrumb-item"><a href="./85-vscode.html"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Visual Studio Code: Extensiones e Interfaz</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./80-instalacion_herramientas.html">Apéndices</a></li><li class="breadcrumb-item"><a href="./85-vscode.html"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Visual Studio Code (VScode): Extensiones e Interfaz</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="vscode-ref" class="quarto-section-identifier">Apéndice E — Visual Studio Code: Extensiones e Interfaz</span></h1>
+<h1 class="title"><span id="sec-anexo_vscode" class="quarto-section-identifier">Apéndice F — Visual Studio Code (VScode): Extensiones e Interfaz</span></h1>
 </div>
 
 
@@ -389,8 +449,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="atajos" class="level2" data-number="E.1">
-<h2 data-number="E.1" class="anchored" data-anchor-id="atajos"><span class="header-section-number">E.1</span> Atajos</h2>
+<p>VScode es un editor de código para programadores gratuito, de código abierto y multiplataforma <span class="citation" data-cites="vscode2026">(<a href="99-referencias.html#ref-vscode2026" role="doc-biblioref">Microsoft Corporation, 2026</a>)</span>. Lo usaremos para editar archivos <code>.qmd</code> y para tener acceso a los contenedores Docker instalados para el curso.</p>
+<section id="instalación" class="level2" data-number="F.1">
+<h2 data-number="F.1" class="anchored" data-anchor-id="instalación"><span class="header-section-number">F.1</span> Instalación</h2>
+<p>Descargue e instale las versión oficial de <strong>VSCode IDE</strong> correspondiente al sistema operativo de su máquina local desde el siguiente enlace:</p>
+<ul>
+<li><strong>URL</strong>: <a href="https://code.visualstudio.com/" class="uri">https://code.visualstudio.com/</a></li>
+<li><strong>Instalación</strong>: Seleccione el instalador <code>.exe</code> más reciente y que coincida con la arquitectura de su máquina.</li>
+</ul>
+</section>
+<section id="acceso-y-configuración-en-vscode" class="level2" data-number="F.2">
+<h2 data-number="F.2" class="anchored" data-anchor-id="acceso-y-configuración-en-vscode"><span class="header-section-number">F.2</span> Acceso y configuración en VSCode</h2>
+<p>Ver <a href="81-uso_infraestructura_instalada.html#sec-cargar_contenedores_vscode" class="quarto-xref"><span>Sección B.4</span></a>.</p>
+</section>
+<section id="inicialización-del-visor-gráfico" class="level2" data-number="F.3">
+<h2 data-number="F.3" class="anchored" data-anchor-id="inicialización-del-visor-gráfico"><span class="header-section-number">F.3</span> Inicialización del visor gráfico</h2>
+<p>Ver <a href="81-uso_infraestructura_instalada.html#sec-httpgd" class="quarto-xref"><span>Sección B.5</span></a>.</p>
+</section>
+<section id="atajos" class="level2" data-number="F.4">
+<h2 data-number="F.4" class="anchored" data-anchor-id="atajos"><span class="header-section-number">F.4</span> Atajos</h2>
 <section id="sec-command-palette" class="level3">
 <h3 class="anchored" data-anchor-id="sec-command-palette">La paleta de comandos VSCode</h3>
 <p>La mayoría de las funciones avanzadas de VSCode no tienen un botón visible. Se acceden mediante la <strong>Paleta de Comandos</strong> presionando <code>Ctrl + Shift + P</code>. A continuación, los comandos más utilizados en este curso:</p>
@@ -502,13 +579,22 @@ El comando de “Primer Auxilio”
 </table>
 </section>
 </section>
-<section id="sec-extensiones-vscode" class="level2" data-number="E.2">
-<h2 data-number="E.2" class="anchored" data-anchor-id="sec-extensiones-vscode"><span class="header-section-number">E.2</span> Instalación de extensiones en VSCode</h2>
-<p>Para que el entorno de desarrollo sea plenamente funcional, es necesario instalar un conjunto de extensiones específicas. Una vez que haya realizado el proceso de <strong>“Attach to Running Container”</strong>, asegúrese de que estas herramientas estén instaladas <strong>dentro del contenedor</strong> (busque el botón azul <em>Install in Dev Container</em> en la pestaña de extensiones).</p>
+<section id="sec-tinytex" class="level2" data-number="F.5">
+<h2 data-number="F.5" class="anchored" data-anchor-id="sec-tinytex"><span class="header-section-number">F.5</span> Instalación Tinytex</h2>
+<p><strong>TinyTeX</strong> es un motor ligero de LaTeX necesario para compilar reportes profesionales (ej. en Quarto) en formato PDF <span class="citation" data-cites="xie2019tinytex">(<a href="99-referencias.html#ref-xie2019tinytex" role="doc-biblioref">Xie, 2019</a>)</span>. Si desea instalar TinyTeX para generar PDF por fuera del entorno Docker, desde la terminal de VSCode use el comando:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>  <span class="ex">quarto</span> install tinytex</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p>La herramienta <code>Tinytex</code> viene instalada dentro del contenedor <code>contenedor_sig_unal</code>, así que no necesita instalarla.</p>
+</blockquote>
+</section>
+<section id="sec-extensiones-vscode" class="level2" data-number="F.6">
+<h2 data-number="F.6" class="anchored" data-anchor-id="sec-extensiones-vscode"><span class="header-section-number">F.6</span> Instalación de extensiones</h2>
+<p>Para que el entorno de desarrollo sea plenamente funcional, es necesario instalar un conjunto de extensiones específicas. Inicialmente todas las extensiones se pueden instalar para el entorno local (ej: Windows), sin embargo esas mismas extensiones deben estar instaladas también dentro del contenedor <code>contenedor_sig_unal</code>.</p>
+<p>Una vez que haya realizado el proceso de <strong>“Dev Containers: Attach to Running Container …”</strong> (<code>Ctrl + Shift + P</code> en VSCode), asegúrese de que estas herramientas estén instaladas <strong>dentro del contenedor</strong> (busque el botón azul <em>Install in …</em> en la pestaña de extensiones).</p>
 <div id="tbl-extensiones" class="quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-extensiones-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabla&nbsp;E.1: Extensiones de VSCode para el entorno de Geomática y Programación SIG
+Tabla&nbsp;F.1: Extensiones de VSCode para el entorno de Geomática y Programación SIG
 </figcaption>
 <div aria-describedby="tbl-extensiones-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="table">
@@ -633,7 +719,7 @@ Tabla&nbsp;E.1: Extensiones de VSCode para el entorno de Geomática y Programaci
 <ul>
 <li><strong>PostgreSQL (Chris Kolkman)</strong>: Esta extensión le permitirá conectarse a la base de datos espacial del contenedor sin salir de VSCode. Podrá ejecutar queries SQL y visualizar tablas directamente.</li>
 <li><strong>Jupyter Ecosystem</strong>: Incluimos el <em>Jupyter Keymap</em> para aquellos acostumbrados a los atajos de teclado de Jupyter Notebooks. Esto facilita la transición al trabajar con kernels de Python dentro de Quarto.</li>
-<li><strong>Sobre <code>psql</code></strong>: La herramienta de línea de comandos <code>psql</code> ya viene preinstalada <strong>dentro del sistema operativo del contenedor</strong> (PostgreSQL Client). No requiere instalación adicional para funcionar en la terminal del contenedor. Sin embargo, la instalación de <code>psql</code> y dentro de VSCode garantiza soporte adicional, ver <a href="#sec-sinergia-psql" class="quarto-xref"><span>Sección E.3</span></a> líneas abajo.</li>
+<li><strong>Sobre <code>psql</code></strong>: La herramienta de línea de comandos <code>psql</code> ya viene preinstalada <strong>dentro del sistema operativo del contenedor</strong> (PostgreSQL Client). No requiere instalación adicional para funcionar en la terminal del contenedor. Sin embargo, la instalación de <code>psql</code> y dentro de VSCode garantiza soporte adicional, ver <a href="#sec-sinergia-psql" class="quarto-xref"><span>Sección F.7</span></a> líneas abajo.</li>
 <li><strong>Live Server (Ritwick Dey)</strong>: Esta extensión le permite lanzar un servidor de desarrollo local con un solo clic. Es extremadamente útil para previsualizar exportaciones de mapas interactivos (<strong>Leaflet</strong> u <strong>OpenLayers</strong>) o sitios web estáticos generados por <strong>Quarto</strong>. La ventaja principal es la “recarga en vivo” (<em>live reload</em>): cada vez que guarde un cambio en su archivo HTML o CSS, el navegador se actualizará automáticamente sin necesidad de recargar la página manualmente.</li>
 <li><strong>Code Spell Checker</strong>: Esta extensión es esencial para evitar errores tipográficos en el código y, sobre todo, en la documentación de archivos <code>.qmd</code>. Para que reconozca términos en nuestro idioma, se recomienda instalar también el paquete <strong>Spanish - Code Spell Checker</strong> (<code>streetsidesoftware.code-spell-checker-spanish</code>).</li>
 </ul>
@@ -683,12 +769,12 @@ Soporte del Lenguaje en R
 <li>Active el idioma: Presione <code>Ctrl + Shift + P</code>, escriba “Spell”, seleccione <code>Enable Spanish Spell Checker Dictionary</code> y finalmente seleccione <code>User</code> de la lista.</li>
 </ul>
 <p>Para que el corrector funcione simultáneamente con términos técnicos en inglés y redacción en español, puede añadir la siguiente configuración en su archivo <code>settings.json</code> de <strong>VSCode</strong>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"cSpell.language"</span><span class="fu">:</span> <span class="st">"en,es"</span><span class="fu">,</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"cSpell.enabled"</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"cSpell.spellCheckDelayMs"</span><span class="fu">:</span> <span class="dv">500</span><span class="fu">,</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"cSpell.diagnosticLevel"</span><span class="fu">:</span> <span class="st">"Information"</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"cSpell.language"</span><span class="fu">:</span> <span class="st">"en,es"</span><span class="fu">,</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"cSpell.enabled"</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"cSpell.spellCheckDelayMs"</span><span class="fu">:</span> <span class="dv">500</span><span class="fu">,</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"cSpell.diagnosticLevel"</span><span class="fu">:</span> <span class="st">"Information"</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -705,8 +791,8 @@ Diccionario técnico
 </section>
 </section>
 </section>
-<section id="sec-sinergia-psql" class="level2" data-number="E.3">
-<h2 data-number="E.3" class="anchored" data-anchor-id="sec-sinergia-psql"><span class="header-section-number">E.3</span> Sinergia de las extensiones de PostgreSQL en VSCode</h2>
+<section id="sec-sinergia-psql" class="level2" data-number="F.7">
+<h2 data-number="F.7" class="anchored" data-anchor-id="sec-sinergia-psql"><span class="header-section-number">F.7</span> Sinergia de las extensiones de PostgreSQL en VSCode</h2>
 <p>Contar con ambas extensiones instaladas dentro del contenedor no es redundancia, sino una estrategia para optimizar el flujo de trabajo con datos espaciales. Cada una ofrece una “capa” de interacción distinta que, al combinarse, potencia la productividad.</p>
 <table class="table">
 <colgroup>
@@ -772,8 +858,8 @@ Atajo de teclado (Shortcut)
 </div>
 </section>
 </section>
-<section id="verificación-de-conectividad" class="level2" data-number="E.4">
-<h2 data-number="E.4" class="anchored" data-anchor-id="verificación-de-conectividad"><span class="header-section-number">E.4</span> Verificación de conectividad</h2>
+<section id="verificación-de-conectividad" class="level2" data-number="F.8">
+<h2 data-number="F.8" class="anchored" data-anchor-id="verificación-de-conectividad"><span class="header-section-number">F.8</span> Verificación de conectividad</h2>
 <p>Una vez instaladas las extensiones, verifique que su entorno esté correctamente configurado siguiendo estos puntos:</p>
 <ul>
 <li><strong>Estado del Contenedor</strong>: En la esquina inferior izquierda de VSCode, debe aparecer un recuadro azul con el texto: <strong>Dev Container: contenedor_sig_unal</strong>.</li>
@@ -795,6 +881,14 @@ Sincronización Automática
 </div>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
+<div id="ref-vscode2026" class="csl-entry" role="listitem">
+Microsoft Corporation. (2026). <em>Visual Studio Code</em>. <a href="https://code.visualstudio.com/">https://code.visualstudio.com/</a>
+</div>
+<div id="ref-xie2019tinytex" class="csl-entry" role="listitem">
+Xie, Y. (2019). TinyTeX: A lightweight, cross-platform, and easy-to-maintain LaTeX distribution based on TeX Live. <em>TUGboat</em>, <em>40</em>(1), 30-32.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
@@ -1188,12 +1282,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./84-git_github.html" class="pagination-link" aria-label="Git y GitHub: Sincronización Local-Remota">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Git y GitHub: Sincronización Local-Remota</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Git y GitHub: Sincronización Local-Remota</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./86-windows.html" class="pagination-link" aria-label="Temas técnicos sobre Windows">
-        <span class="nav-page-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Temas técnicos sobre Windows</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">Temas técnicos sobre Windows</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

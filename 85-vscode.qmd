@@ -1,4 +1,22 @@
-# Visual Studio Code: Extensiones e Interfaz {#vscode-ref}
+# Visual Studio Code (VScode): Extensiones e Interfaz {#sec-anexo_vscode}
+
+VScode es un editor de código para programadores gratuito, de código abierto y multiplataforma [@vscode2026]. Lo usaremos para editar archivos `.qmd` y para tener acceso a los contenedores Docker instalados para el curso.
+
+## Instalación
+
+Descargue e instale las versión oficial de **VSCode IDE** correspondiente al sistema operativo de su máquina local desde el siguiente enlace:
+
+-   **URL**: <https://code.visualstudio.com/>
+-   **Instalación**: Seleccione el instalador `.exe` más reciente y que coincida con la arquitectura de su máquina.
+
+## Acceso y configuración en VSCode
+
+Ver @sec-cargar_contenedores_vscode.
+
+## Inicialización del visor gráfico
+
+Ver @sec-httpgd.
+
 
 ## Atajos 
 
@@ -40,10 +58,20 @@ Además de la paleta, memorice estos tres para su flujo diario:
 | Convertir a Código | `Y` |
 | Crear celda arriba / abajo | `A` / `B` |
 
+## Instalación Tinytex {#sec-tinytex}
 
-## Instalación de extensiones en VSCode {#sec-extensiones-vscode}
+**TinyTeX** es un motor ligero de LaTeX necesario para compilar reportes profesionales (ej. en Quarto) en formato PDF [@xie2019tinytex]. Si desea instalar TinyTeX para generar PDF por fuera del entorno Docker, desde la terminal de VSCode use el comando:
+```bash
+  quarto install tinytex
+```
 
-Para que el entorno de desarrollo sea plenamente funcional, es necesario instalar un conjunto de extensiones específicas. Una vez que haya realizado el proceso de **"Attach to Running Container"**, asegúrese de que estas herramientas estén instaladas **dentro del contenedor** (busque el botón azul *Install in Dev Container* en la pestaña de extensiones).
+> La herramienta `Tinytex` viene instalada dentro del contenedor `contenedor_sig_unal`, así que no necesita instalarla.
+
+## Instalación de extensiones {#sec-extensiones-vscode}
+
+Para que el entorno de desarrollo sea plenamente funcional, es necesario instalar un conjunto de extensiones específicas. Inicialmente todas las extensiones se pueden instalar para el entorno local (ej: Windows), sin embargo esas mismas extensiones deben estar instaladas también dentro del contenedor `contenedor_sig_unal`.
+
+Una vez que haya realizado el proceso de **"Dev Containers: Attach to Running Container ..."** (`Ctrl + Shift + P` en VSCode), asegúrese de que estas herramientas estén instaladas **dentro del contenedor** (busque el botón azul *Install in ...* en la pestaña de extensiones).
 
 | Categoría | Herramienta | Propósito | ID de la Extensión |
 |:--- |:--- |:--- |:--- |

@@ -1,4 +1,4 @@
-# Temas técnicos sobre Windows
+# Temas técnicos sobre Windows {#sec-anexo_windows}
 
 ## Herramientas de administración
 

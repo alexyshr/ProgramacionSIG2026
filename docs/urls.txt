@@ -13,4 +13,63 @@ Archivo: sig_unal_completo.zip
 Link:
 https://drive.google.com/file/d/1J7ssf72-F5EwjoekkexwKUgD1DxyA1xk/view?usp=sharing
 
+
 *********************************************************
+
+
+Python:
+____________
+
+https://geobgu.xyz/py-2025/
+Michael Dorman
+D:\Courses\Python\updatedgeopythoncourse
+
+Geocomputation with Python
+https://py.geocompx.org/
+
+Spatial Data Science
+With Applications in R and Python
+https://r-spatial.org/python/
+https://r-spatial.org/python/#citing-this-book
+
+Introduction to GIS Programming
+https://gispro.gishub.org/
+
+R:
+____________
+
+Geocomputation with R
+https://r.geocompx.org/
+
+Spatial Data Visualization with tmap
+https://tmap.geocompx.org/
+
+Spatial Data Science
+With Applications in R and Python
+https://r-spatial.org/python/
+
+
+Spatial Data Science
+With Applications in R
+https://r-spatial.org/book/
+
+Spatial Statistics for Data Science: Theory and Practice with R
+https://www.paulamoraga.com/book-spatial/
+
+Julia:
+____________
+
+Geocomputation with Julia
+https://jl.geocompx.org/
+
+
+Geospatial Data Science with Julia
+https://juliaearth.github.io/geospatial-data-science-with-julia/
+Júlio Hoffimann
+
+____________
+
+Collection of Resources for Data Science
+https://github.com/javedali99/r-resources-for-data-science
+
+

@@ -1,0 +1,1657 @@
+﻿# Variables y Tipos de Datos {#sec-variables_tipos_datos}
+
+## Función j_eval y j_plot en R
+
+```{r}
+#| label: setup_benchmark
+#| code-fold: true
+# #| include: false
+#| results: asis
+source("./docs/j_eval_j_plot.r")
+```
+
+
+
+## Introducción
+
+
+## Objetivos de aprendizaje
+
+## Variables
+
+| Lenguaje | Operador de asignación | Comando para imprimir | Descripción y Alternativas |
+| :- | :-: | :-: | :-------- |
+| **Python** | `=` | `print()` | El operador `=` es el estándar único para asignación. Para imprimir, `print()` añade automáticamente un salto de línea. En entornos interactivos, se puede usar `display()` para una representación visual más rica. |
+| **R** | `<-` | `print()` | Aunque `=` funciona, se prefiere `<-`. Además de `print()`, existe `cat()`, útil para concatenar texto sin mostrar índices de vector. |
+| **Julia** | `=` | `println()` | Se usa `=` para asignación. `println()` imprime con salto de línea, mientras que `print()` lo hace sin él. Al igual que en Python, existe `display()`. |
+
+: Comparación de sintaxis básica entre Python, R y Julia {#tbl-comp_sintaxis_basica}
+
+::: {.panel-tabset}
+
+
+### Python
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{python}
+#| label: python_variables_codigo
+#| eval: false
+
+#Variable numérica
+numero_dptos = 32
+
+#Imprimir
+print(numero_dptos)
+
+#Ver contenido (en modo interactivo)
+numero_dptos
+```
+:::
+:::
+
+
+```{python}
+#| label: python_variables
+# #| eval: false
+#Variable numérica
+numero_dptos = 32
+
+#Imprimir
+print(numero_dptos)
+
+#Ver contenido (en modo interactivo)
+numero_dptos
+```
+
+### R
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{r}
+#| label: r_variables_codigo
+#| eval: false
+
+# Variable numérica (en R se prefiere el operador <-)
+numero_dptos <- 32
+
+# Imprimir
+print(numero_dptos)
+
+# Ver contenido
+numero_dptos
+```
+:::
+:::
+
+```{r}
+#| label: r_variables
+# #| eval: false
+# Variable numérica (en R se prefiere el operador <-)
+numero_dptos <- 32
+
+# Imprimir
+print(numero_dptos)
+
+# Ver contenido
+numero_dptos
+```
+
+### Julia
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{julia}
+#| label: julia_variables_codigo
+#| eval: false
+
+# Variable numérica
+numero_dptos = 32
+
+# Imprimir
+println(numero_dptos)
+
+# Ver contenido
+numero_dptos
+```
+:::
+:::
+
+```{r}
+#| label: julia_variables
+#| results: asis
+# #| eval: false
+j_eval('
+# Variable numérica
+numero_dptos = 32
+
+# Imprimir
+println(numero_dptos)
+
+# Ver contenido
+numero_dptos
+
+atributos_elemento
+')
+```
+
+:::
+
+
+### Asignación de variables
+
+| Lenguaje | Colección Base | Operador | Descripción y Flexibilidad |
+|:-|:--:|:-:|:-------|
+| **Python** | Lista `[]` | `=` | Permite mezclar tipos en una lista. Es dinámico y **fuerte**: no permite operaciones inválidas entre tipos (ej. sumarle un texto a un número). |
+| **R** | Vector `c()` | `<-` | El vector atómico (`c`) exige que todos los elementos sean del mismo tipo. Si se mezclan, R los convierte automáticamente (coerción). |
+| **Julia** | Arreglo `[]` | `=` | Muy similar a la lista de Python pero optimizado para rendimiento. Es dinámico pero permite declarar tipos para ganar velocidad. |
+
+: Estructuras de datos y comportamiento de asignación {#tbl-estructuras_reasignacion tbl-colwidths="[15,20,15,50]"}
+
+### Conceptos clave de programación
+
+Para entender cómo estos lenguajes manejan la información de la @tbl-estructuras_reasignacion, es fundamental diferenciar los sistemas de tipado:
+
+1. **Tipado Dinámico:** El tipo de la variable se define en tiempo de ejecución. No es necesario declarar que una variable es un entero o un texto antes de usarla; el lenguaje lo infiere. (Python, R y Julia son dinámicos).
+2. **Tipado Estático:** El tipo de la variable debe definirse al momento de escribir el código (ej. C++ o Java). Una vez definida como "entero", no puede guardar texto. Esto previene errores antes de ejecutar el programa.
+3. **Tipado Fuerte:** El lenguaje no permite operaciones entre tipos incompatibles sin una conversión explícita. Por ejemplo, en **Python**, `5 + "10"` arrojará un error.
+4. **Tipado Débil:** El lenguaje intenta realizar conversiones automáticas (coerción) para que la operación funcione. En **R**, si intentas unir un número y un texto en un vector `c(1, "Bogotá")`, R convertirá el `1` en texto `"1"` silenciosamente.
+
+::: {.panel-tabset}
+
+
+#### Python
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+##### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{python}
+#| label: python_asignacion_variables_codigo
+#| eval: false
+
+# Iniciar con un número (Latitud de Monserrate)
+datos_ubicacion = 4.6052
+
+# Cambiar a texto (Nombre del lugar)
+datos_ubicacion = "Cerro de Monserrate"
+
+# Cambiar a una lista de coordenadas [Lat, Lon]
+datos_ubicacion = [4.6052, -74.0554]
+
+# Imprimir resultado final
+print(datos_ubicacion)
+```
+:::
+:::
+
+
+```{python}
+#| label: python_asignacion_variables
+# #| eval: false
+# Iniciar con un número (Latitud de Monserrate)
+datos_ubicacion = 4.6052
+
+# Cambiar a texto (Nombre del lugar)
+datos_ubicacion = "Cerro de Monserrate"
+
+# Cambiar a una lista de coordenadas [Lat, Lon]
+datos_ubicacion = [4.6052, -74.0554]
+
+# Imprimir resultado final
+print(datos_ubicacion)
+```
+
+#### R
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+##### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{r}
+#| label: r_asignacion_variables_codigo
+#| eval: false
+
+# Iniciar con un número (Latitud de Monserrate)
+datos_ubicacion <- 4.6052
+
+# Cambiar a texto (Nombre del lugar)
+datos_ubicacion <- "Cerro de Monserrate"
+
+# Cambiar a un vector de coordenadas (c es para combinar/concatenar)
+datos_ubicacion <- c(4.6052, -74.0554)
+
+# Imprimir resultado final
+print(datos_ubicacion)
+```
+:::
+:::
+
+```{r}
+#| label: r_asignacion_variables
+# #| eval: false
+# Iniciar con un número (Latitud de Monserrate)
+datos_ubicacion <- 4.6052
+
+# Cambiar a texto (Nombre del lugar)
+datos_ubicacion <- "Cerro de Monserrate"
+
+# Cambiar a un vector de coordenadas (c es para combinar/concatenar)
+datos_ubicacion <- c(4.6052, -74.0554)
+
+# Imprimir resultado final
+print(datos_ubicacion)
+```
+
+#### Julia
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+##### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{julia}
+#| label: julia_asignacion_variables_codigo
+#| eval: false
+
+# Iniciar con un número (Latitud de Monserrate)
+datos_ubicacion = 4.6052
+
+# Cambiar a texto (Nombre del lugar)
+datos_ubicacion = "Cerro de Monserrate"
+
+# Cambiar a un arreglo (Array) de coordenadas
+datos_ubicacion = [4.6052, -74.0554]
+
+# Imprimir resultado final
+println(datos_ubicacion)
+```
+:::
+:::
+
+```{r}
+#| label: julia_asignacion_variables
+#| results: asis
+# #| eval: false
+j_eval('
+# Iniciar con un número (Latitud de Monserrate)
+datos_ubicacion = 4.6052
+
+# Cambiar a texto (Nombre del lugar)
+datos_ubicacion = "Cerro de Monserrate"
+
+# Cambiar a un arreglo (Array) de coordenadas
+datos_ubicacion = [4.6052, -74.0554]
+
+# Imprimir resultado final
+println(datos_ubicacion)
+')
+```
+
+:::
+
+
+## Nombres para las variables
+
+**¿Por qué es clave usar nombres adecuados?**
+
+En programación, los nombres que eliges para tus variables no son solo etiquetas; son las instrucciones que permiten que otras personas (y tú mismo en el futuro) entiendan la lógica del código sin errores. Usar nombres estandarizados es vital por las siguientes razones:
+
+1.  **Evitar errores técnicos:** Los lenguajes de programación son muy estrictos. Un espacio, una tilde o una `ñ` pueden hacer que un programa que funciona bien en tu computadora falle al abrirlo en otra.
+2.  **Claridad en la lectura:** Es mucho más fácil entender un proceso si la variable se llama `distancia_metros` en lugar de simplemente `d`.
+3.  **Portabilidad:** El uso de estándares internacionales asegura que tus datos e investigaciones puedan integrarse fácilmente entre diferentes plataformas como **Python**, **R** o **Julia**.
+
+::: {.callout-note collapse="true"}
+### Resumen de Reglas de Estilo (snake_case)
+
+Para que tus programas sean profesionales y compatibles, sigue estas reglas básicas:
+
+* **Todo en minúsculas:** Evita mezclar mayúsculas para mantener la uniformidad.
+* **Usa el guion bajo (`_`):** Dado que los espacios están prohibidos, el guion bajo une las palabras (ej. `precio_gasolina`).
+* **Solo letras básicas y números:** Usa solo caracteres de la `a` a la `z`. Evita tildes, eñes o símbolos especiales (`!`, `#`, `$`).
+* **Prohibido el guion medio (`-`):** El computador lo interpreta como una operación de resta.
+:::
+
+```python
+
+#| code-summary: "Ejemplos comparativos (Python, R, Julia)"
+
+# FORMA CORRECTA: Clara y sin errores
+estacion_climatologica = "Dorado"
+temperatura_celsius = 20.5
+conteo_puntos_gps = 15
+
+# FORMA INCORRECTA: Genera errores o confusión
+estacion climatologica = "Dorado"  # ERROR: Los espacios no están permitidos
+temperatura-celsius = 20.5         # ERROR: El guion medio intenta restar
+t = 20.5                           # MAL: Es una variable muy vaga
+año_inicio = 2024                  # EVITAR: La 'ñ' causa fallos de lectura
+```
+
+::: {.panel-tabset}
+
+
+### Python
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{python}
+#| label: python_varname_codigo
+#| eval: false
+
+# Nombres de variables recomendatos
+# Variables geoespaciales claras
+latitud_bogota = 4.7110
+longitud_bogota = -74.0721
+altura_msnm = 2640.0
+municipio_nombre = "Chinchiná"
+conteo_viviendas_afectadas = 150
+sistema_referencia = "MAGNA-SIRGAS / Origen Nacional"
+
+
+# Nombres de variables NO recomendatos
+# Evitar nombres genéricos o confusos
+x = 4.7110  # ¿Es latitud o un índice?
+d = "Chinchiná"  # Muy vago (¿Distrito, Departamento, Dato?)
+val = 2640  # Ambiguo: ¿Valor, Valencia, Variable?
+coords = [4.71, -74.07]  # Lista sin etiquetas claras
+```
+:::
+:::
+
+
+```{python}
+#| label: python_varname
+# #| eval: false
+# Nombres de variables recomendatos
+# Variables geoespaciales claras
+latitud_bogota = 4.7110
+longitud_bogota = -74.0721
+altura_msnm = 2640.0
+municipio_nombre = "Chinchiná"
+conteo_viviendas_afectadas = 150
+sistema_referencia = "MAGNA-SIRGAS / Origen Nacional"
+
+
+# Nombres de variables NO recomendatos
+# Evitar nombres genéricos o confusos
+x = 4.7110  # ¿Es latitud o un índice?
+d = "Chinchiná"  # Muy vago (¿Distrito, Departamento, Dato?)
+val = 2640  # Ambiguo: ¿Valor, Valencia, Variable?
+coords = [4.71, -74.07]  # Lista sin etiquetas claras
+```
+
+### R
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{r}
+#| label: r_varname_codigo
+#| eval: false
+
+# Nombres de variables recomendatos
+# Estilo snake_case (común en R para análisis de datos)
+latitud_medellin <- 6.2442
+longitud_medellin <- -75.5812
+cota_terreno <- 1495
+nombre_departamento <- "Antioquia"
+poblacion_censo_2018 <- 6407000
+proyeccion_cartografica <- "EPSG:9377"
+
+
+# Nombres de variables NO recomendatos
+# Evitar abreviaturas extremas
+l <- 6.2442 # ¿Latitud, Longitud, Límite, Localidad?
+nom <- "Antioquia" # "nombre" es mejor
+temp <- 1495 # ¿Temperatura o un archivo temporal?
+p <- 6407000 # ¿Población, Perímetro, Pendiente, P-value?
+```
+:::
+:::
+
+```{r}
+#| label: r_varname
+# #| eval: false
+# Nombres de variables recomendatos
+# Estilo snake_case (común en R para análisis de datos)
+latitud_medellin <- 6.2442
+longitud_medellin <- -75.5812
+cota_terreno <- 1495
+nombre_departamento <- "Antioquia"
+poblacion_censo_2018 <- 6407000
+proyeccion_cartografica <- "EPSG:9377"
+
+
+# Nombres de variables NO recomendatos
+# Evitar abreviaturas extremas
+l <- 6.2442 # ¿Latitud, Longitud, Límite, Localidad?
+nom <- "Antioquia" # "nombre" es mejor
+temp <- 1495 # ¿Temperatura o un archivo temporal?
+p <- 6407000 # ¿Población, Perímetro, Pendiente, P-value?
+```
+
+### Julia
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{julia}
+#| label: julia_varname_codigo
+#| eval: false
+
+# Nombres de variables recomendatos
+# Aprovechando el soporte Unicode de Julia
+latitud_cali = 3.4516
+longitud_cali = -76.5320
+elevación_cauca = 995.0
+nombre_vereda = "La Elvira"
+densidad_poblacional = 120.5
+referencia_espacial = "MAGNA-SIRGAS"
+
+
+# Nombres de variables NO recomendatos
+# Nombres que no dicen nada del contexto geográfico
+var1 = 3.4516
+info = "La Elvira"
+tmp = 995.0 # Típico error: ¿Temperatura o Temporal?
+lista = [3.45, -76.53] # Difícil de leer en modelos de optimización
+```
+:::
+:::
+
+```{r}
+#| label: julia_varname
+#| results: asis
+# #| eval: false
+j_eval('
+# Nombres de variables recomendatos
+# Aprovechando el soporte Unicode de Julia
+latitud_cali = 3.4516
+longitud_cali = -76.5320
+elevación_cauca = 995.0
+nombre_vereda = "La Elvira"
+densidad_poblacional = 120.5
+referencia_espacial = "MAGNA-SIRGAS"
+')
+
+j_eval('
+# Nombres de variables NO recomendatos
+# Nombres que no dicen nada del contexto geográfico
+var1 = 3.4516
+info = "La Elvira"
+tmp = 995.0 # Típico error: ¿Temperatura o Temporal?
+lista = [3.45, -76.53] # Difícil de leer en modelos de optimización
+')
+```
+
+:::
+
+
+## Tipos de datos
+
+::: {.panel-tabset}
+
+### Python
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{python}
+#| label: python_tipos_datos_codigo
+#| eval: false
+
+# Representa el número de elementos en un dataset geoespacial
+num_elementos = 500  
+
+# Representa la latitud de un punto (Nevado del Ruiz)
+latitud = 4.8920  
+
+# Representa la longitud de un punto
+longitud = -75.3188  
+
+# Representa el sistema de referencia oficial de Colombia
+sistema_coordenadas = "MAGNA-SIRGAS / Origen Nacional"  
+
+# Representa si el dataset está georreferenciado o no
+esta_georeferenciado = True  
+
+# Una lista que representa latitud y longitud
+coordenadas = [4.8920, -75.3188]  
+
+# Un diccionario con los atributos del elemento geográfico
+atributos_elemento = {
+    "nombre": "Nevado del Ruiz",
+    "altura_msnm": 5321,
+    "tipo": "Estratovolcán",
+    "ubicacion": [4.8920, -75.3188],
+}
+
+print(atributos_elemento)
+
+# Tipo de dato
+type(atributos_elemento)
+
+# Acceder a la primera coordenada (índice 0) dentro de la clave 'ubicacion'
+latitud_ruiz = atributos_elemento["ubicacion"][0]
+latitud_ruiz
+```
+:::
+:::
+
+
+```{python}
+#| label: python_tipos_datos
+# #| eval: false
+
+# Representa el número de elementos en un dataset geoespacial
+num_elementos = 500  
+
+# Representa la latitud de un punto (Nevado del Ruiz)
+latitud = 4.8920  
+
+# Representa la longitud de un punto
+longitud = -75.3188  
+
+# Representa el sistema de referencia oficial de Colombia
+sistema_coordenadas = "MAGNA-SIRGAS / Origen Nacional"  
+
+# Representa si el dataset está georreferenciado o no
+esta_georeferenciado = True  
+
+# Una lista que representa latitud y longitud
+coordenadas = [4.8920, -75.3188]  
+
+# Un diccionario con los atributos del elemento geográfico
+atributos_elemento = {
+    "nombre": "Nevado del Ruiz",
+    "altura_msnm": 5321,
+    "tipo": "Estratovolcán",
+    "ubicacion": [4.8920, -75.3188],
+}
+
+print(atributos_elemento)
+
+# Tipo de dato
+type(atributos_elemento)
+
+# Acceder a la primera coordenada (índice 0) dentro de la clave 'ubicacion'
+latitud_ruiz = atributos_elemento["ubicacion"][0]
+latitud_ruiz
+```
+
+### R
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{r}
+#| label: r_tipos_datos_codigo
+#| eval: false
+
+# Representa el número de elementos (L indica tipo integer)
+num_elementos <- 500L  
+
+# Representa la latitud de un punto (Nevado del Ruiz)
+latitud <- 4.8920  
+
+# Representa la longitud de un punto
+longitud <- -75.3188  
+
+# Representa el sistema de referencia oficial (tipo character)
+sistema_coordenadas <- "MAGNA-SIRGAS / Origen Nacional"  
+
+# Representa si el dataset está georreferenciado (logical)
+esta_georeferenciado <- TRUE  
+
+# Un vector que representa latitud y longitud
+coordenadas <- c(4.8920, -75.3188)  
+
+# Una lista que representa los atributos del elemento geográfico
+atributos_elemento <- list(
+    "nombre" = "Nevado del Ruiz",
+    "altura_msnm" = 5321,
+    "tipo" = "Estratovolcán",
+    "ubicacion" = c(4.8920, -75.3188)
+)
+
+print(atributos_elemento)
+
+# Tipo de dato
+class(atributos_elemento)
+
+# Acceder a la latitud (índice 1 en R) dentro del elemento 'ubicacion'
+latitud_ruiz <- atributos_elemento$ubicacion[1]
+latitud_ruiz
+```
+:::
+:::
+
+```{r}
+#| label: r_tipos_datos
+# #| eval: false
+
+# Representa el número de elementos (L indica tipo integer)
+num_elementos <- 500L  
+
+# Representa la latitud de un punto (Nevado del Ruiz)
+latitud <- 4.8920  
+
+# Representa la longitud de un punto
+longitud <- -75.3188  
+
+# Representa el sistema de referencia oficial (tipo character)
+sistema_coordenadas <- "MAGNA-SIRGAS / Origen Nacional"  
+
+# Representa si el dataset está georreferenciado (logical)
+esta_georeferenciado <- TRUE  
+
+# Un vector que representa latitud y longitud
+coordenadas <- c(4.8920, -75.3188)  
+
+# Una lista que representa los atributos del elemento geográfico
+atributos_elemento <- list(
+    "nombre" = "Nevado del Ruiz",
+    "altura_msnm" = 5321,
+    "tipo" = "Estratovolcán",
+    "ubicacion" = c(4.8920, -75.3188)
+)
+
+print(atributos_elemento)
+
+# Tipo de dato
+class(atributos_elemento)
+
+# Acceder a la latitud (índice 1 en R) dentro del elemento 'ubicacion'
+latitud_ruiz <- atributos_elemento$ubicacion[1]
+latitud_ruiz
+```
+
+### Julia
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{julia}
+#| label: julia_tipos_datos_codigo
+#| eval: false
+
+# Representa el número de elementos en el dataset
+num_elementos = 500  
+
+# Representa la latitud del punto (Nevado del Ruiz)
+latitud = 4.8920  
+
+# Representa la longitud del punto
+longitud = -75.3188  
+
+# Representa el sistema de referencia espacial
+sistema_coordenadas = "MAGNA-SIRGAS / Origen Nacional"  
+
+# Representa el estado de georreferenciación (tipo Bool)
+esta_georeferenciado = true  
+
+# Un arreglo que representa latitud y longitud
+coordenadas = [4.8920, -75.3188]  
+
+# Un diccionario (Dict) para almacenar los atributos
+atributos_elemento = Dict(
+    "nombre" => "Nevado del Ruiz",
+    "altura_msnm" => 5321,
+    "tipo" => "Estratovolcán",
+    "ubicacion" => [4.8920, -75.3188],
+)
+
+print(atributos_elemento)
+
+# Tipo de dato
+typeof(atributos_elemento)
+
+# Acceder a la latitud (índice 1 en Julia) dentro de la clave "ubicacion"
+latitud_ruiz = atributos_elemento["ubicacion"][1]
+latitud_ruiz
+```
+:::
+:::
+
+```{r}
+#| label: julia_tipos_datos
+#| results: asis
+# #| eval: false
+j_eval('
+# Representa el número de elementos en el dataset
+num_elementos = 500  
+
+# Representa la latitud del punto (Nevado del Ruiz)
+latitud = 4.8920  
+
+# Representa la longitud del punto
+longitud = -75.3188  
+
+# Representa el sistema de referencia espacial
+sistema_coordenadas = "MAGNA-SIRGAS / Origen Nacional"  
+
+# Representa el estado de georreferenciación (tipo Bool)
+esta_georeferenciado = true  
+
+# Un arreglo que representa latitud y longitud
+coordenadas = [4.8920, -75.3188]  
+
+# Un diccionario (Dict) para almacenar los atributos
+atributos_elemento = Dict(
+    "nombre" => "Nevado del Ruiz",
+    "altura_msnm" => 5321,
+    "tipo" => "Estratovolcán",
+    "ubicacion" => [4.8920, -75.3188],
+)
+
+println(atributos_elemento)
+
+# Tipo de dato
+typeof(atributos_elemento)
+
+# Acceder a la latitud (índice 1 en Julia) dentro de la clave "ubicacion"
+latitud_ruiz = atributos_elemento["ubicacion"][1]
+latitud_ruiz
+')
+```
+
+:::
+
+| Característica / Variable | Python | R | Julia |
+|:---|:---:|:---:|:---|
+| **Sufijo `L`** (num_elementos)| No se usa. `500` es entero. | Se usa `500L` para `integer`. Sin `L` es `numeric`. | No se usa. `500` es `Int64`. |
+| **Asignación en Diccionario** | `v = {clave: valor, ...}` (Usa `:`). | `v <- list(clave = valor, ...)`. (Usa `=` ) | `v = Dict(clave => valor, ...)` (Usa `=>`). |
+| **`num_elementos`** | `int` | `integer` (con el sufijo `L`) | `Int64` |
+| **`latitud` / `longitud`** | `float` | `numeric` (doble precisión) | `Float64` |
+| **`sistema_coordenadas`** | `str` | `character` | `String` |
+| **`esta_georeferenciado`** | `bool` (`True` / `False`) | `logical` (`TRUE` / `FALSE`) | `Bool` (`true` / `false`) |
+| **`coordenadas`** | `list` `[ , ]`: Colección mutable de objetos. | `vector` `c( , )`: Colección indexada de elementos del mismo tipo. | `Array` `[ , ]` (Vector): Arreglo indexado y optimizado para cómputo. |
+| **`atributos_elemento`** | `dict` `{ : }`: Estructura nativa de pares clave-valor. | `list` `list( = )`: Lista con nombres (etiquetas) para cada elemento. | `Dict` `Dict( => )`: Tipo de dato optimizado para mapeos clave-valor. |
+
+: Comparación detallada de sintaxis y tipos de datos {#tbl-comparativa_tecnica_sig tbl-colwidths="[25,25,25,25]"}
+
+### ¿Qué es un diccionario?
+
+Un **Diccionario** es una estructura de datos que organiza la información mediante pares de **Clave-Valor** (*Key-Value*). A diferencia de las secuencias indexadas (como las listas o vectores) donde los elementos se recuperan por su posición numérica, en un diccionario se accede a la información a través de etiquetas únicas llamadas claves.
+
+* **Identificación:** Cada valor almacenado debe tener una clave asociada que funciona como su identificador único.
+* **Heterogeneidad:** Permite agrupar diversos tipos de datos (cadenas, números, arreglos) bajo un mismo objeto.
+* **Acceso Directo:** Su implementación técnica permite que la recuperación de un dato sea extremadamente eficiente, sin importar el volumen de información.
+* **Estándares:** Es el concepto fundamental detrás de formatos como JSON, facilitando la organización jerárquica de los datos.
+
+## Caracteres de escape
+
+::: {.panel-tabset}
+
+### Python
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{python}
+#| label: python_escape_codigo
+#| eval: false
+
+# Salto de línea para separar información de capas geográficas
+print("Capa: Departamentos_Colombia\nEstado: Procesada exitosamente.")
+
+# Salto de línea y tabulación para jerarquizar metadatos
+print("Metadatos del proyecto:\n\tAutor: IGAC\n\tEscala: 1:100.000")
+
+# Uso de comillas simples dentro de dobles para nombres propios
+print("Nombre del archivo: 'Mapa_Relieve_Colombia.shp'")
+```
+:::
+:::
+
+
+```{python}
+#| label: python_escape
+# #| eval: false
+
+# Salto de línea para separar información de capas geográficas
+print("Capa: Departamentos_Colombia\nEstado: Procesada exitosamente.")
+
+# Salto de línea y tabulación para jerarquizar metadatos
+print("Metadatos del proyecto:\n\tAutor: IGAC\n\tEscala: 1:100.000")
+
+# Uso de comillas simples dentro de dobles para nombres propios
+print("Nombre del archivo: 'Mapa_Relieve_Colombia.shp'")
+```
+
+### R
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{r}
+#| label: r_escape_codigo
+#| eval: false
+
+# Salto de línea para separar información de capas geográficas
+print("Capa: Departamentos_Colombia\nEstado: Procesada exitosamente.")
+
+# Salto de línea y tabulación para jerarquizar metadatos
+cat("Metadatos del proyecto:\n\tAutor: IGAC\n\tEscala: 1:100.000")
+
+# Uso de comillas simples dentro de dobles para nombres propios
+print("Nombre del archivo: 'Mapa_Relieve_Colombia.shp'")
+```
+:::
+:::
+
+```{r}
+#| label: r_escape
+# #| eval: false
+
+# Salto de línea para separar información de capas geográficas
+print("Capa: Departamentos_Colombia\nEstado: Procesada exitosamente.")
+
+# Salto de línea y tabulación para jerarquizar metadatos (cat interpreta mejor los caracteres)
+cat("Metadatos del proyecto:\n\tAutor: IGAC\n\tEscala: 1:100.000")
+
+# Uso de comillas simples dentro de dobles para nombres propios
+print("Nombre del archivo: 'Mapa_Relieve_Colombia.shp'")
+```
+
+### Julia
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{julia}
+#| label: julia_escape_codigo
+#| eval: false
+
+# Salto de línea para separar información de capas geográficas
+println("Capa: Departamentos_Colombia\nEstado: Procesada exitosamente.")
+
+# Salto de línea y tabulación para jerarquizar metadatos
+println("Metadatos del proyecto:\n\tAutor: IGAC\n\tEscala: 1:100.000")
+
+# Uso de comillas simples dentro de dobles para nombres propios
+println("Nombre del archivo: 'Mapa_Relieve_Colombia.shp'")
+```
+:::
+:::
+
+```{r}
+#| label: julia_escape
+#| results: asis
+# #| eval: false
+j_eval('
+# Salto de línea para separar información de capas geográficas
+println("Capa: Departamentos_Colombia\nEstado: Procesada exitosamente.")
+
+# Salto de línea y tabulación para jerarquizar metadatos
+println("Metadatos del proyecto:\n\tAutor: IGAC\n\tEscala: 1:100.000")
+
+# Uso de comillas simples dentro de dobles para nombres propios
+println("Nombre del archivo: \'Mapa_Relieve_Colombia.shp\'")
+')
+```
+
+:::
+
+### Caracteres especiales de escape
+
+| Carácter | Nombre | Descripción Técnica |
+|:---:|:---|:---|
+| `\n` | Salto de línea (Newline) | Mueve el cursor al inicio de la siguiente línea para organizar texto. |
+| `\t` | Tabulación (Tab) | Inserta un espacio horizontal para crear jerarquías o sangrías. |
+| `\\` | Barra invertida | Permite imprimir el carácter `\` (crucial para rutas de archivos en sistemas locales). |
+| `\"` | Comilla doble | Permite insertar comillas dobles sin cerrar prematuramente la cadena de texto. |
+| `\'` | Comilla simple | Permite insertar comillas simples; en Julia/R dentro de `j_eval` suele requerir escape extra. |
+
+: Caracteres de escape comunes en lenguajes de programación {#tbl-caracteres_escape tbl-colwidths="[15,25,60]"}
+
+
+## Comentarios
+
+::: {.panel-tabset}
+
+### Python
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{python}
+#| label: python_escape_comentarios_codigo
+#| eval: false
+
+# Comentario de bloque: Información de procesamiento
+print("Capa: Departamentos_Colombia\nEstado: Procesada exitosamente.")
+
+# Comentario en línea: RMSE en metros
+rmse = 0.05  # Tolerancia para precisión submétrica
+
+"""
+Este es un comentario multilínea en Python.
+Se utilizan triples comillas (aunque técnicamente son cadenas
+de texto no asignadas, se usan para documentar bloques extensos).
+"""
+print("Nombre del archivo: 'Mapa_Relieve_Colombia.shp'")
+```
+:::
+:::
+
+
+```{python}
+#| label: python_escape_comentarios
+# #| eval: false
+
+# Comentario de bloque: Información de procesamiento
+print("Capa: Departamentos_Colombia\nEstado: Procesada exitosamente.")
+
+# Comentario en línea: RMSE en metros
+rmse = 0.05  # Tolerancia para precisión submétrica
+
+"""
+Este es un comentario multilínea en Python.
+Se utilizan triples comillas (aunque técnicamente son cadenas
+de texto no asignadas, se usan para documentar bloques extensos).
+"""
+print("Nombre del archivo: 'Mapa_Relieve_Colombia.shp'")
+```
+
+### R
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{r}
+#| label: r_escape_comentarios_codigo
+#| eval: false
+
+# Comentario de bloque: Información de procesamiento
+print("Capa: Departamentos_Colombia\nEstado: Procesada exitosamente.")
+
+# Comentario en línea: RMSE en metros
+rmse <- 0.05  # Tolerancia para precisión submétrica
+
+# R no tiene un operador nativo para comentarios multilínea.
+# Se deben usar múltiples numerales consecutivos para
+# documentar bloques de código extensos.
+cat("Metadatos del proyecto:\n\tAutor: IGAC\n\tEscala: 1:100.000")
+```
+:::
+:::
+
+```{r}
+#| label: r_escape_comentarios
+# #| eval: false
+
+# Comentario de bloque: Información de procesamiento
+print("Capa: Departamentos_Colombia\nEstado: Procesada exitosamente.")
+
+# Comentario en línea: RMSE en metros
+rmse <- 0.05  # Tolerancia para precisión submétrica
+
+# R no tiene un operador nativo para comentarios multilínea.
+# Se deben usar múltiples numerales consecutivos para
+# documentar bloques de código extensos.
+cat("Metadatos del proyecto:\n\tAutor: IGAC\n\tEscala: 1:100.000")
+```
+
+### Julia
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{julia}
+#| label: julia_escape_comentarios_codigo
+#| eval: false
+
+# Comentario de bloque: Información de procesamiento
+println("Capa: Departamentos_Colombia\nEstado: Procesada exitosamente.")
+
+# Comentario en línea: RMSE en metros
+rmse = 0.05  # Tolerancia para precisión submétrica
+
+#=
+Este es un comentario multilínea nativo en Julia.
+Permite comentar grandes bloques de código o explicaciones
+extensas sin necesidad de colocar numerales en cada línea.
+=#
+
+# En Julia las tres comillas sirven para 
+# definir archivos de texto en memoria (no son comentarios)
+csv_data = """
+municipio,altitud
+Bogota,2625
+Medellin,1495
+Cali,1018
+Quibdo,43
+"""
+csv_data
+
+println("Nombre del archivo: 'Mapa_Relieve_Colombia.shp'")
+```
+:::
+:::
+
+```{r}
+#| label: julia_escape_comentarios
+#| results: asis
+# #| eval: false
+j_eval('
+# Comentario de bloque: Información de procesamiento
+println("Capa: Departamentos_Colombia\nEstado: Procesada exitosamente.")
+
+# Comentario en línea: RMSE en metros
+rmse = 0.05  # Tolerancia para precisión submétrica
+
+#=
+Este es un comentario multilínea nativo en Julia.
+Permite comentar grandes bloques de código o explicaciones
+extensas sin necesidad de colocar numerales en cada línea.
+=#
+
+# En Julia las tres comillas sirven para 
+# definir archivos de texto en memoria (no son comentarios)
+csv_data = """
+municipio,altitud
+Bogota,2625
+Medellin,1495
+Cali,1018
+Quibdo,43
+"""
+csv_data
+
+println("Nombre del archivo: \'Mapa_Relieve_Colombia.shp\'")
+')
+```
+
+:::
+
+### Documentación y caracteres especiales
+
+| Carácter | Nombre | Función Técnica |
+|:---:|:---|:---|
+| `#` | Numeral | Inicia comentarios de una sola línea en los tres lenguajes. |
+| `\n` | Newline | Inserta un salto de línea dentro de una cadena de texto. |
+| `\t` | Tab | Inserta una tabulación horizontal (sangría). |
+| `"""` | Triple comilla | **Python:** Documentación de bloques (*docstrings*). <br>**Julia:** Cadenas multilínea (útil para definir archivos o bloques de texto en memoria). <br>**R:** No se utiliza (causa error de sintaxis). |
+| `#= =#` | Block comment | Delimitador nativo de **Julia** para comentarios multilínea. |
+
+: Sintaxis de documentación, escape y cadenas especiales {#tbl-doc_escape_final tbl-colwidths="[15,25,60]"}
+
+---
+
+**Nota técnica:** En el desarrollo de herramientas automatizadas, los comentarios multilínea son el estándar para definir el **encabezado del script**, detallando licencias, el sistema de referencia de coordenadas (CRS) y las dependencias. Es fundamental diferenciar entre un comentario real y una cadena de texto: mientras que `#` y `#= =#` son ignorados por el compilador, las triples comillas `"""` en Python y Julia generan objetos en la memoria. En Python, estas actúan como comentarios "de facto" solo si no se asignan a una variable (siendo la base de los *docstrings*), mientras que en Julia su propósito principal es la creación de bloques de texto estructurado o archivos en memoria.
+
+## Trabajando con variables y tipos de datos
+
+::: {.panel-tabset}
+
+### Python
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{python}
+#| label: python_trabajo_variables_codigo
+#| eval: false
+
+import math
+
+# Inicialización de variables para asegurar la ejecución
+num_elementos = 500
+
+# Incrementar el número de elementos existentes
+num_elementos += 20
+num_elementos
+
+# Convertir la latitud de grados decimales a radianes
+latitud_ruiz = 4.8920
+latitud_radianes = math.radians(latitud_ruiz)
+
+# Agregar nuevas coordenadas a la lista [Lat, Lon] de Bogotá
+coordenadas = [4.8920, -75.3188]
+coordenadas.append(4.6097)  # Latitud de Bogotá
+coordenadas.append(-74.0817) # Longitud de Bogotá
+
+# Acceso y formateo de cadenas usando el diccionario de atributos
+nombre_volcan = atributos_elemento["nombre"]
+altura_volcan = atributos_elemento["altura_msnm"]
+mensaje = f"{nombre_volcan} tiene una altura de {altura_volcan} metros."
+
+# Mostrar el resultado final
+mensaje
+```
+:::
+:::
+
+
+```{python}
+#| label: python_trabajo_variables
+# #| eval: false
+
+import math
+
+# Inicialización de variables para asegurar la ejecución
+num_elementos = 500
+
+# Incrementar el número de elementos existentes
+num_elementos += 20
+num_elementos
+
+# Convertir la latitud de grados decimales a radianes
+latitud_ruiz = 4.8920
+latitud_radianes = math.radians(latitud_ruiz)
+
+# Agregar nuevas coordenadas a la lista [Lat, Lon] de Bogotá
+coordenadas = [4.8920, -75.3188]
+coordenadas.append(4.6097)  # Latitud de Bogotá
+coordenadas.append(-74.0817) # Longitud de Bogotá
+
+# Acceso y formateo de cadenas usando el diccionario de atributos
+nombre_volcan = atributos_elemento["nombre"]
+altura_volcan = atributos_elemento["altura_msnm"]
+mensaje = f"{nombre_volcan} tiene una altura de {altura_volcan} metros."
+
+# Mostrar el resultado final
+mensaje
+```
+
+### R
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{r}
+#| label: r_trabajo_variables_codigo
+#| eval: false
+
+# Inicialización de variables necesarias
+num_elementos <- 500
+# Incrementar el número de elementos
+num_elementos <- num_elementos + 20
+num_elementos
+
+# Convertir latitud a radianes
+latitud_ruiz <- 4.8920
+latitud_radianes <- latitud_ruiz * (pi / 180)
+
+# Agregar elementos a un vector (creando una copia combinada)
+coordenadas <- c(4.8920, -75.3188)
+coordenadas <- c(coordenadas, 4.6097, -74.0817)
+
+# Acceso a lista y formateo de cadenas
+nombre_volcan <- atributos_elemento$nombre
+altura_volcan <- atributos_elemento$altura_msnm
+mensaje <- paste(nombre_volcan, "tiene una altura de", altura_volcan, "metros.")
+
+# Mostrar el resultado final
+mensaje
+```
+:::
+:::
+
+```{r}
+#| label: r_trabajo_variables
+# #| eval: false
+
+# Inicialización de variables necesarias
+num_elementos <- 500
+# Incrementar el número de elementos
+num_elementos <- num_elementos + 20
+num_elementos
+
+# Convertir latitud a radianes
+latitud_ruiz <- 4.8920
+latitud_radianes <- latitud_ruiz * (pi / 180)
+
+# Agregar elementos a un vector (creando una copia combinada)
+coordenadas <- c(4.8920, -75.3188)
+coordenadas <- c(coordenadas, 4.6097, -74.0817)
+
+# Acceso a lista y formateo de cadenas
+nombre_volcan <- atributos_elemento$nombre
+altura_volcan <- atributos_elemento$altura_msnm
+mensaje <- paste(nombre_volcan, "tiene una altura de", altura_volcan, "metros.")
+
+# Mostrar el resultado final
+mensaje
+```
+
+### Julia
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{julia}
+#| label: julia_trabajo_variables_codigo
+#| eval: false
+
+# Inicialización de variables necesarias
+num_elementos = 500
+# Incrementar el número de elementos
+num_elementos += 20
+num_elementos
+
+# Convertir latitud a radianes usando la función nativa deg2rad
+latitud_ruiz = 4.8920
+latitud_radianes = deg2rad(latitud_ruiz)
+
+# Agregar coordenadas a un arreglo (push! modifica el objeto original)
+coordenadas = [4.8920, -75.3188]
+push!(coordenadas, 4.6097)
+push!(coordenadas, -74.0817)
+
+# Acceso a Diccionario e interpolación de texto
+nombre_volcan = atributos_elemento["nombre"]
+altura_volcan = atributos_elemento["altura_msnm"]
+mensaje = "$nombre_volcan tiene una altura de $altura_volcan metros."
+
+# Mostrar el resultado final
+mensaje
+```
+:::
+:::
+
+```{r}
+#| label: julia_trabajo_variables
+#| results: asis
+# #| eval: false
+j_eval('
+# Inicialización de variables necesarias
+num_elementos = 500
+# Incrementar el número de elementos
+num_elementos += 20
+num_elementos
+
+# Convertir latitud a radianes usando la función nativa deg2rad
+latitud_ruiz = 4.8920
+latitud_radianes = deg2rad(latitud_ruiz)
+
+# Agregar coordenadas a un arreglo
+coordenadas = [4.8920, -75.3188]
+push!(coordenadas, 4.6097)
+push!(coordenadas, -74.0817)
+
+# Acceso e interpolación de texto
+nombre_volcan = atributos_elemento["nombre"]
+altura_volcan = atributos_elemento["altura_msnm"]
+mensaje = "$nombre_volcan tiene una altura de $altura_volcan metros."
+
+# Mostrar el resultado final
+mensaje
+')
+```
+
+:::
+
+| Operación | Python | R | Julia |
+|:---|:---:|:---:|:---|
+| **Incremento** | `+=` | `x <- x + n` | `+=` |
+| **Grados a Radianes** | `math.radians()` | `x * (pi/180)` | `deg2rad()` |
+| **Agregar a lista** | `.append()` (Mutable) | `c(x, n)` (Inmutable) | `push!()` (Mutable) |
+| **Interpolación de texto** | `f"{var}"` | `paste()` / `sprintf()` | `"$var"` |
+
+: Comparación de operaciones comunes con variables {#tbl-operaciones_variables tbl-colwidths="[25,25,25,25]"}
+
+**Nota técnica:** En el desarrollo de algoritmos geográficos, la mutabilidad es un concepto clave. Mientras que Python y Julia permiten modificar una lista de coordenadas directamente (`append` / `push!`), en R los vectores son inmutables; cada vez que "agregamos" un dato, R crea una copia nueva del vector en memoria.
+
+## Operaciones básicas con texto
+
+::: {.panel-tabset}
+
+### Python
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{python}
+#| label: python_texto_codigo
+#| eval: false
+
+# Inicialización de la variable de texto
+nombre_ciudad = "cartagena de indias"
+
+# Convertir a minúsculas
+ciudad_minusculas = nombre_ciudad.lower()
+print("Minúsculas:", ciudad_minusculas)
+
+# Convertir a mayúsculas (útil para estandarizar tablas de atributos)
+ciudad_mayusculas = nombre_ciudad.upper()
+print("Mayúsculas:", ciudad_mayusculas)
+
+# Convertir a formato título (primera letra de cada palabra en mayúscula)
+ciudad_titulo = nombre_ciudad.title()
+print("Formato título:", ciudad_titulo)
+
+# Reemplazar texto específico dentro de una cadena
+ciudad_original = "San Andrés"
+nueva_ciudad = ciudad_original.replace("San", "Isla de San")
+print("Original:", ciudad_original)
+print("Modificada:", nueva_ciudad)
+
+# Limpiar espacios en blanco al inicio y al final (Trim)
+datos_ubicacion = "   Bogotá D.C.   "
+ubicacion_limpia = datos_ubicacion.strip()
+print("Texto limpio:", f"'{ubicacion_limpia}'")
+```
+:::
+:::
+
+
+```{python}
+#| label: python_texto
+# #| eval: false
+
+# Inicialización de la variable de texto
+nombre_ciudad = "cartagena de indias"
+
+# Convertir a minúsculas
+ciudad_minusculas = nombre_ciudad.lower()
+print("Minúsculas:", ciudad_minusculas)
+
+# Convertir a mayúsculas (útil para estandarizar tablas de atributos)
+ciudad_mayusculas = nombre_ciudad.upper()
+print("Mayúsculas:", ciudad_mayusculas)
+
+# Convertir a formato título (primera letra de cada palabra en mayúscula)
+ciudad_titulo = nombre_ciudad.title()
+print("Formato título:", ciudad_titulo)
+
+# Reemplazar texto específico dentro de una cadena
+ciudad_original = "San Andrés"
+nueva_ciudad = ciudad_original.replace("San", "Isla de San")
+print("Original:", ciudad_original)
+print("Modificada:", nueva_ciudad)
+
+# Limpiar espacios en blanco al inicio y al final (Trim)
+datos_ubicacion = "   Bogotá D.C.   "
+ubicacion_limpia = datos_ubicacion.strip()
+print("Texto limpio:", f"'{ubicacion_limpia}'")
+```
+
+### R
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{r}
+#| label: r_texto_codigo
+#| eval: false
+
+# Cargar paquete nativo recomendado para formato título
+library(tools)
+
+# Inicialización de la variable de texto
+nombre_ciudad <- "cartagena de indias"
+
+# Convertir a minúsculas
+ciudad_minusculas <- tolower(nombre_ciudad)
+cat("Minúsculas:", ciudad_minusculas, "\n")
+
+# Convertir a mayúsculas (útil para estandarizar tablas de atributos)
+ciudad_mayusculas <- toupper(nombre_ciudad)
+cat("Mayúsculas:", ciudad_mayusculas, "\n")
+
+# Convertir a formato título
+ciudad_titulo <- toTitleCase(nombre_ciudad)
+cat("Formato título:", ciudad_titulo, "\n")
+
+# Reemplazar texto específico dentro de una cadena
+ciudad_original <- "San Andrés"
+nueva_ciudad <- gsub("San", "Isla de San", ciudad_original)
+cat("Original:", ciudad_original, "\n")
+cat("Modificada:", nueva_ciudad, "\n")
+
+# Limpiar espacios en blanco al inicio y al final (Trim)
+datos_ubicacion <- "   Bogotá D.C.   "
+ubicacion_limpia <- trimws(datos_ubicacion)
+cat("Texto limpio: '", ubicacion_limpia, "'\n", sep="")
+```
+:::
+:::
+
+```{r}
+#| label: r_texto
+# #| eval: false
+
+# Cargar paquete nativo recomendado para formato título
+library(tools)
+
+# Inicialización de la variable de texto
+nombre_ciudad <- "cartagena de indias"
+
+# Convertir a minúsculas
+ciudad_minusculas <- tolower(nombre_ciudad)
+cat("Minúsculas:", ciudad_minusculas, "\n")
+
+# Convertir a mayúsculas (útil para estandarizar tablas de atributos)
+ciudad_mayusculas <- toupper(nombre_ciudad)
+cat("Mayúsculas:", ciudad_mayusculas, "\n")
+
+# Convertir a formato título
+ciudad_titulo <- toTitleCase(nombre_ciudad)
+cat("Formato título:", ciudad_titulo, "\n")
+
+# Reemplazar texto específico dentro de una cadena
+ciudad_original <- "San Andrés"
+nueva_ciudad <- gsub("San", "Isla de San", ciudad_original)
+cat("Original:", ciudad_original, "\n")
+cat("Modificada:", nueva_ciudad, "\n")
+
+# Limpiar espacios en blanco al inicio y al final (Trim)
+datos_ubicacion <- "   Bogotá D.C.   "
+ubicacion_limpia <- trimws(datos_ubicacion)
+cat("Texto limpio: '", ubicacion_limpia, "'\n", sep="")
+```
+
+### Julia
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{julia}
+#| label: julia_texto_codigo
+#| eval: false
+
+# Inicialización de la variable de texto
+nombre_ciudad = "cartagena de indias"
+
+# Convertir a minúsculas
+ciudad_minusculas = lowercase(nombre_ciudad)
+println("Minúsculas: ", ciudad_minusculas)
+
+# Convertir a mayúsculas (útil para estandarizar tablas de atributos)
+ciudad_mayusculas = uppercase(nombre_ciudad)
+println("Mayúsculas: ", ciudad_mayusculas)
+
+# Convertir a formato título (primera letra de cada palabra en mayúscula)
+ciudad_titulo = titlecase(nombre_ciudad)
+println("Formato título: ", ciudad_titulo)
+
+# Reemplazar texto específico dentro de una cadena (usa el operador Pair =>)
+ciudad_original = "San Andrés"
+nueva_ciudad = replace(ciudad_original, "San" => "Isla de San")
+println("Original: ", ciudad_original)
+println("Modificada: ", nueva_ciudad)
+
+# Limpiar espacios en blanco al inicio y al final (Trim)
+datos_ubicacion = "   Bogotá D.C.   "
+ubicacion_limpia = strip(datos_ubicacion)
+println("Texto limpio: '", ubicacion_limpia, "'")
+```
+:::
+:::
+
+```{r}
+#| label: julia_texto
+#| results: asis
+# #| eval: false
+j_eval('
+# Inicialización de la variable de texto
+nombre_ciudad = "cartagena de indias"
+
+# Convertir a minúsculas
+ciudad_minusculas = lowercase(nombre_ciudad)
+println("Minúsculas: ", ciudad_minusculas)
+
+# Convertir a mayúsculas (útil para estandarizar tablas de atributos)
+ciudad_mayusculas = uppercase(nombre_ciudad)
+println("Mayúsculas: ", ciudad_mayusculas)
+
+# Convertir a formato título (primera letra de cada palabra en mayúscula)
+ciudad_titulo = titlecase(nombre_ciudad)
+println("Formato título: ", ciudad_titulo)
+
+# Reemplazar texto específico dentro de una cadena (usa el operador Pair =>)
+ciudad_original = "San Andrés"
+nueva_ciudad = replace(ciudad_original, "San" => "Isla de San")
+println("Original: ", ciudad_original)
+println("Modificada: ", nueva_ciudad)
+
+# Limpiar espacios en blanco al inicio y al final (Trim)
+datos_ubicacion = "   Bogotá D.C.   "
+ubicacion_limpia = strip(datos_ubicacion)
+println("Texto limpio: \'", ubicacion_limpia, "\'")
+')
+```
+
+:::
+
+| Operación | Python | R | Julia |
+|:---|:---:|:---:|:---|
+| **Minúsculas** | `.lower()` | `tolower()` | `lowercase()` |
+| **Mayúsculas** | `.upper()` | `toupper()` | `uppercase()` |
+| **Formato Título** | `.title()` | `tools::toTitleCase()` | `titlecase()` |
+| **Reemplazar** | `.replace("viejo", "nuevo")` | `gsub("viejo", "nuevo", var)` | `replace(var, "viejo" => "nuevo")` |
+| **Limpiar Espacios** | `.strip()` | `trimws()` | `strip()` |
+
+: Equivalencias de funciones para manipulación de cadenas de texto {#tbl-operaciones_texto tbl-colwidths="[20,25,30,25]"}
+
+
+
+---
+
+**Nota técnica:** En el geoprocesamiento, la limpieza de cadenas de texto (*string parsing*) es una fase crítica antes de realizar cruces espaciales o uniones de tablas (joins). Diferencias imperceptibles como espacios en blanco accidentales (`"Bogotá "` vs `"Bogotá"`) o discrepancias de mayúsculas y minúsculas provocarán que el software GIS falle al emparejar los registros. Las funciones de `strip()` y `upper()` son la primera línea de defensa para garantizar la integridad topológica y tabular de los datos.
+
+
+## Resumen de aprendizajes (cheat sheet)
+
+En esta sección hemos abordado los cimientos de la programación aplicados al análisis de datos. A continuación, se presenta un **Cheat Sheet (Hoja de Referencia)** consolidado con las equivalencias sintácticas y funcionales entre Python, R y Julia.
+
+### 1. Asignación, Variables e Indexación
+
+| Concepto / Operación | Python | R | Julia |
+|:---|:---|:---|:---|
+| **Asignación Básica** | `=` | `<-` (Recomendado) o `=` | `=` |
+| **Imprimir en consola** | `print(var)` | `print(var)` o `cat(var)` | `println(var)` |
+| **Interpolación de texto** | `f"Texto {var}"` | `paste("Texto", var)` | `"Texto $var"` |
+| **Incrementar valor** | `x += 1` | `x <- x + 1` | `x += 1` |
+| **Índice Inicial (Arrays)** | `[0]` (Base 0) | `[1]` (Base 1) | `[1]` (Base 1) |
+| **Último elemento** | `[-1]` | `[length(x)]` | `[end]` |
+
+: Resumen de sintaxis y manejo de variables {#tbl-resumen_variables tbl-colwidths="[25,25,25,25]"}
+
+
+### 2. Estructuras y Tipos de Datos Geoespaciales
+
+| Concepto | Python | R | Julia |
+|:---|:---|:---|:---|
+| **Número Entero** | `int` (ej. `500`) | `integer` (ej. `500L`) | `Int64` (ej. `500`) |
+| **Número Decimal** | `float` | `numeric` | `Float64` |
+| **Booleano** | `bool` (`True`/`False`) | `logical` (`TRUE`/`FALSE`) | `Bool` (`true`/`false`) |
+| **Lista de Coordenadas** | `list` `[4.8, -75.3]` (Mutable) | `vector` `c(4.8, -75.3)` (Inmutable) | `Array` `[4.8, -75.3]` (Mutable) |
+| **Agregar a Lista/Array** | `lista.append(x)` | `v <- c(v, x)` | `push!(lista, x)` |
+| **Atributos (Diccionario)** | `dict` `{ "clave": valor }` | `list` `list(clave = valor)` | `Dict` `Dict("clave" => valor)` |
+
+: Resumen de estructuras de datos y tipos {#tbl-resumen_tipos_datos tbl-colwidths="[25,25,25,25]"}
+
+### 3. Manipulación de Cadenas de Texto (Limpieza Tabular)
+
+| Operación | Python | R | Julia |
+|:---|:---|:---|:---|
+| **A minúsculas** | `var.lower()` | `tolower(var)` | `lowercase(var)` |
+| **A MAYÚSCULAS** | `var.upper()` | `toupper(var)` | `uppercase(var)` |
+| **Formato Título** | `var.title()` | `tools::toTitleCase(var)` | `titlecase(var)` |
+| **Reemplazar texto** | `var.replace("a", "b")` | `gsub("a", "b", var)` | `replace(var, "a" => "b")` |
+| **Quitar espacios vacíos** | `var.strip()` | `trimws(var)` | `strip(var)` |
+
+: Resumen de funciones para limpieza de texto (String Parsing) {#tbl-resumen_texto tbl-colwidths="[25,25,25,25]"}
+
+### 4. Documentación y Caracteres Especiales
+
+| Carácter | Python | R | Julia |
+|:---:|:---|:---|:---|
+| `#` | Comentario en línea. | Comentario en línea. | Comentario en línea. |
+| `\n` | Salto de línea. | Salto de línea. | Salto de línea. |
+| `\t` | Tabulación. | Tabulación. | Tabulación. |
+| `"""` | *Docstrings* (Comentarios). | Causa error de sintaxis. | Cadenas/Archivos multilínea. |
+| `#= =#` | No soportado. | No soportado. | Comentario de bloque nativo. |
+
+: Resumen de caracteres de escape y documentación {#tbl-resumen_caracteres tbl-colwidths="[15,25,25,35]"}
+
+---
+
+**Conclusión del Módulo:**
+La correcta elección de los tipos de datos (Listas vs. Diccionarios), la comprensión del índice de origen (Base 0 vs. Base 1) y la estandarización de nombres (snake_case) son los pilares fundamentales para escribir algoritmos robustos. Un manejo deficiente en la limpieza de texto (mayúsculas, minúsculas, espacios) o en la mutabilidad de las variables, suele ser la causa principal de fallos silenciosos durante los procesos de cruce y análisis espacial.
+
+## Ejercicios
+
+Para poner en práctica los conceptos aprendidos, deberás resolver los siguientes dos ejercicios. Puedes elegir resolverlos en **Python, R o Julia** (o implementar la solución en varios lenguajes si deseas retarte).
+
+### Ejercicio 1: Asignación de variables y operaciones básicas
+
+**Contexto:** Formas parte del equipo SIG de una corporación autónoma regional y necesitas estructurar los metadatos de una nueva estación de monitoreo ambiental antes de ingresarla a la base de datos espacial.
+
+**Instrucciones de código:**
+
+1. Define las siguientes variables respetando estrictamente el estándar `snake_case`:
+   * Nombre de la estación: "Páramo de Santurbán"
+   * Latitud: `7.2514`
+   * Longitud: `-72.9069`
+   * Elevación en metros: `3350`
+   * ¿Está activa?: `Verdadero` (Usa el tipo booleano correcto según tu lenguaje).
+2. Crea una estructura de colección (Lista en Python, Vector en R, o Array en Julia) que contenga la Latitud y la Longitud, en ese orden.
+3. Crea un **Diccionario** (o Lista con nombres en R) llamado `metadatos_estacion` que agrupe todas las variables anteriores bajo claves descriptivas.
+4. Usando la indexación adecuada (Base 0 o Base 1, según el lenguaje que elegiste), extrae específicamente la **Longitud** desde la colección de coordenadas que está dentro del diccionario y guárdala en una nueva variable.
+5. Se ha realizado una nueva medición topográfica y la elevación real es 12.5 metros más alta. Actualiza la variable de elevación utilizando el operador de incremento.
+6. Imprime en consola un mensaje dinámico utilizando interpolación de texto (ej. `f-strings`, `paste()` o `$`) que diga exactamente: *"La estación [Nombre] se encuentra operativa en la longitud [Longitud] a una altura actualizada de [Elevación] msnm."*
+
+### Ejercicio 2: Trabajando con strings
+
+**Contexto:** Has recibido una tabla de Excel con la toponimia de áreas protegidas de Colombia capturada manualmente por diferentes operarios. Los textos están sucios y, si intentas hacer un cruce espacial (*Spatial Join*) con la capa oficial del IGAC, el software arrojará errores de topología tabular.
+
+**Instrucciones de código:**
+
+1. Inicializa una variable con el siguiente texto crudo y problemático:
+   `registro_crudo = "   sAnTuaRio de fAuna Y flora iGuaQue   "`
+2. **Utiliza el método o función nativa de tu lenguaje** (vista en la sección anterior) para eliminar los espacios en blanco accidentales al inicio y al final del texto.
+3. **Usa el comando correspondiente para convertir** el texto limpio a formato de Título (*Title Case*), estandarizando así las mayúsculas y minúsculas.
+4. **Emplea la herramienta de reemplazo** de texto para cambiar la letra " Y " por " y " (en minúscula), de modo que el conector gramatical sea correcto.
+5. Utiliza caracteres de escape (`\n` y `\t`) para imprimir un pequeño reporte estructurado que muestre el antes y el después, similar a esto:
+
+```text
+Reporte de Limpieza Toponímica:
+	Registro Original: "   sAnTuaRio de fAuna Y flora iGuaQue   "
+	Registro Limpio: "Santuario De Fauna y Flora Iguaque"
+Estado: Listo para cruce espacial.
+```
+
+### Entregables y Criterios de Evaluación
+
+El objetivo de esta evaluación no es solo que el código funcione, sino que seas capaz de documentar y explicar tus decisiones técnicas.
+
+**1. Archivos de Código:**
+Debes desarrollar los algoritmos en al menos uno de los siguientes formatos de archivo:
+* Script tradicional (`.py`, `.R`, `.jl`)
+* Notebook interactivo (`.ipynb`)
+* Documento computacional (`.qmd` con *chunks* de código)
+
+**2. Documento Analítico (Quarto):**
+Independientemente del formato de tu código fuente, **debes redactar un documento en Quarto (`.qmd`) y renderizarlo tanto en HTML como en PDF**. En este documento debes incluir tus bloques de código y responder argumentativamente a las siguientes preguntas:
+
+* **Sobre el Ejercicio 1:** ¿Qué índice numérico utilizaste para extraer la longitud de la colección y por qué ese número específicamente? ¿Qué error arrojaría el lenguaje si usas el índice del lenguaje opuesto (ej. usar 0 en R o 1 en Python buscando el primer elemento)?
+* **Sobre el Ejercicio 2:** En términos de geoprocesamiento de bases de datos relacionales, ¿por qué es un paso crítico y obligatorio aplicar métodos de limpieza como `.strip()` o `trimws()` antes de realizar uniones de tablas (*Joins*) basadas en nombres de municipios o regiones?
+* **Pregunta General:** Explica brevemente la diferencia fundamental entre el uso de triples comillas `"""` en Python versus su uso en Julia.
+
+**3. Repositorio en GitHub:**
+Sube tu carpeta del proyecto (que debe contener tus scripts, el archivo `.qmd` y los renders finales en HTML y PDF) a un repositorio público en tu cuenta personal de **GitHub**.
+* **Entrega:** Deberás enviar únicamente el enlace (URL) a tu repositorio de GitHub para la calificación.

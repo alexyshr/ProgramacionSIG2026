@@ -1,4 +1,23 @@
-# Adicionales Sobre R
+# Adicionales Sobre R {#sec-anexo_r}
+
+## Stack de R
+
+Para el análisis geoespacial en `R` (instalado dentro de los contenedores), utilizaremos un ecosistema robusto basado en el estándar *Simple Features* y motores de alto rendimiento para datos ráster (rejilla - cuadrículas).
+
+| Paquete | Funcionalidad | Sitio web |
+|:----------:|:------------------:|:--------------------------------:|
+| `sf` | Geometrías vectoriales (Simple Features) | <https://r-spatial.github.io/sf/> |
+| `terra` | Análisis de datos espaciales (Ráster/Vector) | <https://rspatial.github.io/terra/> |
+| `stars` | Arreglos ordenados espacio-temporales (DataCubes) | <https://r-spatial.github.io/stars/> |
+| `tidyverse` | Metapaquete para ciencia de datos | <https://www.tidyverse.org/> |
+| `tidyterra` | Métodos de tidyverse para terra | <https://dieghernan.github.io/tidyterra/> |
+
+: Paquetes principales del stack espacial en R {#tbl-r-packages}
+
+-   **`sf` (Simple Features)**: Es el estándar moderno para el manejo de datos vectoriales. Representa las geometrías como una columna especial en un *data frame*, permitiendo aplicar toda la potencia de manipulación de tablas a objetos espaciales.
+-   **`terra`**: Motor de alta eficiencia que reemplaza al antiguo paquete `raster`. Está optimizado para el manejo de grandes volúmenes de datos mediante objetos `SpatRaster` y `SpatVector`, permitiendo operaciones de álgebra de mapas y análisis local de manera veloz.
+-   **`stars` (Spatiotemporal Arrays)**: Especializada en el manejo de "cubos de datos" (rejillas con dimensiones de espacio, tiempo y múltiples atributos). Es la herramienta ideal para procesar series temporales de imágenes satelitales o modelos climáticos multidimensionales.
+-   **`tidyterra`**: Extiende la gramática de `ggplot2` y `tidyverse` hacia los objetos de `terra`. Permite visualizar mapas ráster de forma elegante y realizar tuberías (`pipes`) de datos manteniendo la integridad espacial.
 
 ## Versiones instaladas del software
 

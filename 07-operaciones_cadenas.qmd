@@ -1,0 +1,978 @@
+﻿# Operaciones con Cadenas de Texto (Strings)
+
+## Función j_eval y j_plot en R
+
+```{r}
+#| label: setup_benchmark
+#| code-fold: true
+#| include: false
+#| results: asis
+source("./docs/j_eval_j_plot.r")
+```
+
+## Introducción
+
+En el análisis de datos espaciales, gran parte del tiempo se invierte en la limpieza y manipulación de texto. Ya sea para estandarizar nombres de municipios colombianos, armar rutas de archivos raster, separar coordenadas o construir consultas SQL espaciales, dominar las cadenas de texto es fundamental.
+
+## Objetivos de aprendizaje
+
+
+## 1. Creación y Propiedades Básicas
+
+Una cadena de texto (`string`) se puede definir con comillas simples o dobles. Para textos largos (como descripciones de metadatos geográficos), usamos comillas triples.
+
+::: {.panel-tabset}
+
+### Python
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{python}
+#| label: python_str_basico_codigo
+#| eval: false
+lugar = "Pico Cristóbal Colón"
+departamento = 'Magdalena'
+descripcion = """El Pico Cristóbal Colón es la montaña más alta
+de Colombia, ubicada en la Sierra Nevada de Santa Marta."""
+
+print(f"Lugar: {lugar}")
+print(f"Departamento: {departamento}")
+print(f"Descripción: {descripcion}")
+
+# Concatenación y Repetición
+ubicacion_completa = lugar + ", " + departamento
+separador = "=" * 40
+
+print(separador)
+print(f"Ubicación Completa: {ubicacion_completa}")
+print(f"Longitud del nombre: {len(lugar)} caracteres")
+print(separador)
+```
+:::
+:::
+
+```{python}
+#| label: python_str_basico
+lugar = "Pico Cristóbal Colón"
+departamento = 'Magdalena'
+descripcion = """El Pico Cristóbal Colón es la montaña más alta
+de Colombia, ubicada en la Sierra Nevada de Santa Marta."""
+
+print(f"Lugar: {lugar}")
+print(f"Departamento: {departamento}")
+print(f"Descripción: {descripcion}")
+
+# Concatenación y Repetición
+ubicacion_completa = lugar + ", " + departamento
+separador = "=" * 40
+
+print(separador)
+print(f"Ubicación Completa: {ubicacion_completa}")
+print(f"Longitud del nombre: {len(lugar)} caracteres")
+print(separador)
+```
+
+### R
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{r}
+#| label: r_str_basico_codigo
+#| eval: false
+lugar <- "Pico Cristóbal Colón"
+departamento <- 'Magdalena'
+descripcion <- "El Pico Cristóbal Colón es la montaña más alta\nde Colombia, ubicada en la Sierra Nevada de Santa Marta."
+
+cat("Lugar:", lugar, "\n")
+cat("Departamento:", departamento, "\n")
+
+# Concatenación y Repetición
+ubicacion_completa <- paste0(lugar, ", ", departamento)
+separador <- strrep("=", 40)
+
+cat(separador, "\n")
+cat("Ubicación Completa:", ubicacion_completa, "\n")
+cat("Longitud del nombre:", nchar(lugar), "caracteres\n")
+cat(separador, "\n")
+```
+:::
+:::
+
+```{r}
+#| label: r_str_basico
+lugar <- "Pico Cristóbal Colón"
+departamento <- 'Magdalena'
+descripcion <- "El Pico Cristóbal Colón es la montaña más alta\nde Colombia, ubicada en la Sierra Nevada de Santa Marta."
+
+cat("Lugar:", lugar, "\n")
+cat("Departamento:", departamento, "\n")
+
+# Concatenación y Repetición
+ubicacion_completa <- paste0(lugar, ", ", departamento)
+separador <- strrep("=", 40)
+
+cat(separador, "\n")
+cat("Ubicación Completa:", ubicacion_completa, "\n")
+cat("Longitud del nombre:", nchar(lugar), "caracteres\n")
+cat(separador, "\n")
+```
+
+### Julia
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{julia}
+#| label: julia_str_basico_codigo
+#| eval: false
+lugar = "Pico Cristóbal Colón"
+departamento = "Magdalena" # En Julia siempre comillas dobles
+descripcion = """El Pico Cristóbal Colón es la montaña más alta
+de Colombia, ubicada en la Sierra Nevada de Santa Marta."""
+
+println("Lugar: $lugar")
+println("Departamento: $departamento")
+
+# Concatenación (*) y Repetición (^)
+ubicacion_completa = lugar * ", " * departamento
+separador = "=" ^ 40
+
+println(separador)
+println("Ubicación Completa: $ubicacion_completa")
+println("Longitud del nombre: $(length(lugar)) caracteres")
+println(separador)
+```
+:::
+:::
+
+```{r}
+#| label: julia_str_basico
+#| results: asis
+j_eval(r"-(
+lugar = "Pico Cristóbal Colón"
+departamento = "Magdalena" # En Julia siempre comillas dobles
+descripcion = """El Pico Cristóbal Colón es la montaña más alta
+de Colombia, ubicada en la Sierra Nevada de Santa Marta."""
+
+println("Lugar: $lugar")
+println("Departamento: $departamento")
+
+# Concatenación (*) y Repetición (^)
+ubicacion_completa = lugar * ", " * departamento
+separador = "=" ^ 40
+
+println(separador)
+println("Ubicación Completa: $ubicacion_completa")
+println("Longitud del nombre: $(length(lugar)) caracteres")
+println(separador)
+)-")
+```
+
+:::
+
+### 1.1 Interpolación de Cadenas
+
+La interpolación nos permite insertar variables directamente dentro de un texto sin tener que estar abriendo y cerrando comillas constantemente.
+
+
+
+::: {.panel-tabset}
+
+### Python
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{python}
+#| label: python_str_interp_codigo
+#| eval: false
+pico = "Pico Cristóbal Colón"
+altura = 5700
+
+# F-strings (Interpolación directa)
+print(f"El {pico} tiene una altitud de {altura} msnm.")
+```
+:::
+:::
+
+```{python}
+#| label: python_str_interp
+pico = "Pico Cristóbal Colón"
+altura = 5700
+
+# F-strings (Interpolación directa)
+print(f"El {pico} tiene una altitud de {altura} msnm.")
+```
+
+### R
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{r}
+#| label: r_str_interp_codigo
+#| eval: false
+pico <- "Pico Cristóbal Colón"
+altura <- 5700
+
+# En R usamos sprintf (%s para texto, %d para enteros)
+mensaje <- sprintf("El %s tiene una altitud de %d msnm.", pico, altura)
+cat(mensaje)
+```
+:::
+:::
+
+```{r}
+#| label: r_str_interp
+pico <- "Pico Cristóbal Colón"
+altura <- 5700
+
+# En R usamos sprintf (%s para texto, %d para enteros)
+mensaje <- sprintf("El %s tiene una altitud de %d msnm.", pico, altura)
+cat(mensaje)
+```
+
+### Julia
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{julia}
+#| label: julia_str_interp_codigo
+#| eval: false
+pico = "Pico Cristóbal Colón"
+altura = 5700
+
+# Julia usa el símbolo $ para interpolar variables
+println("El $pico tiene una altitud de $altura msnm.")
+```
+:::
+:::
+
+```{r}
+#| label: julia_str_interp
+#| results: asis
+j_eval(r"-(
+pico = "Pico Cristóbal Colón"
+altura = 5700
+
+# Julia usa el símbolo $ para interpolar variables
+println("El $pico tiene una altitud de $altura msnm.")
+)-")
+```
+
+:::
+
+**Resumen de Sintaxis: Creación y Propiedades**
+
+| Operación | Python | R | Julia |
+| :--- | :--- | :--- | :--- |
+| **Definir String** | `"Col"`, `'Col'` | `"Col"`, `'Col'` | `"Col"` (Solo dobles) |
+| **Multilínea** | `"""Texto"""` | `"Texto\nTexto"` | `"""Texto"""` |
+| **Concatenar** | `+` | `paste0(a, b)` | `*` |
+| **Repetir** | `* n` | `strrep(str, n)` | `^ n` |
+| **Longitud** | `len(str)` | `nchar(str)` | `length(str)` |
+| **Interpolación** | `f"Texto {var}"` | `sprintf("Texto %s", var)` | `"Texto $var"` |
+---
+
+## 2. Métodos de Limpieza y Transformación
+
+Los datos de entidades como el DANE o el IGAC a veces vienen con errores de digitación o espacios accidentales. Veamos cómo limpiar un topónimo colombiano.
+
+::: {.panel-tabset}
+
+### Python
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{python}
+#| label: python_str_metodos_codigo
+#| eval: false
+toponimo = "   sAnTuaRio de fAuna Y flora iGuaQue   "
+
+# 1. Quitar espacios laterales
+texto_limpio = toponimo.strip()
+
+# 2. Formato Título
+texto_titulo = texto_limpio.title()
+
+# 3. Reemplazo de caracteres (Corregir la 'y')
+registro_final = texto_titulo.replace(" Y ", " y ")
+
+print(f"Original: '{toponimo}'")
+print(f"Mayúsculas: '{registro_final.upper()}'")
+print(f"Limpio:   '{registro_final}'")
+```
+:::
+:::
+
+```{python}
+#| label: python_str_metodos
+toponimo = "   sAnTuaRio de fAuna Y flora iGuaQue   "
+
+# 1. Quitar espacios laterales
+texto_limpio = toponimo.strip()
+
+# 2. Formato Título
+texto_titulo = texto_limpio.title()
+
+# 3. Reemplazo de caracteres (Corregir la 'y')
+registro_final = texto_titulo.replace(" Y ", " y ")
+
+print(f"Original: '{toponimo}'")
+print(f"Mayúsculas: '{registro_final.upper()}'")
+print(f"Limpio:   '{registro_final}'")
+```
+
+### R
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{r}
+#| label: r_str_metodos_codigo
+#| eval: false
+toponimo <- "   sAnTuaRio de fAuna Y flora iGuaQue   "
+
+# 1. Quitar espacios
+texto_limpio <- trimws(toponimo)
+
+# 2. Formato Título (Requiere pasar a minúscula primero)
+texto_titulo <- tools::toTitleCase(tolower(texto_limpio))
+
+# 3. Reemplazo de caracteres
+registro_final <- gsub(" Y ", " y ", texto_titulo)
+
+cat(sprintf("Original: '%s'\n", toponimo))
+cat(sprintf("Mayúsculas: '%s'\n", toupper(registro_final)))
+cat(sprintf("Limpio:   '%s'\n", registro_final))
+```
+:::
+:::
+
+```{r}
+#| label: r_str_metodos
+toponimo <- "   sAnTuaRio de fAuna Y flora iGuaQue   "
+
+# 1. Quitar espacios
+texto_limpio <- trimws(toponimo)
+
+# 2. Formato Título (Requiere pasar a minúscula primero)
+texto_titulo <- tools::toTitleCase(tolower(texto_limpio))
+
+# 3. Reemplazo de caracteres
+registro_final <- gsub(" Y ", " y ", texto_titulo)
+
+cat(sprintf("Original: '%s'\n", toponimo))
+cat(sprintf("Mayúsculas: '%s'\n", toupper(registro_final)))
+cat(sprintf("Limpio:   '%s'\n", registro_final))
+```
+
+### Julia
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{julia}
+#| label: julia_str_metodos_codigo
+#| eval: false
+toponimo = "   sAnTuaRio de fAuna Y flora iGuaQue   "
+
+# 1. Quitar espacios
+texto_limpio = strip(toponimo)
+
+# 2. Formato Título
+texto_titulo = titlecase(texto_limpio)
+
+# 3. Reemplazo de caracteres
+registro_final = replace(texto_titulo, " Y " => " y ")
+
+println("Original: '$toponimo'")
+println("Mayúsculas: '$(uppercase(registro_final))'")
+println("Limpio:   '$registro_final'")
+```
+:::
+:::
+
+```{r}
+#| label: julia_str_metodos
+#| results: asis
+j_eval(r"-(
+toponimo = "   sAnTuaRio de fAuna Y flora iGuaQue   "
+
+# 1. Quitar espacios
+texto_limpio = strip(toponimo)
+
+# 2. Formato Título
+texto_titulo = titlecase(texto_limpio)
+
+# 3. Reemplazo de caracteres
+registro_final = replace(texto_titulo, " Y " => " y ")
+
+println("Original: '$toponimo'")
+println("Mayúsculas: '$(uppercase(registro_final))'")
+println("Limpio:   '$registro_final'")
+)-")
+```
+
+:::
+
+**Resumen de Sintaxis: Transformaciones**
+
+| Operación | Python | R | Julia |
+| :--- | :--- | :--- | :--- |
+| **Mayúsculas** | `.upper()` | `toupper()` | `uppercase()` |
+| **Minúsculas** | `.lower()` | `tolower()` | `lowercase()` |
+| **Formato Título** | `.title()` | `tools::toTitleCase()` | `titlecase()` |
+| **Quitar Espacios**| `.strip()` | `trimws()` | `strip()` |
+| **Reemplazar** | `.replace(old, new)`| `gsub(old, new, str)` | `replace(str, old=>new)`|
+
+---
+
+
+## 3. Separación y Unión (Split & Join)
+
+Es muy común recibir coordenadas en formato de texto separado por comas, o necesitar armar rutas de archivos uniendo directorios para exportar nuestros Shapefiles.
+
+::: {.panel-tabset}
+
+### Python
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{python}
+#| label: python_str_split_codigo
+#| eval: false
+# Separar coordenadas (Plaza de Bolívar, Bogotá)
+coord_str = "4.5981,-74.0758"
+lat_str, lon_str = coord_str.split(",")
+
+print(f"Latitud: {float(lat_str)}, Longitud: {float(lon_str)}")
+
+# Unir elementos de una lista (Ruta de archivo)
+carpetas = ["datos", "colombia", "cundinamarca", "bogota.geojson"]
+ruta_completa = "/".join(carpetas)
+
+print(f"Ruta generada: {ruta_completa}")
+```
+:::
+:::
+
+```{python}
+#| label: python_str_split
+# Separar coordenadas (Plaza de Bolívar, Bogotá)
+coord_str = "4.5981,-74.0758"
+lat_str, lon_str = coord_str.split(",")
+
+print(f"Latitud: {float(lat_str)}, Longitud: {float(lon_str)}")
+
+# Unir elementos de una lista (Ruta de archivo)
+carpetas = ["datos", "colombia", "cundinamarca", "bogota.geojson"]
+ruta_completa = "/".join(carpetas)
+
+print(f"Ruta generada: {ruta_completa}")
+```
+
+### R
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{r}
+#| label: r_str_split_codigo
+#| eval: false
+# Separar coordenadas
+# TABLA COMPARATIVA DE EXTRACCIÓN EN R:
+# | Método                       | Resultado | Metáfora                      |
+# |------------------------------|-----------|-------------------------------|
+# | strsplit(x, ",")[1]          | Lista     | La caja con el sobre adentro  |
+# | strsplit(x, ",")[[1]]        | Vector    | El sobre abierto (Contenido)  |
+# | unlist(strsplit(x, ","))     | Vector    | El contenido sin el sobre     |
+
+coord_str <- "4.5981,-74.0758"
+
+# Explicación: strsplit es 'vectorizada' (está lista para procesar miles de textos a la vez).
+# Por eso, siempre devuelve una "Gran Caja" (Lista). 
+# Para sacar el "Sobre" con nuestras coordenadas, usamos [[1]]. 
+# Si usaras solo [1], tendrías la caja pero no podrías tocar los números.
+partes <- strsplit(coord_str, ",")[[1]]
+
+# Alternativa más legible (El 'machete'): unlist()
+# Esta función "desempaqueta" automáticamente la lista y nos entrega el vector puro.
+partes_alt <- unlist(strsplit(coord_str, ","))
+
+cat("Resultado con [[1]]:", partes[1], "\n")
+cat("Resultado con unlist:", partes_alt[1], "\n")
+
+cat(sprintf("Latitud: %f, Longitud: %f\n", as.numeric(partes[1]), as.numeric(partes[2])))
+
+# Unir elementos de una lista
+carpetas <- c("datos", "colombia", "cundinamarca", "bogota.geojson")
+ruta_completa <- paste(carpetas, collapse = "/")
+
+cat(paste("Ruta generada:", ruta_completa, "\n"))
+```
+:::
+:::
+
+```{r}
+#| label: r_str_split
+# Separar coordenadas
+# TABLA COMPARATIVA DE EXTRACCIÓN EN R:
+# | Método                       | Resultado | Metáfora                      |
+# |------------------------------|-----------|-------------------------------|
+# | strsplit(x, ",")[1]          | Lista     | La caja con el sobre adentro  |
+# | strsplit(x, ",")[[1]]        | Vector    | El sobre abierto (Contenido)  |
+# | unlist(strsplit(x, ","))     | Vector    | El contenido sin el sobre     |
+
+coord_str <- "4.5981,-74.0758"
+
+# Explicación: strsplit es 'vectorizada' (está lista para procesar miles de textos a la vez).
+# Por eso, siempre devuelve una "Gran Caja" (Lista). 
+# Para sacar el "Sobre" con nuestras coordenadas, usamos [[1]]. 
+# Si usaras solo [1], tendrías la caja pero no podrías tocar los números.
+partes <- strsplit(coord_str, ",")[[1]]
+
+# Alternativa más legible (El 'machete'): unlist()
+# Esta función "desempaqueta" automáticamente la lista y nos entrega el vector puro.
+partes_alt <- unlist(strsplit(coord_str, ","))
+
+cat("Resultado con [[1]]:", partes[1], "\n")
+cat("Resultado con unlist:", partes_alt[1], "\n")
+
+cat(sprintf("Latitud: %f, Longitud: %f\n", as.numeric(partes[1]), as.numeric(partes[2])))
+
+# Unir elementos de una lista
+carpetas <- c("datos", "colombia", "cundinamarca", "bogota.geojson")
+ruta_completa <- paste(carpetas, collapse = "/")
+
+cat(paste("Ruta generada:", ruta_completa, "\n"))
+```
+
+### Julia
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{julia}
+#| label: julia_str_split_codigo
+#| eval: false
+# Separar coordenadas
+coord_str = "4.5981,-74.0758"
+lat_str, lon_str = split(coord_str, ",")
+
+println("Latitud: $(parse(Float64, lat_str)), Longitud: $(parse(Float64, lon_str))")
+
+# Unir elementos de una lista
+carpetas = ["datos", "colombia", "cundinamarca", "bogota.geojson"]
+ruta_completa = join(carpetas, "/")
+
+println("Ruta generada: $ruta_completa")
+```
+:::
+:::
+
+```{r}
+#| label: julia_str_split
+#| results: asis
+j_eval(r"-(
+# Separar coordenadas
+coord_str = "4.5981,-74.0758"
+lat_str, lon_str = split(coord_str, ",")
+
+println("Latitud: $(parse(Float64, lat_str)), Longitud: $(parse(Float64, lon_str))")
+
+# Unir elementos de una lista
+carpetas = ["datos", "colombia", "cundinamarca", "bogota.geojson"]
+ruta_completa = join(carpetas, "/")
+
+println("Ruta generada: $ruta_completa")
+)-")
+```
+
+:::
+
+**Resumen de Sintaxis: Split y Join**
+
+| Operación | Python | R | Julia |
+| :-- | :-- | :---- | :-- |
+| **Separar (Split)** | `str.split(",")` | `strsplit(str, ",")[[1]]` o `unlist(strsplit(str, ","))` | `split(str, ",")` |
+| **Unir (Join)** | `"/".join(array)` | `paste(arr, collapse="/")`| `join(array, "/")` |
+| **Texto a Decimal (Float)** | `float(cadena)` | `as.numeric(cadena)` | `parse(Float64, cadena)` |
+
+
+---
+
+## 4. Formateo de Precisión (WKT y SQL)
+
+Construir geometrías en formato de texto (Well-Known Text) o consultas a bases de datos espaciales requiere un control preciso de la interpolación y los decimales.
+
+::: {.panel-tabset}
+
+### Python
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{python}
+#| label: python_str_format_codigo
+#| eval: false
+# 1. Definición de variables (Medellín, Antioquia)
+lat, lon = 6.244203, -75.581211
+ciudad = "Medellín"
+poblacion = 2529000
+poblacion_min = 1000000
+
+# 2. WKT con precisión decimal (.4f)
+wkt_point = f"POINT({lon:.4f} {lat:.4f})"
+
+# 3. Reporte con separador de miles (:,)
+reporte = f"Población de {ciudad}: {poblacion:,} hab."
+
+print(f"Geometría: {wkt_point}")
+print(reporte)
+
+# 4. Consulta SQL Dinámica (Multilínea)
+sql_query = f"""
+SELECT geom, nombre FROM municipios 
+WHERE depto = 'Antioquia' AND poblacion > {poblacion_min:,}
+"""
+print("Consulta SQL:")
+print(sql_query)
+```
+:::
+:::
+
+```{python}
+#| label: python_str_format
+# 1. Definición de variables (Medellín, Antioquia)
+lat, lon = 6.244203, -75.581211
+ciudad = "Medellín"
+poblacion = 2529000
+poblacion_min = 1000000
+
+# 2. WKT con precisión decimal (.4f)
+wkt_point = f"POINT({lon:.4f} {lat:.4f})"
+
+# 3. Reporte con separador de miles (:,)
+reporte = f"Población de {ciudad}: {poblacion:,} hab."
+
+print(f"Geometría: {wkt_point}")
+print(reporte)
+
+# 4. Consulta SQL Dinámica (Multilínea)
+sql_query = f"""
+SELECT geom, nombre FROM municipios 
+WHERE depto = 'Antioquia' AND poblacion > {poblacion_min:,}
+"""
+print("Consulta SQL:")
+print(sql_query)
+```
+
+### R
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{r}
+#| label: r_str_format_codigo
+#| eval: false
+# 1. Definición de variables (Medellín, Antioquia)
+lat <- 6.244203
+lon <- -75.581211
+ciudad <- "Medellín"
+poblacion <- 2529000
+poblacion_min <- 1000000
+
+# 2. WKT con precisión decimal (%.4f)
+wkt_point <- sprintf("POINT(%.4f %.4f)", lon, lat)
+
+# 3. Reporte con separador de miles (big.mark)
+poblacion_fmt <- format(poblacion, big.mark=",")
+reporte <- sprintf("Población de %s: %s hab.", ciudad, poblacion_fmt)
+
+cat("Geometría:", wkt_point, "\n")
+cat(reporte, "\n")
+
+# 4. Consulta SQL Dinámica (sprintf para multilínea)
+sql_query <- sprintf("
+SELECT geom, nombre FROM municipios 
+WHERE depto = 'Antioquia' AND poblacion > %s
+", format(poblacion_min, big.mark=",", scientific = FALSE))
+
+cat("Consulta SQL:\n")
+cat(sql_query)
+```
+:::
+:::
+
+```{r}
+#| label: r_str_format
+# 1. Definición de variables (Medellín, Antioquia)
+lat <- 6.244203
+lon <- -75.581211
+ciudad <- "Medellín"
+poblacion <- 2529000
+poblacion_min <- 1000000
+
+# 2. WKT con precisión decimal (%.4f)
+wkt_point <- sprintf("POINT(%.4f %.4f)", lon, lat)
+
+# 3. Reporte con separador de miles (big.mark)
+poblacion_fmt <- format(poblacion, big.mark=",")
+reporte <- sprintf("Población de %s: %s hab.", ciudad, poblacion_fmt)
+
+cat("Geometría:", wkt_point, "\n")
+cat(reporte, "\n")
+
+# 4. Consulta SQL Dinámica (sprintf para multilínea)
+sql_query <- sprintf("
+SELECT geom, nombre FROM municipios 
+WHERE depto = 'Antioquia' AND poblacion > %s
+", format(poblacion_min, big.mark=",", scientific = FALSE))
+
+cat("Consulta SQL:\n")
+cat(sql_query)
+```
+
+### Julia
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{julia}
+#| label: julia_str_format_codigo
+#| eval: false
+using Printf
+
+# 1. Definición de variables (Medellín, Antioquia)
+lat, lon = 6.244203, -75.581211
+ciudad = "Medellín"
+poblacion = 2529000
+poblacion_min = 1000000
+
+# 2. WKT con precisión decimal (@sprintf)
+wkt_point = @sprintf("POINT(%.4f %.4f)", lon, lat)
+
+# 3. Reporte con separador de miles (Regex)
+poblacion_coma = replace(string(poblacion), r"(?<=\d)(?=(\d{3})+(?!\d))" => ",")
+println("Geometría: $wkt_point")
+println("Población de $ciudad: $poblacion_coma hab.")
+
+# 4. Consulta SQL Dinámica (Triples comillas)
+poblacion_min_coma = replace(string(poblacion_min), r"(?<=\d)(?=(\d{3})+(?!\d))" => ",")
+sql_query = """
+SELECT geom, nombre FROM municipios 
+WHERE depto = 'Antioquia' AND poblacion > $poblacion_min_coma
+"""
+println("Consulta SQL:")
+println(sql_query)
+```
+:::
+:::
+
+```{r}
+#| label: julia_str_format
+#| results: asis
+j_eval(r"-(
+using Printf
+
+# 1. Definición de variables (Medellín, Antioquia)
+lat, lon = 6.244203, -75.581211
+ciudad = "Medellín"
+poblacion = 2529000
+poblacion_min = 1000000
+
+# 2. WKT con precisión decimal (@sprintf)
+wkt_point = @sprintf("POINT(%.4f %.4f)", lon, lat)
+
+# 3. Reporte con separador de miles (Regex)
+poblacion_coma = replace(string(poblacion), r"(?<=\d)(?=(\d{3})+(?!\d))" => ",")
+println("Geometría: $wkt_point")
+println("Población de $ciudad: $poblacion_coma hab.")
+
+# 4. Consulta SQL Dinámica (Triples comillas)
+poblacion_min_coma = replace(string(poblacion_min), r"(?<=\d)(?=(\d{3})+(?!\d))" => ",")
+sql_query = """
+SELECT geom, nombre FROM municipios 
+WHERE depto = 'Antioquia' AND poblacion > $poblacion_min_coma
+"""
+println("Consulta SQL:")
+println(sql_query)
+)-")
+```
+
+:::
+
+
+
+
+### Explicación técnica: El "Radar" de Miles en Julia
+
+A diferencia de Python, Julia no tiene un flag nativo (como el `:,`) para formatear miles automáticamente en el macro `@sprintf`. Por ello, utilizamos una **Expresión Regular (Regex)** que actúa como un "radar" de posiciones:
+
+* **`(?<=\d)` (Lookbehind):** Le dice al motor: "asegúrate de que haya un número justo antes de esta posición".
+* **`(?=(\d{3})+(?!\d))` (Lookahead):** Le dice: "busca grupos de exactamente tres dígitos hacia adelante que lleguen hasta el final del texto (o antes de un punto decimal)".
+
+Lo interesante es que este Regex tiene un ancho de cero; no captura caracteres, sino que localiza el **espacio vacío** exacto donde debe "inyectarse" el separador.
+
+::: {.panel-tabset}
+
+### Julia (Explicación Regex)
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{julia}
+#| label: julia_regex_miles_codigo
+#| eval: false
+# Ejemplo con la población estimada de la sabana de Bogotá
+poblacion = 10700000
+
+# Usamos replace con el radar de posiciones (Regex)
+# El símbolo => indica el reemplazo en el hueco hallado
+poblacion_fmt = replace(string(poblacion), r"(?<=\d)(?=(\d{3})+(?!\d))" => ",")
+
+println("Población formateada: $poblacion_fmt")
+```
+:::
+:::
+
+```{r}
+#| label: julia_regex_miles
+#| results: asis
+j_eval(r"-(
+# Ejemplo con la población estimada de la sabana de Bogotá
+poblacion = 10700000
+
+# Usamos replace con el radar de posiciones (Regex)
+# El símbolo => indica el reemplazo en el hueco hallado
+poblacion_fmt = replace(string(poblacion), r"(?<=\d)(?=(\d{3})+(?!\d))" => ",")
+
+println("Población formateada: $poblacion_fmt")
+)-")
+```
+
+:::
+
+
+**Resumen de Sintaxis: Formateo de Precisión y Consultas**
+
+| Operación | Python | R | Julia |
+| :--- | :--- | :--- | :--- |
+| **Interpolación Básica** | `f"Texto {var}"` | `sprintf("Texto %s", var)` | `"Texto $var"` |
+| **Control Decimal (ej. 4)**| `f"{lon:.4f}"` | `sprintf("%.4f", lon)` | `@sprintf("%.4f", lon)` |
+| **Separador de Miles**[^1] | `f"{var:,}"` | `format(var, big.mark=",", scientific = FALSE)` | `replace(string(v), r"..." => ",")` |
+| **Consulta SQL / Multilínea** | `f""" ... {var} ... """` | `sprintf("\n ... %s \n", var)` | `""" ... $var ... """` |
+
+[^1]: En Colombia, el estándar suele preferir el punto (.) como separador de miles. Para aplicarlo, simplemente cambie el carácter de reemplazo en cada función: `f"{var:,}"`, `format(var, big.mark=",", scientific = FALSE)`, `replace(string(v), r"..." => ",")`.
+
+## Resumen de Aprendizajes (Cheat Sheet)
+
+En este capítulo hemos explorado cómo limpiar, transformar, dividir y dar formato de precisión a los datos de texto (Strings), habilidades esenciales para procesar topónimos, coordenadas crudas y construir consultas espaciales. A continuación, se presenta tu **Hoja de Referencia (Cheat Sheet)** para traducir estos conceptos entre Python, R y Julia.
+
+### 1. Creación y Propiedades Fundamentales
+
+| Operación | Python | R | Julia |
+| :--- | :--- | :--- | :--- |
+| **Definir String** | `"Col"`, `'Col'` | `"Col"`, `'Col'` | `"Col"` (Solo dobles) |
+| **Multilínea** | `"""Texto"""` | `"Texto\nTexto"` | `"""Texto"""` |
+| **Concatenar** | `+` | `paste0(a, b)` | `*` |
+| **Repetir** | `* n` | `strrep(str, n)` | `^ n` |
+| **Longitud** | `len(str)` | `nchar(str)` | `length(str)` |
+| **Interpolación** | `f"Texto {var}"` | `sprintf("Texto %s", var)` | `"Texto $var"` |
+
+: Sintaxis básica para creación y medición de cadenas {#tbl-cheat_str_creacion tbl-colwidths="[25,25,25,25]"}
+
+### 2. Transformaciones y Limpieza
+
+| Operación | Python | R | Julia |
+| :--- | :--- | :--- | :--- |
+| **Mayúsculas** | `.upper()` | `toupper()` | `uppercase()` |
+| **Minúsculas** | `.lower()` | `tolower()` | `lowercase()` |
+| **Formato Título** | `.title()` | `tools::toTitleCase()` | `titlecase()` |
+| **Quitar Espacios**| `.strip()` | `trimws()` | `strip()` |
+| **Reemplazar** | `.replace(old, new)`| `gsub(old, new, str)` | `replace(str, old=>new)`|
+
+: Métodos nativos para estandarización de texto {#tbl-cheat_str_limpieza tbl-colwidths="[25,25,25,25]"}
+
+### 3. Split, Join y Formateo de Precisión
+
+| Operación | Python | R | Julia |
+| :--- | :--- | :--- | :--- |
+| **Separar (Split)** | `str.split(",")` | `unlist(strsplit(str, ","))` | `split(str, ",")` |
+| **Unir (Join)** | `"/".join(array)` | `paste(arr, collapse="/")` | `join(array, "/")` |
+| **Texto a Decimal** | `float(cadena)` | `as.numeric(cadena)` | `parse(Float64, cadena)` |
+| **Control Decimal** | `f"{lon:.4f}"` | `sprintf("%.4f", lon)` | `@sprintf("%.4f", lon)` |
+| **Separador Miles** | `f"{v:,}"` | `format(v, big.mark=",", scientific=F)`| `replace(string(v), r"..." => ",")`|
+
+: Funciones críticas para parseo de coordenadas y WKT {#tbl-cheat_str_format tbl-colwidths="[25,25,25,25]"}
+
+---
+
+::: {.callout-important}
+### Conclusiones Críticas del Módulo
+
+1. **La trampa del Split en R:** A diferencia de Python y Julia (que devuelven arreglos simples), la función `strsplit()` en R siempre devuelve una *Lista*. Si intentas aplicar cálculos matemáticos directamente al resultado de un `strsplit` sin desempaquetarlo antes (usando `[[1]]` o `unlist()`), R arrojará un error.
+2. **Cuidado con la Notación Científica:** Al formatear grandes números (como poblaciones o áreas en metros cuadrados), R y Julia pueden saltar a notación científica (ej. `1e+06`). En geomática, esto rompe las consultas SQL y las etiquetas de los mapas. Acostúmbrate a forzar la salida decimal (ej. `scientific = FALSE` en R).
+3. **El poder de la Interpolación:** Construir geometrías WKT o sentencias SQL concatenando pedazos de texto con el símbolo `+` o `*` es propenso a errores de espacios y comillas. Usa siempre las herramientas de interpolación literal (`f-strings` en Python, `sprintf` en R, y `$` en Julia) para mantener tu código legible y seguro.
+:::
+
+## Ejercicios
+
+Para poner en práctica los conceptos aprendidos sobre manipulación de cadenas de texto, deberás resolver los siguientes dos ejercicios. Puedes elegir resolverlos en **Python, R o Julia** (o implementar la solución en varios lenguajes si deseas retarte).
+
+### Ejercicio 1: Limpieza de Topónimos (PNN Macarena)
+
+**Contexto:** Has recibido una base de datos antigua del IGAC con los nombres de las áreas protegidas de Colombia. Los datos fueron ingresados manualmente a lo largo de los años, por lo que tienen serios problemas de formato (espacios extra, mayúsculas inconsistentes y errores de digitación). Necesitas estandarizar el nombre del Parque Nacional Natural Serranía de la Macarena para cruzarlo con el sistema actual.
+
+**Instrucciones de código:**
+
+1. Define una variable llamada `registro_crudo` que contenga exactamente este texto: `"   pnn  seRRania de la mACaRena   "`
+2. Utiliza el método nativo de tu lenguaje para **eliminar los espacios en blanco** al principio y al final del texto. Guarda el resultado en `texto_sin_espacios`.
+3. Convierte el texto resultante a **Formato Título** (donde la primera letra de cada palabra es mayúscula) y guárdalo en `texto_titulo`.
+4. El sistema oficial requiere que las siglas "PNN" estén en mayúscula sostenida. Utiliza la función de **reemplazo** para cambiar la subcadena "Pnn" por "PNN" dentro de tu `texto_titulo`. Guarda esto como `registro_oficial`.
+5. Calcula la **longitud** (cantidad de caracteres) de tu `registro_oficial`.
+6. Imprime un reporte final utilizando **interpolación de cadenas** que diga exactamente:
+   `"El área protegida limpia es: [AQUI_TU_VARIABLE] y su nombre tiene [AQUI_LONGITUD] caracteres."`
+
+### Ejercicio 2: Parseo de Coordenadas y WKT (Volcán Galeras)
+
+**Contexto:** Un sensor sísmico ubicado en el Volcán Galeras (Nariño) envía las alertas a través de mensajes de texto planos. Tu objetivo es extraer las coordenadas de ese mensaje de texto, convertirlas a formato numérico, y ensamblar un punto espacial estándar (Well-Known Text) para insertarlo en la base de datos PostGIS del Servicio Geológico.
+
+**Instrucciones de código:**
+
+1. Define la variable `mensaje_sensor` con el siguiente texto: `"ALERTA_SISMICA:1.221,-77.359:PROFUNDIDAD_5KM"`
+2. Utiliza la función de **separación (Split)** usando los dos puntos (`:`) como delimitador. Extrae únicamente el bloque central que contiene las coordenadas y guárdalo en la variable `bloque_coords`.
+3. Vuelve a aplicar la función de **separación (Split)**, esta vez sobre `bloque_coords`, usando la coma (`,`) como delimitador para separar la latitud de la longitud.
+4. Las coordenadas extraídas siguen siendo texto. Conviértelas a **formato numérico decimal (Float)** y guárdalas en las variables `latitud` y `longitud`.
+5. La base de datos requiere una precisión estricta. Utilizando las herramientas de formateo de tu lenguaje, construye una cadena de texto en formato WKT (`POINT(lon lat)`) asegurando que tanto la latitud como la longitud tengan **exactamente 4 decimales**. Guarda esto en `punto_wkt`. *(Nota: Recuerda que WKT usa el orden Longitud Latitud, separados por un espacio, no por coma).*
+6. El sensor reportó una anomalía térmica que afectó un área de `1250000` metros cuadrados. Formatea este número agregando un **separador de miles** (coma o punto) para que sea legible en el reporte final.
+7. Imprime el WKT generado y el área afectada formateada.
+
+### Entregables y Criterios de Evaluación
+
+El objetivo de esta evaluación no es solo que el código funcione, sino que seas capaz de documentar y explicar tus decisiones técnicas.
+
+**1. Archivos de Código:**
+Debes desarrollar los algoritmos en al menos uno de los siguientes formatos de archivo:
+
+* Script tradicional (`.py`, `.R`, `.jl`)
+* Notebook interactivo (`.ipynb`)
+* Documento computacional (`.qmd` con *chunks* de código)
+
+**2. Documento Analítico (Quarto):**
+Independientemente del formato de tu código fuente, **debes redactar un documento en Quarto (`.qmd`) y renderizarlo tanto en HTML como en PDF**. En este documento debes incluir tus bloques de código y responder argumentativamente a las siguientes preguntas:
+
+* **Sobre el Ejercicio 1:** ¿Por qué es una mala práctica depender únicamente de la función "Reemplazar" (`.replace()` / `gsub()`) para quitar espacios accidentales al inicio o final de un texto en bases de datos geográficas grandes, en lugar de usar funciones dedicadas como `strip()` o `trimws()`?
+* **Sobre el Ejercicio 2:** En la creación de la geometría WKT, si omitieras el paso de convertir el texto extraído a número decimal (Float) y construyeras el WKT directamente concatenando los textos originales, ¿qué impacto tendría esto al intentar realizar un cálculo de distancia espacial dentro de PostGIS o QGIS posteriormente?
+* **Pregunta General (Split en R):** Si decidiste resolver el Ejercicio 2 usando **R**, explica por qué fue necesario utilizar `unlist()` o los dobles corchetes `[[1]]` después de ejecutar la función `strsplit`. Si usaste Python o Julia, explica cómo se diferencia la salida de la función `split` en tu lenguaje respecto a R.
+
+**3. Repositorio en GitHub:**
+Sube tu carpeta del proyecto (que debe contener tus scripts, el archivo `.qmd` y los renders finales en HTML y PDF) a un repositorio público en tu cuenta personal de **GitHub**.
+
+* **Entrega:** Deberás enviar únicamente el enlace (URL) a tu repositorio de GitHub para la calificación.

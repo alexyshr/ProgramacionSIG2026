@@ -37,13 +37,19 @@ book:
       chapters:                  # Capítulos de esta parte
         - 01-introduccion-entornos.qmd
         - 02-guia_instalacion_A_docker.qmd
-        - 02.a-guia_instalacion_A_docker.qmd
         - 03-guia_instalacion_B_qgis.qmd
         - 04-guia_instalacion_C_ArcGIS.qmd
     - part: "Fundamentos"        # Segunda parte
       chapters:
-        - 05-introduccion_python_r_julia.qmd
-        - 06-estructuras_datos_geo.qmd
+        - 05-variables_tipos_de_datos.qmd
+        - 06-estructuras_datos.qmd
+        - 07-operaciones_cadenas.qmd
+        #- 08-ciclos_condicionales.qmd
+        #- 09-funciones_clases.qmd
+        #- 10-trabajando_con_archivos.qmd
+        #- 11-matrices_dataframes.qmd
+        - 12-introduccion_python_r_julia.qmd
+        - 13-estructuras_datos_geo.qmd
     - part: "Prácticas"        # Tercera parte
       chapters:
         - 41-practica_1_benchmark_raster.qmd
@@ -54,18 +60,22 @@ book:
         
   # APÉNDICES (aparecen después de los capítulos)
   appendices:
-    - 81-infraestructura_instalada.qmd  # Información sobre contenedores y software instalado
-    - 82-quarto.qmd              # A. Información Adicional Quarto
-    - 83-docker_desktop.qmd      # B. Información sogre Docker Desktop
-    - 84-git_github.qmd          # C. Informaión sobre Git y GitHub
-    - 85-vscode.qmd              # D. Información sobre VSCode
-    - 86-windows.qmd             # E. Información sobre Windows
-    - 87-linux_ubuntu.qmd        # F. Información sobre Linux Ubuntu
-    - 88-python.qmd              # G. Adicionales sobre Python
-    - 89-r.qmd                   # H. Información adicional sobre R
-    - 90-julia.qmd               # I. Información adicional sobre Julia
-    - 98-errata.qmd              # J. Erratas
-    - 99-referencias.qmd         # K. Referencias bibliográficas
+    - 80-instalacion_herramientas.qmd
+    - 81-uso_infraestructura_instalada.qmd  # Información sobre contenedores y software instalado
+    - 82-quarto.qmd              # Información Adicional Quarto
+    - 83-docker_desktop.qmd      # Información sogre Docker Desktop
+    - 84-git_github.qmd          # Informaión sobre Git y GitHub
+    - 85-vscode.qmd              # Información sobre VSCode
+    - 86-windows.qmd             # Información sobre Windows
+    - 87-linux_ubuntu.qmd        # Información sobre Linux Ubuntu
+    - 88-python.qmd              # Adicionales sobre Python
+    - 89-r.qmd                   # Información adicional sobre R
+    - 90-julia.qmd               # Información adicional sobre Julia
+    - 91-qgis.qmd                #
+    - 92-arcgispro.qmd           #
+    - 93-postgresql.qmd
+    - 98-errata.qmd              # Erratas
+    - 99-referencias.qmd         # Referencias bibliográficas
     # IMPORTANTE: Este archivo crea la sección de referencias al final
     # Si se quita, las referencias aparecerán sin título en cada capítulo (HTML)
     # o no aparecerán agrupadas al final (PDF)

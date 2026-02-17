@@ -1,4 +1,4 @@
-# Quarto: Orquestación y Configuración {#quarto-ref}
+# Quarto: Orquestación y Configuración {#sec-anexo_quarto}
 
 Quarto se basa en un archivo de configuración centralizado donde se definen los parámetros de renderizado, bibliografía y estilos.
 
@@ -48,11 +48,35 @@ format:
 
 ## Resumen de comandos Quarto
 
-`quarto render guia_instalacion.qmd --to all`
+Renderizar todos los formatos definidos en el encabezado `yml`:
 
-`quarto render guia_instalacion.qmd --to html`
+```bash
+quarto render archivo.qmd --to all
+```
 
-`quarto render guia_instalacion.qmd --to pdf`
+Renderizar a HTML:
+
+```bash
+quarto render archivo.qmd --to html
+```
+
+Renderizar a PDF:
+
+```bash
+quarto render archivo.qmd --to pdf
+```
+
+Renderizar a PDF, mostrando todos los detalles en la consola:
+
+```bash
+quarto render archivo.qmd --to pdf --trace --verbose`
+```
+
+Chequear estado de instalación de Quarto
+
+```bash
+quarto check
+```
 
 ## Control de ejecución en Quarto - opciones de `chunks` {#sec-opciones-chunks}
 

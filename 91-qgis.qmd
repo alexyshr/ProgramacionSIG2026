@@ -1,0 +1,10 @@
+# Adicionales Sobre QGIS {#sec-anexo_qgis}
+
+## Instalación
+
+### OSGeo4w {#sec-instalacion_osgeo4w}
+
+### QGIS con PIXI {#sec-instalacion_qgis_pixi}
+
+
+

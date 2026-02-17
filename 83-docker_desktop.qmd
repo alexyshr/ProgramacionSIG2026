@@ -1,36 +1,816 @@
 
-# Docker: Gestión de Contenedores e Imágenes {#docker-ref}
+# Docker: Gestión de Contenedores e Imágenes {#sec-anexo_docker}
 
-## Procedimiento incial
+Docker es un motor de virtualización [@docker2025] en el que instalaremos las dos máquinas virtuales Linux que permitirán la ejecución de código Python, R y Julia y el acceso a PostGIS + PostgreSQL. 
 
-Antes de trabajar con Docker debes:
+## Instalación del software
+
+Descargue e instale la versión oficial de **Docker Desktop** desde el siguiente enlace:
+
+-   **URL**: <https://www.docker.com/products/docker-desktop/>
+-  Descargue la versión más reciente para el sistema operativo de su máquina local y verifique que el instalador coincida con la arquitectura de su máquina.
+-   **Instalación**: Ejecute el instalador y asegúrese de aceptar la actualización del kernel de WSL 2 si el sistema lo solicita, o previamente usar en el terminal `wsl --update`. Durante la instalación, asegúrese de activar la opción **"Use WSL 2 instead of Hyper-V"**.
+
+
+## Preparación Docker Desktop {#sec-preparacion_docker}
+
+Antes de iniciar la carga o instalación de imágenes/contenedores, es imperativo configurar el entorno local:
+
+* **Configuración de Almacenamiento**: Debido a que la imagen políglota y la base de datos requieren un espacio considerable, asegúrese de que el disco donde Docker guarda sus archivos `.vhdx` tenga al menos **50 GB de espacio libre**. Tenga en cuenta que el tamaño en disco de las dos imágenes Docker, una vez instaladas, es de aproximadamente **45 GB**.
+
+* **Procedimiento para cambiar la ubicación de las imágenes** (archivos con extensión `.vhdx`): Si su disco principal (`C:`) está sin espacio, mueva los archivos Docker a otro disco. En Docker Desktop:
+    a. Diríjase a **Settings** (engranaje) -> **Resources** -> **Advanced**.
+    b. Localice **Disk image location**.
+    c. Haga clic en `Browse` y seleccione una carpeta en un disco con mayor capacidad.
+    d. Haga clic en **Apply & restart**. 
+
+* **Optimización de Memoria Swap**: Para procesar datos raster de gran tamaño sin interrupciones en R o Julia, es fundamental ampliar la memoria Swap (espacio de intercambio). Puede consultar más detalles en la @sec-limpieza_entorno sobre cómo esto impacta el rendimiento.
+
+* **Procedimiento para aumentar Swap en Windows (Host)**: Ajuste la memoria virtual del sistema operativo para evitar cierres por falta de RAM:
+    a. En el buscador de Windows, escriba y seleccione **"Ver la configuración avanzada del sistema"**.
+    b. En la pestaña **Opciones avanzadas**, sección **Rendimiento**, haga clic en el botón `Configuración`.
+    c. Diríjase a **Opciones avanzadas** -> **Memoria Virtual** y haga clic en `Cambiar`.
+    d. Desmarque "Administrar automáticamente", seleccione el disco principal, elija **Tamaño personalizado** y asigne estos valores sugeridos, que dependen del espacio disponible en el disco (verifíquelo): Inicial **16384 MB** / Máximo **32768 MB**.
+    e. Haga clic en `Establecer` y luego en **Aceptar** (requerirá reiniciar el equipo).
+
+* **Configuración de Swap en el Contenedor (WSL2)**: Dado que Docker opera sobre el subsistema Linux, debe configurar el archivo de intercambio global de WSL2:
+    a. Abra el explorador de archivos y diríjase a su carpeta de usuario (escriba `%USERPROFILE%` en la barra de direcciones).
+    b. Cree un archivo nuevo llamado `.wslconfig` (asegúrese de que no tenga extensión `.txt` al final).
+    c. Pegue el siguiente contenido para definir la RAM y asegurar **32 GB de swap** para sus procesos espaciales (sugerido, depende de su espacio en disco):
+
+```ini
+[wsl2]
+memory=12GB # RAM máxima física asignada a Linux
+swap=32GB   # Memoria de intercambio para evitar el cierre de contenedores
+```
+
+::: {.callout-tip}
+### Importante
+Si desea verificar si estos cambios surtieron efecto dentro de su laboratorio, puede ejecutar el comando `free -h` en la terminal de Jupyter o VSCode.
+:::
+
+
+## Limpieza del entorno {#sec-limpieza_entorno}
+
+### Eliminar todas las imagenes/contenedores y liberar todo el espacio usado por Docker.
+
+> **⚠️ Advertencia**: Los siguientes comandos eliminarán todos los contenedores, imágenes y volúmenes existentes en su sistema. Úselos solo si no tiene contenedores o imágenes que desee preservar.
+
+Ejecute estos comandos en su terminal (PowerShell) para liberar espacio y evitar conflictos:
+
+```bash
+# Detener y eliminar todos los contenedores
+docker stop $(docker ps -aq)
+docker rm -f $(docker ps -aq)
+
+# Eliminar todas las imágenes
+docker rmi -f $(docker images -aq)
+
+# Eliminar todos los volúmenes (libera MUCHO espacio)
+docker volume rm $(docker volume ls -q)
+
+# Eliminar redes de usuario (no borra bridge/host/none)
+docker network rm $(docker network ls -q | Select-String -NotMatch "bridge|host|none")
+
+# Eliminar caché de construcción
+docker builder prune -a -f
+
+# OPCIÓN MÁS SIMPLE (Todo en un solo comando)
+# docker system prune -a --volumes -f
+```
+
+Para verificar el espacio liberado, use: `docker system df`. El resultado debería mostrar valores cercanos a **0 bytes**.
+
+
+### Comandos de rescate de espacio
+
+El entorno políglota de este curso es robusto y, por lo tanto, pesado. Tras realizar actualizaciones o varias pruebas de construcción, es posible que el espacio en disco se agote rápidamente. 
+
+Si recibe errores de "Disk Full" o desea limpiar su sistema, ejecute los siguientes comandos en su terminal de Windows (PowerShell):
+
+```powershell
+# 1. Eliminar contenedores detenidos y redes en desuso
+docker system prune -f
+
+# 2. Limpiar caché de construcción (libera mucho espacio tras errores de build)
+docker builder prune -f
+
+# 3. (Uso extremo) Eliminar TODAS las imágenes que no estén siendo usadas
+# docker image prune -a -f
+```
+
+::: {.callout-tip}
+#### Seguridad de sus Datos
+No tema realizar limpiezas periódicas. Gracias a la configuración de volúmenes en nuestro archivo `docker-compose.yml`, todo su código, scripts y datos espaciales están **físicamente en su disco local** (en la carpeta de su ID UNAL). 
+
+Al apagar o borrar el contenedor, lo que está dentro de `/home/rstudio/work/` **siempre estará a salvo** en su carpeta de Windows. El contenedor es solo el "motor", sus archivos son el "combustible" que usted posee.
+:::
+
+
+## Descarga y preparación de archivos {#sec-descarga_tar_yml}
+
+Siga estos pasos para obtener la imagen base:
+
+1. **Descarga**: Obtenga el archivo de 15.5 GB desde el siguiente enlace: [Google Drive - sig_unal_completo.zip](https://drive.google.com/file/d/1J7ssf72-F5EwjoekkexwKUgD1DxyA1xk/view?usp=sharing).
+2. **Descompresión Parte A**: Extraiga el contenido de `sig_unal_completo.zip`.
+3. **Renombrado**: Al archivo resultante llamado `sig_unal_completo.txt`, cámbiele manualmente la extensión a `.zip`.
+4. **Descompresión Parte B**: Extraiga este nuevo archivo `.zip` para obtener los dos archivos definitivos:
+   - `sig_unal_completo.tar` (El archivo de la imagen).
+   - `docker-compose.yml` (El **NUEVO** archivo de orquestación contenido en la descarga).
+
+
+## Cargar imagen/contenedor a partir de imagen/contenedor base guardada en `sig_unal_completo.tar` y `docker-compose.html` {#sec-cargar_docker_tar}
+
+
+Este procedimiento instalará (mediante carga, es decir sin compilación) dos imágenes (una con la base de datos espacial y otra con Python, R y Julia) y configurará una red interna para comunicar su máquina anfitriona (Windows) con las dos máquinas virtuales Linux.
+
+Desde una terminal situada en la carpeta que contiene los archivos `sig_unal_completo.tar` y `docker-compose.yml`, ejecute:
+
+```bash
+docker load -i sig_unal_completo.tar
+```
+
+*Este proceso puede tardar varios minutos o inclusive horas dependiendo de su procesador y disco duro. Verifique que al finalizar aparezca el mensaje "Loaded image" para `image_sig_unal:final` y `postgis_unal:final`.*
+
+> Nota: Existen dos versiones **diferentes** del archivo `docker-compose.html`. El primero es el que se describe en @sec-build_docker y el segundo, que aplica para este procedimiento, es el que se descarga en @sec-descarga_tar_yml.
+
+### Archivo `docker-compose.yml` (orquestación) {#sec-docker_compose_load}
+
+Este archivo es el **manifiesto técnico** que automatiza la construcción y coordinación de los servicios del curso. Su propósito es definir las reglas de convivencia entre los contenedores, configurando los siguientes pilares:
+
+* **Imágenes**: Versiones exactas de software (GDAL/Ubuntu para análisis y PostGIS para datos).
+* **Puertos**: Mapeos específicos para acceder a las herramientas desde el equipo local sin conflictos (8889 para Jupyter, 8788 para el visor de R y 5434 para la base de datos).
+* **Volúmenes**: Garantizan la persistencia de datos, sincronizando su carpeta local en tiempo real con el entorno interno del contenedor.
+
+A continuación, se describen los dos servicios integrados en este manifiesto:
+
+* **Servicio de Análisis (`analisis-geo`)**: Identificado en el archivo como `analisis-geo`, este servicio no usa `Dockerfile` (la etiqueta `build: .` está no está habilitada). Es el motor políglota encargado de procesar R, Python y Julia sobre una base robusta de GDAL. Incluye una configuración de `LD_PRELOAD` para la estabilidad de las librerías dinámicas y una integración profunda que permite usar el visor `httpgd` de R como terminal gráfica unificada para todos los lenguajes. Crea el contenedor `contenedor_sig_unal`. La carpeta `/home/rstudio/work` del contenedor, mapea la carpeta del equipo local donde instaló las imágenes y contenedores a partir de `sig_unal_completo.tar` y `docker-compose.yml`.
+
+* **Servicio PostGIS (`db-postgis`)**: Identificado como `db-postgis`, este servicio apunta a una imagen que fue creada a partir de la imagen especializada de Kartoza. Levanta el servidor de base de datos `sig_db_unal`, configurado para recibir conexiones espaciales desde sus scripts o herramientas externas como QGIS o ArcGIS a través del puerto `5434`.
+
+```yaml
+services:
+  analisis-geo:
+    # build: .                          # <--- No utiliza Dockerfile
+    image: image_sig_unal:final         # <--- Agrega esto para nombrar la imagen
+    container_name: contenedor_sig_unal # <--- Cambia esto para el contenedor    
+    tty: true
+    stdin_open: true
+    volumes:
+      - .:/home/rstudio/work
+    environment:
+      - RETICULATE_PYTHON=/usr/bin/python3
+      - QUARTO_PYTHON=/usr/bin/python3
+      - JULIA_HOME=/opt/julia/bin
+      # Mantenemos la "cirugía" de Julia para que no choque con GDAL
+      - LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libcurl.so.4:/usr/lib/x86_64-linux-gnu/libstdc++.so.6
+      - GKSwstype=100
+    ports:
+      # Forzamos IPv4 para que VS Code no se pierda en el limbo del [::1]
+      # JUPYTER: El 8889 de tu PC va al 8888 del contenedor
+      - "127.0.0.1:8889:8888" # <----- Para programar en Notebooks localhost:8889
+      # R VISOR (httpgd): El 8788 de tu PC va al 8787 del contenedor 
+      - "127.0.0.1:8788:8787" # <----- Para ver los gráficos de R (httpgd) localhost:8788
+
+    depends_on:
+      - db-postgis
+
+  db-postgis:
+    image: postgis_unal:final
+    container_name: contenedor_postgis_unal    
+    environment:
+      - POSTGRES_USER=profe_unal
+      - POSTGRES_PASS=geomatica2025
+      - POSTGRES_DB=sig_db_unal
+    ports:
+      # Para acceder a la base de datos desde fuera del contenedor se usa 5434
+      - "127.0.0.1:5434:5432" 
+    volumes:
+      - postgis_data_unal:/var/lib/postgresql
+
+volumes:
+  postgis_data_unal:
+```
+
+## Compilar imagen/contenedor a partir de `Dockerfile` y  `docker-compose.html` {#sec-build_docker}
+
+El procedimiento que garantiza una instalación (carga) exitosa de las imágenes y contenedores fue documentado en @sec-cargar_docker_tar. Use este procedimiento **solo si** necesita **compilar** una nueva imagen con contenedores que satisfagan necesidades particulares definidas a partir de un archivo `Dockerfile`. Sin embargo, el `Dockerfile` que se presenta en esta sección fue el que se utilizó para compilar la imagen empaquetada cuyo proceso de carga se define en @sec-cargar_docker_tar.
+
+::: {.callout-note}
+#### Organización del Proyecto
+Para automatizar el despliegue de los dos contenedores del curso (`analisis-geo` y `db-postgis`), se utilizó la orquestación de Docker. Mientras que el entorno de análisis se construyó a medida sobre la imagen base `ghcr.io/osgeo/gdal:ubuntu-full-latest`, el servicio de base de datos utilizó la imagen especializada `kartoza/postgis`.
+
+Para este proceso, se utilizaron dos archivos clave: **docker-compose.yml** y **Dockerfile**.
+:::
+
+| Archivo | Rol Crítico |
+|:---|:--- |
+| **`Dockerfile`** | **El "Qué" (La Receta):** Crea el entorno políglota desde cero, instala las librerías de NASA/Copernicus y aplica la **"cirugía" de OpenSSL** para que Julia sea estable en Ubuntu Noble. |
+| **`docker-compose.yml`** | **El "Cómo" (La Orquesta):** Despliega los servicios, mapea los puertos externos (**8889**, **8788**, **5434**) y asegura que sus mapas y bases de datos no se borren gracias al volumen persistente (`postgis_data_unal`). |
+
+1. Cree una carpeta utilizando su **ID de usuario de correo institucional** como nombre (el identificador que aparece antes del `@unal.edu.co`). Por ejemplo, si su correo es `juperez@unal.edu.co`, la carpeta deberá llamarse `juperez`. En adelante llamaremos a esa carpeta `su_carpeta` o la carpeta `ID UNAL`.
+
+2. Dentro de ella, guarde los archivos que se presentan a continuación.
+
+Antes de compilar debes:
 
 1. Arrancar Docker Desktop
+2. Cree una carpeta donde desea compilar las imágenes y copie allí los archivos `Dockerfile` y  `docker-compose.html`.
+3. Usando la terminal (**PowerShell** en Windows) del equipo local, cambiase a la carpeta usando el comando `cd`, ej:
 
-2. Usando la terminal **PowerShell** de Windows ubicarte sobre la carpeta dónde se encuentran los archivos `Dockerfile` y  `docker-compose.html`
+```bash
+cd "ruta_a_carpeta"
+```
 
-Los siguientes pasos son **compilar** (solo una vez), arrancar las imágenes y detener las imágenes:
+4.  **Configuración de Terminal**: Abra PowerShell y ejecute el siguiente comando para visualizar correctamente caracteres especiales y logs:
 
-3. **Compilación Limpia (Sin Cache) con Log:**
+```powershell
+# Forzar UTF8 en el PowerShell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+```
+
+El siguiente paso es **compilar** (solo una vez):
+
+5. **Compilación limpia (sin usar caché) con archivo log:**
+
+*Opción 1: (recomendado)*
+- Guarda el log al archivo y también lo muestra en la terminal
+- No utiliza archivos previamente descargados (`--no-cache`)
+```bash
+docker compose build --no-cache 2>&1 | tee build_sig_unal.log
+```
+
+*Opción 2:*
+- Guarda el log al archivo y no deja ver nada en la terminal
+- No utiliza archivos previamente descargados (`--no-cache`)
+- Se le asigna un etiqueta y una versión a la imagen (**mi_sig_env:v1**), lo cual evita referirse a ella por su ID hexadecimal que es imposible de recordar.
 
 ```bash
 docker build --no-cache -t mi_sig_env:v1 . > build_details.log 2>&1
 ```
-4. **Arrancar las imágenes:**
+
+### Archivo `docker-compose.yml` {#sec-docker_compose_compile}
+
+
+```yaml
+services:
+  # ============================================================
+  # SERVICIO PRINCIPAL
+  # Entorno de análisis geoespacial y científico
+  # Integra R, Python, Julia, GDAL, Quarto y Jupyter
+  # ============================================================
+  analisis-geo:
+    build: .
+    image: image_sig_unal                 # Nombre de la imagen Docker que se construye localmente
+    container_name: contenedor_sig_unal   # Nombre del contenedor (más fácil de usar en docker exec)
+    
+    # Permite sesiones interactivas (terminal, REPLs, etc.)
+    tty: true
+    stdin_open: true
+
+    # Carpeta compartida:
+    # Todo lo que esté en el proyecto (host) aparece dentro del contenedor
+    volumes:
+      - .:/home/rstudio/work
+
+    # ------------------------------------------------------------
+    # VARIABLES DE ENTORNO
+    # Aseguran que R, Python, Julia y Quarto usen versiones correctas
+    # ------------------------------------------------------------
+    environment:
+      - RETICULATE_PYTHON=/usr/bin/python3   # Python que usará R (reticulate)
+      - QUARTO_PYTHON=/usr/bin/python3       # Python que usará Quarto
+      - JULIA_HOME=/opt/julia/bin             # Ruta base de Julia
+
+      # "Cirugía" necesaria para evitar conflictos entre Julia y GDAL
+      # (muy común en entornos científicos mixtos)
+      - LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libcurl.so.4:/usr/lib/x86_64-linux-gnu/libstdc++.so.6
+
+      # Backend gráfico de Julia (evita errores al graficar en contenedores)
+      - GKSwstype=100
+
+    # ------------------------------------------------------------
+    # PUERTOS
+    # izquierda = computador del estudiante (acceso externo con localhost)
+    # derecha   = contenedor (acceso interno - EXPOSE)
+    # ------------------------------------------------------------
+    ports:
+      # Jupyter Notebook / JupyterLab
+      # Se accede desde el navegador en: http://localhost:8889
+      - "127.0.0.1:8889:8888"
+
+      # Visor de gráficos de R (httpgd)
+      # Permite ver gráficos interactivos fuera de RStudio
+      - "127.0.0.1:8788:8787"
+
+    # Este servicio solo se inicia cuando la base de datos esté lista
+    depends_on:
+      - db-postgis
+
+  # ============================================================
+  # SERVICIO DE BASE DE DATOS
+  # PostgreSQL + PostGIS para datos espaciales
+  # ============================================================
+  db-postgis:
+    image: kartoza/postgis:latest
+    container_name: contenedor_postgis_unal
+
+    # Credenciales y base de datos inicial
+    environment:
+      - POSTGRES_USER=profe_unal
+      - POSTGRES_PASS=geomatica2025
+      - POSTGRES_DB=sig_db_unal
+
+    # Puerto para conectarse desde QGIS, DBeaver, PgAdmin, etc.
+    ports:
+      - "127.0.0.1:5434:5432"
+
+    # Volumen persistente:
+    # Los datos NO se pierden aunque el contenedor se borre
+    volumes:
+      - postgis_data_unal:/var/lib/postgresql
+
+# ============================================================
+# VOLUMENES DOCKER
+# Espacio en disco administrado por Docker
+# ============================================================
+volumes:
+  postgis_data_unal:
+```
+
+
+### Archivo `Dockerfile` (Construcción del Entorno)
+
+Este archivo constituye la **receta de construcción** del entorno de análisis. Su función es "congelar" un sistema operativo Ubuntu Noble optimizado, garantizando que todos los estudiantes trabajen exactamente con las mismas versiones de librerías, compiladores y paquetes. Con este archivo `Dockerfile` y con el anterior archivo `docker-compose.yml` (@sec-docker_compose_compile) fue que se **compiló** la imagen que después se empaquetó en el archivo `sig_unal_completo.tar` para la carga de contenedores sin conexión a Internet. Note que el archivo `docker-compose.yml` (@sec-docker_compose_load) que acompaña a `sig_unal_completo.tar` es diferente al archivo `docker-compose.yml` detallado en esta sección.
+
+
+Los pilares técnicos del archivo `Dockerfile` son:
+
+* **Imagen Base Profesional**: Utiliza la distribución oficial de **OSGeo/GDAL**, que provee el stack más estable de librerías geoespaciales (`PROJ`, `GEOS`, `GDAL`) a nivel de sistema.
+* **Pila Políglota Integrada**: Automatiza la instalación y configuración de **R**, **Python 3** y **Julia 1.10.4**, resolviendo dependencias cruzadas que suelen ser difíciles de configurar manualmente.
+* **Motor de Reportes Científicos**: Instala **Quarto** y **TinyTeX**, permitiendo la generación automática de informes en PDF y HTML con calidad editorial.
+* **Puente de Comunicación Maestro**: Configura el archivo `Rprofile.site`, el cual actúa como el "cerebro" que permite a R ejecutar código de Julia y capturar gráficos de Python de forma transparente.
+
+
+```dockerfile
+# ============================================================
+# Imagen base
+# ------------------------------------------------------------
+# Imagen oficial de OSGeo con GDAL completo, PROJ, GEOS y soporte
+# raster/vector profesional. Base estándar en SIG reproducible.
+# ============================================================
+FROM ghcr.io/osgeo/gdal:ubuntu-full-latest
+
+
+# ============================================================
+# 1. Base, Locales y Pandoc
+# ------------------------------------------------------------
+# Configuración UTF-8 para evitar problemas con acentos,
+# R, Python, Julia, LaTeX y generación de documentos.
+# ============================================================
+ENV LANG=en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
+
+# Herramientas base del sistema:
+# - compiladores y toolchain (C/C++)
+# - git / curl / wget para descargas
+# - pandoc como motor universal de documentos
+RUN apt-get update && apt-get install -y locales git curl wget ca-certificates \
+    build-essential cmake libtool automake pkg-config software-properties-common \
+    pandoc && \
+    locale-gen en_US.UTF-8
+
+
+# ============================================================
+# Librerías criptográficas y de red
+# ------------------------------------------------------------
+# Necesarias para:
+# - conexiones HTTPS
+# - Julia
+# - GDAL
+# - acceso a APIs externas
+# ============================================================
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libmbedtls-dev \
+    libnng-dev \
+    libssl-dev \
+    libxml2-dev \
+    libcurl4-openssl-dev \
+    git \
+    cmake
+
+
+# ============================================================
+# 2. R, Python y dependencias de sistema
+# ------------------------------------------------------------
+# Incluye soporte para:
+# - SIG (GDAL / GEOS / PROJ)
+# - NetCDF / HDF5
+# - NASA / Copernicus
+# - WhiteboxTools
+# ============================================================
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    r-base r-base-dev python3-pip python3-dev \
+    psmisc lsof net-tools ffmpeg \
+    libpng-dev libcairo2-dev libsystemd-dev \
+    libfontconfig1-dev libfreetype6-dev \
+    libharfbuzz-dev libfribidi-dev \
+    libcurl4-openssl-dev libsqlite3-dev libxml2-dev libssl-dev \
+    libgeos-dev libproj-dev libgdal-dev libudunits2-dev \
+    libgit2-dev libssh2-1-dev libxt-dev libglpk-dev libmount-dev \
+    libmagick++-dev libpcre2-dev libnetcdf-dev libhdf5-dev \
+    libxt6 libxrender1 libxext6 default-jdk \
+    # Elimina la restricción de pip en Debian/Ubuntu modernos
+    && rm /usr/lib/python3.12/EXTERNALLY-MANAGED || true && \
+    rm -rf /var/lib/apt/lists/*
+
+
+# ============================================================
+# 3. Quarto CLI y TinyTeX
+# ------------------------------------------------------------
+# Quarto: documentos reproducibles (HTML, PDF, slides)
+# TinyTeX: LaTeX liviano para generación de PDF
+# ============================================================
+RUN curl -LO https://github.com/quarto-dev/quarto-cli/releases/download/v1.4.550/quarto-1.4.550-linux-amd64.deb \
+    && dpkg -i quarto-1.4.550-linux-amd64.deb && rm quarto-1.4.550-linux-amd64.deb \
+    && quarto install tinytex --no-prompt
+
+
+# ============================================================
+# 4. Python Stack
+# ------------------------------------------------------------
+# Librerías SIG, ciencia de datos, notebooks y visualización
+# ============================================================
+RUN pip3 install --upgrade --ignore-installed --break-system-packages \
+    # Ya estaban:
+    shapely matplotlib numpy geopandas fiona pyyaml nbformat nbclient ipykernel \
+    # Nuevos agregados:
+    pandas rasterio rasterstats scipy psycopg2 pysal earthaccess cdsapi leafmap \
+    geemap segment-geospatial geoai-py lidar pygis whitebox whiteboxgui streamlit \
+    ghp-import jupyter-book jupyterlab jupytext mystmd notebook
+
+
+# ============================================================
+# 5. R Stack
+# ------------------------------------------------------------
+# Instalación desde CRAN optimizado de Posit para Linux
+# Incluye SIG, visualización, modelado y ML espacial
+# ============================================================
+RUN R -e "options(timeout = 1000, Ncpus = parallel::detectCores(), repos = c(CRAN = 'https://packagemanager.posit.co/cran/__linux__/noble/latest')); \
+    install.packages(c('ggplot2', 'patchwork', 'dplyr', 'remotes', 'languageserver', \
+    'rmarkdown', 'units', 's2', 'sf', 'terra', 'stars', 'reticulate', 'IRkernel', \
+    'unigd', 'cpp11', 'systemfonts', 'AsioHeaders', 'png', 'grid', 'JuliaCall', 'JuliaConnectoR', \
+    # Nuevos CRAN:
+    'tidyverse', 'tmap', 'leaflet', 'googleway', 'ggspatial', 'mapview', 'plotly', \
+    'rasterVis', 'cartogram', 'geogrid', 'geofacet', 'linemap', 'tanaka', 'rayshader', \
+    'lwgeom', 'gstat', 'spdep', 'spatialreg', 'stplanr', 'sfnetworks', 'spatstat', \
+    'stpp', 'magrittr', 'giscoR', 'caret', 'tidymodels', 'spatialsample', 'CAST', \
+    'mlr3spatial', 'mlr3spatiotempcv', 'ncdf4', 'whitebox'))"
+
+
+# ============================================================
+# Starsdata y repositorios específicos
+# ------------------------------------------------------------
+# Se compila desde código fuente y se usan repos especiales
+# ============================================================
+RUN R -e "options(timeout = 30000, Ncpus = parallel::detectCores()); \
+    install.packages('starsdata', repos='https://cran.uni-muenster.de/pebesma/', type='source')" && \
+    R -e "options(timeout = 2000, Ncpus = parallel::detectCores()); \
+    install.packages(c('mlr3cmprsk', 'survdistr'), repos=c('https://mlr3learners.r-universe.dev', 'https://cloud.r-project.org')); \
+    install.packages('geocompkg', repos=c('https://geocompr.r-universe.dev', 'https://cloud.r-project.org'), dependencies=TRUE); \
+    whitebox::install_whitebox(); IRkernel::installspec(user = FALSE)"
+
+
+# ============================================================
+# httpgd estable
+# ------------------------------------------------------------
+# Dispositivo gráfico moderno para R (gráficos en navegador)
+# ============================================================
+RUN wget https://cran.r-project.org/src/contrib/Archive/httpgd/httpgd_2.0.3.tar.gz && \
+    R CMD INSTALL httpgd_2.0.3.tar.gz && rm httpgd_2.0.3.tar.gz
+
+# ============================================================
+# 6. Puente Python ↔ R (Backend de Matplotlib para reticulate)
+# ------------------------------------------------------------
+# Permite que gráficos de matplotlib generados desde Python
+# puedan ser capturados y mostrados correctamente desde R
+# usando reticulate (especialmente en notebooks y httpgd).
+# ============================================================
+
+# Creamos la estructura esperada por reticulate
+RUN mkdir -p /usr/local/lib/python3.12/dist-packages/reticulate/matplotlib && \
+    touch /usr/local/lib/python3.12/dist-packages/reticulate/__init__.py
+
+# Definimos una función que R puede interceptar
+# para recibir el path de la imagen generada por Python
+RUN printf 'def r_graphic_command(path):\n    import os\n    if os.path.exists(path): print(f"r_graphic_command: {path}")\n' > /usr/local/lib/python3.12/dist-packages/reticulate/__init__.py
+
+# Backend custom de matplotlib:
+# - Renderiza con Agg
+# - Guarda el gráfico como PNG temporal
+# - Notifica a R para que lo muestre
+RUN printf 'import matplotlib\nfrom matplotlib.backends.backend_agg import FigureCanvasAgg\nfrom matplotlib.backend_bases import FigureManagerBase\n\ndef show(*args, **kwargs):\n    import os, tempfile, reticulate\n    fd, path = tempfile.mkstemp(suffix=".png")\n    os.close(fd)\n    matplotlib.pyplot.savefig(path)\n    if hasattr(reticulate, "r_graphic_command"):\n        reticulate.r_graphic_command(path)\n\nclass FigureManager(FigureManagerBase):\n    def show(self):\n        show()\n\ndef new_figure_manager(num, *args, **kwargs):\n    FigureClass = kwargs.pop("FigureClass", matplotlib.figure.Figure)\n    thisFig = FigureClass(*args, **kwargs)\n    return new_figure_manager_given_figure(num, thisFig)\n\ndef new_figure_manager_given_figure(num, figure):\n    canvas = FigureCanvasAgg(figure)\n    manager = FigureManager(canvas, num)\n    return manager\n\nFigureCanvas = FigureCanvasAgg\n' > /usr/local/lib/python3.12/dist-packages/reticulate/matplotlib/backend.py
+
+
+# ============================================================
+# 7. Julia: Instalación y Wrapper de Seguridad
+# ------------------------------------------------------------
+# Se instala Julia binaria oficial y se fuerza el uso de
+# librerías del sistema para evitar conflictos con GDAL/OpenSSL
+# ============================================================
+
+# Versión fija de Julia (reproducibilidad total)
+ENV JULIA_VERSION=1.10.4
+
+# Descarga e instalación manual de Julia
+RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.10/julia-${JULIA_VERSION}-linux-x86_64.tar.gz \
+    && tar -xvzf julia-${JULIA_VERSION}-linux-x86_64.tar.gz && mv julia-1.10.4 /opt/julia
+
+# Wrapper de Julia:
+# - Fuerza LD_PRELOAD
+# - Evita conflictos de libcurl / libstdc++
+# - Garantiza compatibilidad con GDAL
+RUN printf '#!/bin/bash\nexport LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libcurl.so.4:/usr/lib/x86_64-linux-gnu/libstdc++.so.6\nexport JULIA_PKG_USE_CLI_GIT=true\n/opt/julia/bin/julia "$@"\n' > /usr/local/bin/julia && chmod +x /usr/local/bin/julia
+    
+
+# ============================================================
+# 8. Julia: Configuración de librerías nativas
+# ------------------------------------------------------------
+# Se fijan explícitamente las rutas del sistema para:
+# - GDAL
+# - GEOS
+# evitando que Julia use binarios incompatibles
+# ============================================================
+RUN mkdir -p /root/.julia/environments/v1.10 && \
+    printf "[LocalPreferences]\nGDAL_jll = { libgdal_path = \"/usr/lib/libgdal.so\" }\nGEOS_jll = { libgeos_path = \"/usr/lib/x86_64-linux-gnu/libgeos_c.so\" }\n" > /root/.julia/environments/v1.10/LocalPreferences.toml
+
+
+# ============================================================
+# 9. Julia: Instalación de paquetes
+# ------------------------------------------------------------
+# Stack SIG completo:
+# - Rasters, ArchGDAL, GeoStats, Makie
+# - Conectores DB, CSV, NetCDF
+# - Visualización y notebooks (IJulia)
+# ============================================================
+RUN julia -e 'using Pkg; Pkg.add(["Preferences", "Suppressor", "RCall", "LibGEOS", "Tables", "DataFrames", "Plots", \
+    "Statistics", "ArchGDAL", "LibPQ", "GeoDataFrames", "IJulia", "CSV", "CairoMakie", "AlgebraOfGraphics", \
+    "DimensionalData", "FlexiJoins", "GeoFormatTypes", "GeoInterface", "GeoJSON", "GeoMakie", "GeometryOps", \
+    "Makie", "MakieCore", "NaturalEarth", "Proj", "Rasters", "StatsBase", "Tyler", "GeoStats", "Graphs", \
+    "NCDatasets", "MetaGraphsNext"])'
+
+
+# ============================================================
+# Cirugía de librerías (OpenSSL)
+# ------------------------------------------------------------
+# Fuerza a Julia a usar OpenSSL del sistema (Ubuntu Noble)
+# Evita errores de TLS y descargas de paquetes
+# ============================================================
+RUN find /root/.julia/artifacts -name "libssl.so*" -exec ln -sf /usr/lib/x86_64-linux-gnu/libssl.so.3 {} \; && \
+    find /root/.julia/artifacts -name "libcrypto.so*" -exec ln -sf /usr/lib/x86_64-linux-gnu/libcrypto.so.3 {} \;
+
+
+# ============================================================
+# Precompilación total de Julia
+# ------------------------------------------------------------
+# Garantiza arranque instantáneo en:
+# - VSCode
+# - Jupyter
+# - IJulia
+# ============================================================
+RUN julia -e 'using Pkg; Pkg.precompile()'
+
+
+# ============================================================
+# Configuración de paralelismo
+# ------------------------------------------------------------
+# Julia usará automáticamente todos los núcleos disponibles
+# ============================================================
+ENV JULIA_NUM_THREADS=auto
+
+# ============================================================
+# 10. CONFIGURACIÓN MAESTRA Rprofile.site
+# ------------------------------------------------------------
+# Este archivo se ejecuta automáticamente cada vez que inicia R.
+# Centraliza la integración R ↔ Julia ↔ Python ↔ VSCode.
+#
+# Build 47.42:
+# - Control de DPI, tamaño y fuentes
+# - Ejecución segura de Julia desde R
+# - Renderizado consistente de gráficos
+# - Hook para Matplotlib vía reticulate
+# ============================================================
+
+RUN cat << 'EOF' > /usr/lib/R/etc/Rprofile.site
+# ============================================================
+# --- 1. AJUSTES DE SISTEMA ---
+# ------------------------------------------------------------
+# Variables globales para que R sepa dónde encontrar:
+# - Julia
+# - Python usado por Quarto
+# ============================================================
+Sys.setenv(JULIA_BINDIR = "/opt/julia/bin")
+Sys.setenv(QUARTO_PYTHON = "/usr/bin/python3")
+
+# ============================================================
+# Código Julia embebido (auto-sanable)
+# ------------------------------------------------------------
+# Se define como string para:
+# - Inyectarse dinámicamente en Julia
+# - Evitar errores si el kernel se reinicia
+# - Garantizar reproducibilidad en notebooks
+# ============================================================
+.unal_julia_code <- '
+using Suppressor, Plots, Statistics
+
+# Ejecutor central de código Julia desde R
+# - Evalúa múltiples expresiones
+# - Captura stdout
+# - Maneja gráficos y texto
+function _unal_core_executor(code, is_plot, filename, dpi, w, h, fs)
+    @capture_out begin
+        if is_plot
+            # Parámetros gráficos homogéneos (DPI, tamaño, fuentes)
+            default(dpi=dpi, size=(w, h), titlefontsize=fs+2, 
+                    guidefontsize=fs, tickfontsize=fs-2, legendfontsize=fs-1)
+        end
+        pos = 1
+        while pos <= lastindex(code)
+            start_idx = pos
+            try
+                ex, pos = Meta.parse(code, pos)
+                cmd_part = strip(code[start_idx:prevind(code, pos)])
+                if !isempty(cmd_part)
+                    println("julia> ", cmd_part)
+                    res = eval(ex)
+                    if res !== nothing && !(res isa Plots.Plot)
+                        show(stdout, MIME("text/plain"), res)
+                        println()
+                    end
+                    println() 
+                end
+            catch e
+                println("julia> Error: ", e)
+                break
+            end
+        end
+        # Guardado del gráfico si aplica
+        if is_plot && current() !== nothing; savefig(current(), filename); end
+    end
+end
+'
+
+# ============================================================
+# Inicialización segura de Julia
+# ------------------------------------------------------------
+# - Verifica que JuliaConnectoR esté disponible
+# - Inyecta el ejecutor solo una vez por sesión
+# ============================================================
+.ensure_julia_ready <- function() {
+  if (!requireNamespace("JuliaConnectoR", quietly = TRUE)) stop("JuliaConnectoR missing")
+  if (!JuliaConnectoR::juliaEval('isdefined(Main, :_unal_core_executor)')) {
+    JuliaConnectoR::juliaEval(.unal_julia_code)
+  }
+}
+
+# ============================================================
+# j_eval(): ejecutar código Julia (solo texto)
+# ------------------------------------------------------------
+# Uso típico:
+# j_eval("1 + 1")
+# ============================================================
+j_eval <- function(cmd) {
+  .ensure_julia_ready()
+  cat(JuliaConnectoR::juliaCall("_unal_core_executor", cmd, FALSE, "", 72, 800, 500, 12))
+}
+
+# ============================================================
+# j_plot(): ejecutar código Julia con gráficos
+# ------------------------------------------------------------
+# - Guarda el gráfico en PNG
+# - Lo renderiza directamente en R
+# ============================================================
+j_plot <- function(cmd, n = "tmp_plot.png", dpi = 300, w = 800, h = NULL, ratio = 1.6, fontsize = 12) {
+  .ensure_julia_ready()
+  if (is.null(h)) h <- round(w / ratio)
+  log_out <- JuliaConnectoR::juliaCall("_unal_core_executor", cmd, TRUE, n, dpi, as.integer(w), as.integer(h), as.integer(fontsize))
+  if (nchar(log_out) > 0) cat(log_out)
+  if (file.exists(n)) {
+    img <- png::readPNG(n)
+    grid::grid.newpage()
+    grid::grid.raster(img)
+  }
+}
+
+# ============================================================
+# --- 2. CARGA DE LIBRERÍAS Y DISPOSITIVOS ---
+# ------------------------------------------------------------
+# Librerías base para renderizar imágenes
+# ============================================================
+library(png)
+library(grid)
+
+if (interactive()) {
+
+  # ==========================================================
+  # Visor gráfico httpgd (VSCode / navegador)
+  # ----------------------------------------------------------
+  # Permite gráficos interactivos persistentes
+  # ==========================================================
+  if (requireNamespace("httpgd", quietly = TRUE)) {
+    options(device = "httpgd", httpgd.host = "0.0.0.0", httpgd.port = 8787, httpgd.token = FALSE)
+  }
+  
+  # ==========================================================
+  # Hook Python → R (Matplotlib)
+  # ----------------------------------------------------------
+  # Captura gráficos de matplotlib y los muestra en R
+  # usando el backend custom definido en Docker
+  # ==========================================================
+  setHook(packageEvent("reticulate", "onLoad"), function(...) {
+    try({
+      ret_py <- reticulate::import("reticulate", delay_load = TRUE)
+      reticulate::py_set_attr(ret_py, "r_graphic_command", function(path) {
+        if (file.exists(path)) {
+          img <- png::readPNG(path)
+          grid::grid.newpage()
+          grid::grid.raster(img)
+        }
+      })
+      reticulate::py_run_string("import matplotlib; matplotlib.use('module://reticulate.matplotlib.backend')")
+    }, silent = TRUE)
+  })
+}
+EOF
+
+
+# ============================================================
+# Compatibilidad multi-R (opcional)
+# ------------------------------------------------------------
+# Permite que R instalado en rutas alternativas use
+# exactamente la misma configuración
+# ============================================================
+#RUN cp /usr/lib/R/etc/Rprofile.site /etc/R/Rprofile.site
+
+
+# ============================================================
+# 10. Finalización del contenedor
+# ------------------------------------------------------------
+# Directorio de trabajo compartido
+# Permisos amplios para docencia
+# ============================================================
+WORKDIR /home/rstudio/work
+RUN chmod -R 777 /home/rstudio/work
+
+# Puertos:
+# 8888 → JupyterLab
+# 8787 → httpgd / RStudio-like viewer
+EXPOSE 8888
+EXPOSE 8787
+
+# Arranque por defecto: JupyterLab
+CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root", "--NotebookApp.token='geomatica2025'"]
+```
+
+## Arrancar y detener las imágenes {#sec-arrancar_detener_contenedores}
+
+### Arrancar las imágenes
+
+Los comandos `build` o `load` una vez se terminan satisfactoriamente, no necesitan volver a ejecutarse. El principal comando para subir el servicio de las imágenes instaladas se muestra a continuación. 
+
+Use este comando siempre antes de iniciar a trabajar con los contenedores instalados. *Esto activará los dos contenedores: uno para análisis geoespacial y otro para la base de datos.*:
 
 ```bash
 docker compose up -d
 ```
 
-5. **Detener las imágenes:** (opcional: solo para terminar)
+Si detuvo los contenedores con `docker compose stop`, use este comando para **reiniciarlos**: 
+
+```bash
+docker compose start
+```
+
+### Detener las imágenes
+
+Para **apagar** los contenedores sin borrar datos:
+
+```bash
+docker compose stop
+```
+
+Si necesita **borrar todo** (por ejemplo para reinstalar) (los datos de la DB se mantienen en el volumen):
 
 ```bash
 docker compose down
 ```
 
-Finalmente trabajar con los contenedores dentro de VSCode:
+## Verificar logs de instalación 
 
-6. "Ctrl + Shif + P": "Dev Containers: Attach to Running Container..." y seleccionar container `image_sig_unal` (`contenedor_sig_unal`)
+**Verificación de Logs**: Si desea ver el log de instalación de una imagen compilada, ejecute el siguiente comando, sin embargo la url de acceso a **Jupyter Lab** mostrada después de ejecutar este comando puede estar errónea. Para acceder a **Jupyter Lab** vea (@sec-acceder_jupyterlab)
+
+```bash
+docker logs contenedor_sig_unal
+```
 
 ## Comandos docker
 

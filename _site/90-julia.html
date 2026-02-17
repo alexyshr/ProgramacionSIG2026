@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Programación SIG: Python, R y Julia - Apéndice J — Adicionales Sobre Julia</title>
+<title>Programación SIG: Python, R y Julia - Apéndice K — Adicionales Sobre Julia</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,7 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./98-errata.html" rel="next">
+<link href="./91-qgis.html" rel="next">
 <link href="./89-r.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -81,7 +81,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./81-infraestructura_instalada.html">Apéndices</a></li><li class="breadcrumb-item"><a href="./90-julia.html"><span class="chapter-number">J</span>&nbsp; <span class="chapter-title">Adicionales Sobre Julia</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./80-instalacion_herramientas.html">Apéndices</a></li><li class="breadcrumb-item"><a href="./90-julia.html"><span class="chapter-number">K</span>&nbsp; <span class="chapter-title">Adicionales Sobre Julia</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -136,25 +136,19 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-guia_instalacion_A_docker.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción A: Contenedor Docker (Python, R, Julia)</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./02.a-guia_instalacion_A_docker.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción A: Instalación vía Paquete Preconfigurado (Docker)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción A: Docker (Python, R, Julia)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-guia_instalacion_B_qgis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción B: QGIS y PyQGIS</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción B: QGIS y PyQGIS</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04-guia_instalacion_C_ArcGIS.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</span></span></a>
   </div>
 </li>
       </ul>
@@ -170,14 +164,32 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05-introduccion_python_r_julia.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introducción</span></span></a>
+  <a href="./05-variables_tipos_de_datos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Función j_eval y j_plot en R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06-estructuras_datos_geo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Estructuras de Datos Geoespaciales</span></span></a>
+  <a href="./06-estructuras_datos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Función j_eval y j_plot en R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-operaciones_cadenas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Función j_eval y j_plot en R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-introduccion_python_r_julia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Introducción a Python, R y Julia</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-estructuras_datos_geo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Estructuras de Datos Geoespaciales</span></span></a>
   </div>
 </li>
       </ul>
@@ -194,7 +206,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./41-practica_1_benchmark_raster.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Evaluación Comparativa de Procesamiento Geoespacial</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Evaluación Comparativa de Procesamiento Geoespacial</span></span></a>
   </div>
 </li>
       </ul>
@@ -211,13 +223,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./61-presentacion_1_clase1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Temas por Charlar</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Temas por Charlar</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./62-presentacion_2_benchmark.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Benchmark geoespacial: cómo leer los resultados</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Benchmark geoespacial: cómo leer los resultados</span></span></a>
   </div>
 </li>
       </ul>
@@ -233,68 +245,92 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./81-infraestructura_instalada.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Infraestructura Instalada</span></span></a>
+  <a href="./80-instalacion_herramientas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Resumen instalación de herramientas</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./81-uso_infraestructura_instalada.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Uso de la Infraestructura Instalada</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./82-quarto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Quarto: Orquestación y Configuración</span></span></a>
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Quarto: Orquestación y Configuración</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./83-docker_desktop.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Docker: Gestión de Contenedores e Imágenes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Docker: Gestión de Contenedores e Imágenes</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./84-git_github.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Git y GitHub: Sincronización Local-Remota</span></span></a>
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Git y GitHub: Sincronización Local-Remota</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./85-vscode.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Visual Studio Code: Extensiones e Interfaz</span></span></a>
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Visual Studio Code (VScode): Extensiones e Interfaz</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./86-windows.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Temas técnicos sobre Windows</span></span></a>
+ <span class="menu-text"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">Temas técnicos sobre Windows</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./87-linux_ubuntu.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">Temas Técnicos sobre Linux</span></span></a>
+ <span class="menu-text"><span class="chapter-number">H</span>&nbsp; <span class="chapter-title">Temas Técnicos sobre Linux</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./88-python.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">H</span>&nbsp; <span class="chapter-title">Adicionales Sobre Python</span></span></a>
+ <span class="menu-text"><span class="chapter-number">I</span>&nbsp; <span class="chapter-title">Adicionales Sobre Python</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./89-r.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">I</span>&nbsp; <span class="chapter-title">Adicionales Sobre R</span></span></a>
+ <span class="menu-text"><span class="chapter-number">J</span>&nbsp; <span class="chapter-title">Adicionales Sobre R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./90-julia.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">J</span>&nbsp; <span class="chapter-title">Adicionales Sobre Julia</span></span></a>
+ <span class="menu-text"><span class="chapter-number">K</span>&nbsp; <span class="chapter-title">Adicionales Sobre Julia</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./91-qgis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">L</span>&nbsp; <span class="chapter-title">Adicionales Sobre QGIS</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./92-arcgispro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">M</span>&nbsp; <span class="chapter-title">Adicionales sobre ArcGIS Pro</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./93-postgresql.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">N</span>&nbsp; <span class="chapter-title">Adicionales sobre ArcGIS Pro</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./98-errata.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">K</span>&nbsp; <span class="chapter-title">Errata</span></span></a>
+ <span class="menu-text"><span class="chapter-number">O</span>&nbsp; <span class="chapter-title">Errata</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -315,16 +351,17 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Tabla de Contenidos</h2>
    
   <ul>
-  <li><a href="#versiones-instaladas-del-software" id="toc-versiones-instaladas-del-software" class="nav-link active" data-scroll-target="#versiones-instaladas-del-software"><span class="header-section-number">J.1</span> Versiones instaladas del software</a></li>
+  <li><a href="#stack-de-julia" id="toc-stack-de-julia" class="nav-link active" data-scroll-target="#stack-de-julia"><span class="header-section-number">K.1</span> Stack de Julia</a></li>
+  <li><a href="#versiones-instaladas-del-software" id="toc-versiones-instaladas-del-software" class="nav-link" data-scroll-target="#versiones-instaladas-del-software"><span class="header-section-number">K.2</span> Versiones instaladas del software</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./81-infraestructura_instalada.html">Apéndices</a></li><li class="breadcrumb-item"><a href="./90-julia.html"><span class="chapter-number">J</span>&nbsp; <span class="chapter-title">Adicionales Sobre Julia</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./80-instalacion_herramientas.html">Apéndices</a></li><li class="breadcrumb-item"><a href="./90-julia.html"><span class="chapter-number">K</span>&nbsp; <span class="chapter-title">Adicionales Sobre Julia</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Apéndice J — Adicionales Sobre Julia</h1>
+<h1 class="title"><span id="sec-anexo_julia" class="quarto-section-identifier">Apéndice K — Adicionales Sobre Julia</span></h1>
 </div>
 
 
@@ -341,8 +378,63 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="versiones-instaladas-del-software" class="level2" data-number="J.1">
-<h2 data-number="J.1" class="anchored" data-anchor-id="versiones-instaladas-del-software"><span class="header-section-number">J.1</span> Versiones instaladas del software</h2>
+<section id="stack-de-julia" class="level2" data-number="K.1">
+<h2 data-number="K.1" class="anchored" data-anchor-id="stack-de-julia"><span class="header-section-number">K.1</span> Stack de Julia</h2>
+<p>Julia ofrece un rendimiento de nivel C++ con sintaxis simplificada. A continuación las principales librerías instaladas en los contenedores para el geoprocesamiento.</p>
+<div id="tbl-julia-packages" class="quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-julia-packages-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;K.1: Paquetes principales del stack en Julia
+</figcaption>
+<div aria-describedby="tbl-julia-packages-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Paquete</th>
+<th style="text-align: center;">Funcionalidad</th>
+<th style="text-align: center;">Sitio web</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>LibPQ.jl</code></td>
+<td style="text-align: center;">Controlador PostgreSQL/PostGIS</td>
+<td style="text-align: center;"><a href="https://juliadatabases.org/LibPQ.jl/dev/" class="uri">https://juliadatabases.org/LibPQ.jl/dev/</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>ArchGDAL.jl</code></td>
+<td style="text-align: center;">Interfaz de alto nivel para GDAL</td>
+<td style="text-align: center;"><a href="https://yeesian.com/ArchGDAL.jl/" class="uri">https://yeesian.com/ArchGDAL.jl/</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>LibGEOS.jl</code></td>
+<td style="text-align: center;">Interfaz del motor geométrico (GEOS)</td>
+<td style="text-align: center;"><a href="https://github.com/JuliaGeo/LibGEOS.jl" class="uri">https://github.com/JuliaGeo/LibGEOS.jl</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>Plots.jl</code></td>
+<td style="text-align: center;">Visualización y generación de gráficos</td>
+<td style="text-align: center;"><a href="https://docs.juliaplots.org/" class="uri">https://docs.juliaplots.org/</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>DataFrames.jl</code></td>
+<td style="text-align: center;">Manipulación de datos en memoria</td>
+<td style="text-align: center;"><a href="https://dataframes.juliadata.org/" class="uri">https://dataframes.juliadata.org/</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<ul>
+<li><strong><code>LibPQ.jl</code></strong>: Conector de bajo nivel para <strong>PostgreSQL</strong>. Es la herramienta que permitirá a los estudiantes realizar ingesta y consulta de datos desde el servidor PostGIS.</li>
+<li><strong><code>ArchGDAL.jl</code></strong>: Proporciona una abstracción de alto nivel para el motor GDAL. Es excelente para transformar formatos y manejar proyecciones.</li>
+<li><strong><code>LibGEOS.jl</code></strong>: La interfaz directa al motor de geometrías (GEOS). Se utiliza para operaciones topológicas puras como validación de polígonos, intersecciones y cálculos de buffers.</li>
+<li><strong><code>DataFrames.jl</code></strong>: El estándar para el manejo de datos tabulares en Julia, permitiendo integrar los resultados de las consultas espaciales en estructuras fáciles de analizar.</li>
+</ul>
+</section>
+<section id="versiones-instaladas-del-software" class="level2" data-number="K.2">
+<h2 data-number="K.2" class="anchored" data-anchor-id="versiones-instaladas-del-software"><span class="header-section-number">K.2</span> Versiones instaladas del software</h2>
 <p>Versiones de paquetes <code>Julia</code> en el sistema:</p>
 <table class="table">
 <colgroup>
@@ -801,12 +893,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./89-r.html" class="pagination-link" aria-label="Adicionales Sobre R">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">I</span>&nbsp; <span class="chapter-title">Adicionales Sobre R</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">J</span>&nbsp; <span class="chapter-title">Adicionales Sobre R</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./98-errata.html" class="pagination-link" aria-label="Errata">
-        <span class="nav-page-text"><span class="chapter-number">K</span>&nbsp; <span class="chapter-title">Errata</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./91-qgis.html" class="pagination-link" aria-label="Adicionales Sobre QGIS">
+        <span class="nav-page-text"><span class="chapter-number">L</span>&nbsp; <span class="chapter-title">Adicionales Sobre QGIS</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

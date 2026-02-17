@@ -1,0 +1,1586 @@
+﻿# Estructuras de datos {#sec-estructuras_datos}
+
+## Función j_eval y j_plot en R
+
+```{r}
+#| label: setup_benchmark
+#| code-fold: true
+# #| include: false
+#| results: asis
+source("./docs/j_eval_j_plot.r")
+```
+
+## Introducción
+
+
+## Objetivos de aprendizaje
+
+## Tuplas
+
+Las **Tuplas** son estructuras de datos diseñadas para almacenar una colección de elementos. Su característica más importante es la **inmutabilidad**: una vez creada una tupla, sus elementos no pueden ser alterados, añadidos ni eliminados. Esto las hace perfectas para almacenar pares de coordenadas estáticas `(Latitud, Longitud)` que no deben modificarse accidentalmente durante la ejecución de un algoritmo espacial.
+
+::: {.panel-tabset}
+
+### Python
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{python}
+#| label: python_tuplas_codigo
+#| eval: false
+
+# Creación de una tupla estática (Latitud, Longitud) de Bogotá
+punto_bogota = (4.6097, -74.0817)
+print(f"Coordenadas de Bogotá: {punto_bogota}")
+
+# Acceso a los elementos de la tupla (Recordar: Índice Base 0)
+latitud = punto_bogota[0]
+longitud = punto_bogota[1]
+print(f"Latitud: {latitud}")
+print(f"Longitud: {longitud}")
+
+# Desempaquetado de tuplas (Tuple Unpacking) en variables separadas
+lat, lon = punto_bogota
+print(f"Bogotá está ubicada a {lat}°N, {lon}°W")
+
+# Almacenamiento de múltiples puntos geográficos como tuplas
+medellin = (6.2442, -75.5812)
+cali = (3.4516, -76.5320)
+cartagena = (10.3910, -75.4794)
+
+print(f"Medellín: {medellin}")
+print(f"Cali: {cali}")
+print(f"Cartagena: {cartagena}")
+```
+:::
+:::
+
+
+```{python}
+#| label: python_tuplas
+# #| eval: false
+
+# Creación de una tupla estática (Latitud, Longitud) de Bogotá
+punto_bogota = (4.6097, -74.0817)
+print(f"Coordenadas de Bogotá: {punto_bogota}")
+
+# Acceso a los elementos de la tupla (Recordar: Índice Base 0)
+latitud = punto_bogota[0]
+longitud = punto_bogota[1]
+print(f"Latitud: {latitud}")
+print(f"Longitud: {longitud}")
+
+# Desempaquetado de tuplas (Tuple Unpacking) en variables separadas
+lat, lon = punto_bogota
+print(f"Bogotá está ubicada a {lat}°N, {lon}°W")
+
+# Almacenamiento de múltiples puntos geográficos como tuplas
+medellin = (6.2442, -75.5812)
+cali = (3.4516, -76.5320)
+cartagena = (10.3910, -75.4794)
+
+print(f"Medellín: {medellin}")
+print(f"Cali: {cali}")
+print(f"Cartagena: {cartagena}")
+```
+
+### R
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{r}
+#| label: r_tuplas_codigo
+#| eval: false
+
+# R no tiene "tuplas" nativas; usamos vectores 'c()' para coordenadas
+punto_bogota <- c(4.6097, -74.0817)
+cat("Coordenadas de Bogotá:", punto_bogota, "\n")
+
+# Acceso a los elementos (Recordar: Índice Base 1)
+latitud <- punto_bogota[1]
+longitud <- punto_bogota[2]
+cat("Latitud:", latitud, "\n")
+cat("Longitud:", longitud, "\n")
+
+# Asignación de variables (R nativo no tiene desempaquetado automático)
+lat <- punto_bogota[1]
+lon <- punto_bogota[2]
+cat(sprintf("Bogotá está ubicada a %s°N, %s°W\n", lat, lon))
+
+# Almacenamiento de múltiples puntos geográficos
+medellin <- c(6.2442, -75.5812)
+cali <- c(3.4516, -76.5320)
+cartagena <- c(10.3910, -75.4794)
+
+cat("Medellín:", medellin, "\n")
+cat("Cali:", cali, "\n")
+cat("Cartagena:", cartagena, "\n")
+```
+:::
+:::
+
+```{r}
+#| label: r_tuplas
+# #| eval: false
+
+# R no tiene "tuplas" nativas; usamos vectores 'c()' para coordenadas
+punto_bogota <- c(4.6097, -74.0817)
+cat("Coordenadas de Bogotá:", punto_bogota, "\n")
+
+# Acceso a los elementos (Recordar: Índice Base 1)
+latitud <- punto_bogota[1]
+longitud <- punto_bogota[2]
+cat("Latitud:", latitud, "\n")
+cat("Longitud:", longitud, "\n")
+
+# Asignación de variables (R nativo no tiene desempaquetado automático)
+lat <- punto_bogota[1]
+lon <- punto_bogota[2]
+cat(sprintf("Bogotá está ubicada a %s°N, %s°W\n", lat, lon))
+
+# Almacenamiento de múltiples puntos geográficos
+medellin <- c(6.2442, -75.5812)
+cali <- c(3.4516, -76.5320)
+cartagena <- c(10.3910, -75.4794)
+
+cat("Medellín:", medellin, "\n")
+cat("Cali:", cali, "\n")
+cat("Cartagena:", cartagena, "\n")
+```
+
+### Julia
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{julia}
+#| label: julia_tuplas_codigo
+#| eval: false
+
+# Creación de una tupla estática (Latitud, Longitud) de Bogotá
+punto_bogota = (4.6097, -74.0817)
+println("Coordenadas de Bogotá: ", punto_bogota)
+
+# Acceso a los elementos de la tupla (Recordar: Índice Base 1)
+latitud = punto_bogota[1]
+longitud = punto_bogota[2]
+println("Latitud: ", latitud)
+println("Longitud: ", longitud)
+
+# Desempaquetado de tuplas (Tuple Unpacking)
+lat, lon = punto_bogota
+println("Bogotá está ubicada a $lat°N, $lon°W")
+
+# Almacenamiento de múltiples puntos geográficos como tuplas
+medellin = (6.2442, -75.5812)
+cali = (3.4516, -76.5320)
+cartagena = (10.3910, -75.4794)
+
+println("Medellín: ", medellin)
+println("Cali: ", cali)
+println("Cartagena: ", cartagena)
+```
+:::
+:::
+
+```{r}
+#| label: julia_tuplas
+#| results: asis
+# #| eval: false
+j_eval('
+# Creación de una tupla estática (Latitud, Longitud) de Bogotá
+punto_bogota = (4.6097, -74.0817)
+println("Coordenadas de Bogotá: ", punto_bogota)
+
+# Acceso a los elementos de la tupla (Recordar: Índice Base 1)
+latitud = punto_bogota[1]
+longitud = punto_bogota[2]
+println("Latitud: ", latitud)
+println("Longitud: ", longitud)
+
+# Desempaquetado de tuplas (Tuple Unpacking)
+lat, lon = punto_bogota
+println("Bogotá está ubicada a $lat°N, $lon°W")
+
+# Almacenamiento de múltiples puntos geográficos como tuplas
+medellin = (6.2442, -75.5812)
+cali = (3.4516, -76.5320)
+cartagena = (10.3910, -75.4794)
+
+println("Medellín: ", medellin)
+println("Cali: ", cali)
+println("Cartagena: ", cartagena)
+')
+```
+
+:::
+
+| Característica | Python | R | Julia |
+|:---|:---:|:---:|:---:|
+| **Sintaxis de Creación** | `t = (x, y)` | `v <- c(x, y)` (Vector) | `t = (x, y)` |
+| **Inmutabilidad estricta**| Sí (genera error si se intenta alterar). | No aplica. Los vectores hacen una copia en memoria si se alteran. | Sí (genera error si se intenta alterar). |
+| **Desempaquetado (*Unpacking*)** | `x, y = t` | Requiere extraer por índice manual `x <- v[1]; y <- v[2]`. | `x, y = t` |
+| **Uso Principal en SIG** | Proteger pares de coordenadas estáticas de alteraciones en iteraciones. | Creación rápida de puntos geométricos. | Tipado estricto y seguro de coordenadas para máximo rendimiento. |
+
+: Comparación técnica de tuplas y equivalentes {#tbl-tuplas tbl-colwidths="[20,25,30,25]"}
+
+
+
+---
+
+**Nota técnica:** Las tuplas no existen nativamente en R con el comportamiento de "desempaquetado" e "inmutabilidad estricta" que vemos en Python y Julia. En R, utilizamos **vectores** (`c()`) o **listas** (`list()`) para agrupar coordenadas. Es crucial entender que en Python y Julia, si intentas ejecutar `punto_bogota[0] = 5.0`, el programa colapsará inmediatamente para proteger los datos (porque una tupla es inmutable). En R, `punto_bogota[1] <- 5.0` sí funcionará, reescribiendo la coordenada silenciosamente.
+
+
+## Listas (y Vectores)
+
+A diferencia de las tuplas, las **Listas** (en Python y Julia) o los **Vectores** (en R) son secuencias **mutables** y dinámicas. Son la estructura de datos más utilizada en geomática para almacenar series temporales, perfiles de elevación, atributos de una tabla o una secuencia ordenada de vértices que conforman una ruta, ya que permiten agregar, eliminar o modificar datos sobre la marcha.
+
+::: {.panel-tabset}
+
+### Python
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{python}
+#| label: python_listas_codigo
+#| eval: false
+
+# 1. CREACIÓN DE LISTAS
+# Una lista de tuplas de coordenadas representando una ruta de viaje
+ruta = [
+    (4.6097, -74.0817),  # Bogotá
+    (6.2442, -75.5812),  # Medellín
+    (3.4516, -76.5320),  # Cali
+]
+print("Ruta inicial:", ruta)
+
+# Una lista de mediciones de elevación (en metros)
+elevaciones = [2600.5, 2650.2, 2710.8, 2800.3, 2950.7, 3100.1]
+print("Perfil de elevación:", elevaciones)
+
+# Una lista de cadenas de texto (nombres de ciudades)
+ciudades = ["Bogotá", "Medellín", "Cali"]
+print("Ciudades a visitar:", ciudades)
+
+# 2. AGREGAR ELEMENTOS (Mutabilidad)
+# Agregamos Cartagena a nuestra ruta y su elevación al perfil
+ruta.append((10.3910, -75.4794))
+elevaciones.append(2.0)
+print("Ruta actualizada:", ruta)
+
+# 3. ACCEDER A ELEMENTOS (Índices)
+# Acceder a la primera ciudad de la ruta (Índice 0)
+primera_parada = ruta[0]
+print(f"Primera parada: {primera_parada}")
+
+# Acceder a la última ciudad usando indexación negativa
+ultima_parada = ruta[-1]
+print(f"Última parada: {ultima_parada}")
+
+# 4. SLICING (Extraer porciones de la lista)
+# Obtener las dos primeras paradas (índices 0 y 1, el 2 es exclusivo)
+primeras_dos = ruta[:2]
+print("Primeras dos paradas:", primeras_dos)
+
+# Obtener una porción central de las elevaciones (índices 2, 3 y 4)
+elevaciones_medias = elevaciones[2:5]
+print("Elevaciones intermedias:", elevaciones_medias)
+
+# 5. OPERACIONES ÚTILES
+# Contar el número de vértices (puntos de ruta)
+num_vertices = len(ruta)
+print(f"Número de vértices: {num_vertices}")
+
+# Encontrar la elevación máxima
+elev_maxima = max(elevaciones)
+print(f"Elevación máxima: {elev_maxima} metros")
+
+# Calcular la elevación promedio
+elev_promedio = sum(elevaciones) / len(elevaciones)
+print(f"Elevación promedio: {elev_promedio:.1f} metros")
+```
+:::
+:::
+
+
+```{python}
+#| label: python_listas
+# #| eval: false
+
+# 1. CREACIÓN DE LISTAS
+# Una lista de tuplas de coordenadas representando una ruta de viaje
+ruta = [
+    (4.6097, -74.0817),  # Bogotá
+    (6.2442, -75.5812),  # Medellín
+    (3.4516, -76.5320),  # Cali
+]
+print("Ruta inicial:", ruta)
+
+# Una lista de mediciones de elevación (en metros)
+elevaciones = [2600.5, 2650.2, 2710.8, 2800.3, 2950.7, 3100.1]
+print("Perfil de elevación:", elevaciones)
+
+# Una lista de cadenas de texto (nombres de ciudades)
+ciudades = ["Bogotá", "Medellín", "Cali"]
+print("Ciudades a visitar:", ciudades)
+
+# 2. AGREGAR ELEMENTOS (Mutabilidad)
+# Agregamos Cartagena a nuestra ruta y su elevación al perfil
+ruta.append((10.3910, -75.4794))
+elevaciones.append(2.0)
+print("Ruta actualizada:", ruta)
+
+# 3. ACCEDER A ELEMENTOS (Índices)
+# Acceder a la primera ciudad de la ruta (Índice 0)
+primera_parada = ruta[0]
+print(f"Primera parada: {primera_parada}")
+
+# Acceder a la última ciudad usando indexación negativa
+ultima_parada = ruta[-1]
+print(f"Última parada: {ultima_parada}")
+
+# 4. SLICING (Extraer porciones de la lista)
+# Obtener las dos primeras paradas (índices 0 y 1, el 2 es exclusivo)
+primeras_dos = ruta[:2]
+print("Primeras dos paradas:", primeras_dos)
+
+# Obtener una porción central de las elevaciones (índices 2, 3 y 4)
+elevaciones_medias = elevaciones[2:5]
+print("Elevaciones intermedias:", elevaciones_medias)
+
+# 5. OPERACIONES ÚTILES
+# Contar el número de vértices (puntos de ruta)
+num_vertices = len(ruta)
+print(f"Número de vértices: {num_vertices}")
+
+# Encontrar la elevación máxima
+elev_maxima = max(elevaciones)
+print(f"Elevación máxima: {elev_maxima} metros")
+
+# Calcular la elevación promedio
+elev_promedio = sum(elevaciones) / len(elevaciones)
+print(f"Elevación promedio: {elev_promedio:.1f} metros")
+```
+
+### R
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{r}
+#| label: r_listas_codigo
+#| eval: false
+
+# 1. CREACIÓN DE LISTAS Y VECTORES
+# En R, usamos 'list' para agrupar objetos complejos como vectores de coordenadas
+ruta <- list(
+    c(4.6097, -74.0817),  # Bogotá
+    c(6.2442, -75.5812),  # Medellín
+    c(3.4516, -76.5320)   # Cali
+)
+cat("Ruta inicial:\n"); print(ruta)
+
+# Los datos homogéneos (números o textos solos) van en vectores atómicos 'c()'
+elevaciones <- c(2600.5, 2650.2, 2710.8, 2800.3, 2950.7, 3100.1)
+cat("Perfil de elevación:", elevaciones, "\n")
+
+ciudades <- c("Bogotá", "Medellín", "Cali")
+cat("Ciudades a visitar:", ciudades, "\n")
+
+# 2. AGREGAR ELEMENTOS
+# Agregamos Cartagena a la ruta (usando append para listas)
+ruta <- append(ruta, list(c(10.3910, -75.4794)))
+# Agregamos la elevación al vector (creando un nuevo vector combinado)
+elevaciones <- c(elevaciones, 2.0)
+
+# 3. ACCEDER A ELEMENTOS (Índice Base 1)
+# En listas de R, se usa doble corchete [[ ]] para extraer el elemento real
+primera_parada <- ruta[[1]]
+cat("Primera parada:", primera_parada, "\n")
+
+# Acceder a la última ciudad usando la longitud total
+ultima_parada <- ruta[[length(ruta)]]
+cat("Última parada:", ultima_parada, "\n")
+
+# 4. SLICING (Extraer porciones)
+# En R, el índice final SÍ se incluye en el rango
+primeras_dos <- ruta[1:2] # Usa corchete simple para rebanar listas
+
+# Para extraer las elevaciones equivalentes (3er, 4to y 5to elemento)
+elevaciones_medias <- elevaciones[3:5]
+cat("Elevaciones intermedias:", elevaciones_medias, "\n")
+
+# 5. OPERACIONES ÚTILES
+num_vertices <- length(ruta)
+cat("Número de vértices:", num_vertices, "\n")
+
+elev_maxima <- max(elevaciones)
+cat("Elevación máxima:", elev_maxima, "metros\n")
+
+# R tiene una función nativa para el promedio
+elev_promedio <- mean(elevaciones)
+cat(sprintf("Elevación promedio: %.1f metros\n", elev_promedio))
+```
+:::
+:::
+
+```{r}
+#| label: r_listas
+# #| eval: false
+
+# 1. CREACIÓN DE LISTAS Y VECTORES
+# En R, usamos 'list' para agrupar objetos complejos como vectores de coordenadas
+ruta <- list(
+    c(4.6097, -74.0817),  # Bogotá
+    c(6.2442, -75.5812),  # Medellín
+    c(3.4516, -76.5320)   # Cali
+)
+cat("Ruta inicial:\n"); print(ruta)
+
+# Los datos homogéneos (números o textos solos) van en vectores atómicos 'c()'
+elevaciones <- c(2600.5, 2650.2, 2710.8, 2800.3, 2950.7, 3100.1)
+cat("Perfil de elevación:", elevaciones, "\n")
+
+ciudades <- c("Bogotá", "Medellín", "Cali")
+cat("Ciudades a visitar:", ciudades, "\n")
+
+# 2. AGREGAR ELEMENTOS
+# Agregamos Cartagena a la ruta (usando append para listas)
+ruta <- append(ruta, list(c(10.3910, -75.4794)))
+# Agregamos la elevación al vector (creando un nuevo vector combinado)
+elevaciones <- c(elevaciones, 2.0)
+
+# 3. ACCEDER A ELEMENTOS (Índice Base 1)
+# En listas de R, se usa doble corchete [[ ]] para extraer el elemento real
+primera_parada <- ruta[[1]]
+cat("Primera parada:", primera_parada, "\n")
+
+# Acceder a la última ciudad usando la longitud total
+ultima_parada <- ruta[[length(ruta)]]
+cat("Última parada:", ultima_parada, "\n")
+
+# 4. SLICING (Extraer porciones)
+# En R, el índice final SÍ se incluye en el rango
+primeras_dos <- ruta[1:2] # Usa corchete simple para rebanar listas
+
+# Para extraer las elevaciones equivalentes (3er, 4to y 5to elemento)
+elevaciones_medias <- elevaciones[3:5]
+cat("Elevaciones intermedias:", elevaciones_medias, "\n")
+
+# 5. OPERACIONES ÚTILES
+num_vertices <- length(ruta)
+cat("Número de vértices:", num_vertices, "\n")
+
+elev_maxima <- max(elevaciones)
+cat("Elevación máxima:", elev_maxima, "metros\n")
+
+# R tiene una función nativa para el promedio
+elev_promedio <- mean(elevaciones)
+cat(sprintf("Elevación promedio: %.1f metros\n", elev_promedio))
+```
+
+### Julia
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{julia}
+#| label: julia_listas_codigo
+#| eval: false
+
+# 1. CREACIÓN DE ARREGLOS (Listas)
+# Un Array de tuplas de coordenadas
+ruta = [
+    (4.6097, -74.0817),  # Bogotá
+    (6.2442, -75.5812),  # Medellín
+    (3.4516, -76.5320),  # Cali
+]
+println("Ruta inicial: ", ruta)
+
+# Array de valores numéricos de coma flotante
+elevaciones = [2600.5, 2650.2, 2710.8, 2800.3, 2950.7, 3100.1]
+println("Perfil de elevación: ", elevaciones)
+
+# Array de cadenas de texto
+ciudades = ["Bogotá", "Medellín", "Cali"]
+println("Ciudades a visitar: ", ciudades)
+
+# 2. AGREGAR ELEMENTOS (Mutabilidad directa con push!)
+push!(ruta, (10.3910, -75.4794))
+push!(elevaciones, 2.0)
+println("Ruta actualizada: ", ruta)
+
+# 3. ACCEDER A ELEMENTOS (Índice Base 1)
+# Acceder al primer vértice
+primera_parada = ruta[1]
+println("Primera parada: ", primera_parada)
+
+# Julia tiene la palabra clave 'end' para acceder al último elemento
+ultima_parada = ruta[end]
+println("Última parada: ", ultima_parada)
+
+# 4. SLICING (Extraer porciones)
+# El rango [1:2] incluye ambos límites
+primeras_dos = ruta[1:2]
+println("Primeras dos paradas: ", primeras_dos)
+
+# Las posiciones equivalentes (3er, 4to y 5to elemento)
+elevaciones_medias = elevaciones[3:5]
+println("Elevaciones intermedias: ", elevaciones_medias)
+
+# 5. OPERACIONES ÚTILES
+num_vertices = length(ruta)
+println("Número de vértices: ", num_vertices)
+
+# En Julia se prefiere 'maximum' para colecciones completas
+elev_maxima = maximum(elevaciones)
+println("Elevación máxima: ", elev_maxima, " metros")
+
+# Promedio (sumatoria sobre longitud)
+elev_promedio = sum(elevaciones) / length(elevaciones)
+println("Elevación promedio: ", round(elev_promedio, digits=1), " metros")
+```
+:::
+:::
+
+```{r}
+#| label: julia_listas
+#| results: asis
+# #| eval: false
+j_eval('
+# 1. CREACIÓN DE ARREGLOS (Listas)
+# Un Array de tuplas de coordenadas
+ruta = [
+    (4.6097, -74.0817),  # Bogotá
+    (6.2442, -75.5812),  # Medellín
+    (3.4516, -76.5320),  # Cali
+]
+println("Ruta inicial: ", ruta)
+
+# Array de valores numéricos de coma flotante
+elevaciones = [2600.5, 2650.2, 2710.8, 2800.3, 2950.7, 3100.1]
+println("Perfil de elevación: ", elevaciones)
+
+# Array de cadenas de texto
+ciudades = ["Bogotá", "Medellín", "Cali"]
+println("Ciudades a visitar: ", ciudades)
+
+# 2. AGREGAR ELEMENTOS (Mutabilidad directa con push!)
+push!(ruta, (10.3910, -75.4794))
+push!(elevaciones, 2.0)
+println("Ruta actualizada: ", ruta)
+
+# 3. ACCEDER A ELEMENTOS (Índice Base 1)
+# Acceder al primer vértice
+primera_parada = ruta[1]
+println("Primera parada: ", primera_parada)
+
+# Julia tiene la palabra clave "end" para acceder al último elemento
+ultima_parada = ruta[end]
+println("Última parada: ", ultima_parada)
+
+# 4. SLICING (Extraer porciones)
+# El rango [1:2] incluye ambos límites
+primeras_dos = ruta[1:2]
+println("Primeras dos paradas: ", primeras_dos)
+
+# Las posiciones equivalentes (3er, 4to y 5to elemento)
+elevaciones_medias = elevaciones[3:5]
+println("Elevaciones intermedias: ", elevaciones_medias)
+
+# 5. OPERACIONES ÚTILES
+num_vertices = length(ruta)
+println("Número de vértices: ", num_vertices)
+
+# En Julia se prefiere "maximum" para colecciones completas
+elev_maxima = maximum(elevaciones)
+println("Elevación máxima: ", elev_maxima, " metros")
+
+# Promedio (sumatoria sobre longitud)
+elev_promedio = sum(elevaciones) / length(elevaciones)
+println("Elevación promedio: ", round(elev_promedio, digits=1), " metros")
+')
+```
+
+:::
+
+
+
+### Resumen de Operaciones en Listas/Vectores
+
+| Operación | Python | R | Julia |
+|:---|:---:|:---:|:---:|
+| **Creación** | `[x, y, z]` | `c(x, y, z)` | `[x, y, z]` |
+| **Agregar** | `.append(x)` | `c(vector, x)` | `push!(array, x)` |
+| **Último Elemento** | `[-1]` | `[length(x)]` | `[end]` |
+| **Rango (*Slicing*)** | `[2:5]` (Excluye el 5) | `[3:5]` (Incluye el 5) | `[3:5]` (Incluye el 5) |
+| **Largo total** | `len(x)` | `length(x)` | `length(x)` |
+| **Máximo** | `max(x)` | `max(x)` | `maximum(x)` |
+| **Promedio** | `sum(x)/len(x)` | `mean(x)` | `sum(x)/length(x)` |
+
+: Equivalencias para el manejo de secuencias ordenadas {#tbl-operaciones_listas tbl-colwidths="[20,25,30,25]"}
+
+---
+
+**Nota técnica sobre Slicing (Rebanado):**
+Extraer porciones de datos (*slicing*) es una de las mayores fuentes de error topológico y estadístico al migrar código.
+* En **Python**, la sintaxis `[2:5]` extrae los elementos en los índices `2, 3 y 4` (omitiendo el final). Dado que Python inicia en 0, esto corresponde al 3er, 4to y 5to elemento real de los datos.
+* En **R y Julia**, la sintaxis `[3:5]` extrae los elementos en los índices `3, 4 y 5` (incluyendo ambos extremos). Como inician en 1, esto corresponde directamente al 3er, 4to y 5to dato.
+
+::: {.callout-note icon="false"}
+### El dilema en R: ¿Vectores `c()` o Listas `list()`?
+
+Existe un choque de terminología fundamental al pasar de lenguajes como Python o Julia hacia R: **lo que Python y Julia llaman "Lista" (`[1, 2, 3]`), R lo llama "Vector Atómico" (`c(1, 2, 3)`). Y lo que R llama "Lista" (`list()`), en Python suele comportarse más como una lista anidada o, si tiene nombres, como un Diccionario.**
+
+Para evitar errores al manipular datos espaciales en R, es vital entender esta diferencia práctica:
+
+1. **Vectores Atómicos `c()`:** Exigen que **todos los elementos sean del mismo tipo** (todos números o todos texto). Son estructuras planas (1D). Se usan para series de datos simples, como un perfil de elevaciones o una columna de nombres de municipios.
+   * *Ejemplo:* `c(2600.5, 2650.2, 2710.8)`
+
+2. **Listas `list()`:** Son contenedores flexibles. Permiten mezclar texto con números, e incluso **pueden contener otros vectores u otras listas dentro de sí mismas** (anidación). Se usan para agrupar objetos complejos, como los pares de coordenadas `(x,y)` independientes que componen una ruta.
+   * *Ejemplo:* `list( c(4.6, -74.0), c(6.2, -75.5) )`
+
+
+
+**Regla de oro en R:** Usa `c()` para colecciones de datos homogéneos. Usa `list()` cuando necesites agrupar geometrías complejas, atributos mixtos o emular la estructura de un diccionario clave-valor.
+:::
+
+## Conjuntos (*Sets*)
+
+Los **Conjuntos** son estructuras de datos que almacenan colecciones de elementos **sin orden y sin duplicados**. Son la traducción computacional de la teoría matemática de conjuntos. En el análisis espacial, son indispensables para obtener listas de valores únicos (por ejemplo, extraer todos los códigos de municipios de una gran base de datos sin repeticiones) y para realizar operaciones espaciales lógicas como intersecciones, uniones o diferencias de atributos entre dos zonas geográficas.
+
+
+
+[Image of set theory Venn diagram operations]
+
+
+::: {.panel-tabset}
+
+### Python
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{python}
+#| label: python_conjuntos_codigo
+#| eval: false
+
+# 1. CREACIÓN Y LIMPIEZA DE DUPLICADOS
+# Crear un conjunto con llaves {}
+regiones_visitadas = {"Andina", "Caribe", "Pacífica"}
+print("Regiones:", regiones_visitadas)
+
+# Crear un conjunto desde una lista (elimina duplicados automáticamente)
+codigos_dptos = ["ANT", "BOG", "VAL", "ANT", "BOG"]
+codigos_unicos = set(codigos_dptos)
+print("Códigos únicos:", codigos_unicos)
+
+# 2. AGREGAR ELEMENTOS
+# Agregar una región nueva
+regiones_visitadas.add("Orinoquía")
+# Intentar agregar un duplicado (Python lo ignorará sin dar error)
+regiones_visitadas.add("Caribe") 
+print("Regiones actualizadas:", regiones_visitadas)
+
+# 3. OPERACIONES DE CONJUNTOS (Venn)
+# Especies observadas en dos polígonos diferentes
+area_a = {"Roble", "Pino", "Frailejón", "Aliso"}
+area_b = {"Pino", "Frailejón", "Palma de Cera", "Yagrumo"}
+
+# Intersección: Especies comunes en ambas áreas
+comunes = area_a.intersection(area_b)
+print("Especies en ambas áreas:", comunes)
+
+# Diferencia: Especies exclusivas del Área A
+solo_a = area_a - area_b
+print("Especies exclusivas de A:", solo_a)
+
+# Unión: Todas las especies registradas
+todas_especies = area_a.union(area_b)
+print("Todas las especies:", todas_especies)
+
+# 4. MEMBRESÍA (Comprobar si existe)
+if "Pino" in comunes:
+    print("El Pino está en la zona de intersección.")
+```
+:::
+:::
+
+
+```{python}
+#| label: python_conjuntos
+# #| eval: false
+
+# 1. CREACIÓN Y LIMPIEZA DE DUPLICADOS
+# Crear un conjunto con llaves {}
+regiones_visitadas = {"Andina", "Caribe", "Pacífica"}
+print("Regiones:", regiones_visitadas)
+
+# Crear un conjunto desde una lista (elimina duplicados automáticamente)
+codigos_dptos = ["ANT", "BOG", "VAL", "ANT", "BOG"]
+codigos_unicos = set(codigos_dptos)
+print("Códigos únicos:", codigos_unicos)
+
+# 2. AGREGAR ELEMENTOS
+# Agregar una región nueva
+regiones_visitadas.add("Orinoquía")
+# Intentar agregar un duplicado (Python lo ignorará sin dar error)
+regiones_visitadas.add("Caribe") 
+print("Regiones actualizadas:", regiones_visitadas)
+
+# 3. OPERACIONES DE CONJUNTOS (Venn)
+# Especies observadas en dos polígonos diferentes
+area_a = {"Roble", "Pino", "Frailejón", "Aliso"}
+area_b = {"Pino", "Frailejón", "Palma de Cera", "Yagrumo"}
+
+# Intersección: Especies comunes en ambas áreas
+comunes = area_a.intersection(area_b)
+print("Especies en ambas áreas:", comunes)
+
+# Diferencia: Especies exclusivas del Área A
+solo_a = area_a - area_b
+print("Especies exclusivas de A:", solo_a)
+
+# Unión: Todas las especies registradas
+todas_especies = area_a.union(area_b)
+print("Todas las especies:", todas_especies)
+
+# 4. MEMBRESÍA (Comprobar si existe)
+if "Pino" in comunes:
+    print("El Pino está en la zona de intersección.")
+```
+
+### R
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{r}
+#| label: r_conjuntos_codigo
+#| eval: false
+
+# 1. CREACIÓN Y LIMPIEZA DE DUPLICADOS
+# En R, usamos vectores atómicos normales y les aplicamos funciones lógicas
+regiones_visitadas <- c("Andina", "Caribe", "Pacífica")
+
+# Eliminar duplicados usando unique()
+codigos_dptos <- c("ANT", "BOG", "VAL", "ANT", "BOG")
+codigos_unicos <- unique(codigos_dptos)
+cat("Códigos únicos:", codigos_unicos, "\n")
+
+# 2. AGREGAR ELEMENTOS
+# Concatenamos y aplicamos unique() para mantener la lógica de conjuntos
+regiones_visitadas <- unique(c(regiones_visitadas, "Orinoquía", "Caribe"))
+cat("Regiones actualizadas:", regiones_visitadas, "\n")
+
+# 3. OPERACIONES DE CONJUNTOS (Venn)
+area_a <- c("Roble", "Pino", "Frailejón", "Aliso")
+area_b <- c("Pino", "Frailejón", "Palma de Cera", "Yagrumo")
+
+# Intersección: Especies comunes
+comunes <- intersect(area_a, area_b)
+cat("Especies en ambas áreas:", comunes, "\n")
+
+# Diferencia: Especies exclusivas de A
+solo_a <- setdiff(area_a, area_b)
+cat("Especies exclusivas de A:", solo_a, "\n")
+
+# Unión: Todas las especies (elimina duplicados automáticamente)
+todas_especies <- union(area_a, area_b)
+cat("Todas las especies:", todas_especies, "\n")
+
+# 4. MEMBRESÍA (Comprobar si existe con %in%)
+if ("Pino" %in% comunes) {
+  cat("El Pino está en la zona de intersección.\n")
+}
+```
+:::
+:::
+
+```{r}
+#| label: r_conjuntos
+# #| eval: false
+
+# 1. CREACIÓN Y LIMPIEZA DE DUPLICADOS
+# En R, usamos vectores atómicos normales y les aplicamos funciones lógicas
+regiones_visitadas <- c("Andina", "Caribe", "Pacífica")
+
+# Eliminar duplicados usando unique()
+codigos_dptos <- c("ANT", "BOG", "VAL", "ANT", "BOG")
+codigos_unicos <- unique(codigos_dptos)
+cat("Códigos únicos:", codigos_unicos, "\n")
+
+# 2. AGREGAR ELEMENTOS
+# Concatenamos y aplicamos unique() para mantener la lógica de conjuntos
+regiones_visitadas <- unique(c(regiones_visitadas, "Orinoquía", "Caribe"))
+cat("Regiones actualizadas:", regiones_visitadas, "\n")
+
+# 3. OPERACIONES DE CONJUNTOS (Venn)
+area_a <- c("Roble", "Pino", "Frailejón", "Aliso")
+area_b <- c("Pino", "Frailejón", "Palma de Cera", "Yagrumo")
+
+# Intersección: Especies comunes
+comunes <- intersect(area_a, area_b)
+cat("Especies en ambas áreas:", comunes, "\n")
+
+# Diferencia: Especies exclusivas de A
+solo_a <- setdiff(area_a, area_b)
+cat("Especies exclusivas de A:", solo_a, "\n")
+
+# Unión: Todas las especies (elimina duplicados automáticamente)
+todas_especies <- union(area_a, area_b)
+cat("Todas las especies:", todas_especies, "\n")
+
+# 4. MEMBRESÍA (Comprobar si existe con %in%)
+if ("Pino" %in% comunes) {
+  cat("El Pino está en la zona de intersección.\n")
+}
+```
+
+### Julia
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{julia}
+#| label: julia_conjuntos_codigo
+#| eval: false
+
+# 1. CREACIÓN Y LIMPIEZA DE DUPLICADOS
+# En Julia existe el tipo nativo Set
+regiones_visitadas = Set(["Andina", "Caribe", "Pacífica"])
+
+# Crear un Set a partir de un Array elimina duplicados
+codigos_dptos = ["ANT", "BOG", "VAL", "ANT", "BOG"]
+codigos_unicos = Set(codigos_dptos)
+println("Códigos únicos: ", codigos_unicos)
+
+# 2. AGREGAR ELEMENTOS
+# Usamos push! para agregar elementos in-place
+push!(regiones_visitadas, "Orinoquía")
+push!(regiones_visitadas, "Caribe") # Se ignora el duplicado
+println("Regiones actualizadas: ", regiones_visitadas)
+
+# 3. OPERACIONES DE CONJUNTOS (Venn)
+area_a = Set(["Roble", "Pino", "Frailejón", "Aliso"])
+area_b = Set(["Pino", "Frailejón", "Palma de Cera", "Yagrumo"])
+
+# Intersección
+comunes = intersect(area_a, area_b)
+println("Especies en ambas áreas: ", comunes)
+
+# Diferencia
+solo_a = setdiff(area_a, area_b)
+println("Especies exclusivas de A: ", solo_a)
+
+# Unión
+todas_especies = union(area_a, area_b)
+println("Todas las especies: ", todas_especies)
+
+# 4. MEMBRESÍA (Operador in)
+if in("Pino", comunes) # También se puede escribir: "Pino" in comunes
+    println("El Pino está en la zona de intersección.")
+end
+```
+:::
+:::
+
+```{r}
+#| label: julia_conjuntos
+#| results: asis
+# #| eval: false
+j_eval('
+# 1. CREACIÓN Y LIMPIEZA DE DUPLICADOS
+# En Julia existe el tipo nativo Set
+regiones_visitadas = Set(["Andina", "Caribe", "Pacífica"])
+
+# Crear un Set a partir de un Array elimina duplicados
+codigos_dptos = ["ANT", "BOG", "VAL", "ANT", "BOG"]
+codigos_unicos = Set(codigos_dptos)
+println("Códigos únicos: ", codigos_unicos)
+
+# 2. AGREGAR ELEMENTOS
+# Usamos push! para agregar elementos in-place
+push!(regiones_visitadas, "Orinoquía")
+push!(regiones_visitadas, "Caribe") # Se ignora el duplicado
+println("Regiones actualizadas: ", regiones_visitadas)
+
+# 3. OPERACIONES DE CONJUNTOS (Venn)
+area_a = Set(["Roble", "Pino", "Frailejón", "Aliso"])
+area_b = Set(["Pino", "Frailejón", "Palma de Cera", "Yagrumo"])
+
+# Intersección
+comunes = intersect(area_a, area_b)
+println("Especies en ambas áreas: ", comunes)
+
+# Diferencia
+solo_a = setdiff(area_a, area_b)
+println("Especies exclusivas de A: ", solo_a)
+
+# Unión
+todas_especies = union(area_a, area_b)
+println("Todas las especies: ", todas_especies)
+
+# 4. MEMBRESÍA (Operador in)
+if in("Pino", comunes) # También se puede escribir: "Pino" in comunes
+    println("El Pino está en la zona de intersección.")
+end
+')
+```
+
+:::
+
+### Resumen de Operaciones con Conjuntos
+
+| Operación | Python | R | Julia |
+|:---|:---:|:---:|:---:|
+| **Creación Básica** | `{"A", "B"}` o `set()` | `c("A", "B")` (Vectores) | `Set(["A", "B"])` |
+| **Eliminar Duplicados** | `set(lista)` | `unique(vector)` | `Set(array)` o `unique(array)` |
+| **Agregar Elemento** | `set.add(x)` | `unique(c(v, x))` | `push!(set, x)` |
+| **Intersección (Común)** | `a.intersection(b)` o `a & b` | `intersect(a, b)` | `intersect(a, b)` |
+| **Unión (Todos)** | `a.union(b)` o `a | b` | `union(a, b)` | `union(a, b)` |
+| **Diferencia (Solo en A)** | `a - b` | `setdiff(a, b)` | `setdiff(a, b)` |
+| **Pertenece a** | `x in set` | `x %in% v` | `in(x, set)` o `x in set` |
+
+: Equivalencias para operaciones lógicas de conjuntos {#tbl-operaciones_conjuntos tbl-colwidths="[20,25,30,25]"}
+
+---
+
+**Nota técnicas:** 
+
+* Tenga cuidado al crear conjuntos vacíos en **Python**. Si escribe `mis_datos = {}`, Python creará un *Diccionario* vacío, no un conjunto. Para crear un conjunto vacío obligatoriamente debe usar `mis_datos = set()`. Por otro lado, si inicializa con datos como `{"Andina", "Caribe"}`, Python sí entenderá automáticamente que es un conjunto.
+* A diferencia de Python y Julia, que tienen una estructura de datos `Set` específica (las cuales ignoran intrínsecamente los duplicados), **R no posee un tipo de dato "Conjunto" nativo**. En R, trabajamos con vectores regulares y utilizamos funciones lógicas (`union`, `intersect`, `setdiff`, `unique`) que simulan el comportamiento de los conjuntos matemáticos al evaluarlos.
+
+## Diccionarios
+
+Los **Diccionarios** son estructuras de datos que almacenan información mediante pares de **Clave-Valor** (*Key-Value*). A diferencia de las listas (donde accedes por la posición numérica), en un diccionario accedes a los datos a través de "etiquetas" únicas (las claves). 
+
+En el ámbito de los Sistemas de Información Geográfica, los diccionarios son, literalmente, la base técnica de cómo se estructuran los atributos de un vector. De hecho, el popular formato **GeoJSON** no es más que un gran diccionario anidado.
+
+
+
+::: {.panel-tabset}
+
+### Python
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{python}
+#| label: python_diccionarios_codigo
+#| eval: false
+
+# 1. CREACIÓN DE DICCIONARIOS
+# Diccionario almacenando atributos de una ciudad
+info_bogota = {
+    "nombre": "Bogotá",
+    "poblacion": 7181469,
+    "coordenadas": (4.6097, -74.0817),
+    "pais": "Colombia",
+    "fundacion": 1538,
+}
+print("Información de Bogotá:", info_bogota)
+
+# 2. ACCESO A VALORES
+# Acceder a información específica usando la clave entre corchetes
+nombre_ciudad = info_bogota["nombre"]
+poblacion_ciudad = info_bogota["poblacion"]
+print(f"Ciudad: {nombre_ciudad} | Población: {poblacion_ciudad:,}")
+
+# Acceso seguro con get() para evitar errores si la clave no existe
+area = info_bogota.get("area_km2", "No especificada")
+print(f"Área: {area}")
+
+# 3. AGREGAR Y ACTUALIZAR VALORES
+# Agregar nueva información al diccionario
+info_bogota["area_km2"] = 1775
+info_bogota["poblacion"] = 7900000  # Actualizar un valor existente
+print("Info actualizada:", info_bogota)
+
+# 4. TRABAJANDO CON COLECCIONES ANIDADAS (Estilo GeoJSON)
+capitales_deptos = {
+    "Antioquia": {
+        "capital": "Medellín",
+        "coordenadas": (6.2442, -75.5812),
+        "poblacion": 2533424
+    },
+    "Valle del Cauca": {
+        "capital": "Cali",
+        "coordenadas": (3.4516, -76.5320),
+        "poblacion": 2227642
+    }
+}
+
+# Acceder a información anidada
+info_valle = capitales_deptos["Valle del Cauca"]
+print(f"Capital del Valle: {info_valle['capital']}")
+
+# 5. EXPLORACIÓN DE DICCIONARIOS
+print("Claves disponibles:", list(info_bogota.keys()))
+
+# Comprobar si una clave existe
+if "coordenadas" in info_bogota:
+    print("La información de coordenadas está disponible.")
+
+# 6. EJEMPLO PRÁCTICO: Metadatos de un Waypoint GPS
+punto_gps = {
+    "id": "PC001",
+    "nombre": "Inicio Sendero Cocora",
+    "latitud": 4.6395,
+    "longitud": -75.4851,
+    "elevacion": 2400,
+    "tipo_cobertura": "Bosque de Palma",
+    "facilidades": ["parqueadero", "guía", "restaurante"]
+}
+
+print(f"Punto: {punto_gps['nombre']} a {punto_gps['elevacion']} msnm")
+print(f"Servicios: {', '.join(punto_gps['facilidades'])}")
+```
+:::
+:::
+
+
+```{python}
+#| label: python_diccionarios
+# #| eval: false
+
+# 1. CREACIÓN DE DICCIONARIOS
+# Diccionario almacenando atributos de una ciudad
+info_bogota = {
+    "nombre": "Bogotá",
+    "poblacion": 7181469,
+    "coordenadas": (4.6097, -74.0817),
+    "pais": "Colombia",
+    "fundacion": 1538,
+}
+print("Información de Bogotá:", info_bogota)
+
+# 2. ACCESO A VALORES
+# Acceder a información específica usando la clave entre corchetes
+nombre_ciudad = info_bogota["nombre"]
+poblacion_ciudad = info_bogota["poblacion"]
+print(f"Ciudad: {nombre_ciudad} | Población: {poblacion_ciudad:,}")
+
+# Acceso seguro con get() para evitar errores si la clave no existe
+area = info_bogota.get("area_km2", "No especificada")
+print(f"Área: {area}")
+
+# 3. AGREGAR Y ACTUALIZAR VALORES
+# Agregar nueva información al diccionario
+info_bogota["area_km2"] = 1775
+info_bogota["poblacion"] = 7900000  # Actualizar un valor existente
+print("Info actualizada:", info_bogota)
+
+# 4. TRABAJANDO CON COLECCIONES ANIDADAS (Estilo GeoJSON)
+capitales_deptos = {
+    "Antioquia": {
+        "capital": "Medellín",
+        "coordenadas": (6.2442, -75.5812),
+        "poblacion": 2533424
+    },
+    "Valle del Cauca": {
+        "capital": "Cali",
+        "coordenadas": (3.4516, -76.5320),
+        "poblacion": 2227642
+    }
+}
+
+# Acceder a información anidada
+info_valle = capitales_deptos["Valle del Cauca"]
+print(f"Capital del Valle: {info_valle['capital']}")
+
+# 5. EXPLORACIÓN DE DICCIONARIOS
+print("Claves disponibles:", list(info_bogota.keys()))
+
+# Comprobar si una clave existe
+if "coordenadas" in info_bogota:
+    print("La información de coordenadas está disponible.")
+
+# 6. EJEMPLO PRÁCTICO: Metadatos de un Waypoint GPS
+punto_gps = {
+    "id": "PC001",
+    "nombre": "Inicio Sendero Cocora",
+    "latitud": 4.6395,
+    "longitud": -75.4851,
+    "elevacion": 2400,
+    "tipo_cobertura": "Bosque de Palma",
+    "facilidades": ["parqueadero", "guía", "restaurante"]
+}
+
+print(f"Punto: {punto_gps['nombre']} a {punto_gps['elevacion']} msnm")
+print(f"Servicios: {', '.join(punto_gps['facilidades'])}")
+```
+
+### R
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{r}
+#| label: r_diccionarios_codigo
+#| eval: false
+
+# 1. CREACIÓN DE DICCIONARIOS
+# En R, usamos listas nombradas (named lists) para emular diccionarios
+info_bogota <- list(
+    nombre = "Bogotá",
+    poblacion = 7181469,
+    coordenadas = c(4.6097, -74.0817),
+    pais = "Colombia",
+    fundacion = 1538
+)
+cat("Información de Bogotá:\n"); print(info_bogota)
+
+# 2. ACCESO A VALORES
+# Accedemos mediante el símbolo del dólar '$' o doble corchete '[[]]'
+nombre_ciudad <- info_bogota$nombre
+poblacion_ciudad <- info_bogota$poblacion
+cat(sprintf("Ciudad: %s | Población: %s\n", nombre_ciudad, format(poblacion_ciudad, big.mark=",")))
+
+# En R, acceder a una clave inexistente devuelve NULL de forma nativa
+area <- if(is.null(info_bogota$area_km2)) "No especificada" else info_bogota$area_km2
+cat(sprintf("Área: %s\n", area))
+
+# 3. AGREGAR Y ACTUALIZAR VALORES
+info_bogota$area_km2 <- 1775
+info_bogota$poblacion <- 7900000
+cat("Info actualizada:\n"); print(info_bogota)
+
+# 4. TRABAJANDO CON COLECCIONES ANIDADAS
+capitales_deptos <- list(
+    Antioquia = list(
+        capital = "Medellín",
+        coordenadas = c(6.2442, -75.5812),
+        poblacion = 2533424
+    ),
+    Valle_del_Cauca = list(
+        capital = "Cali",
+        coordenadas = c(3.4516, -76.5320),
+        poblacion = 2227642
+    )
+)
+
+info_valle <- capitales_deptos$Valle_del_Cauca
+cat(sprintf("Capital del Valle: %s\n", info_valle$capital))
+
+# 5. EXPLORACIÓN DE DICCIONARIOS
+cat("Claves disponibles:", names(info_bogota), "\n")
+
+if ("coordenadas" %in% names(info_bogota)) {
+    cat("La información de coordenadas está disponible.\n")
+}
+
+# 6. EJEMPLO PRÁCTICO: Metadatos de un Waypoint GPS
+punto_gps <- list(
+    id = "PC001",
+    nombre = "Inicio Sendero Cocora",
+    latitud = 4.6395,
+    longitud = -75.4851,
+    elevacion = 2400,
+    tipo_cobertura = "Bosque de Palma",
+    facilidades = c("parqueadero", "guía", "restaurante")
+)
+
+cat(sprintf("Punto: %s a %s msnm\n", punto_gps$nombre, punto_gps$elevacion))
+cat(sprintf("Servicios: %s\n", paste(punto_gps$facilidades, collapse=", ")))
+```
+:::
+:::
+
+```{r}
+#| label: r_diccionarios
+# #| eval: false
+
+# 1. CREACIÓN DE DICCIONARIOS
+# En R, usamos listas nombradas (named lists) para emular diccionarios
+info_bogota <- list(
+    nombre = "Bogotá",
+    poblacion = 7181469,
+    coordenadas = c(4.6097, -74.0817),
+    pais = "Colombia",
+    fundacion = 1538
+)
+cat("Información de Bogotá:\n"); print(info_bogota)
+
+# 2. ACCESO A VALORES
+# Accedemos mediante el símbolo del dólar '$' o doble corchete '[[]]'
+nombre_ciudad <- info_bogota$nombre
+poblacion_ciudad <- info_bogota$poblacion
+cat(sprintf("Ciudad: %s | Población: %s\n", nombre_ciudad, format(poblacion_ciudad, big.mark=",")))
+
+# En R, acceder a una clave inexistente devuelve NULL de forma nativa
+area <- if(is.null(info_bogota$area_km2)) "No especificada" else info_bogota$area_km2
+cat(sprintf("Área: %s\n", area))
+
+# 3. AGREGAR Y ACTUALIZAR VALORES
+info_bogota$area_km2 <- 1775
+info_bogota$poblacion <- 7900000
+cat("Info actualizada:\n"); print(info_bogota)
+
+# 4. TRABAJANDO CON COLECCIONES ANIDADAS
+capitales_deptos <- list(
+    Antioquia = list(
+        capital = "Medellín",
+        coordenadas = c(6.2442, -75.5812),
+        poblacion = 2533424
+    ),
+    Valle_del_Cauca = list(
+        capital = "Cali",
+        coordenadas = c(3.4516, -76.5320),
+        poblacion = 2227642
+    )
+)
+
+info_valle <- capitales_deptos$Valle_del_Cauca
+cat(sprintf("Capital del Valle: %s\n", info_valle$capital))
+
+# 5. EXPLORACIÓN DE DICCIONARIOS
+cat("Claves disponibles:", names(info_bogota), "\n")
+
+if ("coordenadas" %in% names(info_bogota)) {
+    cat("La información de coordenadas está disponible.\n")
+}
+
+# 6. EJEMPLO PRÁCTICO: Metadatos de un Waypoint GPS
+punto_gps <- list(
+    id = "PC001",
+    nombre = "Inicio Sendero Cocora",
+    latitud = 4.6395,
+    longitud = -75.4851,
+    elevacion = 2400,
+    tipo_cobertura = "Bosque de Palma",
+    facilidades = c("parqueadero", "guía", "restaurante")
+)
+
+cat(sprintf("Punto: %s a %s msnm\n", punto_gps$nombre, punto_gps$elevacion))
+cat(sprintf("Servicios: %s\n", paste(punto_gps$facilidades, collapse=", ")))
+```
+
+### Julia
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{julia}
+#| label: julia_diccionarios_codigo
+#| eval: false
+
+# 1. CREACIÓN DE DICCIONARIOS
+# Julia usa Dict() con el operador =>
+info_bogota = Dict(
+    "nombre" => "Bogotá",
+    "poblacion" => 7181469,
+    "coordenadas" => (4.6097, -74.0817),
+    "pais" => "Colombia",
+    "fundacion" => 1538
+)
+println("Información de Bogotá: ", info_bogota)
+
+# 2. ACCESO A VALORES
+nombre_ciudad = info_bogota["nombre"]
+poblacion_ciudad = info_bogota["poblacion"]
+println("Ciudad: $nombre_ciudad | Población: $poblacion_ciudad")
+
+# Acceso seguro con get()
+area = get(info_bogota, "area_km2", "No especificada")
+println("Área: $area")
+
+# 3. AGREGAR Y ACTUALIZAR VALORES
+info_bogota["area_km2"] = 1775
+info_bogota["poblacion"] = 7900000
+println("Info actualizada: ", info_bogota)
+
+# 4. TRABAJANDO CON COLECCIONES ANIDADAS
+capitales_deptos = Dict(
+    "Antioquia" => Dict(
+        "capital" => "Medellín",
+        "coordenadas" => (6.2442, -75.5812),
+        "poblacion" => 2533424
+    ),
+    "Valle del Cauca" => Dict(
+        "capital" => "Cali",
+        "coordenadas" => (3.4516, -76.5320),
+        "poblacion" => 2227642
+    )
+)
+
+info_valle = capitales_deptos["Valle del Cauca"]
+println("Capital del Valle: ", info_valle["capital"])
+
+# 5. EXPLORACIÓN DE DICCIONARIOS
+println("Claves disponibles: ", collect(keys(info_bogota)))
+
+if haskey(info_bogota, "coordenadas")
+    println("La información de coordenadas está disponible.")
+end
+
+# 6. EJEMPLO PRÁCTICO: Metadatos de un Waypoint GPS
+punto_gps = Dict(
+    "id" => "PC001",
+    "nombre" => "Inicio Sendero Cocora",
+    "latitud" => 4.6395,
+    "longitud" => -75.4851,
+    "elevacion" => 2400,
+    "tipo_cobertura" => "Bosque de Palma",
+    "facilidades" => ["parqueadero", "guía", "restaurante"]
+)
+
+println("Punto: ", punto_gps["nombre"], " a ", punto_gps["elevacion"], " msnm")
+println("Servicios: ", join(punto_gps["facilidades"], ", "))
+```
+:::
+:::
+
+```{r}
+#| label: julia_diccionarios
+#| results: asis
+# #| eval: false
+j_eval('
+# 1. CREACIÓN DE DICCIONARIOS
+# Julia usa Dict() con el operador =>
+info_bogota = Dict(
+    "nombre" => "Bogotá",
+    "poblacion" => 7181469,
+    "coordenadas" => (4.6097, -74.0817),
+    "pais" => "Colombia",
+    "fundacion" => 1538
+)
+println("Información de Bogotá: ", info_bogota)
+
+# 2. ACCESO A VALORES
+nombre_ciudad = info_bogota["nombre"]
+poblacion_ciudad = info_bogota["poblacion"]
+println("Ciudad: $nombre_ciudad | Población: $poblacion_ciudad")
+
+# Acceso seguro con get()
+area = get(info_bogota, "area_km2", "No especificada")
+println("Área: $area")
+
+# 3. AGREGAR Y ACTUALIZAR VALORES
+info_bogota["area_km2"] = 1775
+info_bogota["poblacion"] = 7900000
+println("Info actualizada: ", info_bogota)
+
+# 4. TRABAJANDO CON COLECCIONES ANIDADAS
+capitales_deptos = Dict(
+    "Antioquia" => Dict(
+        "capital" => "Medellín",
+        "coordenadas" => (6.2442, -75.5812),
+        "poblacion" => 2533424
+    ),
+    "Valle del Cauca" => Dict(
+        "capital" => "Cali",
+        "coordenadas" => (3.4516, -76.5320),
+        "poblacion" => 2227642
+    )
+)
+
+info_valle = capitales_deptos["Valle del Cauca"]
+println("Capital del Valle: ", info_valle["capital"])
+
+# 5. EXPLORACIÓN DE DICCIONARIOS
+println("Claves disponibles: ", collect(keys(info_bogota)))
+
+if haskey(info_bogota, "coordenadas")
+    println("La información de coordenadas está disponible.")
+end
+
+# 6. EJEMPLO PRÁCTICO: Metadatos de un Waypoint GPS
+punto_gps = Dict(
+    "id" => "PC001",
+    "nombre" => "Inicio Sendero Cocora",
+    "latitud" => 4.6395,
+    "longitud" => -75.4851,
+    "elevacion" => 2400,
+    "tipo_cobertura" => "Bosque de Palma",
+    "facilidades" => ["parqueadero", "guía", "restaurante"]
+)
+
+println("Punto: ", punto_gps["nombre"], " a ", punto_gps["elevacion"], " msnm")
+println("Servicios: ", join(punto_gps["facilidades"], ", "))
+')
+```
+
+:::
+
+### Resumen de Diccionarios y Listas Nombradas
+
+| Operación | Python | R | Julia |
+|:---|:---:|:---:|:---:|
+| **Creación** | `{"k": v}` | `list(k = v)` | `Dict("k" => v)` |
+| **Acceso a valor** | `dict["k"]` | `lista$k` o `lista[["k"]]` | `dict["k"]` |
+| **Acceso seguro (Fallback)** | `dict.get("k", "Null")` | `if(is.null(lista$k))` | `get(dict, "k", "Null")` |
+| **Actualizar/Añadir** | `dict["k"] = nuevo` | `lista$k <- nuevo` | `dict["k"] = nuevo` |
+| **Verificar si existe** | `"k" in dict` | `"k" %in% names(lista)` | `haskey(dict, "k")` |
+| **Obtener todas las claves** | `dict.keys()` | `names(lista)` | `keys(dict)` |
+
+: Manejo de estructuras Clave-Valor {#tbl-operaciones_diccionarios tbl-colwidths="[20,25,30,25]"}
+
+---
+
+**Nota técnica importante sobre errores de acceso:** Uno de los comportamientos que más confunde a los analistas de datos ocurre cuando intentan acceder a una clave o atributo que **no existe** en la estructura.
+
+* En **Python y Julia**, pedir una clave inexistente (como `info_bogota["clima"]`) hará que el programa **colapse inmediatamente** (`KeyError`). Por eso, es mejor práctica usar la función segura `.get()` cuando no estamos seguros de si el atributo existe.
+* En **R**, la aproximación es mucho más laxa. Si pides `info_bogota$clima`, R no arrojará ningún error, simplemente devolverá `NULL` (vacío). Esto puede ser peligroso porque el programa sigue ejecutándose silenciosamente, pero los cálculos posteriores podrían fallar o contaminarse con datos nulos.
+
+## Guía de Selección de Estructuras de Datos
+
+Saber elegir la estructura de datos correcta es la diferencia entre un script que procesa millones de coordenadas en segundos y uno que colapsa tu computadora. A continuación, te presentamos una guía práctica para tomar esta decisión en tus proyectos de análisis espacial.
+
+### Árbol de decisión rápido
+
+Hazte las siguientes preguntas sobre los datos que necesitas almacenar:
+
+1. **¿Los datos tienen un orden secuencial que importa?**
+   * *Ejemplo:* Los vértices de un polígono o los puntos de una ruta GPS. El orden define la geometría.
+   * **SÍ:** Pasa a la pregunta 2.
+   * **NO:** Pasa a la pregunta 3.
+
+2. **¿Necesitarás agregar, borrar o modificar datos después de crearlos?**
+   * **SÍ (Mutables):** Usa una **Lista** (o Vector `c()` en R). *Ideal para acumular resultados de un cálculo.*
+   * **NO (Inmutables):** Usa una **Tupla** (en Python/Julia). *Ideal para fijar pares de coordenadas exactas (Lat, Lon) que nadie deba alterar por error.*
+
+3. **¿Cómo vas a buscar la información?**
+   * **Por una etiqueta o nombre (Clave-Valor):** Usa un **Diccionario** (o `list()` nombrada en R). *Ideal para almacenar los atributos de un municipio (Nombre, Área, Población) o crear metadatos tipo GeoJSON.*
+   * **Solo me importan los valores únicos y sin repeticiones:** Usa un **Conjunto** (`Set` o funciones lógicas en R). *Ideal para limpiar bases de datos (ej. obtener los códigos únicos de departamentos desde una tabla nacional de 10,000 registros).*
+
+---
+
+### Casos de Uso Comunes en Geomática
+
+| Escenario | Estructura Recomendada | ¿Por qué? |
+|:---|:---:|:---|
+| Coordenada estática `(X, Y)` | **Tupla** | Protege el dato. Si un algoritmo intenta mover la X sin mover la Y, el programa arroja error y salva la topología. |
+| Perfil de elevación de una ruta | **Lista / Vector** | Mantiene el orden estricto de los datos. Permite usar funciones matemáticas rápidas (`max`, `mean`). |
+| Tabla de atributos de un lote | **Diccionario** | Permite acceder a los datos intuitivamente por nombre (ej. `lote["propietario"]`) en lugar de recordar en qué columna numérica estaban. |
+| Intersectar áreas de influencia | **Conjunto (Set)** | Permite operaciones de Teoría de Conjuntos nativas y ultrarrápidas (`union`, `intersect`) para saber, por ejemplo, qué fincas están en zona de riesgo. |
+
+: Escenarios prácticos para la selección de estructuras de datos {#tbl-seleccion_estructuras}
+
+
+
+::: {.callout-tip}
+### Consejo de Rendimiento
+Si estás procesando *Big Data* espacial (ej. nubes de puntos LiDAR con millones de registros), evita usar **Listas** si vas a realizar búsquedas frecuentes ("¿Existe este punto en la lista?"). Buscar en una lista obliga al computador a revisar elemento por elemento. Por el contrario, buscar en un **Conjunto** o en las claves de un **Diccionario** es casi instantáneo debido a cómo se estructuran internamente en la memoria (Tablas Hash).
+:::
+
+
+## Resumen de Aprendizajes (Cheat Sheet)
+
+En este capítulo hemos explorado cómo organizar, almacenar y manipular grupos de datos usando las cuatro estructuras fundamentales de la programación. A continuación, se presenta tu **Hoja de Referencia (Cheat Sheet)** para traducir estos conceptos entre Python, R y Julia.
+
+
+
+### 1. Creación y Propiedades Fundamentales
+
+| Estructura | Python | R | Julia | Mutabilidad |
+|:---|:---|:---|:---|:---:|
+| **Tupla** (Pares fijos) | `t = (1, 2)` | *Usa vectores* `c(1, 2)` | `t = (1, 2)` | **Inmutable** (Py/Jl) |
+| **Lista / Vector** (Secuencias) | `l = [1, 2, 3]` | `v <- c(1, 2, 3)` | `a = [1, 2, 3]` | **Mutable** |
+| **Conjunto** (Valores únicos) | `s = {"A", "B"}` | *Usa vectores* `c("A")` | `s = Set(["A", "B"])`| **Mutable** |
+| **Diccionario** (Clave-Valor) | `d = {"x": 1}` | `d <- list(x = 1)` | `d = Dict("x" => 1)` | **Mutable** |
+
+: Definición de estructuras de datos y mutabilidad {#tbl-cheat_creacion tbl-colwidths="[20,20,25,20,15]"}
+
+### 2. Acceso, Índices y Extracción (*Slicing*)
+
+| Operación | Python (Base 0) | R (Base 1) | Julia (Base 1) |
+|:---|:---|:---|:---|
+| **Primer Elemento** | `lista[0]` | `vector[1]` o `lista[[1]]` | `array[1]` |
+| **Último Elemento** | `lista[-1]` | `vector[length(vector)]` | `array[end]` |
+| **Rango (*Slicing*)** | `lista[2:5]` *(Excluye el 5)* | `vector[3:5]` *(Incluye el 5)* | `array[3:5]` *(Incluye el 5)* |
+| **Acceso a Diccionario** | `dict["clave"]` | `lista$clave` | `dict["clave"]` |
+| **Acceso Seguro (Fallback)**| `dict.get("clave", 0)` | `if(is.null(l$c)) 0 else l$c`| `get(dict, "clave", 0)` |
+
+: Reglas de indexación y acceso a elementos {#tbl-cheat_acceso tbl-colwidths="[25,25,25,25]"}
+
+### 3. Operaciones Principales y Modificaciones
+
+| Objetivo / Acción | Python | R | Julia |
+|:---|:---|:---|:---|
+| **Tamaño / Longitud** | `len(datos)` | `length(datos)` | `length(datos)` |
+| **Agregar al final** | `lista.append(x)` | `v <- c(v, x)` | `push!(array, x)` |
+| **Eliminar Duplicados** | `set(lista)` | `unique(vector)` | `unique(array)` o `Set(array)`|
+| **Valor Máximo** | `max(lista)` | `max(vector)` | `maximum(array)` |
+| **Intersección (Comunes)** | `set1 & set2` | `intersect(v1, v2)` | `intersect(s1, s2)` |
+| **Comprobar si existe** | `x in lista` | `x %in% vector` | `x in array` |
+
+: Funciones nativas para manipulación de colecciones {#tbl-cheat_operaciones tbl-colwidths="[25,25,25,25]"}
+
+---
+
+::: {.callout-important}
+### Conclusiones Críticas del Módulo
+
+1. **La trampa del Índice de Origen:** Nunca olvides que Python empieza a contar desde `0`, mientras que R y Julia empiezan desde `1`. Migrar un código de análisis de series de tiempo de R a Python sin ajustar los índices resultará en datos desplazados o errores de ejecución (*IndexError*).
+2. **La ilusión de las Listas en R:** En Python y Julia, los corchetes `[]` crean listas o arreglos dinámicos. En R, una verdadera colección homogénea se crea con la función concatenar `c()`. El comando `list()` en R equivale en comportamiento a un Diccionario o a una estructura anidada.
+3. **Tuplas para Topología:** Acostúmbrate a guardar las coordenadas geográficas siempre como Tuplas en Python y Julia. Su inmutabilidad evitará que un bucle mal programado altere silenciosamente la posición espacial de tus datos originales.
+:::
+
+
+## Ejercicios
+
+Para poner en práctica los conceptos aprendidos sobre estructuras de datos, deberás resolver los siguientes dos ejercicios. Puedes elegir resolverlos en **Python, R o Julia** (o implementar la solución en varios lenguajes si deseas retarte).
+
+### Ejercicio 1: Rutas de monitoreo (Tuplas y Listas)
+
+
+
+**Contexto:** Trabajas en un proyecto de conservación en la Sierra Nevada de Santa Marta. Los guardabosques realizan recorridos diarios y te envían las coordenadas de los puntos de avistamiento de fauna. Necesitas estructurar esta ruta temporal de forma segura, garantizando que las coordenadas individuales no se alteren, pero permitiendo que la ruta crezca a medida que reportan nuevos puntos.
+
+**Instrucciones de código:**
+
+1. Define tres variables (`punto_1`, `punto_2`, `punto_3`) que almacenen las coordenadas (Latitud, Longitud) como **Tuplas** estáticas (o su equivalente más seguro en tu lenguaje).
+   * Punto 1: `11.1198, -74.0321`
+   * Punto 2: `11.1250, -74.0280`
+   * Punto 3: `11.1302, -74.0215`
+2. Crea una colección secuencial y mutable (**Lista** en Python/Julia o **Vector/Lista** en R) llamada `ruta_avistamiento` que contenga los tres puntos iniciales en orden.
+3. Los guardabosques acaban de reportar un cuarto punto (`11.1355, -74.0150`). Utiliza el método nativo de tu lenguaje para **agregar** esta nueva coordenada al final de tu ruta.
+4. Utilizando la indexación dinámica (indexación negativa o comandos como `length/end`), extrae el **último punto** de la ruta y guárdalo en una variable llamada `ultimo_reporte`.
+5. Crea una nueva lista/vector paralela llamada `elevaciones` que contenga las alturas de los cuatro puntos: `[850.5, 920.0, 1050.2, 1180.8]`.
+6. Calcula e imprime la elevación máxima alcanzada en el recorrido y el número total de puntos visitados (vértices), utilizando las funciones nativas (ej. `max()`, `len()`, `length()`).
+
+### Ejercicio 2: Metadatos y Ecosistemas (Diccionarios y Conjuntos)
+
+**Contexto:** Estás diseñando el esquema de base de datos para los Parques Nacionales Naturales (PNN). Necesitas estructurar los atributos de un parque usando un modelo de clave-valor (similar a GeoJSON) y depurar una lista de observaciones de campo que tiene datos duplicados.
+
+**Instrucciones de código:**
+
+1. Crea un **Diccionario** (o Lista nombrada en R) llamado `pnn_tayrona` que contenga exactamente las siguientes claves y valores:
+   * `"nombre"`: "PNN Tayrona"
+   * `"area_hectareas"`: 15000
+   * `"abierto_turismo"`: Verdadero (tipo Booleano)
+   * `"ecosistemas"`: Una lista/vector con los textos `"Manglar"`, `"Bosque Seco"`, y `"Coral"`.
+2. Emplea la función o método de acceso seguro (ej. `.get()` en Python o condicionales en R/Julia) para intentar extraer la clave `"fecha_creacion"`. Como no existe, debe devolver el texto `"Dato no disponible"` sin que el programa colapse. Imprime el resultado.
+3. Actualiza el diccionario añadiendo una nueva clave llamada `"departamento"` con el valor `"Magdalena"`.
+4. Recibes un reporte de campo crudo con los ecosistemas observados hoy, el cual contiene duplicados:
+   `observaciones_crudas = ["Manglar", "Coral", "Bosque Seco", "Manglar", "Coral", "Matorral"]`
+   Convierte esta colección en un **Conjunto** (*Set* o usando `unique()`) para eliminar los duplicados y guárdalo en la variable `observaciones_unicas`.
+5. Utiliza una **operación lógica de conjuntos** (intersección) entre la lista oficial de ecosistemas del parque (guardada dentro de tu diccionario en el paso 1) y tus `observaciones_unicas`. Imprime el resultado para saber qué ecosistemas oficiales fueron efectivamente avistados hoy.
+
+### Entregables y Criterios de Evaluación
+
+El objetivo de esta evaluación no es solo que el código funcione, sino que seas capaz de documentar y explicar tus decisiones técnicas.
+
+**1. Archivos de Código:**
+Debes desarrollar los algoritmos en al menos uno de los siguientes formatos de archivo:
+* Script tradicional (`.py`, `.R`, `.jl`)
+* Notebook interactivo (`.ipynb`)
+* Documento computacional (`.qmd` con *chunks* de código)
+
+**2. Documento Analítico (Quarto):**
+Independientemente del formato de tu código fuente, **debes redactar un documento en Quarto (`.qmd`) y renderizarlo tanto en HTML como en PDF**. En este documento debes incluir tus bloques de código y responder argumentativamente a las siguientes preguntas:
+
+* **Sobre el Ejercicio 1:** En términos de topología espacial y seguridad del código, ¿cuál es la ventaja de guardar las coordenadas individuales `(X, Y)` como *Tuplas* inmutables, pero guardar la ruta completa como una *Lista* mutable? ¿Qué pasaría si intentas modificar directamente la latitud del `punto_1` usando `punto_1[0] = 12.0000` en Python o Julia?
+* **Sobre el Ejercicio 2:** En R, existe un debate constante entre usar `c()` o `list()`. Si estuvieras programando en R y necesitaras almacenar la lista de `"ecosistemas"` dentro de las propiedades del parque, ¿qué comando usarías para agrupar esos textos específicos y por qué?
+* **Pregunta General (Slicing):** Explica brevemente la diferencia crítica en el comportamiento de extracción de rangos (*slicing*) si ejecutas `ruta[1:3]` en **Python** comparado con ejecutar el mismo código en **R o Julia**. ¿Cuántos elementos te devuelve cada uno y por qué?
+
+**3. Repositorio en GitHub:**
+Sube tu carpeta del proyecto (que debe contener tus scripts, el archivo `.qmd` y los renders finales en HTML y PDF) a un repositorio público en tu cuenta personal de **GitHub**.
+* **Entrega:** Deberás enviar únicamente el enlace (URL) a tu repositorio de GitHub para la calificación.
+
+
+https://gispro.gishub.org/book/python/data-structures.html#creating-and-using-tuples

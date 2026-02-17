@@ -1,4 +1,23 @@
-# Adicionales Sobre Julia
+# Adicionales Sobre Julia {#sec-anexo_julia}
+
+## Stack de Julia
+
+Julia ofrece un rendimiento de nivel C++ con sintaxis simplificada. A continuación las principales librerías instaladas en los contenedores para el geoprocesamiento.
+
+| Paquete | Funcionalidad | Sitio web |
+|:-:|:--:|:----:|
+| `LibPQ.jl` | Controlador PostgreSQL/PostGIS | <https://juliadatabases.org/LibPQ.jl/dev/> |
+| `ArchGDAL.jl` | Interfaz de alto nivel para GDAL | <https://yeesian.com/ArchGDAL.jl/> |
+| `LibGEOS.jl` | Interfaz del motor geométrico (GEOS) | <https://github.com/JuliaGeo/LibGEOS.jl> |
+| `Plots.jl` | Visualización y generación de gráficos | <https://docs.juliaplots.org/> |
+| `DataFrames.jl` | Manipulación de datos en memoria | <https://dataframes.juliadata.org/> |
+
+: Paquetes principales del stack en Julia {#tbl-julia-packages}
+
+-   **`LibPQ.jl`**: Conector de bajo nivel para **PostgreSQL**. Es la herramienta que permitirá a los estudiantes realizar ingesta y consulta de datos desde el servidor PostGIS.
+-   **`ArchGDAL.jl`**: Proporciona una abstracción de alto nivel para el motor GDAL. Es excelente para transformar formatos y manejar proyecciones.
+-   **`LibGEOS.jl`**: La interfaz directa al motor de geometrías (GEOS). Se utiliza para operaciones topológicas puras como validación de polígonos, intersecciones y cálculos de buffers.
+-   **`DataFrames.jl`**: El estándar para el manejo de datos tabulares en Julia, permitiendo integrar los resultados de las consultas espaciales en estructuras fáciles de analizar.
 
 ## Versiones instaladas del software
 

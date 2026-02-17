@@ -10,3 +10,4 @@ sample_qmds/
 carrera_sig/
 /.quarto/
 .Rhistory
+.Rproj.user

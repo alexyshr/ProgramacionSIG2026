@@ -1,8 +1,48 @@
-# Adicionales Sobre Python
+# Adicionales Sobre Python {#sec-anexo_python}
+
+## Stack instalado de Python
+
+Para el análisis geoespacial avanzado, en los contenedores se instalaron un conjunto de librerías especializadas. El núcleo de este entorno es **`geopandas`**, cuya instalación gestiona automáticamente dependencias críticas como **`numpy`** (cálculo numérico), **`pandas`** (manipulación de datos) y **`shapely`** (operaciones geométricas). Complementariamente, se instaló **`rasterio`** para la gestión profesional de datos ráster y **`rasterstats`** para la extracción de estadísticas zonales.
+
+| Paquete | Funcionalidad | Sitio web |
+|:--------------:|:---------------:|:-------------------------------------:|
+| `numpy` | Arreglos | <https://numpy.org/> |
+| `pandas` | Tablas | <https://pandas.pydata.org/> |
+| `shapely` | Geometrías vectoriales | <https://shapely.readthedocs.io/> |
+| `geopandas` | Capas vectoriales | <https://geopandas.org/> |
+| `rasterio` | Ráster | <https://rasterio.readthedocs.io/> |
+| `rasterstats` | Estadísticas zonales | <https://github.com/perrygeo/python-rasterstats> |
+| `psycopg2` | Interfaz a PostgreSQL | <https://www.psycopg.org/docs/> |
+
+: Paquetes principales de Python {#tbl-python-packages}
+
+Como veremos, estos paquetes dependen unos de otros. Las dependencias principales se muestran en la @fig-python-package-deps:
+
+![Principales dependencias entre los paquetes de Python que vamos a estudiar. Adaptado de @dorman2025spatial.](images/dependencias_python.png){#fig-python-package-deps}
+
+-   **`geopandas`**: Capa superior que integra a `pandas`, `shapely`, `fiona` y `pyproj`. Permite realizar consultas espaciales complejas y gestionar GeoDataFrames con una sintaxis simplificada.
+-   **`rasterio`**: Basada en la librería **GDAL**, es el estándar para la lectura, escritura y manipulación de formatos ráster (como GeoTIFF), permitiendo gestionar metadatos y arreglos de píxeles con alta eficiencia.
+-   **`scipy`**: Proporciona algoritmos avanzados de optimización, álgebra lineal y estadística necesarios para procesos de interpolación y análisis de superficies.
+-   **`rasterstats`**: Herramienta específica para extraer estadísticas (medias, sumas) a partir de capas ráster basadas en geometrías vectoriales.
+-   **`shapely`**: Motor geométrico basado en el estándar *Simple Features* y puente hacia la librería **GEOS**. Se encarga de la lógica matemática de las geometrías (áreas, intersecciones, buffers y validación topográfica).
+-   **`pyproj`**: Interfaz para la librería **PROJ**. Gestiona proyecciones cartográficas, sistemas de referencia (CRS) y transformaciones de datums.
+-   **`fiona` / `pyogrio`**: Motores de acceso a datos vectoriales (SHP, GPKG) que actúan como interfaces hacia la librería **GDAL/OGR**.
+-   **`xyzservices`**: Repositorio de metadatos para conectar con servicios de mapas base dinámicos (como OpenStreetMap).
+
+La siguiente tabla vincula las librerías de Python con los motores de cálculo de bajo nivel (C/C++) integrados en el contenedor Docker:
+
+| Librería Python | Motor de Sistema (C/C++) | Función Principal en Geomática |
+|:--------|:------------------|:------------------------------------------|
+| **`pyproj`** | **PROJ** | Gestión de Proyecciones y Sistemas de Referencia (CRS). |
+| **`shapely`** | **GEOS** | Álgebra topológica (Intersecciones, Buffers, Áreas). |
+| **`fiona` / `pyogrio`** | **GDAL/OGR** | Lectura y escritura de formatos vectoriales. |
+| **`rasterio`** | **GDAL** | Manejo de datos ráster y metadatos de imágenes. |
+| **`geopandas`** | *(Integra los 3 motores)* | Gestión integral de GeoDataFrames espaciales. |
+
 
 ## Versiones instaladas del software
 
-Para verificar las versiones instaladas, puede ejecutar `pip3 list` en la terminal. Las versiones instaladas deben coincidir con la siguiente tabla:
+Para verificar las versiones inSstaladas, puede ejecutar `pip3 list` en la terminal. Las versiones instaladas deben coincidir con la siguiente tabla:
 
 | Software | Tipo | Versión | Comando (desde terminal) | Comando (desde Python) |
 |:-|:--|:-|:----|:------|
