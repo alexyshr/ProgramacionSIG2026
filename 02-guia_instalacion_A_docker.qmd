@@ -38,6 +38,7 @@ Ubique los archivos en una carpeta local que cumpla con los siguientes requisito
 - Evite carpetas temporales o de sistema como **Descargas** o **Temp**.
 
 Dentro de la carpeta deben existir los archivos descargados en el paso anterior:
+
    - `sig_unal_completo.tar` (El archivo de la imagen).
    - `docker-compose.yml` (El archivo de orquestación contenido en la descarga).
 
@@ -62,6 +63,7 @@ docker compose up -d
 ```
 
 Si la ejecución es exitosa, verá un mensaje confirmando el inicio de:
+
 - Red: `final_default`
 - Contenedor: `contenedor_postgis_unal` (basado en la imagen `postgis_unal:final`)
 - Contenedor: `contenedor_sig_unal` (basado en la imagen `image_sig_unal:final`)

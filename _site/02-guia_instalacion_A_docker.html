@@ -219,19 +219,19 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-variables_tipos_de_datos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Función j_eval y j_plot en R</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Variables y tipos de datos</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./06-estructuras_datos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Función j_eval y j_plot en R</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Estructuras de datos</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07-operaciones_cadenas.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Función j_eval y j_plot en R</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Operaciones con Cadenas de Texto (Strings)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -474,7 +474,11 @@ div.csl-indent {
 <li>Que sea preferiblemente una <strong>ruta corta</strong>.</li>
 <li>Evite carpetas temporales o de sistema como <strong>Descargas</strong> o <strong>Temp</strong>.</li>
 </ul>
-<p>Dentro de la carpeta deben existir los archivos descargados en el paso anterior: - <code>sig_unal_completo.tar</code> (El archivo de la imagen). - <code>docker-compose.yml</code> (El archivo de orquestación contenido en la descarga).</p>
+<p>Dentro de la carpeta deben existir los archivos descargados en el paso anterior:</p>
+<ul>
+<li><code>sig_unal_completo.tar</code> (El archivo de la imagen).</li>
+<li><code>docker-compose.yml</code> (El archivo de orquestación contenido en la descarga).</li>
+</ul>
 <p>Este procedimiento instalará dos imágenes (una con la base de datos espacial y otra con Python, R y Julia) y configurará una red interna para comunicar su máquina anfitriona (Windows) con las dos máquinas virtuales Linux.</p>
 <p>Desde una terminal situada en dicha carpeta, ejecute:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> load <span class="at">-i</span> sig_unal_completo.tar</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -489,7 +493,12 @@ div.csl-indent {
 <h2 data-number="2.6" class="anchored" data-anchor-id="puesta-en-marcha"><span class="header-section-number">2.6</span> Puesta en marcha</h2>
 <p>Una vez terminada la carga (<code>load</code>), inicie los servicios desde la misma carpeta con:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> compose up <span class="at">-d</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Si la ejecución es exitosa, verá un mensaje confirmando el inicio de: - Red: <code>final_default</code> - Contenedor: <code>contenedor_postgis_unal</code> (basado en la imagen <code>postgis_unal:final</code>) - Contenedor: <code>contenedor_sig_unal</code> (basado en la imagen <code>image_sig_unal:final</code>)</p>
+<p>Si la ejecución es exitosa, verá un mensaje confirmando el inicio de:</p>
+<ul>
+<li>Red: <code>final_default</code></li>
+<li>Contenedor: <code>contenedor_postgis_unal</code> (basado en la imagen <code>postgis_unal:final</code>)</li>
+<li>Contenedor: <code>contenedor_sig_unal</code> (basado en la imagen <code>image_sig_unal:final</code>)</li>
+</ul>
 </section>
 <section id="iniciar-contenedores" class="level2" data-number="2.7">
 <h2 data-number="2.7" class="anchored" data-anchor-id="iniciar-contenedores"><span class="header-section-number">2.7</span> Iniciar contenedores</h2>
@@ -497,7 +506,7 @@ div.csl-indent {
 </section>
 <section id="cargar-contenedores-en-vscode" class="level2" data-number="2.8">
 <h2 data-number="2.8" class="anchored" data-anchor-id="cargar-contenedores-en-vscode"><span class="header-section-number">2.8</span> Cargar contenedores en VSCode</h2>
-<p>Ver <a href="81-uso_infraestructura_instalada.html#sec-cargar_contenedores_vscode" class="quarto-xref"><span>Sección B.4</span></a>.</p>
+<p>Ver <a href="81-uso_infraestructura_instalada.html#sec-cargar_contenedores_vscode" class="quarto-xref"><span>Sección B.5</span></a>.</p>
 </section>
 <section id="apagar-los-contenedores" class="level2" data-number="2.9">
 <h2 data-number="2.9" class="anchored" data-anchor-id="apagar-los-contenedores"><span class="header-section-number">2.9</span> Apagar los contenedores</h2>
@@ -505,7 +514,7 @@ div.csl-indent {
 </section>
 <section id="contenido-de-los-contenedores" class="level2" data-number="2.10">
 <h2 data-number="2.10" class="anchored" data-anchor-id="contenido-de-los-contenedores"><span class="header-section-number">2.10</span> Contenido de los contenedores</h2>
-<p>Ver <a href="81-uso_infraestructura_instalada.html#sec-contenedores_instalados" class="quarto-xref"><span>Sección B.2.1</span></a>.</p>
+<p>Ver <a href="81-uso_infraestructura_instalada.html#sec-contenedores_instalados" class="quarto-xref"><span>Sección B.3.1</span></a>.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">

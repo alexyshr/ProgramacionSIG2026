@@ -1,12 +1,15 @@
-﻿# Variables y Tipos de Datos {#sec-variables_tipos_datos}
+﻿---
+# Este bloque vacío obliga a Quarto a entender que aquí empieza un documento nuevo
+---
 
-## Función j_eval y j_plot en R
+# Variables y tipos de datos {#sec-variables_tipos_datos}
+
+## Funciones j_eval y j_plot en R
 
 ```{r}
-#| label: setup_benchmark
+#| label: j_eval_j_plot
 #| code-fold: true
 # #| include: false
-#| results: asis
 source("./docs/j_eval_j_plot.r")
 ```
 
@@ -14,8 +17,23 @@ source("./docs/j_eval_j_plot.r")
 
 ## Introducción
 
+En el análisis espacial, un dato nunca es solo un número o una letra; es la representación digital de un fenómeno físico. La latitud de una estación GPS, el nombre de un municipio en una tabla de atributos o la firma espectral de una imagen satelital deben almacenarse en la memoria del computador de una forma específica para poder procesarse.
+
+Una **variable** actúa como un contenedor etiquetado en la memoria del sistema, permitiéndonos guardar, recuperar y manipular esa información. Sin embargo, la forma en que **Python**, **R** y **Julia** gestionan estos contenedores varía significativamente.
+
+![Abstracción de una Variable: En lenguajes modernos como Python o R, funciona más como una etiqueta que apunta a un objeto en memoria.](images/variables.png){#fig-concepto-variable width=50%}
+
+Entender la diferencia entre un entero (`int`) y un decimal de doble precisión (`float64`) no es solo una curiosidad informática: en geomática, usar el tipo de dato incorrecto puede significar la diferencia entre localizar un punto con precisión milimétrica o desviarlo por cientos de metros debido a errores de redondeo. Este capítulo sienta las bases para manipular la "materia prima" de cualquier Sistema de Información Geográfica (SIG).
 
 ## Objetivos de aprendizaje
+
+Al finalizar este capítulo, el estudiante estará en capacidad de:
+
+1.  **Definir y asignar variables** correctamente en Python, R y Julia, comprendiendo las diferencias de sintaxis y asignación de memoria.
+2.  **Diferenciar tipos de datos fundamentales** (enteros, flotantes, cadenas y lógicos) y seleccionar el más adecuado para optimizar el almacenamiento de datos masivos (Big Data Geoespacial).
+3.  **Manipular cadenas de texto** para la limpieza y estandarización automática de tablas de atributos (corrección de mayúsculas, eliminación de espacios, interpolación).
+4.  **Aplicar formatos de precisión** para controlar la salida de coordenadas y datos numéricos en reportes técnicos.
+5.  **Comprender la mutabilidad**, distinguiendo cuándo una operación modifica los datos originales (Python/Julia) y cuándo genera una copia nueva (R).
 
 ## Variables
 
@@ -159,6 +177,8 @@ Para entender cómo estos lenguajes manejan la información de la @tbl-estructur
 2. **Tipado Estático:** El tipo de la variable debe definirse al momento de escribir el código (ej. C++ o Java). Una vez definida como "entero", no puede guardar texto. Esto previene errores antes de ejecutar el programa.
 3. **Tipado Fuerte:** El lenguaje no permite operaciones entre tipos incompatibles sin una conversión explícita. Por ejemplo, en **Python**, `5 + "10"` arrojará un error.
 4. **Tipado Débil:** El lenguaje intenta realizar conversiones automáticas (coerción) para que la operación funcione. En **R**, si intentas unir un número y un texto en un vector `c(1, "Bogotá")`, R convertirá el `1` en texto `"1"` silenciosamente.
+
+![Comparativa de Tipado: La flexibilidad tiene un costo en seguridad, pero gana en velocidad de desarrollo.](images/tipado_estatico_dinamico.png){#fig-tipado width=60%}
 
 ::: {.panel-tabset}
 
@@ -339,7 +359,7 @@ año_inicio = 2024                  # EVITAR: La 'ñ' causa fallos de lectura
 #| label: python_varname_codigo
 #| eval: false
 
-# Nombres de variables recomendatos
+# Nombres de variables recomendados
 # Variables geoespaciales claras
 latitud_bogota = 4.7110
 longitud_bogota = -74.0721
@@ -349,7 +369,7 @@ conteo_viviendas_afectadas = 150
 sistema_referencia = "MAGNA-SIRGAS / Origen Nacional"
 
 
-# Nombres de variables NO recomendatos
+# Nombres de variables NO recomendados
 # Evitar nombres genéricos o confusos
 x = 4.7110  # ¿Es latitud o un índice?
 d = "Chinchiná"  # Muy vago (¿Distrito, Departamento, Dato?)
@@ -363,7 +383,7 @@ coords = [4.71, -74.07]  # Lista sin etiquetas claras
 ```{python}
 #| label: python_varname
 # #| eval: false
-# Nombres de variables recomendatos
+# Nombres de variables recomendados
 # Variables geoespaciales claras
 latitud_bogota = 4.7110
 longitud_bogota = -74.0721
@@ -373,7 +393,7 @@ conteo_viviendas_afectadas = 150
 sistema_referencia = "MAGNA-SIRGAS / Origen Nacional"
 
 
-# Nombres de variables NO recomendatos
+# Nombres de variables NO recomendados
 # Evitar nombres genéricos o confusos
 x = 4.7110  # ¿Es latitud o un índice?
 d = "Chinchiná"  # Muy vago (¿Distrito, Departamento, Dato?)
@@ -390,7 +410,7 @@ coords = [4.71, -74.07]  # Lista sin etiquetas claras
 #| label: r_varname_codigo
 #| eval: false
 
-# Nombres de variables recomendatos
+# Nombres de variables recomendados
 # Estilo snake_case (común en R para análisis de datos)
 latitud_medellin <- 6.2442
 longitud_medellin <- -75.5812
@@ -400,7 +420,7 @@ poblacion_censo_2018 <- 6407000
 proyeccion_cartografica <- "EPSG:9377"
 
 
-# Nombres de variables NO recomendatos
+# Nombres de variables NO recomendados
 # Evitar abreviaturas extremas
 l <- 6.2442 # ¿Latitud, Longitud, Límite, Localidad?
 nom <- "Antioquia" # "nombre" es mejor
@@ -413,7 +433,7 @@ p <- 6407000 # ¿Población, Perímetro, Pendiente, P-value?
 ```{r}
 #| label: r_varname
 # #| eval: false
-# Nombres de variables recomendatos
+# Nombres de variables recomendados
 # Estilo snake_case (común en R para análisis de datos)
 latitud_medellin <- 6.2442
 longitud_medellin <- -75.5812
@@ -423,7 +443,7 @@ poblacion_censo_2018 <- 6407000
 proyeccion_cartografica <- "EPSG:9377"
 
 
-# Nombres de variables NO recomendatos
+# Nombres de variables NO recomendados
 # Evitar abreviaturas extremas
 l <- 6.2442 # ¿Latitud, Longitud, Límite, Localidad?
 nom <- "Antioquia" # "nombre" es mejor
@@ -440,7 +460,7 @@ p <- 6407000 # ¿Población, Perímetro, Pendiente, P-value?
 #| label: julia_varname_codigo
 #| eval: false
 
-# Nombres de variables recomendatos
+# Nombres de variables recomendados
 # Aprovechando el soporte Unicode de Julia
 latitud_cali = 3.4516
 longitud_cali = -76.5320
@@ -450,7 +470,7 @@ densidad_poblacional = 120.5
 referencia_espacial = "MAGNA-SIRGAS"
 
 
-# Nombres de variables NO recomendatos
+# Nombres de variables NO recomendados
 # Nombres que no dicen nada del contexto geográfico
 var1 = 3.4516
 info = "La Elvira"
@@ -465,7 +485,7 @@ lista = [3.45, -76.53] # Difícil de leer en modelos de optimización
 #| results: asis
 # #| eval: false
 j_eval('
-# Nombres de variables recomendatos
+# Nombres de variables recomendados
 # Aprovechando el soporte Unicode de Julia
 latitud_cali = 3.4516
 longitud_cali = -76.5320
@@ -476,7 +496,7 @@ referencia_espacial = "MAGNA-SIRGAS"
 ')
 
 j_eval('
-# Nombres de variables NO recomendatos
+# Nombres de variables NO recomendados
 # Nombres que no dicen nada del contexto geográfico
 var1 = 3.4516
 info = "La Elvira"
@@ -502,7 +522,17 @@ lista = [3.45, -76.53] # Difícil de leer en modelos de optimización
 #| eval: false
 
 # Representa el número de elementos en un dataset geoespacial
-num_elementos = 500  
+num_elementos = 500 # Igual a num_elementos = int(500)
+
+# Validación de tipo (Type Checking)
+# Lanza un error si no es un entero, ideal para debugging en scripts de Geomatización
+if not isinstance(num_elementos, int):
+    raise TypeError(f"Se esperaba un entero, pero se recibió {type(num_elementos)}")
+
+# Representa la altitud de un punto (Nevado del Ruiz)
+import numpy as np
+altitud_32 = np.float32(2640.5) # np.float32() para simple
+altitud_64 = 2640.5   # float() es el defecto (doble)
 
 # Representa la latitud de un punto (Nevado del Ruiz)
 latitud = 4.8920  
@@ -545,7 +575,17 @@ latitud_ruiz
 # #| eval: false
 
 # Representa el número de elementos en un dataset geoespacial
-num_elementos = 500  
+num_elementos = 500 # Igual a num_elementos = int(500)
+
+# Validación de tipo (Type Checking)
+# Lanza un error si no es un entero, ideal para debugging en scripts de Geomatización
+if not isinstance(num_elementos, int):
+    raise TypeError(f"Se esperaba un entero, pero se recibió {type(num_elementos)}")
+
+# Representa la altitud de un punto (Nevado del Ruiz)
+import numpy as np
+altitud_32 = np.float32(2640.5) # np.float32() para simple
+altitud_64 = 2640.5   # float() es el defecto (doble)
 
 # Representa la latitud de un punto (Nevado del Ruiz)
 latitud = 4.8920  
@@ -590,7 +630,17 @@ latitud_ruiz
 #| eval: false
 
 # Representa el número de elementos (L indica tipo integer)
-num_elementos <- 500L  
+num_elementos <- 500L  # Diferente a num_elementos = 500 (numeric)
+
+# Validación del tipo de dato
+if (!is.integer(num_elementos)) {
+  stop(paste("Error: Se esperaba un tipo 'integer', pero se recibió uno de tipo '", 
+             class(num_elementos), "'.", sep = ""))
+}
+
+# Representa la altitud de un punto (Nevado del Ruiz)
+altitud_32 <- as.single(5321.0) # as.single() para precisión simple (32 bits)
+altitud_64 <- 5321.0            # double es el defecto en R (64 bits)
 
 # Representa la latitud de un punto (Nevado del Ruiz)
 latitud <- 4.8920  
@@ -632,7 +682,17 @@ latitud_ruiz
 # #| eval: false
 
 # Representa el número de elementos (L indica tipo integer)
-num_elementos <- 500L  
+num_elementos <- 500L  # Diferente a num_elementos = 500 (numeric)
+
+# Validación del tipo de dato
+if (!is.integer(num_elementos)) {
+  stop(paste("Error: Se esperaba un tipo 'integer', pero se recibió uno de tipo '", 
+             class(num_elementos), "'.", sep = ""))
+}
+
+# Representa la altitud de un punto (Nevado del Ruiz)
+altitud_32 <- as.single(5321.0) # as.single() para precisión simple (32 bits)
+altitud_64 <- 5321.0            # double es el defecto en R (64 bits)
 
 # Representa la latitud de un punto (Nevado del Ruiz)
 latitud <- 4.8920  
@@ -677,7 +737,17 @@ latitud_ruiz
 #| eval: false
 
 # Representa el número de elementos en el dataset
-num_elementos = 500  
+num_elementos = 500  # Igual a num_elementos = Int64(500)
+typeof(num_elementos)
+
+# Validación del tipo de dato
+if !(num_elementos isa Int64)
+    error("Error: Se esperaba un 'Int64', pero se recibió un '$(typeof(num_elementos))'.")
+end
+
+# Representa la altitud de un punto (Nevado del Ruiz)
+altitud_32 = Float32(5321.0) # Float32() para precisión simple (32 bits)
+altitud_64 = 5321.0          # Float64 es el defecto en Julia (64 bits)
 
 # Representa la latitud del punto (Nevado del Ruiz)
 latitud = 4.8920  
@@ -720,7 +790,17 @@ latitud_ruiz
 # #| eval: false
 j_eval('
 # Representa el número de elementos en el dataset
-num_elementos = 500  
+num_elementos = 500  # Igual a num_elementos = Int64(500)
+typeof(num_elementos)
+
+# Validación del tipo de dato
+if !(num_elementos isa Int64)
+    error("Error: Se esperaba un \'Int64\', pero se recibió un \'$(typeof(num_elementos))\'.")
+end
+
+# Representa la altitud de un punto (Nevado del Ruiz)
+altitud_32 = Float32(5321.0) # Float32() para precisión simple (32 bits)
+altitud_64 = 5321.0          # Float64 es el defecto en Julia (64 bits)
 
 # Representa la latitud del punto (Nevado del Ruiz)
 latitud = 4.8920  
@@ -762,8 +842,9 @@ latitud_ruiz
 |:---|:---:|:---:|:---|
 | **Sufijo `L`** (num_elementos)| No se usa. `500` es entero. | Se usa `500L` para `integer`. Sin `L` es `numeric`. | No se usa. `500` es `Int64`. |
 | **Asignación en Diccionario** | `v = {clave: valor, ...}` (Usa `:`). | `v <- list(clave = valor, ...)`. (Usa `=` ) | `v = Dict(clave => valor, ...)` (Usa `=>`). |
-| **`num_elementos`** | `int` | `integer` (con el sufijo `L`) | `Int64` |
-| **`latitud` / `longitud`** | `float` | `numeric` (doble precisión) | `Float64` |
+| **`num_elementos`** | `int` (Automático) | `integer` (Requiere `L`) | `Int64` (Automático) |
+| **`latitud` (doble precisión por defecto)** | `float` | `numeric` | `Float64` |
+| **`altitud_32` (simple precisión)** | `np.float32()` | `as.single()` | `Float32` |
 | **`sistema_coordenadas`** | `str` | `character` | `String` |
 | **`esta_georeferenciado`** | `bool` (`True` / `False`) | `logical` (`TRUE` / `FALSE`) | `Bool` (`true` / `false`) |
 | **`coordenadas`** | `list` `[ , ]`: Colección mutable de objetos. | `vector` `c( , )`: Colección indexada de elementos del mismo tipo. | `Array` `[ , ]` (Vector): Arreglo indexado y optimizado para cómputo. |
@@ -926,6 +1007,8 @@ print("Capa: Departamentos_Colombia\nEstado: Procesada exitosamente.")
 # Comentario en línea: RMSE en metros
 rmse = 0.05  # Tolerancia para precisión submétrica
 
+# El intérprete lo procesa (""") como un string, 
+# pero al no asignarse a una variable, actúa como comentario.
 """
 Este es un comentario multilínea en Python.
 Se utilizan triples comillas (aunque técnicamente son cadenas
@@ -947,6 +1030,8 @@ print("Capa: Departamentos_Colombia\nEstado: Procesada exitosamente.")
 # Comentario en línea: RMSE en metros
 rmse = 0.05  # Tolerancia para precisión submétrica
 
+# El intérprete lo procesa (""") como un string, 
+# pero al no asignarse a una variable, actúa como comentario.
 """
 Este es un comentario multilínea en Python.
 Se utilizan triples comillas (aunque técnicamente son cadenas
@@ -1107,10 +1192,20 @@ num_elementos
 latitud_ruiz = 4.8920
 latitud_radianes = math.radians(latitud_ruiz)
 
-# Agregar nuevas coordenadas a la lista [Lat, Lon] de Bogotá
+# Latitud, Longitud del Nevado del Ruíz
 coordenadas = [4.8920, -75.3188]
-coordenadas.append(4.6097)  # Latitud de Bogotá
-coordenadas.append(-74.0817) # Longitud de Bogotá
+
+# Agregar datos de Bogotá al FINAL de la lista
+coordenadas.append(4.6097)   # Agrega Latitud de Bogotá al final
+coordenadas.append(-74.0817)  # Agrega Longitud de Bogotá al final
+
+# --- Uso de INSERT ---
+# Supongamos que queremos insertar el nombre del país al principio de la lista
+# El método .insert(índice, valor) desplaza los demás elementos
+coordenadas.insert(0, "Colombia") # Inserta en la posición inicial (índice 0)
+
+# Ver el resultado final
+coordenadas
 
 # Acceso y formateo de cadenas usando el diccionario de atributos
 nombre_volcan = atributos_elemento["nombre"]
@@ -1141,10 +1236,20 @@ num_elementos
 latitud_ruiz = 4.8920
 latitud_radianes = math.radians(latitud_ruiz)
 
-# Agregar nuevas coordenadas a la lista [Lat, Lon] de Bogotá
+# Latitud, Longitud del Nevado del Ruíz
 coordenadas = [4.8920, -75.3188]
-coordenadas.append(4.6097)  # Latitud de Bogotá
-coordenadas.append(-74.0817) # Longitud de Bogotá
+
+# Agregar datos de Bogotá al FINAL de la lista
+coordenadas.append(4.6097)   # Agrega Latitud de Bogotá al final
+coordenadas.append(-74.0817)  # Agrega Longitud de Bogotá al final
+
+# --- Uso de INSERT ---
+# Supongamos que queremos insertar el nombre del país al principio de la lista
+# El método .insert(índice, valor) desplaza los demás elementos
+coordenadas.insert(0, "Colombia") # Inserta en la posición inicial (índice 0)
+
+# Ver el resultado final
+coordenadas
 
 # Acceso y formateo de cadenas usando el diccionario de atributos
 nombre_volcan = atributos_elemento["nombre"]
@@ -1174,16 +1279,60 @@ num_elementos
 latitud_ruiz <- 4.8920
 latitud_radianes <- latitud_ruiz * (pi / 180)
 
-# Agregar elementos a un vector (creando una copia combinada)
+# Latitud, Longitud del Nevado del Ruíz
 coordenadas <- c(4.8920, -75.3188)
-coordenadas <- c(coordenadas, 4.6097, -74.0817)
+
+# --- Uso de c() para combinar (Equivalente a append) ---
+# Agregar elementos a un vector (creando una copia combinada)
+# Adicionamos coordenadas de Bogotá al final
+coordenadas <- c(coordenadas, 4.6097, -74.0817) 
+
+# --- ADVERTENCIA DE COERCIÓN ---
+# Si intentamos insertar un texto en este vector numérico, 
+# R convertirá TODO el vector a tipo 'character'.
+# coordenadas <- c("Colombia", coordenadas) # ¡Cuidado con esto!
+
+# --- Uso de append() con after (Equivalente a insert en Python) ---
+# Insertar "Colombia" al inicio (after = 0)
+# ¡ADVERTENCIA!: Al insertar un texto, R convertirá todos los números 
+# del vector a tipo 'character' (coerción).
+coordenadas <- append(coordenadas, "Colombia", after = 0)
 
 # Acceso a lista y formateo de cadenas
 nombre_volcan <- atributos_elemento$nombre
 altura_volcan <- atributos_elemento$altura_msnm
-mensaje <- paste(nombre_volcan, "tiene una altura de", altura_volcan, "metros.")
+mensaje <- paste(nombre_volcan, "tiene una altura de", altura_volcan, "metros.", sep = " ")
+mensaje
+# Si no quieres NINGÚN espacio, puedes usar paste0() o sep = ""
+mensaje <- paste(nombre_volcan, " tiene una altura de ", altura_volcan, " metros.", sep = "")
+mensaje
+mensaje <- paste0(nombre_volcan, " tiene una altura de ", altura_volcan, " metros.")
+mensaje
 
-# Mostrar el resultado final
+# El formato define exactamente qué caracteres van entre las variables
+# %s para texto (string), %d para enteros, %f para decimales
+# La máscara de texto define el espacio natural entre las variables
+mensaje <- sprintf("%s tiene una altura de %d metros.", nombre_volcan, altura_volcan)
+mensaje
+
+# Interpolación con más de una variable entera, texto o decimal
+# Definición de variables
+pais <- "Colombia"
+nombre_volcan <- "Nevado del Ruiz"
+altura_volcan <- 5321L          # Entero (Integer)
+num_sensores <- 12L             # Entero (Integer)
+latitud <- 4.8920               # Decimal (Double)
+longitud <- -75.3188            # Decimal (Double)
+
+# Interpolación: 2 strings (%s), 2 enteros (%d) y 2 decimales con precisión (%f)
+# Usamos %.4f para asegurar 4 decimales en las coordenadas
+mensaje <- sprintf("En %s, el %s (Altitud: %d m) tiene %d sensores. Ubicación: %.4f, %.4f", 
+                   pais, 
+                   nombre_volcan, 
+                   altura_volcan, 
+                   num_sensores, 
+                   latitud, 
+                   longitud)
 mensaje
 ```
 :::
@@ -1203,16 +1352,60 @@ num_elementos
 latitud_ruiz <- 4.8920
 latitud_radianes <- latitud_ruiz * (pi / 180)
 
-# Agregar elementos a un vector (creando una copia combinada)
+# Latitud, Longitud del Nevado del Ruíz
 coordenadas <- c(4.8920, -75.3188)
-coordenadas <- c(coordenadas, 4.6097, -74.0817)
+
+# --- Uso de c() para combinar (Equivalente a append) ---
+# Agregar elementos a un vector (creando una copia combinada)
+# Adicionamos coordenadas de Bogotá al final
+coordenadas <- c(coordenadas, 4.6097, -74.0817) 
+
+# --- ADVERTENCIA DE COERCIÓN ---
+# Si intentamos insertar un texto en este vector numérico, 
+# R convertirá TODO el vector a tipo 'character'.
+# coordenadas <- c("Colombia", coordenadas) # ¡Cuidado con esto!
+
+# --- Uso de append() con after (Equivalente a insert en Python) ---
+# Insertar "Colombia" al inicio (after = 0)
+# ¡ADVERTENCIA!: Al insertar un texto, R convertirá todos los números 
+# del vector a tipo 'character' (coerción).
+coordenadas <- append(coordenadas, "Colombia", after = 0)
 
 # Acceso a lista y formateo de cadenas
 nombre_volcan <- atributos_elemento$nombre
 altura_volcan <- atributos_elemento$altura_msnm
-mensaje <- paste(nombre_volcan, "tiene una altura de", altura_volcan, "metros.")
+mensaje <- paste(nombre_volcan, "tiene una altura de", altura_volcan, "metros.", sep = " ")
+mensaje
+# Si no quieres NINGÚN espacio, puedes usar paste0() o sep = ""
+mensaje <- paste(nombre_volcan, " tiene una altura de ", altura_volcan, " metros.", sep = "")
+mensaje
+mensaje <- paste0(nombre_volcan, " tiene una altura de ", altura_volcan, " metros.")
+mensaje
 
-# Mostrar el resultado final
+# El formato define exactamente qué caracteres van entre las variables
+# %s para texto (string), %d para enteros, %f para decimales
+# La máscara de texto define el espacio natural entre las variables
+mensaje <- sprintf("%s tiene una altura de %d metros.", nombre_volcan, altura_volcan)
+mensaje
+
+# Interpolación con más de una variable entera, texto o decimal
+# Definición de variables
+pais <- "Colombia"
+nombre_volcan <- "Nevado del Ruiz"
+altura_volcan <- 5321L          # Entero (Integer)
+num_sensores <- 12L             # Entero (Integer)
+latitud <- 4.8920               # Decimal (Double)
+longitud <- -75.3188            # Decimal (Double)
+
+# Interpolación: 2 strings (%s), 2 enteros (%d) y 2 decimales con precisión (%f)
+# Usamos %.4f para asegurar 4 decimales en las coordenadas
+mensaje <- sprintf("En %s, el %s (Altitud: %d m) tiene %d sensores. Ubicación: %.4f, %.4f", 
+                   pais, 
+                   nombre_volcan, 
+                   altura_volcan, 
+                   num_sensores, 
+                   latitud, 
+                   longitud)
 mensaje
 ```
 
@@ -1235,10 +1428,29 @@ num_elementos
 latitud_ruiz = 4.8920
 latitud_radianes = deg2rad(latitud_ruiz)
 
-# Agregar coordenadas a un arreglo (push! modifica el objeto original)
+# Latitud, Longitud del Nevado del Ruiz
 coordenadas = [4.8920, -75.3188]
-push!(coordenadas, 4.6097)
-push!(coordenadas, -74.0817)
+
+# --- Uso de push!() (Equivalente a append de Python) ---
+# Agregar elementos al final del vector original
+# Agregar coordenadas de Bogotá al final
+push!(coordenadas, 4.6097, -74.0817)
+
+# --- ADVERTENCIA DE TIPO (Type Safety) ---
+# A diferencia de R, Julia NO convertirá los números a texto automáticamente.
+# Si el vector es de tipo Float64, esta línea lanzará un ERROR:
+# insert!(coordenadas, 1, "Colombia") 
+
+# Para que funcione como en Python (mezclando tipos), el vector 
+# debe ser de tipo 'Any' o estar predefinido para aceptar strings.
+coordenadas_mix = Any[4.8920, -75.3188, 4.6097, -74.0817]
+
+# --- Uso de insert!() (Equivalente a insert en Python) ---
+# Insertar "Colombia" al inicio (Índice 1 en Julia)
+insert!(coordenadas_mix, 1, "Colombia")
+
+# Ver el resultado
+coordenadas_mix
 
 # Acceso a Diccionario e interpolación de texto
 nombre_volcan = atributos_elemento["nombre"]
@@ -1266,10 +1478,29 @@ num_elementos
 latitud_ruiz = 4.8920
 latitud_radianes = deg2rad(latitud_ruiz)
 
-# Agregar coordenadas a un arreglo
+# Latitud, Longitud del Nevado del Ruiz
 coordenadas = [4.8920, -75.3188]
-push!(coordenadas, 4.6097)
-push!(coordenadas, -74.0817)
+
+# --- Uso de push!() (Equivalente a append de Python) ---
+# Agregar elementos al final del vector original
+# Agregar coordenadas de Bogotá al final
+push!(coordenadas, 4.6097, -74.0817)
+
+# --- ADVERTENCIA DE TIPO (Type Safety) ---
+# A diferencia de R, Julia NO convertirá los números a texto automáticamente.
+# Si el vector es de tipo Float64, esta línea lanzará un ERROR:
+# insert!(coordenadas, 1, "Colombia") 
+
+# Para que funcione como en Python (mezclando tipos), el vector 
+# debe ser de tipo \'Any\' o estar predefinido para aceptar strings.
+coordenadas_mix = Any[4.8920, -75.3188, 4.6097, -74.0817]
+
+# --- Uso de insert!() (Equivalente a insert en Python) ---
+# Insertar "Colombia" al inicio (Índice 1 en Julia)
+insert!(coordenadas_mix, 1, "Colombia")
+
+# Ver el resultado
+coordenadas_mix
 
 # Acceso e interpolación de texto
 nombre_volcan = atributos_elemento["nombre"]
@@ -1287,12 +1518,58 @@ mensaje
 |:---|:---:|:---:|:---|
 | **Incremento** | `+=` | `x <- x + n` | `+=` |
 | **Grados a Radianes** | `math.radians()` | `x * (pi/180)` | `deg2rad()` |
-| **Agregar a lista** | `.append()` (Mutable) | `c(x, n)` (Inmutable) | `push!()` (Mutable) |
-| **Interpolación de texto** | `f"{var}"` | `paste()` / `sprintf()` | `"$var"` |
+| **Agregar al final** | `.append()` (Mutable) | `c(x, n)` (Copia/Coerción) | `push!()` (Mutable) |
+| **Insertar en posición** | `.insert(índice, v)` | `append(x, v, after=n)` | `insert!(x, índice, v)` |
+| **Primer índice** | `0` | `1` | `1` |
+| **Mezclar tipos (Heterogéneo)** | Nativo (Listas) | No (Coerción a texto) | Requiere `Any[]` |
+| **Interpolación de texto** | `f"{var}"` | `sprintf()` / `paste()` | `"$var"` |
+| **Marcadores (Formato)** | Ver @sec-especificadores-formato | `%s`, `%d`, `%f` | Ver @sec-especificadores-formato |
+| **Precisión (4 dec)** | `f"{v:.4f}"` | `sprintf("%.4f", v)` | `@sprintf("%.4f", v)` |
 
 : Comparación de operaciones comunes con variables {#tbl-operaciones_variables tbl-colwidths="[25,25,25,25]"}
 
-**Nota técnica:** En el desarrollo de algoritmos geográficos, la mutabilidad es un concepto clave. Mientras que Python y Julia permiten modificar una lista de coordenadas directamente (`append` / `push!`), en R los vectores son inmutables; cada vez que "agregamos" un dato, R crea una copia nueva del vector en memoria.
+**Donde los marcadores representan:**
+
+* **s**: String (Texto).
+* **d**: Integer (Entero).
+* **f**: Float (Decimal).
+* **.4f**: Precisión a 4 decimales.
+
+**Nota técnica:** En el desarrollo de algoritmos geográficos, la mutabilidad es un concepto clave. Mientras que Python y Julia permiten modificar una lista de coordenadas directamente (`append` / `push!`), en R los vectores son atómicos e inmutables; cada vez que "agregamos" un dato, R crea una copia nueva del vector en memoria. Esta diferencia es explicada en @fig-mutabilidad y @fig-inmutabilidad.
+
+::: {#fig-comparacion-memoria layout-ncol=2 layout-valign="bottom"}
+
+![Python/Julia: Listas Mutables. El objeto cambia sin cambiar de dirección de memoria.](images/mutabilidad.png){#fig-mutabilidad width="50%"}
+
+![R: Vectores Inmutables. Al modificar, R crea una copia nueva silenciosamente.](images/inmutabilidad.png){#fig-inmutabilidad width="50%"}
+
+Comparativa de manejo de memoria y mutabilidad.
+:::
+
+
+
+
+### Nota sobre especificadores de formato {#sec-especificadores-formato}
+
+Aunque Python y Julia tienen formas nativas más simples (`f""` y `""`), el uso de **s, d, f** es un estándar universal inspirado en el lenguaje C para controlar la apariencia de los datos:
+
+* **En R:** Es el estándar para controlar la salida prolija.
+    * *Ejemplo:* `sprintf("%s tiene %d m", "Ruiz", 5321)`
+* **En Python:** Estilo "antiguo" con el operador `%`. Útil para entender código heredado.
+    * *Ejemplo:* `"%s tiene %d m" % ("Ruiz", 5321)`
+* **En Julia:** Requiere la macro `@sprintf` de la librería `Printf`.
+    * *Ejemplo:* `using Printf; @sprintf("%s tiene %d m", "Ruiz", 5321)`
+
+Ejemplos controlando los decimales:
+
+* **En R:** Se usa el símbolo `%` como prefijo obligatorio.
+    * *Ejemplo:* `sprintf("%.4f", 4.892)`
+* **En Python:** Dentro de las f-strings, se usa el prefijo `:` para indicar el formato.
+    * *Ejemplo:* `f"{4.892:.4f}"`
+* **En Julia:** Se usa la macro `@sprintf` (librería `Printf`) con el prefijo `%`.
+    * *Ejemplo:* `using Printf; @sprintf("%.4f", 4.892)`
+
+En todos los lenguajes, la instrucción **`.4f`** le indica al intérprete que debe mostrar el número decimal (float) con exactamente **4 decimales**, rellenando con ceros o redondeando si es necesario.
 
 ## Operaciones básicas con texto
 
@@ -1537,34 +1814,49 @@ println("Texto limpio: \'", ubicacion_limpia, "\'")
 
 En esta sección hemos abordado los cimientos de la programación aplicados al análisis de datos. A continuación, se presenta un **Cheat Sheet (Hoja de Referencia)** consolidado con las equivalencias sintácticas y funcionales entre Python, R y Julia.
 
-### 1. Asignación, Variables e Indexación
+### 1. Asignación y Operaciones Básicas
 
 | Concepto / Operación | Python | R | Julia |
 |:---|:---|:---|:---|
-| **Asignación Básica** | `=` | `<-` (Recomendado) o `=` | `=` |
+| **Asignación Básica** | `=` | `<-` (Estándar) | `=` |
 | **Imprimir en consola** | `print(var)` | `print(var)` o `cat(var)` | `println(var)` |
-| **Interpolación de texto** | `f"Texto {var}"` | `paste("Texto", var)` | `"Texto $var"` |
 | **Incrementar valor** | `x += 1` | `x <- x + 1` | `x += 1` |
 | **Índice Inicial (Arrays)** | `[0]` (Base 0) | `[1]` (Base 1) | `[1]` (Base 1) |
 | **Último elemento** | `[-1]` | `[length(x)]` | `[end]` |
 
 : Resumen de sintaxis y manejo de variables {#tbl-resumen_variables tbl-colwidths="[25,25,25,25]"}
 
-
-### 2. Estructuras y Tipos de Datos Geoespaciales
+### 2. Estructuras, Tipos y Gestión de Memoria
 
 | Concepto | Python | R | Julia |
 |:---|:---|:---|:---|
 | **Número Entero** | `int` (ej. `500`) | `integer` (ej. `500L`) | `Int64` (ej. `500`) |
-| **Número Decimal** | `float` | `numeric` | `Float64` |
+| **Número Decimal** | `float` | `numeric` (Double) | `Float64` |
 | **Booleano** | `bool` (`True`/`False`) | `logical` (`TRUE`/`FALSE`) | `Bool` (`true`/`false`) |
-| **Lista de Coordenadas** | `list` `[4.8, -75.3]` (Mutable) | `vector` `c(4.8, -75.3)` (Inmutable) | `Array` `[4.8, -75.3]` (Mutable) |
-| **Agregar a Lista/Array** | `lista.append(x)` | `v <- c(v, x)` | `push!(lista, x)` |
-| **Atributos (Diccionario)** | `dict` `{ "clave": valor }` | `list` `list(clave = valor)` | `Dict` `Dict("clave" => valor)` |
+| **Lista/Vector** | `list` `[...]` | `vector` `c(...)` | `Array` `[...]` |
+| **Agregar al Final** | `lista.append(x)` | `v <- c(v, x)` | `push!(lista, x)` |
+| **Insertar en Posición** | `lista.insert(i, x)` | `append(v, x, after=i)` | `insert!(lista, i, x)` |
+| **Comportamiento Memoria** | **Mutable** (In-place). Modifica el objeto original. | **Inmutable** (Copy-on-modify). Crea una copia nueva. | **Mutable** (In-place). Modifica el objeto original. |
+| **Diccionario** | `dict` `{k: v}` | `list` `list(k = v)` | `Dict` `Dict(k => v)` |
 
-: Resumen de estructuras de datos y tipos {#tbl-resumen_tipos_datos tbl-colwidths="[25,25,25,25]"}
+: Resumen de estructuras de datos y su comportamiento en memoria (Mutabilidad) {#tbl-resumen_tipos_datos tbl-colwidths="[20,25,30,25]"}
 
-### 3. Manipulación de Cadenas de Texto (Limpieza Tabular)
+### 3. Interpolación y Formato de Salida (Formatters)
+
+Esta tabla resume cómo insertar variables dentro de texto y controlar su precisión (ej. coordenadas).
+
+| Operación | Python | R | Julia |
+|:---|:---|:---|:---|
+| **Interpolación Básica** | `f"Texto {var}"` | `paste("Texto", var)` | `"Texto $var"` |
+| **Interpolación con Formato** | `f"Valor: {var:.4f}"` | `sprintf("Valor: %.4f", var)` | `@sprintf "Valor: %.4f" var` |
+| **Marcador Texto** | `{var}` | `%s` | `%s` |
+| **Marcador Entero** | `{var}` o `{:d}` | `%d` | `%d` |
+| **Marcador Decimal** | `{var}` o `{:f}` | `%f` | `%f` |
+| **Control Decimales** | `:.4f` (4 decimales) | `%.4f` (4 decimales) | `%.4f` (4 decimales) |
+
+: Resumen de técnicas de interpolación y formateo numérico. Nota: En Julia `@sprintf` requiere `using Printf`. {#tbl-resumen_formato tbl-colwidths="[25,25,25,25]"}
+
+### 4. Manipulación de Cadenas de Texto (Limpieza Tabular)
 
 | Operación | Python | R | Julia |
 |:---|:---|:---|:---|
@@ -1576,22 +1868,22 @@ En esta sección hemos abordado los cimientos de la programación aplicados al a
 
 : Resumen de funciones para limpieza de texto (String Parsing) {#tbl-resumen_texto tbl-colwidths="[25,25,25,25]"}
 
-### 4. Documentación y Caracteres Especiales
+### 5. Documentación y caracteres especiales
 
 | Carácter | Python | R | Julia |
 |:---:|:---|:---|:---|
 | `#` | Comentario en línea. | Comentario en línea. | Comentario en línea. |
 | `\n` | Salto de línea. | Salto de línea. | Salto de línea. |
 | `\t` | Tabulación. | Tabulación. | Tabulación. |
-| `"""` | *Docstrings* (Comentarios). | Causa error de sintaxis. | Cadenas/Archivos multilínea. |
+| `"""` | *Docstrings* (Documentación). | No soportado (Error). | Cadenas/Archivos multilínea. |
 | `#= =#` | No soportado. | No soportado. | Comentario de bloque nativo. |
 
-: Resumen de caracteres de escape y documentación {#tbl-resumen_caracteres tbl-colwidths="[15,25,25,35]"}
+: Resumen de caracteres de escape y sintaxis de documentación {#tbl-resumen_caracteres tbl-colwidths="[15,25,25,35]"}
 
 ---
 
 **Conclusión del Módulo:**
-La correcta elección de los tipos de datos (Listas vs. Diccionarios), la comprensión del índice de origen (Base 0 vs. Base 1) y la estandarización de nombres (snake_case) son los pilares fundamentales para escribir algoritmos robustos. Un manejo deficiente en la limpieza de texto (mayúsculas, minúsculas, espacios) o en la mutabilidad de las variables, suele ser la causa principal de fallos silenciosos durante los procesos de cruce y análisis espacial.
+La correcta elección de los tipos de datos (Listas vs. Diccionarios), la comprensión del índice de origen (Base 0 vs. Base 1) y el control estricto del formato (`%.4f` vs `.4f`) son pilares fundamentales para evitar errores de redondeo en coordenadas. Asimismo, entender la **mutabilidad** es vital: mientras Python y Julia permiten **insertar** o modificar datos "in-place" (eficiente), R tiende a generar copias en memoria, lo cual debe considerarse al procesar grandes volúmenes de información geoespacial.
 
 ## Ejercicios
 
@@ -1641,6 +1933,7 @@ El objetivo de esta evaluación no es solo que el código funcione, sino que sea
 
 **1. Archivos de Código:**
 Debes desarrollar los algoritmos en al menos uno de los siguientes formatos de archivo:
+
 * Script tradicional (`.py`, `.R`, `.jl`)
 * Notebook interactivo (`.ipynb`)
 * Documento computacional (`.qmd` con *chunks* de código)
@@ -1654,4 +1947,5 @@ Independientemente del formato de tu código fuente, **debes redactar un documen
 
 **3. Repositorio en GitHub:**
 Sube tu carpeta del proyecto (que debe contener tus scripts, el archivo `.qmd` y los renders finales en HTML y PDF) a un repositorio público en tu cuenta personal de **GitHub**.
+
 * **Entrega:** Deberás enviar únicamente el enlace (URL) a tu repositorio de GitHub para la calificación.

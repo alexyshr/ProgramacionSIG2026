@@ -38,10 +38,12 @@ Este material de curso se distribuye bajo una licencia **Creative Commons Atribu
 ::: {.callout-note}
 #### Lo que esto significa para el estudiante:
 Bajo los principios de **Open Science**, usted es libre de:
+
 1. **Compartir**: Copiar y redistribuir el material en cualquier medio o formato.
 2. **Adaptar**: Remezclar, transformar y construir sobre el material para fines académicos e investigativos.
 
 **Bajo las siguientes condiciones:**
+
 * **Atribución**: Debe dar crédito de manera adecuada, brindar un enlace a la licencia e indicar si se han realizado cambios.
 * **No comercial**: No puede hacer uso del material con fines comerciales o de lucro.
 :::

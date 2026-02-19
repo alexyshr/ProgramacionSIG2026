@@ -6,172 +6,16 @@
 * **Práctica 1**: Sentinel-2 (1GB) - R (`terra`) vs R (`stars`) vs Python (`rasterio`) vs Julia (`ArchGDAL + Raster.jl`)
 * **Autores**: Alexys Rodríguez-Avellaneda Ph.D. & herramientas IA
 
-## Función j_eval y j_plot en R
-
-Usada para ejecutar código **Julia** en **R**. `j_eval` ejecuta comandos que no tengan salidas gráficas, y `j_plot` es necesaria cuándo el código Julia produce salidas gráficas.
-
-::: {.content-visible when-format="html"}
-::: {.callout-tip collapse="true" icon="false"}
-##### ▷ CÓDIGO PURO (Copiar y Pegar)
-```{r}
-#| label: setup_benchmark_codigo
-#| eval: false
-# Código en R 
-j_eval <- function(cmd) {
-  .ensure_julia_ready()
-  lineas <- strsplit(cmd, "\n")[[1]]
-  buffer_bloque <- ""; en_bloque <- 0; resultado_final <- NULL
-
-  for (l in lineas) {
-    if (trimws(l) == "") next
-    buffer_bloque <- paste0(buffer_bloque, l, "\n")
-    abrir <- grepl("\\b(do|function|for|if|begin|let|while)\\b", l) & !grepl("\\bend\\b", l)
-    cerrar <- grepl("\\bend\\b", l)
-    en_bloque <- en_bloque + abrir - cerrar
-    
-    if (en_bloque <= 0) {
-      res_raw <- JuliaConnectoR::juliaCall("_unal_core_executor", buffer_bloque, FALSE, "", 72, 800, 500, 12)
-      cat(res_raw)
-      lineas_res <- strsplit(res_raw, "\n")[[1]]
-      lineas_res <- trimws(lineas_res[lineas_res != ""])
-      # Capturamos solo si hay contenido real
-      temp_res <- tail(lineas_res[!grepl("^julia>", lineas_res)], 1)
-      if (length(temp_res) > 0) resultado_final <- temp_res
-      buffer_bloque <- ""; en_bloque <- 0
-    }
-  }
-  if (is.null(resultado_final)) return(NULL) # Evita el error de length zero
-  val_limpio <- gsub('"', '', resultado_final)
-  num_val <- suppressWarnings(as.numeric(val_limpio))
-  return(if (!is.na(num_val)) num_val else val_limpio)
-}
-
-j_plot <- function(cmd, n = "tmp_plot.png", dpi = 300, w = 800, h = NULL, ratio = 1.6, fontsize = 12) {
-  .ensure_julia_ready()
-  if (is.null(h)) h <- round(w / ratio)
-  
-  lineas <- strsplit(cmd, "\n")[[1]]
-  buffer_bloque <- ""; en_bloque <- 0
-  
-  for (i in 1:length(lineas)) {
-    l <- lineas[i]
-    if (trimws(l) == "") next
-    buffer_bloque <- paste0(buffer_bloque, l, "\n")
-    
-    # Lógica de detección de bloques (do, function, for, etc.)
-    abrir <- grepl("\\b(do|function|for|if|begin|let|while)\\b", l) & !grepl("\\bend\\b", l)
-    cerrar <- grepl("\\bend\\b", l)
-    en_bloque <- en_bloque + abrir - cerrar
-    
-    # Solo ejecutamos si el bloque está cerrado
-    if (en_bloque <= 0) {
-      # ¿Es el último bloque? Si sí, activamos el guardado de imagen (TRUE)
-      es_ultimo <- (i == length(lineas))
-      
-      log_out <- JuliaConnectoR::juliaCall(
-        "_unal_core_executor", 
-        buffer_bloque, 
-        es_ultimo, # Solo la última ejecución guarda el PNG
-        n, dpi, as.integer(w), as.integer(h), as.integer(fontsize)
-      )
-      
-      if (nchar(log_out) > 0) cat(log_out)
-      buffer_bloque <- ""; en_bloque <- 0
-    }
-  }
-  
-  # Renderizado de la imagen en R (solo si se creó el archivo)
-  if (file.exists(n)) {
-    img <- png::readPNG(n)
-    grid::grid.newpage()
-    grid::grid.raster(img)
-    # Opcional: borrar el temporal después de leerlo para no dejar basura
-    # unlink(n) 
-  }
-}
-
-```
-:::
-:::
-
+## Funciones j_eval y j_plot en R
 
 ```{r}
-#| label: setup_benchmark
+#| label: j_eval_j_plot
 #| code-fold: true
+#| results: asis
 #| include: false
-j_eval <- function(cmd) {
-  .ensure_julia_ready()
-  lineas <- strsplit(cmd, "\n")[[1]]
-  buffer_bloque <- ""; en_bloque <- 0; resultado_final <- NULL
-
-  for (l in lineas) {
-    if (trimws(l) == "") next
-    buffer_bloque <- paste0(buffer_bloque, l, "\n")
-    abrir <- grepl("\\b(do|function|for|if|begin|let|while)\\b", l) & !grepl("\\bend\\b", l)
-    cerrar <- grepl("\\bend\\b", l)
-    en_bloque <- en_bloque + abrir - cerrar
-    
-    if (en_bloque <= 0) {
-      res_raw <- JuliaConnectoR::juliaCall("_unal_core_executor", buffer_bloque, FALSE, "", 72, 800, 500, 12)
-      cat(res_raw)
-      lineas_res <- strsplit(res_raw, "\n")[[1]]
-      lineas_res <- trimws(lineas_res[lineas_res != ""])
-      # Capturamos solo si hay contenido real
-      temp_res <- tail(lineas_res[!grepl("^julia>", lineas_res)], 1)
-      if (length(temp_res) > 0) resultado_final <- temp_res
-      buffer_bloque <- ""; en_bloque <- 0
-    }
-  }
-  if (is.null(resultado_final)) return(NULL) # Evita el error de length zero
-  val_limpio <- gsub('"', '', resultado_final)
-  num_val <- suppressWarnings(as.numeric(val_limpio))
-  return(if (!is.na(num_val)) num_val else val_limpio)
-}
-
-j_plot <- function(cmd, n = "tmp_plot.png", dpi = 300, w = 800, h = NULL, ratio = 1.6, fontsize = 12) {
-  .ensure_julia_ready()
-  if (is.null(h)) h <- round(w / ratio)
-  
-  lineas <- strsplit(cmd, "\n")[[1]]
-  buffer_bloque <- ""; en_bloque <- 0
-  
-  for (i in 1:length(lineas)) {
-    l <- lineas[i]
-    if (trimws(l) == "") next
-    buffer_bloque <- paste0(buffer_bloque, l, "\n")
-    
-    # Lógica de detección de bloques (do, function, for, etc.)
-    abrir <- grepl("\\b(do|function|for|if|begin|let|while)\\b", l) & !grepl("\\bend\\b", l)
-    cerrar <- grepl("\\bend\\b", l)
-    en_bloque <- en_bloque + abrir - cerrar
-    
-    # Solo ejecutamos si el bloque está cerrado
-    if (en_bloque <= 0) {
-      # ¿Es el último bloque? Si sí, activamos el guardado de imagen (TRUE)
-      es_ultimo <- (i == length(lineas))
-      
-      log_out <- JuliaConnectoR::juliaCall(
-        "_unal_core_executor", 
-        buffer_bloque, 
-        es_ultimo, # Solo la última ejecución guarda el PNG
-        n, dpi, as.integer(w), as.integer(h), as.integer(fontsize)
-      )
-      
-      if (nchar(log_out) > 0) cat(log_out)
-      buffer_bloque <- ""; en_bloque <- 0
-    }
-  }
-  
-  # Renderizado de la imagen en R (solo si se creó el archivo)
-  if (file.exists(n)) {
-    img <- png::readPNG(n)
-    grid::grid.newpage()
-    grid::grid.raster(img)
-    # Opcional: borrar el temporal después de leerlo para no dejar basura
-    # unlink(n) 
-  }
-}
+source("./docs/j_eval_j_plot.r")
 ```
+
 
 ## Preparación de los Datos: Sentinel-2A
 
@@ -627,12 +471,11 @@ t_julia
 #| fig-align: "center"
 #| fig-cap: "Procesamiento de alta resolución en Julia"
 #| code-fold: true
-
+#| results: asis
 # 1. Desde R, llamamos a julia con j_eval (la función al inicio de este archivo o en el Rprofile)
 # Ejecutamos dos veces: 
 #   la primera compila "costo de arranque" (JIT), 
 #   la segunda mide el tiempo
-
 t_julia <- j_eval('
 using Rasters, ArchGDAL, Statistics, Plots
 
@@ -687,6 +530,9 @@ end
 # Debe ser la última para que j_eval en R capture solo el número
 t_julia
 ')
+
+#Si la función devuelve un texto lo convertimos a float
+t_julia <- as.numeric(t_julia)
 
 # 2. R muestra la imagen guardada por Julia en el HTML
 knitr::include_graphics("julia_plot.png")

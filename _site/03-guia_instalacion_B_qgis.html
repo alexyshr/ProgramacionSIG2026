@@ -219,19 +219,19 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-variables_tipos_de_datos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Función j_eval y j_plot en R</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Variables y tipos de datos</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./06-estructuras_datos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Función j_eval y j_plot en R</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Estructuras de datos</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07-operaciones_cadenas.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Función j_eval y j_plot en R</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Operaciones con Cadenas de Texto (Strings)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -408,7 +408,7 @@ div.csl-indent {
   <li><a href="#sec-osgeo4w" id="toc-sec-osgeo4w" class="nav-link active" data-scroll-target="#sec-osgeo4w"><span class="header-section-number">3.1</span> Opción B.1 - OSGeo4W</a>
   <ul class="collapse">
   <li><a href="#instrucciones-de-instalación" id="toc-instrucciones-de-instalación" class="nav-link" data-scroll-target="#instrucciones-de-instalación">Instrucciones de Instalación</a></li>
-  <li><a href="#lista-de-paquetes-seleccionados" id="toc-lista-de-paquetes-seleccionados" class="nav-link" data-scroll-target="#lista-de-paquetes-seleccionados">Lista de Paquetes Seleccionados</a></li>
+  <li><a href="#lista-de-paquetes-a-seleccionar" id="toc-lista-de-paquetes-a-seleccionar" class="nav-link" data-scroll-target="#lista-de-paquetes-a-seleccionar">Lista de paquetes a seleccionar</a></li>
   <li><a href="#verificación-de-la-instalación" id="toc-verificación-de-la-instalación" class="nav-link" data-scroll-target="#verificación-de-la-instalación">Verificación de la Instalación</a></li>
   </ul></li>
   <li><a href="#sec-qgis-gee-pixi" id="toc-sec-qgis-gee-pixi" class="nav-link" data-scroll-target="#sec-qgis-gee-pixi"><span class="header-section-number">3.2</span> Opción B.2: QGIS + GEE usando Pixi</a>
@@ -451,6 +451,19 @@ div.csl-indent {
 <h2 data-number="3.1" class="anchored" data-anchor-id="sec-osgeo4w"><span class="header-section-number">3.1</span> Opción B.1 - OSGeo4W</h2>
 <p><strong>OSGeo4W</strong> es un entorno para Windows que agrupa y facilita la gestión de software geoespacial de código abierto como QGIS <span class="citation" data-cites="rosas2022qgis">(<a href="99-referencias.html#ref-rosas2022qgis" role="doc-biblioref">Rosas-Chavoya et&nbsp;al., 2022</a>)</span>, GDAL/OGR <span class="citation" data-cites="mitchell2015introduction">(<a href="99-referencias.html#ref-mitchell2015introduction" role="doc-biblioref">Mitchell, 2015</a>)</span>, GRASS <span class="citation" data-cites="neteler2012grass">(<a href="99-referencias.html#ref-neteler2012grass" role="doc-biblioref">Neteler et&nbsp;al., 2012</a>)</span> y SAGA <span class="citation" data-cites="passy2018use">(<a href="99-referencias.html#ref-passy2018use" role="doc-biblioref">Passy &amp; Théry, 2018</a>)</span>.</p>
 <p>En este escenario, <strong>Python</strong> <span class="citation" data-cites="python_docs">(<a href="99-referencias.html#ref-python_docs" role="doc-biblioref">Python Software Foundation, 2025</a>)</span> es el motor fundamental, permitiendo la automatización directa de tareas sobre el software de escritorio <span class="citation" data-cites="lawhead2017qgis">(<a href="99-referencias.html#ref-lawhead2017qgis" role="doc-biblioref">Lawhead, 2017</a>)</span>. Para mantener la estabilidad del sistema, en este entorno nativo no intentaremos vincular R <span class="citation" data-cites="rlanguage">(<a href="99-referencias.html#ref-rlanguage" role="doc-biblioref">R Core Team, 2025</a>)</span> o Julia <span class="citation" data-cites="bezanson2017julia">(<a href="99-referencias.html#ref-bezanson2017julia" role="doc-biblioref">Bezanson et&nbsp;al., 2017</a>)</span>; para dicho propósito políglota utilizaremos exclusivamente la <strong>Opción A (Docker)</strong> <span class="citation" data-cites="docker2025">(<a href="99-referencias.html#ref-docker2025" role="doc-biblioref">Inc., 2025</a>)</span>.</p>
+<blockquote class="blockquote">
+<p><strong>Nota</strong>: OSGeo4W permite instalar diversas aplicaciones de escritorio, como se muestra en la <a href="#fig-aplicaciones_desktop_osgeo4w" class="quarto-xref">Figura&nbsp;<span>3.1</span></a>. Mientras que la <a href="#tbl-stack-software-osgeo4w" class="quarto-xref">Tabla&nbsp;<span>3.1</span></a> se centra en las librerías binarias requeridas para QGIS, el instalador también permite integrar las demás herramientas mostradas en la figura. El último item de la figura es el instalador <code>Setup</code> que permitirá agregar mas componentes en cualquier momento.</p>
+</blockquote>
+<div id="fig-aplicaciones_desktop_osgeo4w" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-aplicaciones_desktop_osgeo4w-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/aplicaciones_desktop_osgeo4w.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-aplicaciones_desktop_osgeo4w-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.1: Aplicaciones Desktop OSGeo4W.
+</figcaption>
+</figure>
+</div>
 <section id="instrucciones-de-instalación" class="level3">
 <h3 class="anchored" data-anchor-id="instrucciones-de-instalación">Instrucciones de Instalación</h3>
 <ol type="1">
@@ -460,8 +473,14 @@ div.csl-indent {
 <li>En el paso de <strong>Select Packages</strong>, busque los elementos de la tabla y marque únicamente la casilla <strong>Bin</strong> (Binarios).</li>
 </ol>
 </section>
-<section id="lista-de-paquetes-seleccionados" class="level3">
-<h3 class="anchored" data-anchor-id="lista-de-paquetes-seleccionados">Lista de Paquetes Seleccionados</h3>
+<section id="lista-de-paquetes-a-seleccionar" class="level3">
+<h3 class="anchored" data-anchor-id="lista-de-paquetes-a-seleccionar">Lista de paquetes a seleccionar</h3>
+<div id="tbl-stack-software-osgeo4w" class="quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-stack-software-osgeo4w-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;3.1: Listado de herramientas y librerías OSGeo4W para el curso
+</figcaption>
+<div aria-describedby="tbl-stack-software-osgeo4w-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="table">
 <colgroup>
 <col style="width: 25%">
@@ -576,6 +595,9 @@ div.csl-indent {
 </tr>
 </tbody>
 </table>
+</div>
+</figure>
+</div>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">

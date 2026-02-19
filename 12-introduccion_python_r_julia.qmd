@@ -31,6 +31,16 @@ engine: knitr
 
 # Introducción a Python, R y Julia
 
+## Funciones j_eval y j_plot en R
+
+```{r}
+#| label: j_eval_j_plot
+#| code-fold: true
+#| include: false
+source("./docs/j_eval_j_plot.r")
+```
+
+
 ## Introducción
 
 Este capítulo presenta una **introducción práctica y comparativa** a los lenguajes **Python, R y Julia**, enfocada en el uso de **comandos básicos** y en la lectura e interpretación de resultados en consola. El objetivo no es profundizar en programación avanzada, sino ofrecer una **puerta de entrada común** para estudiantes que se inician en el uso de herramientas computacionales para geocomputación.
@@ -44,6 +54,7 @@ Este capítulo presenta una **introducción práctica y comparativa** a los leng
   - `j_plot()` para generar gráficos
 
 Por esta razón, en el documento encontrarás dos tipos de bloques relacionados con Julia:
+
 - Bloques con **código Julia puro**, que sirven como referencia y pueden copiarse y reutilizarse.
 - Bloques en **R** que llaman a `j_eval()` o `j_plot()`, que son los que realmente ejecutan el código.
 
@@ -56,6 +67,7 @@ Por esta razón, en el documento encontrarás dos tipos de bloques relacionados 
 ### Alcance del capítulo
 
 En este capítulo aprenderás a:
+
 - Acceder a la ayuda y documentación básica en cada lenguaje
 - Ejecutar comandos simples y entender su salida
 - Reconocer tipos de objetos y estructuras básicas
@@ -63,70 +75,6 @@ En este capítulo aprenderás a:
 
 Este contenido servirá como base para los capítulos posteriores, donde se utilizarán estos lenguajes para la creación de mapas, análisis de datos espaciales y visualización geográfica.
 
-
-## Función j_eval y j_plot en R
-
-Usada para ejecutar código **Julia** en **R**. `j_eval` ejecuta comandos que no tengan salidas gráficas, y `j_plot` es necesaria cuándo el código Julia produce salidas gráficas.
-
-```{r}
-#| label: setup_benchmark
-#| code-fold: true
-#| results: asis
-# #| include: false
-source("./docs/j_eval_j_plot.r")
-```
-
-
-### Flujo de ejecución de texto con j_eval {#sec-flujo-jeval}
-
-Para entender por qué los resultados aparecen con colores y cómo se gestionan los bloques de código, observe el siguiente flujo de ejecución de la función `j_eval`:
-
-fig-flujo-jeval
-
-::: {#fig-flujo-jeval}
-![](images/fig-flujo-jeval.png){width=100%}
-Arquitectura de ejecución de la función puente j_eval.
-:::
-
-
-::: {.callout-note}
-Como se ilustra en la @fig-flujo-jeval, la función no solo "pasa" el texto, sino que actúa como un supervisor que espera a que los bloques de programación estén completos antes de despertar al motor de Julia. Esto garantiza la estabilidad del sistema.
-:::
-
-### Flujo de generación gráfica con j_plot {#sec-flujo-jplot}
-
-A diferencia de la ejecución de texto, `j_plot` requiere una coordinación adicional para gestionar archivos físicos. Observe el proceso:
-
-
-::: {#fig-flujo-jplot}
-![](images/fig-flujo-jplot.png){width=100%}
-Arquitectura de generación y renderizado de gráficos Julia-R.
-:::
-
-::: {.callout-tip}
-#### El rol del disco duro
-Como muestra la @fig-flujo-jplot, el secreto de `j_plot` es que utiliza un archivo temporal como "puente" visual. Por eso, si usted tiene el archivo `tmp_plot.png` abierto en otro programa, j_plot podría fallar al intentar sobrescribirlo.
-:::
-
-
-### Interpretación de errores y consola {#sec-errores-consola}
-
-Al trabajar con la interoperabilidad entre lenguajes (usando las funciones `j_eval` y `j_plot` definidas arriba, la consola de **VSCode** nos devolverá mensajes que debemos aprender a interpretar.
-
-#### El error de conexión TCP
-Si al usar Julia recibe un mensaje de error que menciona `TCP connection`, usualmente significa que el motor de Julia se ha cerrado o ha entrado en conflicto de memoria.
-* **Solución**: Ejecute `.ensure_julia_ready()` en su consola de R para reiniciar el puente de comunicación.
-
-#### Interpretación del Stacktrace en Julia
-Cuando Julia detecta un error, genera un rastro de llamadas o *Stacktrace*. No intente leer cada línea; busque siempre la primera (que define el tipo de error) y la última línea de código escrita por usted.
-
-```julia
-# Ejemplo de error por índice fuera de rango
-ERROR: BoundsError: attempt to access 5-element Vector{Int64} at index [6]
-```
-
-#### Resaltado de sintaxis en la salida
-Gracias a la configuración de `results: asis` en los bloques de código, la salida de nuestras funciones aparecerá con el prompt `julia>` coloreado, facilitando la distinción entre lo que es un mensaje informativo y un resultado del cálculo.
 
 ## Ayuda y documentación
 

@@ -1,9 +1,9 @@
 # Estructuras de Datos Geoespaciales {#estructuras-geo}
 
-## Función j_eval y j_plot en R
+## Funciones j_eval y j_plot en R
 
 ```{r}
-#| label: setup_benchmark
+#| label: j_eval_j_plot
 #| code-fold: true
 #| results: asis
 #| include: false

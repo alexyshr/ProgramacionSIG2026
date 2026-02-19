@@ -8,6 +8,10 @@ La **Opción B** realmente se basa en dos alternativas para la instalación de Q
 
 En este escenario, **Python** [@python_docs] es el motor fundamental, permitiendo la automatización directa de tareas sobre el software de escritorio [@lawhead2017qgis]. Para mantener la estabilidad del sistema, en este entorno nativo no intentaremos vincular R [@rlanguage] o Julia [@bezanson2017julia]; para dicho propósito políglota utilizaremos exclusivamente la **Opción A (Docker)** [@docker2025].
 
+> **Nota**: OSGeo4W permite instalar diversas aplicaciones de escritorio, como se muestra en la @fig-aplicaciones_desktop_osgeo4w. Mientras que la @tbl-stack-software-osgeo4w se centra en las librerías binarias requeridas para QGIS, el instalador también permite integrar las demás herramientas mostradas en la figura. El último item de la figura es el instalador `Setup` que permitirá agregar mas componentes en cualquier momento.
+
+![Aplicaciones Desktop OSGeo4W.](./images/aplicaciones_desktop_osgeo4w.png){#fig-aplicaciones_desktop_osgeo4w}
+
 ### Instrucciones de Instalación
 
 1. Descargue el [**Network Installer**](https://qgis.org/download/) de QGIS.
@@ -15,7 +19,7 @@ En este escenario, **Python** [@python_docs] es el motor fundamental, permitiend
 3. Mantenga las rutas por defecto (`C:\OSGeo4W`).
 4. En el paso de **Select Packages**, busque los elementos de la tabla y marque únicamente la casilla **Bin** (Binarios).
 
-### Lista de Paquetes Seleccionados
+### Lista de paquetes a seleccionar
 
 | Grupo | Paquete | Módulo | Propósito / Uso en Clase |
 | --- | --- | --- | --- |
@@ -35,6 +39,8 @@ En este escenario, **Python** [@python_docs] es el motor fundamental, permitiend
 | **Desarrollo** | `python3-jupyterlab` | Todo | Entorno interactivo para prototipado rápido [@wijayaningrum2022jupyter]. |
 | **Motores SIG** | `proj` / `geos` | 6 | Cálculos de proyecciones y geometría. |
 | **Machine Learning** | `python3-scikit-learn` | 6 | Modelado predictivo espacial. |
+
+: Listado de herramientas y librerías OSGeo4W para el curso {#tbl-stack-software-osgeo4w}
 
 ::: {.callout-important icon="true"}
 

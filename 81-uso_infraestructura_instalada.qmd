@@ -13,14 +13,21 @@ Para automatizar el soporte de gráficos y capturas sin configurar cada archivo 
 : Comandos de configuración global del contenedor {#tbl-preflight}
 
 /usr/bin/google-chrome
-
-Google Chrome se necesita para compilar código `mermaid` dentro de Quarto. Ejecute el siguiente comando para comprobar si Google Chrome web browser está instalado correctamente:
-
-```bash
-
-```
 /usr/lib/R/etc/Rprofile.site /etc/R/Rprofile.site
 
+Google Chrome se necesita para compilar código `mermaid` dentro de Quarto. Ejecute uno de lo siguientes comandos para comprobar si Google Chrome web browser está instalado correctamente:
+
+```bash
+google-chrome --version
+```
+
+```bash
+which google-chrome
+```
+
+```bash
+quarto check
+```
 
 La imagen cargada del archivo tar ya incluye los programas descritos a continuación en @tbl-preflight_old. Esta tabla se deja como referencia para facilitar una futura compilación. La tabla descrita líneas abajo servirá para complementar el archivo Dockerfile.
 
@@ -56,6 +63,76 @@ En distribuciones basadas en Ubuntu 22.04 o superiores, el comando `apt install 
 #### Importancia de ImageIO y FileIO en Julia
 En Julia, estas librerías actúan como los "drivers" de imagen. Sin ellas, aunque el código genere un mapa o gráfico, Quarto no podrá convertirlo a un formato que LaTeX entienda (como PNG), resultando en bloques vacíos en el PDF final.
 :::
+
+
+## Función j_eval y j_plot en R
+
+El motor de ejecución de los archivos Quarto (`.qmd`) dentro del contenedor instalado para el curso es `knitr`, el cual está basado en `R`. Esto significa que el código de `Python` y `Julia` se ejecuta a través de `R` para generar los archivos de salida HTML y PDF. 
+
+`Python` se ejecuta mediante el paquete de R `reticulate`, mientras que `Julia` suele hacerlo a través del paquete `JuliaCall`. Debido a que este último presenta problemas de compatibilidad con librerías geoespaciales en `R`, se desarrollaron con apoyo de inteligencia artificial las funciones `j_eval` y `j_plot`, las cuales utilizan el paquete `JuliaConnectoR` en su lugar.
+
+Las funciones `j_eval` y `j_plot` son usadas para ejecutar código **Julia** en **R**. `j_eval` ejecuta comandos que no tengan salidas gráficas, y `j_plot` es necesaria cuándo el código Julia produce salidas gráficas.
+
+```{r}
+#| label: j_eval_j_plot
+#| code-fold: true
+#| results: asis
+# #| include: false
+source("./docs/j_eval_j_plot.r")
+```
+
+
+### Flujo de ejecución de texto con j_eval {#sec-flujo-jeval}
+
+Para entender por qué los resultados aparecen con colores y cómo se gestionan los bloques de código, observe el siguiente flujo de ejecución de la función `j_eval`:
+
+fig-flujo-jeval
+
+::: {#fig-flujo-jeval}
+![](images/fig-flujo-jeval.png){width=100%}
+Arquitectura de ejecución de la función puente j_eval.
+:::
+
+
+::: {.callout-note}
+Como se ilustra en la @fig-flujo-jeval, la función no solo "pasa" el texto, sino que actúa como un supervisor que espera a que los bloques de programación estén completos antes de despertar al motor de Julia. Esto garantiza la estabilidad del sistema.
+:::
+
+### Flujo de generación gráfica con j_plot {#sec-flujo-jplot}
+
+A diferencia de la ejecución de texto, `j_plot` requiere una coordinación adicional para gestionar archivos físicos. Observe el proceso:
+
+
+::: {#fig-flujo-jplot}
+![](images/fig-flujo-jplot.png){width=100%}
+Arquitectura de generación y renderizado de gráficos Julia-R.
+:::
+
+::: {.callout-tip}
+#### El rol del disco duro
+Como muestra la @fig-flujo-jplot, el secreto de `j_plot` es que utiliza un archivo temporal como "puente" visual. Por eso, si usted tiene el archivo `tmp_plot.png` abierto en otro programa, j_plot podría fallar al intentar sobrescribirlo.
+:::
+
+
+### Interpretación de errores y consola {#sec-errores-consola}
+
+Al trabajar con la interoperabilidad entre lenguajes (usando las funciones `j_eval` y `j_plot` definidas arriba, la consola de **VSCode** nos devolverá mensajes que debemos aprender a interpretar.
+
+#### El error de conexión TCP
+Si al usar Julia recibe un mensaje de error que menciona `TCP connection`, usualmente significa que el motor de Julia se ha cerrado o ha entrado en conflicto de memoria.
+* **Solución**: Ejecute `.ensure_julia_ready()` en su consola de R para reiniciar el puente de comunicación.
+
+#### Interpretación del Stacktrace en Julia
+Cuando Julia detecta un error, genera un rastro de llamadas o *Stacktrace*. No intente leer cada línea; busque siempre la primera (que define el tipo de error) y la última línea de código escrita por usted.
+
+```julia
+# Ejemplo de error por índice fuera de rango
+ERROR: BoundsError: attempt to access 5-element Vector{Int64} at index [6]
+```
+
+#### Resaltado de sintaxis en la salida
+Gracias a la configuración de `results: asis` en los bloques de código, la salida de nuestras funciones aparecerá con el prompt `julia>` coloreado, facilitando la distinción entre lo que es un mensaje informativo y un resultado del cálculo.
+
 
 ## Introducción a la infraestructura de datos
 
@@ -219,7 +296,7 @@ docker logs contenedor_sig_unal
 jupyter lab --ip=0.0.0.0 --port=8889 --no-browser --allow-root --ServerApp.token='geomatica2025'
 ```
 
-## Guía Visual de JupyterLab
+## Guía visual de JupyterLab
 
 Al ingresar, se encontrará con el centro de mando de sus kernels, donde podrá elegir entre R, Python o Julia para sus Notebooks:
 
@@ -278,7 +355,7 @@ Este es un espacio para tus observaciones personales y recordatorios.
 ```
 :::
 
-## Mapeo de Capacidades SIG
+## Mapeo de capacidades SIG
 
 Es vital entender que, aunque usemos lenguajes distintos, todos "beben" de las mismas librerías de bajo nivel instaladas en nuestra imagen base de OSGeo:
 
@@ -289,14 +366,89 @@ Es vital entender que, aunque usemos lenguajes distintos, todos "beben" de las m
 | Reproyección | `st_transform()` | `.to_crs()` | `ArchGDAL.reproject()` | **PROJ** |
 
 
-## Verificación de Conectividad Multilenguaje
+## Verificación de conectividad multilenguaje
 
 **Nota técnica**: Dentro de la red de Docker, el host es `db-postgis`.
 
 ::: panel-tabset
 ### Python
 
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
 ```{python}
+#| label: python_verificacion_codigo
+#| eval: false
+import psycopg2
+import geopandas as gpd
+import fiona
+import matplotlib.pyplot as plt
+from shapely.geometry import Point
+
+print("--- Inicio de Verificación de Python SIG ---")
+
+# 1. Prueba de conexión a la base de datos PostGIS
+try:
+    conn = psycopg2.connect(
+        host="db-postgis", 
+        dbname="sig_db_unal", 
+        user="profe_unal", 
+        password="geomatica2025"
+    )
+    print("✅ Conexión a PostGIS: Exitosa")
+    conn.close()
+except Exception as e:
+    print(f"❌ Error de conexión a PostGIS: {e}")
+
+# 2. Prueba de Fiona y drivers GDAL
+try:
+    drivers = len(fiona.supported_drivers)
+    print(f"✅ Fiona operativo: {drivers} drivers GDAL detectados")
+except Exception as e:
+    print(f"❌ Error en Fiona/GDAL: {e}")
+
+# 3. Prueba de GeoPandas, Motores GEOS y Visualización
+try:
+    # Creamos un punto y su buffer (GEOS)
+    punto = Point(0, 0)
+    buffer_geom = punto.buffer(1.0)
+    
+    # Creamos GeoDataFrames para graficar
+    gdf_buffer = gpd.GeoDataFrame({'geometry': [buffer_geom]}, crs="EPSG:4326")
+    gdf_punto = gpd.GeoDataFrame({'geometry': [punto]}, crs="EPSG:4326")
+    
+    print(f"✅ GeoPandas {gpd.__version__}: Operativo")
+    print(f"✅ Motores GEOS/Shapely: Verificados")
+
+    # Generación del Plot Espacial con Ejes y Cuadrícula
+    fig, ax = plt.subplots(figsize=(6, 6))
+    
+    # Graficamos el buffer
+    gdf_buffer.plot(ax=ax, color='lightgreen', edgecolor='green', alpha=0.4, label='Buffer')
+    
+    # Graficamos el punto original (en rojo)
+    gdf_punto.plot(ax=ax, color='red', markersize=50, zorder=5, label='Centro')
+    
+    # Configuración de estilo consistente (Ejes y Grilla)
+    ax.set_title("Validación Python SIG: Buffer GEOS")
+    ax.set_xlabel("Longitud")
+    ax.set_ylabel("Latitud")
+    ax.grid(True, linestyle='--', alpha=0.7) # Cuadrícula activada
+    ax.set_aspect('equal') # Proporción 1:1 para evitar deformación
+    
+    plt.show()
+    print("✅ Visualización GeoPandas: Mapa generado con éxito")
+
+except Exception as e:
+    print(f"❌ Error en el stack espacial de Python: {e}")
+
+print("--- Verificación Finalizada ---")
+```
+:::
+:::
+
+```{python}
+#| label: python_verificacion
 import psycopg2
 import geopandas as gpd
 import fiona
@@ -365,7 +517,81 @@ print("--- Verificación Finalizada ---")
 
 ### R
 
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
 ```{r}
+#| label: r_verificacion_codigo
+#| eval: false
+library(DBI)
+library(RPostgres)
+library(sf)
+library(terra)
+
+cat("--- Inicio de Verificación de R-Spatial ---\n")
+
+# 1. Prueba de conexión a la base de datos PostGIS
+tryCatch({
+  con <- dbConnect(
+    RPostgres::Postgres(), 
+    host = "db-postgis", 
+    dbname = "sig_db_unal", 
+    user = "profe_unal", 
+    password = "geomatica2025"
+  )
+  cat("✅ Conexión a PostGIS: Exitosa\n")
+  dbDisconnect(con)
+}, error = function(e) {
+  cat("❌ Error de conexión a PostGIS:", conditionMessage(e), "\n")
+})
+
+# 2. Prueba de Motores de Sistema y Visualización (sf)
+tryCatch({
+  conf <- sf_extSoftVersion()
+  cat(paste0("✅ sf operativo. Motores detectados:\n",
+             "   - GDAL: ", conf["GDAL"], "\n",
+             "   - GEOS: ", conf["GEOS"], "\n",
+             "   - PROJ: ", conf["PROJ"], "\n"))
+  
+  # Creamos el punto y el buffer
+  punto <- st_point(c(0, 0))
+  buffer_geom <- st_buffer(punto, dist = 1)
+  cat("✅ Prueba geométrica (GEOS): Buffer creado correctamente\n")
+
+  # Generación del Plot Espacial
+  # Usamos st_geometry para graficar solo la forma
+  plot(st_geometry(buffer_geom), 
+       col = 'lightblue', 
+       border = 'blue', 
+       main = "Validación R-Spatial: Buffer GEOS",
+       axes = TRUE,
+       graticule = TRUE)
+  
+  # Añadimos el punto original para referencia
+  plot(st_geometry(punto), add = TRUE, col = 'red', pch = 20)
+  
+  cat("✅ Visualización sf: Mapa generado con éxito\n")
+  
+}, error = function(e) {
+  cat("❌ Error en el stack sf/GEOS:", conditionMessage(e), "\n")
+})
+
+# 3. Prueba de Raster (terra)
+tryCatch({
+  r <- rast(ncols=10, nrows=10)
+  values(r) <- 1:ncell(r)
+  cat("✅ Paquete 'terra' operativo: Objetos Raster verificados\n")
+}, error = function(e) {
+  cat("❌ Error en el stack terra:", conditionMessage(e), "\n")
+})
+
+cat("--- Verificación Finalizada ---\n")
+```
+:::
+:::
+
+```{r}
+#| label: r_verificacion
 library(DBI)
 library(RPostgres)
 library(sf)
@@ -433,7 +659,71 @@ cat("--- Verificación Finalizada ---\n")
 
 ### Julia
 
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{julia}
+#| label: julia_verificacion_codigo
+#| eval: false
+using LibPQ
+using LibGEOS
+using ArchGDAL
+using Plots
+
+println("--- Inicio de Verificación de Julia SIG ---")
+
+# 1. Prueba de conexión a la base de datos PostGIS
+try
+    conn = LibPQ.Connection("host=db-postgis dbname=sig_db_unal user=profe_unal password=geomatica2025")
+    println("✅ Conexión a PostGIS: Exitosa")
+    close(conn)
+catch e
+    println("❌ Error de conexión a PostGIS: ", e)
+end
+
+# 2. Verificación de LibGEOS y Visualización de Geometría
+try
+    # Creamos un punto y le aplicamos un buffer de 1.0 unidades
+    # Esto valida la integración de Julia con la librería GEOS del sistema
+    punto = LibGEOS.readgeom("POINT (0 0)")
+    buffer_geom = LibGEOS.buffer(punto, 1.0)
+    
+    println("✅ LibGEOS operativo: Motores geométricos verificados")
+    
+    # Graficamos el objeto del buffer
+    # fillcolor y alpha ayudan a ver que es un polígono real
+    plt = plot(buffer_geom, 
+               title="Validación Julia SIG: Buffer GEOS", 
+               fillcolor=:blue, 
+               fillalpha=0.3, 
+               aspect_ratio=:equal, 
+               legend=false)
+    
+    # display() es OBLIGATORIO para mostrar gráficos dentro de bloques try/catch
+    display(plt) 
+    
+catch e
+    println("❌ Error en LibGEOS o Visualización: ", e)
+end
+
+# 3. Verificación de ArchGDAL (Usando llamada de bajo nivel)
+try
+    # Accedemos directamente al motor de C para evitar errores de exportación
+    gdal_ver = ArchGDAL.GDAL.gdalversioninfo("--version")
+    println("✅ ArchGDAL operativo (Versión GDAL: $gdal_ver)")
+catch e
+    println("❌ Error en ArchGDAL: ", e)
+end
+
+println("--- Verificación Finalizada ---")
+```
+:::
+:::
+
+
 ```{r}
+#| label: julia_verificacion
+#| results: asis
 # #| eval: false
 j_plot('
 using LibPQ
@@ -490,8 +780,26 @@ println("--- Verificación Finalizada ---")
 ')
 ```
 
-```julia
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{julia}
+#| label: julia_verificacion2_codigo
+#| eval: false
+
+
+# codigo
+
+```
+:::
+:::
+
+```{r}
+#| label: julia_verificacion2
+#| results: asis
 # Validación de Motores SIG y Conectividad
+j_plot('
 using LibPQ, LibGEOS, ArchGDAL, Plots
 
 # 1. Prueba de conexión a PostGIS
@@ -516,6 +824,7 @@ try
 catch e
     println("❌ Error en motores geométricos o gráficos: ", e)
 end
+')
 ```
 
 

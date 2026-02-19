@@ -1,12 +1,15 @@
-﻿# Operaciones con Cadenas de Texto (Strings)
+﻿---
+# Este bloque vacío obliga a Quarto a entender que aquí empieza un documento nuevo
+---
 
-## Función j_eval y j_plot en R
+# Operaciones con Cadenas de Texto (Strings)
+
+## Funciones j_eval y j_plot en R
 
 ```{r}
-#| label: setup_benchmark
+#| label: j_eval_j_plot
 #| code-fold: true
 #| include: false
-#| results: asis
 source("./docs/j_eval_j_plot.r")
 ```
 
