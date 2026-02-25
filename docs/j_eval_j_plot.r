@@ -1,5 +1,5 @@
 # ==============================================================================
-# MOTOR DE INTEROPERABILIDAD GEOMÁTICA (UNAL) - VERSIÓN FINAL
+# MOTOR DE INTEROPERABILIDAD GEOMÁTICA (UNAL) - VERSIÓN PRO (NIVEL MAESTRÍA)
 # ==============================================================================
 
 .j_render_output <- function(res_raw) {
@@ -22,6 +22,7 @@
   res_l <- gsub("\033\\[[0-9;]*m", "", res_raw)
   partes <- strsplit(res_l, "\n")[[1]]
   
+  # Inicialización estricta
   out_triple <- 0; out_comentario <- 0; out_comillas <- 0; out_bloque <- 0
   current_mode <- "none" 
 
@@ -42,7 +43,7 @@
       if (n_abre > 0 || n_cierra > 0) out_comentario <- out_comentario + n_abre - n_cierra
       
       if (out_triple == 0 && out_comentario <= 0) {
-        # FIX CLAVE: Purgar triples comillas temporalmente para no confundir el parser
+        # Limpieza para no confundir el parser
         p_ev <- gsub('"""', '', p_clean, fixed = TRUE)
         p_ev <- gsub('"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"', '""', p_ev, perl = TRUE)
         p_ev <- gsub("'[^'\\\\]*(?:\\\\.[^'\\\\]*)*'", "''", p_ev, perl = TRUE)
@@ -52,12 +53,16 @@
         if (n_comillas > 0) out_comillas <- (out_comillas + n_comillas) %% 2
         
         if (out_comillas == 0) {
-          abrir_out <- grepl("\\b(do|function|for|if|begin|let|while|macro|try|module)\\b", p_ev) + 
+          # FIX PRO: Contar apariciones exactas, no solo presencias (grepl)
+          patron_abrir <- "\\b(do|function|for|if|begin|let|while|macro|try|module|baremodule|struct|quote)\\b"
+          abrir_out <- lengths(regmatches(p_ev, gregexpr(patron_abrir, p_ev))) + 
                        lengths(regmatches(p_ev, gregexpr("(", p_ev, fixed = TRUE))) + 
                        lengths(regmatches(p_ev, gregexpr("[", p_ev, fixed = TRUE)))
-          cerrar_out <- grepl("\\bend\\b", p_ev) + 
+          
+          cerrar_out <- lengths(regmatches(p_ev, gregexpr("\\bend\\b", p_ev))) + 
                         lengths(regmatches(p_ev, gregexpr(")", p_ev, fixed = TRUE))) + 
                         lengths(regmatches(p_ev, gregexpr("]", p_ev, fixed = TRUE)))
+                        
           out_bloque <- out_bloque + abrir_out - cerrar_out
         }
       }
@@ -108,7 +113,6 @@ j_eval <- function(cmd) {
     if (num_com_abre > 0 || num_com_cierra > 0) en_comentario_multi <- en_comentario_multi + num_com_abre - num_com_cierra
     
     if (en_triple_comilla == 0 && en_comentario_multi <= 0) {
-      # FIX CLAVE: Purgar triples comillas primero
       l_clean <- gsub('"""', '', l, fixed = TRUE)
       l_clean <- gsub('"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"', '""', l_clean, perl = TRUE)
       l_clean <- gsub("'[^'\\\\]*(?:\\\\.[^'\\\\]*)*'", "''", l_clean, perl = TRUE)
@@ -118,8 +122,15 @@ j_eval <- function(cmd) {
       if (num_comillas > 0) en_comillas <- (en_comillas + num_comillas) %% 2
       
       if (en_comillas == 0) {
-        abrir <- grepl("\\b(do|function|for|if|begin|let|while|macro|try|module)\\b", l_clean) + lengths(regmatches(l_clean, gregexpr("(", l_clean, fixed = TRUE))) + lengths(regmatches(l_clean, gregexpr("[", l_clean, fixed = TRUE)))
-        cerrar <- grepl("\\bend\\b", l_clean) + lengths(regmatches(l_clean, gregexpr(")", l_clean, fixed = TRUE))) + lengths(regmatches(l_clean, gregexpr("]", l_clean, fixed = TRUE)))
+        patron_abrir <- "\\b(do|function|for|if|begin|let|while|macro|try|module|baremodule|struct|quote)\\b"
+        abrir <- lengths(regmatches(l_clean, gregexpr(patron_abrir, l_clean))) + 
+                 lengths(regmatches(l_clean, gregexpr("(", l_clean, fixed = TRUE))) + 
+                 lengths(regmatches(l_clean, gregexpr("[", l_clean, fixed = TRUE)))
+                 
+        cerrar <- lengths(regmatches(l_clean, gregexpr("\\bend\\b", l_clean))) + 
+                  lengths(regmatches(l_clean, gregexpr(")", l_clean, fixed = TRUE))) + 
+                  lengths(regmatches(l_clean, gregexpr("]", l_clean, fixed = TRUE)))
+                  
         en_bloque <- en_bloque + abrir - cerrar
       }
     }
@@ -133,6 +144,8 @@ j_eval <- function(cmd) {
       lineas_res <- trimws(lineas_res[lineas_res != ""])
       temp_res <- tail(lineas_res[!grepl("^julia>", lineas_res)], 1)
       if (length(temp_res) > 0) resultado_final <- temp_res
+      
+      # Reset seguro del buffer
       buffer <- ""; en_bloque <- 0; en_comillas <- 0; en_comentario_multi <- 0; en_triple_comilla <- 0
     }
   }
@@ -143,9 +156,49 @@ j_plot <- function(cmd, n = "tmp_plot.png", dpi = 300, w = 800, h = NULL, ratio 
   .ensure_julia_ready()
   if (is.null(h)) h <- round(w / ratio)
   
-  # Misma lógica que j_eval, enviando a _unal_core_executor
-  res_log <- JuliaConnectoR::juliaCall("_unal_core_executor", paste0(cmd, "\n"), TRUE, n, dpi, as.integer(w), as.integer(h), as.integer(fontsize))
-  .j_render_output(res_log)
+  lineas <- strsplit(cmd, "\n")[[1]]
+  buffer <- ""; en_bloque <- 0; en_comillas <- 0; en_comentario_multi <- 0; en_triple_comilla <- 0
+  
+  for (l in lineas) {
+    if (trimws(l) == "" && en_comentario_multi == 0 && en_triple_comilla == 0 && en_comillas == 0 && en_bloque == 0) next
+    buffer <- paste0(buffer, l, "\n")
+    
+    num_triples <- lengths(regmatches(l, gregexpr('"""', l, fixed = TRUE)))
+    if (num_triples > 0) en_triple_comilla <- (en_triple_comilla + num_triples) %% 2
+    
+    num_com_abre <- lengths(regmatches(l, gregexpr("#=", l, fixed = TRUE)))
+    num_com_cierra <- lengths(regmatches(l, gregexpr("=#", l, fixed = TRUE)))
+    if (num_com_abre > 0 || num_com_cierra > 0) en_comentario_multi <- en_comentario_multi + num_com_abre - num_com_cierra
+    
+    if (en_triple_comilla == 0 && en_comentario_multi <= 0) {
+      l_clean <- gsub('"""', '', l, fixed = TRUE)
+      l_clean <- gsub('"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"', '""', l_clean, perl = TRUE)
+      l_clean <- gsub("'[^'\\\\]*(?:\\\\.[^'\\\\]*)*'", "''", l_clean, perl = TRUE)
+      l_clean <- sub("#.*", "", l_clean)
+      
+      num_comillas <- lengths(regmatches(l_clean, gregexpr('"', l_clean, fixed = TRUE)))
+      if (num_comillas > 0) en_comillas <- (en_comillas + num_comillas) %% 2
+      
+      if (en_comillas == 0) {
+        patron_abrir <- "\\b(do|function|for|if|begin|let|while|macro|try|module|baremodule|struct|quote)\\b"
+        abrir <- lengths(regmatches(l_clean, gregexpr(patron_abrir, l_clean))) + 
+                 lengths(regmatches(l_clean, gregexpr("(", l_clean, fixed = TRUE))) + 
+                 lengths(regmatches(l_clean, gregexpr("[", l_clean, fixed = TRUE)))
+                 
+        cerrar <- lengths(regmatches(l_clean, gregexpr("\\bend\\b", l_clean))) + 
+                  lengths(regmatches(l_clean, gregexpr(")", l_clean, fixed = TRUE))) + 
+                  lengths(regmatches(l_clean, gregexpr("]", l_clean, fixed = TRUE)))
+                  
+        en_bloque <- en_bloque + abrir - cerrar
+      }
+    }
+    
+    if (en_bloque <= 0 && en_comillas == 0 && en_comentario_multi <= 0 && en_triple_comilla == 0) {
+      res_log <- JuliaConnectoR::juliaCall("_unal_core_executor", buffer, TRUE, n, dpi, as.integer(w), as.integer(h), as.integer(fontsize))
+      .j_render_output(res_log)
+      buffer <- "" 
+    }
+  }
   
   if (file.exists(n)) {
     img <- png::readPNG(n)

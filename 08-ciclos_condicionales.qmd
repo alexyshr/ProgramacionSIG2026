@@ -1,0 +1,1450 @@
+---
+format:
+  html: default
+  pdf:
+    keep-tex: true
+    mermaid-format: png
+    include-in-header:
+      - text: \usepackage{pdflscape}
+---
+
+# Bucles y Declaraciones Condicionales {#sec-ciclos_condicionales}
+
+## Funciones j_eval y j_plot en R
+
+```{r}
+#| label: j_eval_j_plot
+#| code-fold: true
+# #| include: false
+source("./docs/j_eval_j_plot.r")
+```
+
+## Introducción
+
+
+## Objetivos de aprendizaje
+
+## Ciclos for
+
+Los **ciclos for** (bucles `for`) son la herramienta principal para la automatización de tareas repetitivas. En el análisis espacial, casi siempre trabajamos con colecciones de datos: cientos de coordenadas en una ruta, múltiples polígonos en un *Shapefile* o docenas de imágenes satelitales en una carpeta. Un ciclo `for` nos permite tomar cada uno de esos elementos, uno por uno, y aplicarle una misma operación matemática o lógica.
+
+A continuación, veremos tres aplicaciones clásicas: 
+
+1. Iterar y "desempaquetar" coordenadas.
+2. Aplicar una función de distancia a múltiples puntos.
+3. Recorrer una lista de nombres de ciudades llevando la cuenta de su posición (índice).
+
+Trabajaremos con coordenadas de nuestras principales ciudades en Colombia.
+
+::: {.panel-tabset}
+
+### Python
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{python}
+#| label: python_ciclos_for_codigo
+#| eval: false
+
+# 1. Sintaxis básica del ciclo for
+# Creamos una lista de tuplas con las coordenadas geográficas de las ciudades
+coordenadas = [
+    (4.6097, -74.0817),  # Bogotá
+    (6.2442, -75.5812),  # Medellín
+    (3.4516, -76.5320),  # Cali
+]
+
+# Python permite desempaquetar la tupla directamente en el for
+print("--- Extracción de coordenadas ---")
+for lat, lon in coordenadas:
+    # IMPORTANTE: Observa el espacio (tabulador) al inicio de esta línea.
+    # El estándar oficial de Python (llamado PEP 8) dicta que deben ser 4 espacios en blanco.
+    # Así sabe Python que esta instrucción pertenece al bucle for.
+    print(f"Latitud: {lat}, Longitud: {lon}")
+
+# 2. Procesamiento de múltiples puntos
+def calcular_distancia(lat1, lon1, lat2, lon2):
+    # Cálculo de distancia euclidiana simple (fines pedagógicos)
+    return ((lat2 - lat1) ** 2 + (lon2 - lon1) ** 2) ** 0.5
+
+punto_referencia = (4.0846, -72.9560)  # Centro geográfico (Puerto López)
+
+print("\n--- Distancia al centro geográfico ---")
+for lat, lon in coordenadas:
+    distancia = calcular_distancia(punto_referencia[0], punto_referencia[1], lat, lon)
+    print(f"Distancia a ({lat}, {lon}): {distancia:.2f} grados")
+
+# 3. Iterar colecciones llevando la cuenta (enumerate)
+# Creamos una lista simple de textos con los nombres
+ciudades = ["Bogotá", "Medellín", "Cali", "Barranquilla", "Cartagena"]
+
+print("\n--- Principales ciudades de Colombia ---")
+# enumerate nos da el índice (i) y el valor (ciudad) en cada vuelta
+for i, ciudad in enumerate(ciudades):
+    print(f"{i+1}. {ciudad}")
+```
+:::
+:::
+
+```{python}
+#| label: python_ciclos_for
+# #| eval: false
+
+# 1. Sintaxis básica del ciclo for
+# Creamos una lista de tuplas con las coordenadas geográficas de las ciudades
+coordenadas = [
+    (4.6097, -74.0817),  # Bogotá
+    (6.2442, -75.5812),  # Medellín
+    (3.4516, -76.5320),  # Cali
+]
+
+# Python permite desempaquetar la tupla directamente en el for
+print("--- Extracción de coordenadas ---")
+for lat, lon in coordenadas:
+    # IMPORTANTE: Observa el espacio (tabulador) al inicio de esta línea. 
+    # Así sabe Python que esta instrucción pertenece al bucle for.
+    print(f"Latitud: {lat}, Longitud: {lon}")
+
+# 2. Procesamiento de múltiples puntos
+def calcular_distancia(lat1, lon1, lat2, lon2):
+    # Cálculo de distancia euclidiana simple (fines pedagógicos)
+    return ((lat2 - lat1) ** 2 + (lon2 - lon1) ** 2) ** 0.5
+
+punto_referencia = (4.0846, -72.9560)  # Centro geográfico (Puerto López)
+
+print("\n--- Distancia al centro geográfico ---")
+for lat, lon in coordenadas:
+    distancia = calcular_distancia(punto_referencia[0], punto_referencia[1], lat, lon)
+    print(f"Distancia a ({lat}, {lon}): {distancia:.2f} grados")
+
+# 3. Iterar colecciones llevando la cuenta (enumerate)
+# Creamos una lista simple de textos con los nombres
+ciudades = ["Bogotá", "Medellín", "Cali", "Barranquilla", "Cartagena"]
+
+print("\n--- Principales ciudades de Colombia ---")
+# enumerate nos da el índice (i) y el valor (ciudad) en cada vuelta
+for i, ciudad in enumerate(ciudades):
+    print(f"{i+1}. {ciudad}")
+```
+
+### R
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{r}
+#| label: r_ciclos_for_codigo
+#| eval: false
+
+# 1. Sintaxis básica del ciclo for
+# En R usamos una lista que contiene vectores numéricos 'c()' para las coordenadas
+coordenadas <- list(
+    c(4.6097, -74.0817),  # Bogotá
+    c(6.2442, -75.5812),  # Medellín
+    c(3.4516, -76.5320)   # Cali
+)
+
+cat("--- Extracción de coordenadas ---\n")
+# En R, el bloque de código del ciclo se encierra entre llaves { }
+for (coord in coordenadas) {
+    lat <- coord[1]
+    lon <- coord[2]
+    cat(sprintf("Latitud: %.4f, Longitud: %.4f\n", lat, lon))
+}
+
+# 2. Procesamiento de múltiples puntos
+calcular_distancia <- function(lat1, lon1, lat2, lon2) {
+    return(sqrt((lat2 - lat1)^2 + (lon2 - lon1)^2))
+}
+
+punto_referencia <- c(4.0846, -72.9560)  # Centro geográfico (Puerto López)
+
+cat("\n--- Distancia al centro geográfico ---\n")
+for (coord in coordenadas) {
+    distancia <- calcular_distancia(punto_referencia[1], punto_referencia[2], coord[1], coord[2])
+    cat(sprintf("Distancia a (%.4f, %.4f): %.2f grados\n", coord[1], coord[2], distancia))
+}
+
+# 3. Iterar colecciones llevando la cuenta (seq_along)
+ciudades <- c("Bogotá", "Medellín", "Cali", "Barranquilla", "Cartagena")
+
+cat("\n--- Principales ciudades de Colombia ---\n")
+# seq_along genera una secuencia de números del 1 al tamaño del vector
+for (i in seq_along(ciudades)) {
+    cat(sprintf("%d. %s\n", i, ciudades[i]))
+}
+```
+:::
+:::
+
+```{r}
+#| label: r_ciclos_for
+# #| eval: false
+
+# 1. Sintaxis básica del ciclo for
+# En R usamos una lista que contiene vectores numéricos 'c()' para las coordenadas
+coordenadas <- list(
+    c(4.6097, -74.0817),  # Bogotá
+    c(6.2442, -75.5812),  # Medellín
+    c(3.4516, -76.5320)   # Cali
+)
+
+cat("--- Extracción de coordenadas ---\n")
+# En R, el bloque de código del ciclo se encierra entre llaves { }
+for (coord in coordenadas) {
+    lat <- coord[1]
+    lon <- coord[2]
+    cat(sprintf("Latitud: %.4f, Longitud: %.4f\n", lat, lon))
+}
+
+# 2. Procesamiento de múltiples puntos
+calcular_distancia <- function(lat1, lon1, lat2, lon2) {
+    return(sqrt((lat2 - lat1)^2 + (lon2 - lon1)^2))
+}
+
+punto_referencia <- c(4.0846, -72.9560)  # Centro geográfico (Puerto López)
+
+cat("\n--- Distancia al centro geográfico ---\n")
+for (coord in coordenadas) {
+    distancia <- calcular_distancia(punto_referencia[1], punto_referencia[2], coord[1], coord[2])
+    cat(sprintf("Distancia a (%.4f, %.4f): %.2f grados\n", coord[1], coord[2], distancia))
+}
+
+# 3. Iterar colecciones llevando la cuenta (seq_along)
+ciudades <- c("Bogotá", "Medellín", "Cali", "Barranquilla", "Cartagena")
+
+cat("\n--- Principales ciudades de Colombia ---\n")
+# seq_along genera una secuencia de números del 1 al tamaño del vector
+for (i in seq_along(ciudades)) {
+    cat(sprintf("%d. %s\n", i, ciudades[i]))
+}
+```
+
+### Julia
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{julia}
+#| label: julia_ciclos_for_codigo
+#| eval: false
+
+# 1. Sintaxis básica del ciclo for
+# Creamos un arreglo (Array) de tuplas con las coordenadas geográficas
+coordenadas = [
+    (4.6097, -74.0817),  # Bogotá
+    (6.2442, -75.5812),  # Medellín
+    (3.4516, -76.5320),  # Cali
+]
+
+# Al igual que Python, Julia puede desempaquetar la tupla
+println("--- Extracción de coordenadas ---")
+# En Julia el ciclo finaliza explícitamente con la palabra 'end'
+for (lat, lon) in coordenadas
+    println("Latitud: $lat, Longitud: $lon")
+end
+
+# 2. Procesamiento de múltiples puntos
+function calcular_distancia(lat1, lon1, lat2, lon2)
+    return sqrt((lat2 - lat1)^2 + (lon2 - lon1)^2)
+end
+
+punto_referencia = (4.0846, -72.9560)  # Centro geográfico
+
+using Printf
+println("\n--- Distancia al centro geográfico ---")
+for (lat, lon) in coordenadas
+    distancia = calcular_distancia(punto_referencia[1], punto_referencia[2], lat, lon)
+    @printf("Distancia a (%.4f, %.4f): %.2f grados\n", lat, lon, distancia)
+end
+
+# 3. Iterar colecciones llevando la cuenta (enumerate)
+ciudades = ["Bogotá", "Medellín", "Cali", "Barranquilla", "Cartagena"]
+
+println("\n--- Principales ciudades de Colombia ---")
+# enumerate funciona idéntico que en Python, pero arrancando en 1
+for (i, ciudad) in enumerate(ciudades)
+    println("$i. $ciudad")
+end
+```
+:::
+:::
+
+```{r}
+#| label: julia_ciclos_for
+#| results: asis
+# #| eval: false
+j_eval(r"-(
+# 1. Sintaxis básica del ciclo for
+# Creamos un arreglo (Array) de tuplas con las coordenadas geográficas
+coordenadas = [
+    (4.6097, -74.0817),  # Bogotá
+    (6.2442, -75.5812),  # Medellín
+    (3.4516, -76.5320),  # Cali
+]
+
+# Al igual que Python, Julia puede desempaquetar la tupla
+println("--- Extracción de coordenadas ---")
+# En Julia el ciclo finaliza explícitamente con la palabra 'end'
+for (lat, lon) in coordenadas
+    println("Latitud: $lat, Longitud: $lon")
+end
+
+# 2. Procesamiento de múltiples puntos
+function calcular_distancia(lat1, lon1, lat2, lon2)
+    return sqrt((lat2 - lat1)^2 + (lon2 - lon1)^2)
+end
+
+punto_referencia = (4.0846, -72.9560)  # Centro geográfico
+
+using Printf
+println("\n--- Distancia al centro geográfico ---")
+for (lat, lon) in coordenadas
+    distancia = calcular_distancia(punto_referencia[1], punto_referencia[2], lat, lon)
+    @printf("Distancia a (%.4f, %.4f): %.2f grados\n", lat, lon, distancia)
+end
+
+# 3. Iterar colecciones llevando la cuenta (enumerate)
+ciudades = ["Bogotá", "Medellín", "Cali", "Barranquilla", "Cartagena"]
+
+println("\n--- Principales ciudades de Colombia ---")
+# enumerate funciona idéntico que en Python, pero arrancando en 1
+for (i, ciudad) in enumerate(ciudades)
+    println("$i. $ciudad")
+end
+)-")
+```
+
+:::
+
+### Resumen de sintaxis: ciclos for
+
+| Operación | Python | R | Julia |
+| :--- | :--- | :--- | :--- |
+| **Sintaxis Básica** | `for item in lista:` | `for (item in vector) { }` | `for item in lista ... end` |
+| **Desempaquetar** | `for x, y in tuplas:` | *(No nativo, extraer manual)* | `for (x, y) in tuplas` |
+| **Iterar con Índice** | `for i, v in enumerate(L):`| `for (i in seq_along(v)) { }` | `for (i, v) in enumerate(L)` |
+| **Rango Numérico** | `for i in range(1, 6):` | `for (i in 1:5) { }` | `for i in 1:5` |
+
+: Equivalencias para el manejo de bucles for {#tbl-operaciones_for tbl-colwidths="[20,28,26,26]"}
+
+---
+
+**Nota técnica de iteración:** Observe un detalle fundamental al usar la función de enumeración. En Python, `enumerate()` genera índices comenzando desde `0`, por lo que tuvimos que imprimir `i + 1` para que la lista de ciudades empezara en el número uno. Por el contrario, tanto R (`seq_along()`) como Julia (`enumerate()`) son lenguajes de **Base 1**, por lo que sus índices naturales arrancan directamente en el número 1, haciendo la impresión mucho más directa.
+
+## Ciclos while
+
+A diferencia del ciclo `for` (que se usa cuando sabemos exactamente cuántos elementos vamos a recorrer), el **ciclo while** se ejecuta de manera indefinida **mientras una condición siga siendo verdadera**. 
+
+En el contexto espacial, esto es sumamente útil para procesos de simulación o lectura de sensores. Por ejemplo: "*sigue leyendo el puerto del GPS mientras la precisión sea mayor a 5 metros*" o "*sigue intentando descargar la imagen satelital mientras el servidor devuelva un error*".
+
+A continuación, exploraremos dos escenarios:
+
+1. Usar un `while` como contador tradicional para recorrer una lista de coordenadas.
+2. Simular un sensor GPS que busca "enganchar" una coordenada cerca de Bogotá (Latitud 4.6), con un número máximo de intentos para no crear un ciclo infinito.
+
+::: {.panel-tabset}
+
+### Python
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{python}
+#| label: python_ciclos_while_codigo
+#| eval: false
+
+# 1. Estructura básica de un ciclo while
+# Crearemos un vector de tuplas con coordenadas de Bogotá y Medellín
+coordenadas = [(4.6097, -74.0817), (6.2442, -75.5812)]
+contador = 0
+
+print("--- Procesamiento secuencial ---")
+while contador < len(coordenadas):
+    lat, lon = coordenadas[contador]
+    # Todo lo que esté indentado (movido a la derecha) se repetirá
+    print(f"Procesando coordenada: ({lat}, {lon})")
+    contador += 1  # Crucial: Si no incrementamos, el ciclo será infinito
+
+# 2. Ejemplo práctico: Simulador de señal GPS
+import random
+
+latitud_objetivo = 4.6097  # Objetivo: Latitud de Bogotá
+tolerancia = 0.1
+intentos = 0
+max_intentos = 10
+
+print(f"\n--- Buscando señal GPS cerca de la latitud {latitud_objetivo} ---")
+
+while intentos < max_intentos:
+    # random.uniform genera un número con decimales de manera aleatoria.
+    # El primer parámetro (4.0) es el límite inferior y el segundo (5.0) es el límite superior.
+    lat_aleatoria = random.uniform(4.0, 5.0)
+    intentos += 1
+    
+    print(f"Intento {intentos}: Lectura ({lat_aleatoria:.4f})")
+    
+    # Comprobamos si la lectura está dentro del rango aceptable
+    if abs(lat_aleatoria - latitud_objetivo) <= tolerancia:
+        print(f"✓ Señal estable encontrada en {intentos} intentos!")
+        break  # Rompe el ciclo inmediatamente y no ejecuta el 'else'
+else:
+    # Python tiene esta estructura única: el bloque 'else' se ejecuta 
+    # SOLO si el ciclo while terminó de forma natural (sin usar 'break').
+    print(f"✗ No se logró estabilizar la señal tras {max_intentos} intentos.")
+```
+:::
+:::
+
+```{python}
+#| label: python_ciclos_while
+# #| eval: false
+
+# 1. Estructura básica de un ciclo while
+# Crearemos un vector de tuplas con coordenadas de Bogotá y Medellín
+coordenadas = [(4.6097, -74.0817), (6.2442, -75.5812)]
+contador = 0
+
+print("--- Procesamiento secuencial ---")
+while contador < len(coordenadas):
+    lat, lon = coordenadas[contador]
+    # Todo lo que esté indentado (movido a la derecha) se repetirá
+    print(f"Procesando coordenada: ({lat}, {lon})")
+    contador += 1  # Crucial: Si no incrementamos, el ciclo será infinito
+
+# 2. Ejemplo práctico: Simulador de señal GPS
+import random
+
+latitud_objetivo = 4.6097  # Objetivo: Latitud de Bogotá
+tolerancia = 0.1
+intentos = 0
+max_intentos = 10
+
+print(f"\n--- Buscando señal GPS cerca de la latitud {latitud_objetivo} ---")
+
+while intentos < max_intentos:
+    # random.uniform genera un número con decimales de manera aleatoria.
+    # El primer parámetro (4.0) es el límite inferior y el segundo (5.0) es el límite superior.
+    lat_aleatoria = random.uniform(4.0, 5.0)
+    intentos += 1
+    
+    print(f"Intento {intentos}: Lectura ({lat_aleatoria:.4f})")
+    
+    # Comprobamos si la lectura está dentro del rango aceptable
+    if abs(lat_aleatoria - latitud_objetivo) <= tolerancia:
+        print(f"✓ Señal estable encontrada en {intentos} intentos!")
+        break  # Rompe el ciclo inmediatamente y no ejecuta el 'else'
+else:
+    # Python tiene esta estructura única: el bloque 'else' se ejecuta 
+    # SOLO si el ciclo while terminó de forma natural (sin usar 'break').
+    print(f"✗ No se logró estabilizar la señal tras {max_intentos} intentos.")
+```
+
+### R
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{r}
+#| label: r_ciclos_while_codigo
+#| eval: false
+
+# 1. Estructura básica de un ciclo while
+# Crearemos una lista que contiene vectores numéricos de coordenadas
+coordenadas <- list(c(4.6097, -74.0817), c(6.2442, -75.5812))
+contador <- 1  # Recuerda: R usa Base 1
+
+cat("--- Procesamiento secuencial ---\n")
+while (contador <= length(coordenadas)) {
+    # Todo lo que esté entre las llaves { } se repetirá
+    coord <- coordenadas[[contador]] # Abrimos la caja fuerte con [[ ]]
+    cat(sprintf("Procesando coordenada: (%.4f, %.4f)\n", coord[1], coord[2]))
+    contador <- contador + 1
+}
+
+# 2. Ejemplo práctico: Simulador de señal GPS
+latitud_objetivo <- 4.6097  # Objetivo: Latitud de Bogotá
+tolerancia <- 0.1
+intentos <- 0
+max_intentos <- 10
+
+# R no tiene el "while...else" de Python, así que usamos una bandera lógica (flag)
+senal_encontrada <- FALSE 
+
+cat(sprintf("\n--- Buscando señal GPS cerca de la latitud %.4f ---\n", latitud_objetivo))
+
+while (intentos < max_intentos) {
+    # runif genera números aleatorios con decimales.
+    # El primer parámetro (1) es la cantidad. min (4.0) y max (5.0) son los límites.
+    lat_aleatoria <- runif(1, min = 4.0, max = 5.0)
+    intentos <- intentos + 1
+    
+    cat(sprintf("Intento %d: Lectura (%.4f)\n", intentos, lat_aleatoria))
+    
+    if (abs(lat_aleatoria - latitud_objetivo) <= tolerancia) {
+        cat(sprintf("✓ Señal estable encontrada en %d intentos!\n", intentos))
+        senal_encontrada <- TRUE
+        break
+    }
+}
+
+# Comprobamos la bandera fuera del ciclo
+if (!senal_encontrada) {
+    cat(sprintf("✗ No se logró estabilizar la señal tras %d intentos.\n", max_intentos))
+}
+```
+:::
+:::
+
+```{r}
+#| label: r_ciclos_while
+# #| eval: false
+
+# 1. Estructura básica de un ciclo while
+# Crearemos una lista que contiene vectores numéricos de coordenadas
+coordenadas <- list(c(4.6097, -74.0817), c(6.2442, -75.5812))
+contador <- 1  # Recuerda: R usa Base 1
+
+cat("--- Procesamiento secuencial ---\n")
+while (contador <= length(coordenadas)) {
+    # Todo lo que esté entre las llaves { } se repetirá
+    coord <- coordenadas[[contador]] # Abrimos la caja fuerte con [[ ]]
+    cat(sprintf("Procesando coordenada: (%.4f, %.4f)\n", coord[1], coord[2]))
+    contador <- contador + 1
+}
+
+# 2. Ejemplo práctico: Simulador de señal GPS
+latitud_objetivo <- 4.6097  # Objetivo: Latitud de Bogotá
+tolerancia <- 0.1
+intentos <- 0
+max_intentos <- 10
+
+# R no tiene el "while...else" de Python, así que usamos una bandera lógica (flag)
+senal_encontrada <- FALSE 
+
+cat(sprintf("\n--- Buscando señal GPS cerca de la latitud %.4f ---\n", latitud_objetivo))
+
+while (intentos < max_intentos) {
+    # runif genera números aleatorios con decimales.
+    # El primer parámetro (1) es la cantidad. min (4.0) y max (5.0) son los límites.
+    lat_aleatoria <- runif(1, min = 4.0, max = 5.0)
+    intentos <- intentos + 1
+    
+    cat(sprintf("Intento %d: Lectura (%.4f)\n", intentos, lat_aleatoria))
+    
+    if (abs(lat_aleatoria - latitud_objetivo) <= tolerancia) {
+        cat(sprintf("✓ Señal estable encontrada en %d intentos!\n", intentos))
+        senal_encontrada <- TRUE
+        break
+    }
+}
+
+# Comprobamos la bandera fuera del ciclo
+if (!senal_encontrada) {
+    cat(sprintf("✗ No se logró estabilizar la señal tras %d intentos.\n", max_intentos))
+}
+```
+
+### Julia
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{julia}
+#| label: julia_ciclos_while_codigo
+#| eval: false
+
+# 1. Estructura básica de un ciclo while
+# Creamos un arreglo de tuplas con coordenadas de Bogotá y Medellín
+coordenadas = [(4.6097, -74.0817), (6.2442, -75.5812)]
+contador = 1  # Julia usa Base 1
+
+println("--- Procesamiento secuencial ---")
+while contador <= length(coordenadas)
+    lat, lon = coordenadas[contador]
+    println("Procesando coordenada: ($lat, $lon)")
+    global contador += 1 
+end # La palabra 'end' marca donde termina el bucle
+
+# 2. Ejemplo práctico: Simulador de señal GPS
+using Printf
+
+latitud_objetivo = 4.6097  # Objetivo: Latitud de Bogotá
+tolerancia = 0.1
+intentos = 0
+max_intentos = 10
+senal_encontrada = false # Bandera lógica de control
+
+println("\n--- Buscando señal GPS cerca de la latitud $latitud_objetivo ---")
+
+while intentos < max_intentos
+    # rand() genera un decimal entre 0.0 y 1.0
+    # Multiplicar por 1.0 (tamaño del rango deseado) y sumar 4.0 (límite inferior)
+    # nos da un valor aleatorio entre 4.0 y 5.0
+    lat_aleatoria = 4.0 + rand() * 1.0
+    global intentos += 1
+    
+    @printf("Intento %d: Lectura (%.4f)\n", intentos, lat_aleatoria)
+    
+    if abs(lat_aleatoria - latitud_objetivo) <= tolerancia
+        println("✓ Señal estable encontrada en $intentos intentos!")
+        global senal_encontrada = true
+        break
+    end
+end
+
+if !senal_encontrada
+    println("✗ No se logró estabilizar la señal tras $max_intentos intentos.")
+end
+```
+:::
+:::
+
+```{r}
+#| label: julia_ciclos_while
+#| results: asis
+# #| eval: false
+j_eval(r"-(
+# 1. Estructura básica de un ciclo while
+# Creamos un arreglo de tuplas con coordenadas de Bogotá y Medellín
+coordenadas = [(4.6097, -74.0817), (6.2442, -75.5812)]
+contador = 1  # Julia usa Base 1
+
+println("--- Procesamiento secuencial ---")
+while contador <= length(coordenadas)
+    lat, lon = coordenadas[contador]
+    println("Procesando coordenada: ($lat, $lon)")
+    global contador += 1 
+end # La palabra 'end' marca donde termina el bucle
+
+# 2. Ejemplo práctico: Simulador de señal GPS
+using Printf
+
+latitud_objetivo = 4.6097  # Objetivo: Latitud de Bogotá
+tolerancia = 0.1
+intentos = 0
+max_intentos = 10
+senal_encontrada = false # Bandera lógica de control
+
+println("\n--- Buscando señal GPS cerca de la latitud $latitud_objetivo ---")
+
+while intentos < max_intentos
+    # rand() genera un decimal entre 0.0 y 1.0
+    # Multiplicar por 1.0 (tamaño del rango deseado) y sumar 4.0 (límite inferior)
+    # nos da un valor aleatorio entre 4.0 y 5.0
+    lat_aleatoria = 4.0 + rand() * 1.0
+    global intentos += 1
+    
+    @printf("Intento %d: Lectura (%.4f)\n", intentos, lat_aleatoria)
+    
+    if abs(lat_aleatoria - latitud_objetivo) <= tolerancia
+        println("✓ Señal estable encontrada en $intentos intentos!")
+        global senal_encontrada = true
+        break
+    end
+end
+
+if !senal_encontrada
+    println("✗ No se logró estabilizar la señal tras $max_intentos intentos.")
+end
+)-")
+```
+
+:::
+
+### Resumen de sintaxis: ciclos while
+
+| Operación | Python | R | Julia |
+| :--- | :--- | :--- | :--- |
+| **Delimitador de Bloque** | Indentación (Tabulador) | Llaves `{ }` | Palabra clave `end` |
+| **Sintaxis Básica** | `while condicion:` | `while (condicion) { }` | `while condicion ... end` |
+| **Romper Ciclo** | `break` | `break` | `break` |
+| **Saltar a siguiente iteración** | `continue` | `next` | `continue` |
+| **Control de Cierre Natural** | `while... else:` | *(Usar banderas lógicas)* | *(Usar banderas lógicas)* |
+
+: Equivalencias para el manejo de bucles while {#tbl-operaciones_while tbl-colwidths="[25,25,25,25]"}
+
+
+
+::: {.callout-important}
+### La trampa de la indentación en Python
+Note un cambio crítico en la primera fila de la tabla anterior. En **R** y **Julia**, el computador sabe qué instrucciones pertenecen a un bucle porque están atrapadas entre llaves `{}` o terminan con la palabra `end`. 
+
+En **Python**, las llaves no existen. El lenguaje utiliza la **indentación** (los 4 espacios en blanco o tabuladores a la izquierda del código en VSCode) para definir qué pertenece a cada ciclo o condición. Si olvidas presionar la tecla *Tab* (en VSCode: 4 espacios en blanco) después de declarar un `while:` o un `for:`, Python te arrojará un error de sintaxis inmediatamente.
+:::
+
+## Declaraciones de control (toma de decisiones)
+
+En la programación espacial, rara vez aplicamos la misma regla a todos los datos. Las **declaraciones condicionales** (`if`, `else if`, `else`) funcionan como "agujas de tren" que desvían el flujo de nuestro programa dependiendo de si los datos cumplen o no con ciertas condiciones lógicas. 
+
+Por ejemplo, podríamos necesitar un algoritmo que dicte: "Si el predio es rural, aplique el impuesto A; si es urbano, aplique el impuesto B; y si no tiene categoría, clasifíquelo como error". 
+
+Antes de construir estas condiciones, necesitamos conocer las herramientas básicas para comparar datos matemáticamente. Afortunadamente, los **operadores de comparación** son prácticamente idénticos en Python, R y Julia:
+
+| Comparación | Operador universal | Ejemplo |
+| :--- | :---: | :--- |
+| **Igual a** | `==` | `lat == 0` *(Nota: ¡Doble igual! Un solo `=` es para asignar variables)* |
+| **Diferente de** | `!=` | `depto != "Bogotá"` |
+| **Mayor / Menor que** | `>`, `<` | `poblacion > 1000` |
+| **Mayor o igual / Menor o igual**| `>=`, `<=` | `elevacion >= 2600` |
+
+: Operadores de comparación matemáticos {#tbl-operadores_comparacion tbl-colwidths="[30,20,50]"}
+
+A continuación, analizaremos un conjunto mixto de coordenadas (colombianas, internacionales y un error intencional) para clasificarlas según su hemisferio y cuadrante global. 
+
+Para que este ejercicio tenga sentido geográfico y matemático, es fundamental recordar que **las latitudes válidas van de -90° a 90°**, y **las longitudes válidas van de -180° a 180°**. Usaremos esta regla para filtrar datos erróneos.
+
+::: {.panel-tabset}
+
+### Python
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{python}
+#| label: python_condicionales_codigo
+#| eval: false
+
+# Conjunto de análisis: Bogotá, Leticia, Tokio, y una coordenada errónea
+coordenadas = [
+    (4.6097, -74.0817),   # Bogotá (Norte, Oeste)
+    (-4.2153, -69.9406),  # Leticia (Sur, Oeste)
+    (0.0000, -76.0000),   # Sobre el Ecuador
+    (35.6762, 139.6503),  # Tokio (Norte, Este)
+    (105.0000, -75.0000)  # ¡Error! La latitud no puede pasar de 90
+]
+
+norte_count = 0
+sur_count = 0
+este_count = 0
+oeste_count = 0
+coordenadas_validas = []
+
+print("--- Análisis de Coordenadas ---")
+
+for lat, lon in coordenadas:
+    
+    # 1. Validación de rango (Operador lógico 'and' y encadenamiento)
+    # Python permite encadenar comparaciones matemáticas directamente
+    if -90 <= lat <= 90 and -180 <= lon <= 180:
+        
+        coordenadas_validas.append((lat, lon))
+        
+        # 2. Clasificación simple (if / elif / else)
+        if lat > 0:
+            hemisferio = "Norte"
+            norte_count += 1
+        elif lat < 0:
+            hemisferio = "Sur"
+            sur_count += 1
+        else:
+            hemisferio = "Ecuador"
+            
+        if lon > 0:
+            este_count += 1
+        else:
+            oeste_count += 1
+
+        # 3. Clasificación compleja por cuadrantes (múltiples condiciones)
+        if lat > 0 and lon > 0:
+            cuadrante = "Noreste"
+        elif lat > 0 and lon < 0:
+            cuadrante = "Noroeste"
+        elif lat < 0 and lon > 0:
+            cuadrante = "Sureste"
+        else:  # Por descarte
+            cuadrante = "Suroeste"
+            
+        print(f"✓ Válida: ({lat:7.4f}, {lon:8.4f}) -> {cuadrante} ({hemisferio})")
+        
+    else:
+        print(f"✗ Inválida: ({lat}, {lon}) - Fuera de rango global.")
+
+print("\n--- Resumen Estadístico ---")
+print(f"Total válidas: {len(coordenadas_validas)}")
+print(f"Puntos en el Norte: {norte_count} | Sur: {sur_count}")
+print(f"Puntos en el Este: {este_count} | Oeste: {oeste_count}")
+```
+:::
+:::
+
+```{python}
+#| label: python_condicionales
+# #| eval: false
+
+# Conjunto de análisis: Bogotá, Leticia, Tokio, y una coordenada errónea
+coordenadas = [
+    (4.6097, -74.0817),   # Bogotá (Norte, Oeste)
+    (-4.2153, -69.9406),  # Leticia (Sur, Oeste)
+    (0.0000, -76.0000),   # Sobre el Ecuador
+    (35.6762, 139.6503),  # Tokio (Norte, Este)
+    (105.0000, -75.0000)  # ¡Error! La latitud no puede pasar de 90
+]
+
+norte_count = 0
+sur_count = 0
+este_count = 0
+oeste_count = 0
+coordenadas_validas = []
+
+print("--- Análisis de Coordenadas ---")
+
+for lat, lon in coordenadas:
+    
+    # 1. Validación de rango (Operador lógico 'and' y encadenamiento)
+    # Python permite encadenar comparaciones matemáticas directamente
+    if -90 <= lat <= 90 and -180 <= lon <= 180:
+        
+        coordenadas_validas.append((lat, lon))
+        
+        # 2. Clasificación simple (if / elif / else)
+        if lat > 0:
+            hemisferio = "Norte"
+            norte_count += 1
+        elif lat < 0:
+            hemisferio = "Sur"
+            sur_count += 1
+        else:
+            hemisferio = "Ecuador"
+            
+        if lon > 0:
+            este_count += 1
+        else:
+            oeste_count += 1
+
+        # 3. Clasificación compleja por cuadrantes (múltiples condiciones)
+        if lat > 0 and lon > 0:
+            cuadrante = "Noreste"
+        elif lat > 0 and lon < 0:
+            cuadrante = "Noroeste"
+        elif lat < 0 and lon > 0:
+            cuadrante = "Sureste"
+        else:  # Por descarte
+            cuadrante = "Suroeste"
+            
+        print(f"✓ Válida: ({lat:7.4f}, {lon:8.4f}) -> {cuadrante} ({hemisferio})")
+        
+    else:
+        print(f"✗ Inválida: ({lat}, {lon}) - Fuera de rango global.")
+
+print("\n--- Resumen Estadístico ---")
+print(f"Total válidas: {len(coordenadas_validas)}")
+print(f"Puntos en el Norte: {norte_count} | Sur: {sur_count}")
+print(f"Puntos en el Este: {este_count} | Oeste: {oeste_count}")
+```
+
+### R
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{r}
+#| label: r_condicionales_codigo
+#| eval: false
+
+coordenadas <- list(
+    c(4.6097, -74.0817),   
+    c(-4.2153, -69.9406),  
+    c(0.0000, -76.0000),   
+    c(35.6762, 139.6503),  
+    c(105.0000, -75.0000)  
+)
+
+norte_count <- 0
+sur_count <- 0
+este_count <- 0
+oeste_count <- 0
+coordenadas_validas <- list()
+
+cat("--- Análisis de Coordenadas ---\n")
+
+for (coord in coordenadas) {
+    lat <- coord[1]
+    lon <- coord[2]
+    
+    # 1. Validación con el operador && (AND lógico para valores individuales)
+    # A diferencia de Python, en R debemos separar las condiciones completas
+    if (lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180) {
+        
+        coordenadas_validas <- append(coordenadas_validas, list(c(lat, lon)))
+        
+        # 2. Clasificación simple
+        # R estila poner el 'else if' en la misma línea que cierra la llave anterior
+        if (lat > 0) {
+            hemisferio <- "Norte"
+            norte_count <- norte_count + 1
+        } else if (lat < 0) {
+            hemisferio <- "Sur"
+            sur_count <- sur_count + 1
+        } else {
+            hemisferio <- "Ecuador"
+        }
+            
+        if (lon > 0) {
+            este_count <- este_count + 1
+        } else {
+            oeste_count <- oeste_count + 1
+        }
+
+        # 3. Clasificación por cuadrantes
+        if (lat > 0 && lon > 0) {
+            cuadrante <- "Noreste"
+        } else if (lat > 0 && lon < 0) {
+            cuadrante <- "Noroeste"
+        } else if (lat < 0 && lon > 0) {
+            cuadrante <- "Sureste"
+        } else {
+            cuadrante <- "Suroeste"
+        }
+            
+        cat(sprintf("✓ Válida: (%7.4f, %8.4f) -> %s (%s)\n", lat, lon, cuadrante, hemisferio))
+        
+    } else {
+        cat(sprintf("✗ Inválida: (%.4f, %.4f) - Fuera de rango global.\n", lat, lon))
+    }
+}
+
+cat("\n--- Resumen Estadístico ---\n")
+cat(sprintf("Total válidas: %d\n", length(coordenadas_validas)))
+cat(sprintf("Puntos en el Norte: %d | Sur: %d\n", norte_count, sur_count))
+cat(sprintf("Puntos en el Este: %d | Oeste: %d\n", este_count, oeste_count))
+```
+:::
+:::
+
+```{r}
+#| label: r_condicionales
+# #| eval: false
+
+coordenadas <- list(
+    c(4.6097, -74.0817),   
+    c(-4.2153, -69.9406),  
+    c(0.0000, -76.0000),   
+    c(35.6762, 139.6503),  
+    c(105.0000, -75.0000)  
+)
+
+norte_count <- 0
+sur_count <- 0
+este_count <- 0
+oeste_count <- 0
+coordenadas_validas <- list()
+
+cat("--- Análisis de Coordenadas ---\n")
+
+for (coord in coordenadas) {
+    lat <- coord[1]
+    lon <- coord[2]
+    
+    # 1. Validación con el operador && (AND lógico para valores individuales)
+    # A diferencia de Python, en R debemos separar las condiciones completas
+    if (lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180) {
+        
+        coordenadas_validas <- append(coordenadas_validas, list(c(lat, lon)))
+        
+        # 2. Clasificación simple
+        # R estila poner el 'else if' en la misma línea que cierra la llave anterior
+        if (lat > 0) {
+            hemisferio <- "Norte"
+            norte_count <- norte_count + 1
+        } else if (lat < 0) {
+            hemisferio <- "Sur"
+            sur_count <- sur_count + 1
+        } else {
+            hemisferio <- "Ecuador"
+        }
+            
+        if (lon > 0) {
+            este_count <- este_count + 1
+        } else {
+            oeste_count <- oeste_count + 1
+        }
+
+        # 3. Clasificación por cuadrantes
+        if (lat > 0 && lon > 0) {
+            cuadrante <- "Noreste"
+        } else if (lat > 0 && lon < 0) {
+            cuadrante <- "Noroeste"
+        } else if (lat < 0 && lon > 0) {
+            cuadrante <- "Sureste"
+        } else {
+            cuadrante <- "Suroeste"
+        }
+            
+        cat(sprintf("✓ Válida: (%7.4f, %8.4f) -> %s (%s)\n", lat, lon, cuadrante, hemisferio))
+        
+    } else {
+        cat(sprintf("✗ Inválida: (%.4f, %.4f) - Fuera de rango global.\n", lat, lon))
+    }
+}
+
+cat("\n--- Resumen Estadístico ---\n")
+cat(sprintf("Total válidas: %d\n", length(coordenadas_validas)))
+cat(sprintf("Puntos en el Norte: %d | Sur: %d\n", norte_count, sur_count))
+cat(sprintf("Puntos en el Este: %d | Oeste: %d\n", este_count, oeste_count))
+```
+
+### Julia
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{julia}
+#| label: julia_condicionales_codigo
+#| eval: false
+
+coordenadas = [
+    (4.6097, -74.0817),   
+    (-4.2153, -69.9406),  
+    (0.0000, -76.0000),   
+    (35.6762, 139.6503),  
+    (105.0000, -75.0000)  
+]
+
+norte_count = 0
+sur_count = 0
+este_count = 0
+oeste_count = 0
+coordenadas_validas = []
+
+using Printf
+println("--- Análisis de Coordenadas ---")
+
+for (lat, lon) in coordenadas
+    
+    # 1. Julia soporta el encadenamiento matemático igual que Python
+    # pero el operador AND se escribe && (como en R)
+    if -90 <= lat <= 90 && -180 <= lon <= 180
+        
+        push!(coordenadas_validas, (lat, lon))
+        
+        # 2. Clasificación simple (if / elseif / else)
+        if lat > 0
+            hemisferio = "Norte"
+            global norte_count += 1
+        elseif lat < 0
+            hemisferio = "Sur"
+            global sur_count += 1
+        else
+            hemisferio = "Ecuador"
+        end
+            
+        if lon > 0
+            global este_count += 1
+        else
+            global oeste_count += 1
+        end
+
+        # 3. Clasificación por cuadrantes
+        if lat > 0 && lon > 0
+            cuadrante = "Noreste"
+        elseif lat > 0 && lon < 0
+            cuadrante = "Noroeste"
+        elseif lat < 0 && lon > 0
+            cuadrante = "Sureste"
+        else
+            cuadrante = "Suroeste"
+        end
+            
+        @printf("✓ Válida: (%7.4f, %8.4f) -> %s (%s)\n", lat, lon, cuadrante, hemisferio)
+        
+    else
+        println("✗ Inválida: ($lat, $lon) - Fuera de rango global.")
+    end
+end
+
+println("\n--- Resumen Estadístico ---")
+println("Total válidas: $(length(coordenadas_validas))")
+println("Puntos en el Norte: $norte_count | Sur: $sur_count")
+println("Puntos en el Este: $este_count | Oeste: $oeste_count")
+```
+:::
+:::
+
+```{r}
+#| label: julia_condicionales
+#| results: asis
+# #| eval: false
+j_eval(r"-(
+coordenadas = [
+    (4.6097, -74.0817),   
+    (-4.2153, -69.9406),  
+    (0.0000, -76.0000),   
+    (35.6762, 139.6503),  
+    (105.0000, -75.0000)  
+]
+
+norte_count = 0
+sur_count = 0
+este_count = 0
+oeste_count = 0
+coordenadas_validas = []
+
+using Printf
+println("--- Análisis de Coordenadas ---")
+
+for (lat, lon) in coordenadas
+    
+    # 1. Julia soporta el encadenamiento matemático igual que Python
+    # pero el operador AND se escribe && (como en R)
+    if -90 <= lat <= 90 && -180 <= lon <= 180
+        
+        push!(coordenadas_validas, (lat, lon))
+        
+        # 2. Clasificación simple (if / elseif / else)
+        if lat > 0
+            hemisferio = "Norte"
+            global norte_count += 1
+        elseif lat < 0
+            hemisferio = "Sur"
+            global sur_count += 1
+        else
+            hemisferio = "Ecuador"
+        end
+            
+        if lon > 0
+            global este_count += 1
+        else
+            global oeste_count += 1
+        end
+
+        # 3. Clasificación por cuadrantes
+        if lat > 0 && lon > 0
+            cuadrante = "Noreste"
+        elseif lat > 0 && lon < 0
+            cuadrante = "Noroeste"
+        elseif lat < 0 && lon > 0
+            cuadrante = "Sureste"
+        else
+            cuadrante = "Suroeste"
+        end
+            
+        @printf("✓ Válida: (%7.4f, %8.4f) -> %s (%s)\n", lat, lon, cuadrante, hemisferio)
+        
+    else
+        println("✗ Inválida: ($lat, $lon) - Fuera de rango global.")
+    end
+end
+
+println("\n--- Resumen Estadístico ---")
+println("Total válidas: $(length(coordenadas_validas))")
+println("Puntos en el Norte: $norte_count | Sur: $sur_count")
+println("Puntos en el Este: $este_count | Oeste: $oeste_count")
+)-")
+```
+
+:::
+
+### Resumen de sintaxis: condicionales y operadores lógicos
+
+| Operación | Python | R | Julia |
+| :--- | :--- | :--- | :--- |
+| **Si (Principal)** | `if condicion:` | `if (condicion) { }` | `if condicion` |
+| **O si (Intermedio)** | `elif condicion:` | `else if (condicion) { }` | `elseif condicion` |
+| **Sino (Descarte)** | `else:` | `else { }` | `else` |
+| **Cierre del bloque** | Indentación | Llave de cierre `}` | Palabra `end` |
+| **Y lógico (AND)** | `and` | `&&` | `&&` |
+| **O lógico (OR)** | `or` | `||` | `||` |
+| **NO lógico (NOT)** | `not` | `!` | `!` |
+
+: Equivalencias para el manejo de condicionales lógicos {#tbl-operaciones_condicionales tbl-colwidths="[20,20,30,30]"}
+
+### Agrupación y orden de evaluación (el poder de los paréntesis)
+
+Cuando combinamos múltiples condiciones (usando `AND` y `OR` en la misma frase), el computador evalúa las reglas en un orden estricto (generalmente el `AND` tiene prioridad sobre el `OR`). Esto puede llevar a resultados desastrosos si no le decimos explícitamente qué agrupar.
+
+**Imagina este escenario:** Queremos filtrar los puntos que caigan en el cuadrante *Noroeste* **O** en el cuadrante *Sureste*, pero en ambos casos, su elevación **DEBE** ser mayor a 1000 metros.
+
+* ❌ **Forma incorrecta (Ambigua):**
+  `if lat > 0 and lon < 0 or lat < 0 and lon > 0 and elevacion > 1000:`
+  *¿Qué hará el computador aquí?* Podría aprobar puntos del Noroeste sin importar su elevación, porque el `OR` partió la regla en dos universos distintos.
+
+* ✅ **Forma correcta (Agrupada con paréntesis):**
+  `if ((lat > 0 and lon < 0) or (lat < 0 and lon > 0)) and elevacion > 1000:`
+  *Aquí le dijimos:* "Primero evalúa los paréntesis internos (los cuadrantes). Luego, agarra el resultado de eso y, obligatoriamente, exígele la elevación".
+
+**Regla de oro:** Siempre que mezcles un `AND` y un `OR` en la misma línea, usa paréntesis `()` para aislar la lógica, independientemente del lenguaje que estés usando.
+
+---
+
+::: {.callout-warning icon="false"}
+### La metáfora del portero y el colador (Operadores lógicos en R y Julia)
+
+R y Julia tienen **dos familias** de operadores lógicos que confunden constantemente a los analistas de datos. Para no olvidarlos nunca, piensa en ellos así:
+
+1. **El operador doble (`&&`, `||`) es el "portero de la discoteca":** Está diseñado para decidir si abre o no la puerta (el `if`). Por lo tanto, exige revisar **una sola cédula a la vez** (un valor escalar). Si tú le entregas una lista completa con 30 cédulas de golpe (un vector), el portero se confunde, se bloquea y arroja un error. Además, es perezoso (*cortocircuito*): si ve que la primera condición falla, ni siquiera mira la segunda.
+2. **El operador sencillo (`&`, `|` en R; `.&`, `.|` en Julia) es el "filtro de colador":** Está diseñado exactamente para trabajar con datos masivos. Recibe la lista completa de 30 datos, los evalúa todos al mismo tiempo (recuerda que en Julia el punto `.` de *broadcasting* es obligatorio para que el filtro actúe elemento por elemento), y te devuelve una lista nueva diciéndote cuáles pasaron la prueba (`TRUE`) y cuáles no (`FALSE`). Esa lista resultante es la que usamos para filtrar la base de datos original.
+
+
+
+A continuación, veremos cómo el "colador" filtra correctamente un vector de alturas (elevaciones topográficas), y cómo el "portero" hace que el programa colapse al no saber qué hacer con tantos datos a la vez.
+
+::: {.panel-tabset}
+
+### R
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{r}
+#| label: r_operadores_logicos_codigo
+#| eval: false
+
+alturas <- c(1500, 2500, 800)
+
+cat("--- 1. El Colador: Operador sencillo '&' (Vectorizado) ---\n")
+# Evalúa elemento por elemento y devuelve un vector lógico:
+filtro_logico <- alturas > 1000 & alturas < 3000
+print(filtro_logico)
+
+# Usamos ese vector de TRUE/FALSE para extraer los datos originales:
+alturas_validas <- alturas[filtro_logico]
+cat("Alturas filtradas:", alturas_validas, "\n\n")
+
+cat("--- 2. El Portero: Operador doble '&&' en un vector ---\n")
+# Esto generará un error porque el portero (&&) espera una sola cédula para el 'if'
+if (alturas > 1000 && alturas < 3000) {
+    cat("Esto no se imprimirá.\n")
+}
+```
+:::
+:::
+
+```{r}
+#| label: r_operadores_logicos
+#| error: true
+#| collapse: true
+# #| eval: false
+
+alturas <- c(1500, 2500, 800)
+
+cat("--- 1. El Colador: Operador sencillo '&' (Vectorizado) ---\n")
+# Evalúa elemento por elemento y devuelve un vector lógico:
+filtro_logico <- alturas > 1000 & alturas < 3000
+print(filtro_logico)
+
+# Usamos ese vector de TRUE/FALSE para extraer los datos originales:
+alturas_validas <- alturas[filtro_logico]
+cat("Alturas filtradas:", alturas_validas, "\n\n")
+
+cat("--- 2. El Portero: Operador doble '&&' en un vector ---\n")
+# Esto generará un error porque el portero (&&) espera una sola cédula para el 'if'
+if (alturas > 1000 && alturas < 3000) {
+    cat("Esto no se imprimirá.\n")
+}
+```
+
+### Julia
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{julia}
+#| label: julia_operadores_logicos_codigo
+#| eval: false
+
+alturas = [1500, 2500, 800]
+
+println("--- 1. El Colador: Operador sencillo '.&' (Vectorizado) ---")
+# En Julia agregamos un punto (.) antes del operador matemático y lógico 
+# para indicar explícitamente que la operación es elemento por elemento.
+filtro_logico = (alturas .> 1000) .& (alturas .< 3000)
+println(filtro_logico)
+
+# Usamos el resultado para filtrar el arreglo:
+alturas_validas = alturas[filtro_logico]
+println("Alturas filtradas: ", alturas_validas, "\n")
+
+println("--- 2. El Portero: Operador doble '&&' en un vector ---")
+# Intentar meter un arreglo completo en un condicional doble genera error.
+# Usamos try/catch para atrapar el error y que el programa no explote.
+try
+    if (alturas .> 1000) && (alturas .< 3000)
+        println("Esto no se imprimirá.")
+    end
+catch e
+    println("¡ERROR!: ", typeof(e))
+    println("Motivo: El 'if' y el '&&' exigen una sola cédula (true/false), no la lista completa.")
+end
+```
+:::
+:::
+
+```{r}
+#| label: julia_operadores_logicos
+#| results: asis
+# #| eval: false
+j_eval(r"-(
+alturas = [1500, 2500, 800]
+
+println("--- 1. El Colador: Operador sencillo '.&' (Vectorizado) ---")
+# En Julia agregamos un punto (.) antes del operador matemático y lógico 
+# para indicar explícitamente que la operación es elemento por elemento.
+filtro_logico = (alturas .> 1000) .& (alturas .< 3000)
+println(filtro_logico)
+
+# Usamos el resultado para filtrar el arreglo:
+alturas_validas = alturas[filtro_logico]
+println("Alturas filtradas: ", alturas_validas, "\n")
+
+println("--- 2. El Portero: Operador doble '&&' en un vector ---")
+# Intentar meter un arreglo completo en un condicional doble genera error.
+# Usamos try/catch para atrapar el error y que el programa no explote.
+try
+    if (alturas .> 1000) && (alturas .< 3000)
+        println("Esto no se imprimirá.")
+    end
+catch e
+    println("¡ERROR!: ", typeof(e))
+    println("Motivo: El 'if' y el '&&' exigen una sola cédula (true/false), no la lista completa.")
+end
+)-")
+```
+
+:::
+:::
+
+## Guía de toma de decisiones sobre declaraciones de control y bucles
+
+Cuando nos enfrentamos a un problema de programación espacial, el mayor reto no es escribir el código, sino saber **qué estructura lógica elegir**. Para no perder tiempo intentando forzar una herramienta que no es la adecuada, hazte las siguientes preguntas en orden:
+
+
+
+1. **¿Necesito tomar una decisión o clasificar un dato?**
+   * *Ejemplo:* Si la elevación es > 2000m, clasificar como "Páramo".
+   * 👉 **Usa:** `if` / `elif` (`else if`) / `else`.
+
+2. **¿Necesito repetir una tarea varias veces?**
+
+   * **Opción A: Sé exactamente cuántos datos hay.** 
+     * *Ejemplo:* Tengo una lista de 50 municipios y quiero calcular el área de cada uno.
+     * 👉 **Usa:** Ciclo `for`. Es seguro, predecible y se detiene solo cuando se acaban los elementos.
+   * **Opción B: No sé cuántas veces debo repetir, depende de un evento.**
+     * *Ejemplo:* Quiero intentar descargar un mapa hasta que el servidor de la NASA responda correctamente.
+     * 👉 **Usa:** Ciclo `while`. Asegúrate de incluir un contador de intentos o un `break` para evitar un ciclo infinito.
+
+3. **¿Estoy trabajando con R o Julia y necesito filtrar miles de datos de un solo golpe?**
+   * *Ejemplo:* Extraer todas las parcelas con área > 100 hectáreas de un vector completo.
+   * 👉 **Usa:** Operadores lógicos sencillos para crear un "filtro de colador" (vectorizado), evitando usar un `if` tradicional. En **R** usa `&` o `|`. En **Julia**, no olvides el punto de *broadcasting*: `.&` o `.|`.
+
+
+## Resumen de aprendizajes (cheat sheet)
+
+En este capítulo hemos explorado cómo tomar decisiones lógicas y automatizar tareas repetitivas. A continuación, se presenta tu **Hoja de Referencia (Cheat Sheet)** para traducir estos conceptos estructurales entre Python, R y Julia.
+
+### 1. Declaraciones condicionales y lógica
+
+| Estructura / Operador | Python | R | Julia |
+|:---|:---|:---|:---|
+| **Condicional Básico** | `if x > 0:` | `if (x > 0) { }` | `if x > 0 ... end` |
+| **Condicional Múltiple** | `elif x == 0:` | `else if (x == 0) { }`| `elseif x == 0` |
+| **Descarte (Sino)** | `else:` | `else { }` | `else` |
+| **Delimitador de Bloque** | Indentación (Tab) | Llaves `{ }` | Palabra `end` |
+| **Y (Escalar - para 'if')**| `and` | `&&` | `&&` |
+| **O (Escalar - para 'if')**| `or` | `||` | `||` |
+| **Y (Vectorizado - filtros)**| *(Usa Pandas/Numpy)*| `&` | `.&` |
+| **O (Vectorizado - filtros)**| *(Usa Pandas/Numpy)*| `|` | `.|` |
+
+: Equivalencias de toma de decisiones lógicas {#tbl-cheat_condicionales tbl-colwidths="[25,25,25,25]"}
+
+### 2. Ciclos for (iteraciones definidas)
+
+| Objetivo / Acción | Python | R | Julia |
+|:---|:---|:---|:---|
+| **Sintaxis Básica** | `for v in lista:` | `for (v in lista) { }`| `for v in lista` |
+| **Rango Numérico** | `for i in range(1, 6):`| `for (i in 1:5) { }` | `for i in 1:5` |
+| **Iterar con Índice** | `for i, v in enumerate(L):`| `for (i in seq_along(L))`| `for (i, v) in enumerate(L)`|
+| **Inicio del Índice** | **Empieza en 0** | **Empieza en 1** | **Empieza en 1** |
+| **Desempaquetar Tupla** | `for lat, lon in coords:`| *(Extracción manual)* | `for (lat, lon) in coords` |
+
+: Equivalencias para bucles definidos {#tbl-cheat_for tbl-colwidths="[25,25,25,25]"}
+
+### 3. Ciclos while (iteraciones indefinidas)
+
+| Objetivo / Acción | Python | R | Julia |
+|:---|:---|:---|:---|
+| **Sintaxis Básica** | `while condicion:` | `while (condicion) { }` | `while condicion` |
+| **Romper el Ciclo** | `break` | `break` | `break` |
+| **Saltar Iteración** | `continue` | `next` | `continue` |
+| **Cierre sin 'break'** | `while... else:` | *(Bandera lógica)* | *(Bandera lógica)* |
+
+: Equivalencias para bucles indefinidos y control de flujo {#tbl-cheat_while tbl-colwidths="[25,25,25,25]"}
+
+---
+
+::: {.callout-important}
+### Conclusiones críticas del módulo
+
+1. **La tiranía de la indentación en Python:** A diferencia de R (que usa `{}`) y Julia (que usa `end`), Python lee los espacios en blanco para saber qué código va dentro de un `if` o un `for`. Olvidar un tabulador o mezclar espacios con tabuladores destruirá tu código inmediatamente (*IndentationError*).
+2. **El "portero" vs el "colador" en R y Julia:** Nunca metas un vector entero dentro de un `if(x > 0 && y > 0)`. El operador doble (`&&`, `||`) colapsará al ver tantos datos. Si necesitas filtrar cientos de parcelas o coordenadas simultáneamente, usa la evaluación vectorizada con el operador simple (`&`, `|` en R; `.&`, `.|` en Julia).
+3. **El desfase de los índices numéricos:** Al usar funciones como `enumerate()` (Python/Julia) o `seq_along()` (R) para numerar elementos en un bucle, recuerda tu base matemática. En Python tu primera ciudad será la número `0`, mientras que en R y Julia será la número `1`. Ajusta tus impresiones en pantalla (`i + 1`) para no confundir al usuario final.
+4. **La trampa del ciclo infinito:** El error más común al programar un `while` es olvidar actualizar la condición que lo mantiene vivo. Si usas un contador numérico, asegúrate de sumarle 1 (`contador += 1`) dentro del bloque de repetición; de lo contrario, tu programa se congelará para siempre.
+:::
+
+## Ejercicios
+
+Para poner en práctica los conceptos aprendidos sobre bucles y declaraciones condicionales, deberás resolver los siguientes dos ejercicios. Puedes elegir resolverlos en **Python, R o Julia** (o implementar la solución en varios lenguajes si deseas retarte).
+
+### Ejercicio 1: Clasificación iterativa (ciclo for e if-else)
+
+**Contexto:** Estás trabajando en un proyecto de zonificación agrícola en el Eje Cafetero. Tienes una lista de fincas con su respectiva altitud. Sabiendo que el café de especialidad de la región requiere alturas entre los 1700 y los 2200 metros sobre el nivel del mar (msnm), necesitas crear un algoritmo que clasifique automáticamente cada finca.
+
+**Instrucciones de código:**
+
+1. Crea una colección (lista o vector) llamada `altitudes_fincas` que contenga los siguientes valores numéricos: `1350, 1750, 1900, 2300, 1600, 2100`.
+2. Inicializa dos contadores en cero: `conteo_especial` y `conteo_tradicional`.
+3. Inicializa dos colecciones vacías (listas o vectores) llamadas `fincas_especiales` y `fincas_tradicionales`.
+4. Construye un ciclo **`for`** que recorra uno a uno los valores de `altitudes_fincas`.
+5. Dentro del ciclo, utiliza una declaración **`if - else`** con operadores lógicos (`AND`) para evaluar cada altitud:
+
+   * **Si** la altitud es mayor o igual a 1700 **Y** menor o igual a 2200, agrega la altitud a la colección `fincas_especiales` y suma 1 al `conteo_especial`.
+   * **De lo contrario**, agrégala a la colección `fincas_tradicionales` y suma 1 al `conteo_tradicional`.
+6. Fuera del ciclo, imprime un reporte final que muestre cuántas fincas son aptas para café de especialidad y cuántas para café tradicional, mostrando además los valores guardados en ambas colecciones.
+
+### Ejercicio 2: Monitoreo de sensores (ciclo while y control de flujo)
+
+**Contexto:** El IDEAM te ha encargado programar el software de una estación hidrológica automatizada en el Río Magdalena. El sensor debe tomar lecturas continuas del nivel del agua. Si el río supera los 8.5 metros, el sistema debe disparar una alerta de inundación y detener las mediciones para proteger el equipo. Si después de cierto número de lecturas todo está normal, el sensor entra en modo de reposo.
+
+
+
+**Instrucciones de código:**
+
+1. Define las siguientes variables de configuración:
+
+   * `nivel_alerta` = 8.5
+   * `max_lecturas` = 12
+   * `lectura_actual` = 0
+   * Una bandera lógica (Booleana) llamada `alerta_inundacion` inicializada como Falsa (`False` / `FALSE` / `false`).
+2. Construye un ciclo **`while`** que se ejecute **mientras** `lectura_actual` sea menor a `max_lecturas`.
+3. Dentro del ciclo, simula la medición del río generando un número decimal aleatorio entre 5.0 y 9.0 (usa la función nativa de tu lenguaje para números aleatorios, ej. `random.uniform` en Python, `runif` en R, o `rand` en Julia).
+4. Incrementa en 1 la variable `lectura_actual`. Imprime en pantalla el número del intento y el nivel del agua medido (con dos decimales).
+5. Usa un condicional **`if`** para verificar si la medición superó o igualó el `nivel_alerta`. Si es así:
+
+   * Cambia la bandera `alerta_inundacion` a Verdadera.
+   * Imprime un mensaje de "¡ALERTA ROJA! Posible desbordamiento."
+   * Rompe el ciclo inmediatamente usando el comando adecuado (`break`).
+6. Fuera del ciclo `while`, utiliza un condicional para evaluar tu bandera lógica. Si la bandera sigue siendo Falsa, imprime: "Monitoreo finalizado. Niveles estables."
+
+### Entregables y criterios de evaluación
+
+El objetivo de esta evaluación no es solo que el código funcione, sino que seas capaz de documentar y explicar tus decisiones técnicas de control de flujo.
+
+**1. Archivos de Código:**
+Debes desarrollar los algoritmos en al menos uno de los siguientes formatos de archivo:
+
+* Script tradicional (`.py`, `.R`, `.jl`)
+* Notebook interactivo (`.ipynb`)
+* Documento computacional (`.qmd` con *chunks* de código)
+
+**2. Documento Analítico (Quarto):**
+Independientemente del formato de tu código fuente, **debes redactar un documento en Quarto (`.qmd`) y renderizarlo tanto en HTML como en PDF**. En este documento debes incluir tus bloques de código y responder argumentativamente a las siguientes preguntas:
+
+* **Sobre el Ejercicio 1 (Indentación y Bloques):** Si estuvieras desarrollando el código en **Python**, ¿cómo sabe el computador qué instrucciones pertenecen dentro del ciclo `for`, cuáles pertenecen al `if`, y cuáles deben ejecutarse solo al final del programa? ¿Qué diferencia estructural existe frente a cómo lo resolverías en **R** o **Julia**?
+* **Sobre el Ejercicio 2 (Ciclos Infinitos):** En el ciclo `while` de la simulación del río, ¿qué sucedería exactamente con la memoria y la ejecución del programa si olvidas incluir la instrucción que incrementa la variable `lectura_actual` en 1? ¿Por qué este riesgo no existe al usar un ciclo `for`?
+* **Pregunta General (Operadores Lógicos):** Si estás programando en **R** o **Julia**, explica detalladamente por qué es peligroso usar el operador doble (`&&`) cuando intentas filtrar un vector completo de altitudes, y por qué en ese caso específico debes usar el operador sencillo (`&` o `.&`).
+
+**3. Repositorio en GitHub:**
+Sube tu carpeta del proyecto (que debe contener tus scripts, el archivo `.qmd` y los renders finales en HTML y PDF) a un repositorio público en tu cuenta personal de **GitHub**.
+
+* **Entrega:** Deberás enviar únicamente el enlace (URL) a tu repositorio de GitHub para la calificación.

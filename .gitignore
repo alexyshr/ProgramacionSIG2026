@@ -5,7 +5,6 @@ __pycache__/
 notebooks/
 scripts/
 data/
-site_libs/
 sample_qmds/
 carrera_sig/
 /.quarto/

@@ -1,5 +1,11 @@
-﻿---
-# Este bloque vacío obliga a Quarto a entender que aquí empieza un documento nuevo
+---
+format:
+  html: default
+  pdf:
+    keep-tex: true
+    mermaid-format: png
+    include-in-header:
+      - text: \usepackage{pdflscape}
 ---
 
 # Estructuras de datos {#sec-estructuras_datos}
@@ -236,7 +242,7 @@ println("Cartagena: ", cartagena)
 **Nota técnica:** Las tuplas no existen nativamente en R con el comportamiento de "desempaquetado" e "inmutabilidad estricta" que vemos en Python y Julia. En R, utilizamos **vectores** (`c()`) o **listas** (`list()`) para agrupar coordenadas. Es crucial entender que en Python y Julia, si intentas ejecutar `punto_bogota[0] = 5.0`, el programa colapsará inmediatamente para proteger los datos (porque una tupla es inmutable). En R, `punto_bogota[1] <- 5.0` sí funcionará, reescribiendo la coordenada silenciosamente.
 
 
-## Listas (y Vectores)
+## Listas (y vectores)
 
 A diferencia de las tuplas, las **Listas** (en Python y Julia) o los **Vectores** (en R) son secuencias **mutables** y dinámicas. Son la estructura de datos más utilizada en geomática para almacenar series temporales, perfiles de elevación, atributos de una tabla o una secuencia ordenada de vértices que conforman una ruta, ya que permiten agregar, eliminar o modificar datos sobre la marcha.
 
@@ -269,15 +275,47 @@ ciudades = ["Bogotá", "Medellín", "Cali"]
 print("Ciudades a visitar:", ciudades)
 
 # 2. AGREGAR ELEMENTOS (Mutabilidad)
-# Agregamos Cartagena a nuestra ruta y su elevación al perfil
+
+# a. Agregar al final (.append)
+# Agregamos Cartagena al final de nuestra ruta (pasa a ser la tercera parada, índice 2)
 ruta.append((10.3910, -75.4794))
 elevaciones.append(2.0)
-print("Ruta actualizada:", ruta)
+print("Ruta con Cartagena al final:", ruta)
+
+# b. Insertar en una posición específica (.insert)
+# Necesitamos agregar una parada (ej. Manizales) justo DESPUÉS de Medellín.
+# Como Medellín es el índice 1, insertamos en el índice 2.
+# Esto empuja a Cartagena hacia el índice 3
+ruta.insert(2, (5.0689, -75.5174))
+elevaciones.insert(2, 2160.0)
+
+print("\nRuta final con parada intercalada:", ruta)
+print("Elevaciones finales:", elevaciones)
+
+# NOTA PEDAGÓGICA:
+# Usar .insert(2, valor) asegura que el nuevo elemento ocupe exactamente 
+# la tercera posición de la lista (Base 0), respetando el orden de las paradas anteriores.
 
 # 3. ACCEDER A ELEMENTOS (Índices)
 # Acceder a la primera ciudad de la ruta (Índice 0)
 primera_parada = ruta[0]
 print(f"Primera parada: {primera_parada}")
+
+# Acceder a la latitud de la segunda ciudad de la ruta 
+# Índice 1 (entra a Medellín) y luego Índice 0 (extrae la latitud)
+# Nota: A diferencia de R, en Python NO se usan dobles corchetes [[ ]].
+# Aquí simplemente encadenamos un corchete al lado del otro: [1][0]
+sda_parada_lat = ruta[1][0]
+print(f"Latitud segunda parada: {sda_parada_lat}")
+
+# Alternativa Pythonica: Desempaquetado de tuplas
+# Extraemos la tupla entera (ruta[1]) y la desempaquetamos 
+# directamente en dos variables con nombres claros.
+# En este caso decidimos no extraer la longitud
+latitud, _ = ruta[1]
+
+print(f"Latitud segunda parada: {latitud}")
+
 
 # Acceder a la última ciudad usando indexación negativa
 ultima_parada = ruta[-1]
@@ -331,15 +369,46 @@ ciudades = ["Bogotá", "Medellín", "Cali"]
 print("Ciudades a visitar:", ciudades)
 
 # 2. AGREGAR ELEMENTOS (Mutabilidad)
-# Agregamos Cartagena a nuestra ruta y su elevación al perfil
+
+# a. Agregar al final (.append)
+# Agregamos Cartagena al final de nuestra ruta (pasa a ser la tercera parada, índice 2)
 ruta.append((10.3910, -75.4794))
 elevaciones.append(2.0)
-print("Ruta actualizada:", ruta)
+print("Ruta con Cartagena al final:", ruta)
+
+# b. Insertar en una posición específica (.insert)
+# Necesitamos agregar una parada (ej. Manizales) justo DESPUÉS de Medellín.
+# Como Medellín es el índice 1, insertamos en el índice 2.
+# Esto empuja a Cartagena hacia el índice 3
+ruta.insert(2, (5.0689, -75.5174))
+elevaciones.insert(2, 2160.0)
+
+print("\nRuta final con parada intercalada:", ruta)
+print("Elevaciones finales:", elevaciones)
+
+# NOTA PEDAGÓGICA:
+# Usar .insert(2, valor) asegura que el nuevo elemento ocupe exactamente 
+# la tercera posición de la lista (Base 0), respetando el orden de las paradas anteriores.
 
 # 3. ACCEDER A ELEMENTOS (Índices)
 # Acceder a la primera ciudad de la ruta (Índice 0)
 primera_parada = ruta[0]
 print(f"Primera parada: {primera_parada}")
+
+# Acceder a la latitud de la segunda ciudad de la ruta 
+# Índice 1 (entra a Medellín) y luego Índice 0 (extrae la latitud)
+# Nota: A diferencia de R, en Python NO se usan dobles corchetes [[ ]].
+# Aquí simplemente encadenamos un corchete al lado del otro: [1][0]
+sda_parada_lat = ruta[1][0]
+print(f"Latitud segunda parada: {sda_parada_lat}")
+
+# Alternativa Pythonica: Desempaquetado de tuplas
+# Extraemos la tupla entera (ruta[1]) y la desempaquetamos 
+# directamente en dos variables con nombres claros.
+# En este caso decidimos no extraer la longitud
+latitud, _ = ruta[1]
+
+print(f"Latitud segunda parada: {latitud}")
 
 # Acceder a la última ciudad usando indexación negativa
 ultima_parada = ruta[-1]
@@ -393,16 +462,72 @@ cat("Perfil de elevación:", elevaciones, "\n")
 ciudades <- c("Bogotá", "Medellín", "Cali")
 cat("Ciudades a visitar:", ciudades, "\n")
 
-# 2. AGREGAR ELEMENTOS
-# Agregamos Cartagena a la ruta (usando append para listas)
+# 2. AGREGAR ELEMENTOS (Mutabilidad)
+
+# a. Agregar al final (append / c)
+# Agregamos Cartagena al final de la lista de rutas
 ruta <- append(ruta, list(c(10.3910, -75.4794)))
-# Agregamos la elevación al vector (creando un nuevo vector combinado)
+# Agregamos la elevación al final del vector
 elevaciones <- c(elevaciones, 2.0)
 
+print("Ruta con Cartagena al final:")
+print(ruta)
+
+# b. Insertar en una posición específica (after)
+# Necesitamos agregar Manizales justo DESPUÉS de Medellín.
+# Como Medellín es la posición 2, indicamos after = 2.
+# Esto coloca a Manizales en la posición 3 y desplaza a Cartagena a la 4.
+ruta <- append(ruta, list(c(5.0689, -75.5174)), after = 2)
+elevaciones <- append(elevaciones, 2160.0, after = 2)
+
+print("Ruta final con parada intercalada:")
+print(ruta)
+
+# NOTA PEDAGÓGICA:
+# En R, la función append() es muy versátil. Si no usas 'after', agrega al final.
+# Al usar after = 2, le indicamos que el nuevo "eslabón" se enganche justo 
+# después de la segunda posición, manteniendo la lógica de nuestra ruta.
+
 # 3. ACCEDER A ELEMENTOS (Índice Base 1)
-# En listas de R, se usa doble corchete [[ ]] para extraer el elemento real
+
+# LA REGLA DE ORO DE LAS LISTAS EN R:
+# ruta[1]   -> Devuelve una LISTA (La "caja" cerrada). No podemos hacer cálculos numéricos con esto.
+# ruta[[1]] -> Devuelve el VECTOR (El contenido de la caja). ¡Esto es lo que necesitamos!
 primera_parada <- ruta[[1]]
 cat("Primera parada:", primera_parada, "\n")
+
+# ACCEDER A LA LATITUD DE LA SEGUNDA CIUDAD DE LA RUTA (MEDELLÍN)
+# --- ESTRATEGIA MATRIOSHKA EN R ---
+
+# a. El camino largo (Entender las capas)
+# ruta[2]         -> Crea una sub-lista (caja con el paquete adentro)
+# ruta[2][[1]]    -> Abre la sub-lista para sacar el vector (el paquete)
+# ruta[2][[1]][1] -> Toma el primer valor del paquete (la latitud)
+
+sda_parada_lat_v1 <- ruta[2][[1]][1]
+cat("Camino Largo - Latitud segunda parada:", sda_parada_lat_v1, "\n")
+
+# b. El camino directo (La forma recomendada)
+# ruta[[2]]       -> Abre directamente la caja 2 de la lista original
+# ruta[[2]][1]    -> Toma el primer valor del vector extraído
+
+sda_parada_lat_v2 <- ruta[[2]][1]
+cat("Camino Corto - Latitud segunda parada:", sda_parada_lat_v2, "\n")
+
+# NOTA PEDAGÓGICA: 
+# ruta[2][[1]] es exactamente idéntico a ruta[[2]]. 
+# Usar la primera opción es como abrir un sobre para sacar una carta 
+# que está dentro de otro sobre. ¡Doble trabajo innecesario!
+
+# c. Alternativa: Paso a paso para evitar el laberinto de corchetes
+# A diferencia de Python/Julia, R Base no tiene un "desempaquetado" de 
+# múltiples variables en una sola línea. La forma más limpia y "R-ónica" 
+# de hacerlo sin confundirse es usar variables intermedias:
+
+medellin_coords <- ruta[[2]]   # Paso 1: Extraemos el vector completo
+latitud <- medellin_coords[1]  # Paso 2: Sacamos solo lo que nos interesa
+
+cat("Paso a Paso  - Latitud segunda parada:", latitud, "\n")
 
 # Acceder a la última ciudad usando la longitud total
 ultima_parada <- ruta[[length(ruta)]]
@@ -450,16 +575,72 @@ cat("Perfil de elevación:", elevaciones, "\n")
 ciudades <- c("Bogotá", "Medellín", "Cali")
 cat("Ciudades a visitar:", ciudades, "\n")
 
-# 2. AGREGAR ELEMENTOS
-# Agregamos Cartagena a la ruta (usando append para listas)
+# 2. AGREGAR ELEMENTOS (Mutabilidad)
+
+# a. Agregar al final (append / c)
+# Agregamos Cartagena al final de la lista de rutas
 ruta <- append(ruta, list(c(10.3910, -75.4794)))
-# Agregamos la elevación al vector (creando un nuevo vector combinado)
+# Agregamos la elevación al final del vector
 elevaciones <- c(elevaciones, 2.0)
 
+print("Ruta con Cartagena al final:")
+print(ruta)
+
+# b. Insertar en una posición específica (after)
+# Necesitamos agregar Manizales justo DESPUÉS de Medellín.
+# Como Medellín es la posición 2, indicamos after = 2.
+# Esto coloca a Manizales en la posición 3 y desplaza a Cartagena a la 4.
+ruta <- append(ruta, list(c(5.0689, -75.5174)), after = 2)
+elevaciones <- append(elevaciones, 2160.0, after = 2)
+
+print("Ruta final con parada intercalada:")
+print(ruta)
+
+# NOTA PEDAGÓGICA:
+# En R, la función append() es muy versátil. Si no usas 'after', agrega al final.
+# Al usar after = 2, le indicamos que el nuevo "eslabón" se enganche justo 
+# después de la segunda posición, manteniendo la lógica de nuestra ruta.
+
 # 3. ACCEDER A ELEMENTOS (Índice Base 1)
-# En listas de R, se usa doble corchete [[ ]] para extraer el elemento real
+
+# LA REGLA DE ORO DE LAS LISTAS EN R:
+# ruta[1]   -> Devuelve una LISTA (La "caja" cerrada). No podemos hacer cálculos numéricos con esto.
+# ruta[[1]] -> Devuelve el VECTOR (El contenido de la caja). ¡Esto es lo que necesitamos!
 primera_parada <- ruta[[1]]
 cat("Primera parada:", primera_parada, "\n")
+
+# ACCEDER A LA LATITUD DE LA SEGUNDA CIUDAD DE LA RUTA (MEDELLÍN)
+# --- ESTRATEGIA MATRIOSHKA EN R ---
+
+# a. El camino largo (Entender las capas)
+# ruta[2]         -> Crea una sub-lista (caja con el paquete adentro)
+# ruta[2][[1]]    -> Abre la sub-lista para sacar el vector (el paquete)
+# ruta[2][[1]][1] -> Toma el primer valor del paquete (la latitud)
+
+sda_parada_lat_v1 <- ruta[2][[1]][1]
+cat("Camino Largo - Latitud segunda parada:", sda_parada_lat_v1, "\n")
+
+# b. El camino directo (La forma recomendada)
+# ruta[[2]]       -> Abre directamente la caja 2 de la lista original
+# ruta[[2]][1]    -> Toma el primer valor del vector extraído
+
+sda_parada_lat_v2 <- ruta[[2]][1]
+cat("Camino Corto - Latitud segunda parada:", sda_parada_lat_v2, "\n")
+
+# NOTA PEDAGÓGICA: 
+# ruta[2][[1]] es exactamente idéntico a ruta[[2]]. 
+# Usar la primera opción es como abrir un sobre para sacar una carta 
+# que está dentro de otro sobre. ¡Doble trabajo innecesario!
+
+# c. Alternativa: Paso a paso para evitar el laberinto de corchetes
+# A diferencia de Python/Julia, R Base no tiene un "desempaquetado" de 
+# múltiples variables en una sola línea. La forma más limpia y "R-ónica" 
+# de hacerlo sin confundirse es usar variables intermedias:
+
+medellin_coords <- ruta[[2]]   # Paso 1: Extraemos el vector completo
+latitud <- medellin_coords[1]  # Paso 2: Sacamos solo lo que nos interesa
+
+cat("Paso a Paso  - Latitud segunda parada:", latitud, "\n")
 
 # Acceder a la última ciudad usando la longitud total
 ultima_parada <- ruta[[length(ruta)]]
@@ -511,16 +692,49 @@ println("Perfil de elevación: ", elevaciones)
 ciudades = ["Bogotá", "Medellín", "Cali"]
 println("Ciudades a visitar: ", ciudades)
 
-# 2. AGREGAR ELEMENTOS (Mutabilidad directa con push!)
+# 2. AGREGAR ELEMENTOS (Mutabilidad directa con push! e insert!)
+
+# a. Agregar al final (push!)
+# Agregamos Cartagena al final de la ruta (pasa a ser la tercera parada)
 push!(ruta, (10.3910, -75.4794))
 push!(elevaciones, 2.0)
-println("Ruta actualizada: ", ruta)
+
+println("Ruta con Cartagena al final: ", ruta)
+
+# b. Insertar en una posición específica (insert!)
+# Queremos a Manizales justo DESPUÉS de Medellín. 
+# Como Medellín es la posición 2, insertamos en la posición 3.
+# Esto desplaza a Cartagena a la posición 4.
+insert!(ruta, 3, (5.0689, -75.5174))
+insert!(elevaciones, 3, 2160.0)
+
+println("\nRuta final con parada intercalada: ", ruta)
+println("Elevaciones finales: ", elevaciones)
+
+# NOTA PEDAGÓGICA:
+# El signo '!' en push! e insert! indica que estas funciones modifican 
+# el objeto original (mutabilidad). Al ser Base 1, la posición 3 es 
+# exactamente el lugar que sigue a Medellín.
 
 # 3. ACCEDER A ELEMENTOS (Índice Base 1)
-# Acceder al primer vértice
+# Acceder a la primera ciudad de la ruta (Índice 1)
 primera_parada = ruta[1]
 println("Primera parada: ", primera_parada)
 
+# Acceder a la latitud de la segunda ciudad de la ruta (Medellín)
+# Índice 2 (entra a Medellín) y luego Índice 1 (extrae la latitud)
+# Nota: A diferencia de R, aquí no hay cajas fuertes [[ ]]. 
+# Igual que en Python, simplemente encadenamos corchetes simples: [2][1]
+sda_parada_lat = ruta[2][1]
+println("Latitud segunda parada: ", sda_parada_lat)
+
+# Alternativa elegante: Desempaquetado de tuplas (Destructuring)
+# Julia hereda esta genialidad de lenguajes modernos. Extraemos la tupla 
+# entera (ruta[2]) y la desempaquetamos directamente en variables.
+# Usamos el guion bajo (_) para ignorar el dato que no necesitamos (longitud).
+latitud, _ = ruta[2]
+
+println("Latitud segunda parada (desempaquetado): ", latitud)
 # Julia tiene la palabra clave 'end' para acceder al último elemento
 ultima_parada = ruta[end]
 println("Última parada: ", ultima_parada)
@@ -571,15 +785,49 @@ println("Perfil de elevación: ", elevaciones)
 ciudades = ["Bogotá", "Medellín", "Cali"]
 println("Ciudades a visitar: ", ciudades)
 
-# 2. AGREGAR ELEMENTOS (Mutabilidad directa con push!)
+# 2. AGREGAR ELEMENTOS (Mutabilidad directa con push! e insert!)
+
+# a. Agregar al final (push!)
+# Agregamos Cartagena al final de la ruta (pasa a ser la tercera parada)
 push!(ruta, (10.3910, -75.4794))
 push!(elevaciones, 2.0)
-println("Ruta actualizada: ", ruta)
+
+println("Ruta con Cartagena al final: ", ruta)
+
+# b. Insertar en una posición específica (insert!)
+# Queremos a Manizales justo DESPUÉS de Medellín. 
+# Como Medellín es la posición 2, insertamos en la posición 3.
+# Esto desplaza a Cartagena a la posición 4.
+insert!(ruta, 3, (5.0689, -75.5174))
+insert!(elevaciones, 3, 2160.0)
+
+println("\nRuta final con parada intercalada: ", ruta)
+println("Elevaciones finales: ", elevaciones)
+
+# NOTA PEDAGÓGICA:
+# El signo \'!\' en push! e insert! indica que estas funciones modifican 
+# el objeto original (mutabilidad). Al ser Base 1, la posición 3 es 
+# exactamente el lugar que sigue a Medellín.
 
 # 3. ACCEDER A ELEMENTOS (Índice Base 1)
-# Acceder al primer vértice
+# Acceder a la primera ciudad de la ruta (Índice 1)
 primera_parada = ruta[1]
 println("Primera parada: ", primera_parada)
+
+# Acceder a la latitud de la segunda ciudad de la ruta (Medellín)
+# Índice 2 (entra a Medellín) y luego Índice 1 (extrae la latitud)
+# Nota: A diferencia de R, aquí no hay cajas fuertes [[ ]]. 
+# Igual que en Python, simplemente encadenamos corchetes simples: [2][1]
+sda_parada_lat = ruta[2][1]
+println("Latitud segunda parada: ", sda_parada_lat)
+
+# Alternativa elegante: Desempaquetado de tuplas (Destructuring)
+# Julia hereda esta genialidad de lenguajes modernos. Extraemos la tupla 
+# entera (ruta[2]) y la desempaquetamos directamente en variables.
+# Usamos el guion bajo (_) para ignorar el dato que no necesitamos (longitud).
+latitud, _ = ruta[2]
+
+println("Latitud segunda parada (desempaquetado): ", latitud)
 
 # Julia tiene la palabra clave "end" para acceder al último elemento
 ultima_parada = ruta[end]
@@ -610,21 +858,104 @@ println("Elevación promedio: ", round(elev_promedio, digits=1), " metros")
 
 :::
 
+### Diagrama Conceptual: La Metáfora de la Caja y el Paquete
+
+Para entender cómo cada lenguaje navega por estas estructuras complejas, vamos a plantearnos un objetivo práctico: **extraer la latitud de la segunda parada de nuestra ruta (Medellín)**.
+
+En el siguiente diagrama observaremos el flujo completo, desde cómo se declara la lista de coordenadas, hasta los comandos exactos que debemos introducir en la terminal para llegar al número `6.2442`. 
+
+La clave al leer el gráfico está en notar la diferencia de filosofías: observe cómo Python y Julia le entregan el dato listo para usar o desempaquetar, mientras que R le pone una trampa. Si usa corchetes simples (`[ ]`), R le entregará una "caja fuerte" cerrada que provocará un error matemático si intenta operarla; para obtener el dato real, deberá usar la llave doble (`[[ ]]`) que abre el paquete.
+
+
+
+```{=latex}
+\begin{landscape}
+```
+
+```{mermaid}
+%%| label: fig-metafora-indices-obra-maestra-v2
+%%| fig-cap: "El flujo completo: Desde la declaración de la estructura hasta el desempaquetado de sus elementos."
+%%| fig-width: 8
+%%| fig-align: center
+%%| out-width: "100%"
+graph TD
+    %% 1. ESTILOS DEFINITIVOS
+    classDef caja fill:#fbeeb8,stroke:#e6b800,stroke-width:3px,stroke-dasharray: 5 5,color:#000;
+    classDef abierto fill:#d4edda,stroke:#28a745,stroke-width:3px,color:#000;
+    classDef terminal fill:#333,stroke:#666,color:#fff,font-family:monospace,font-size:13px;
+    classDef var fill:#e2e3e5,stroke:#343a40,stroke-width:2px,color:#000;
+    classDef err fill:#f1f4f9,stroke:#dc3545,stroke-width:2px,color:#dc3545;
+    classDef tit fill:#fff,stroke:#333;
+    
+    %% Bajamos a 11px y mantenemos el monospace para las definiciones
+    classDef codigo fill:#e8f4f8,stroke:#0dcaf0,stroke-width:2px,color:#000,font-family:monospace,font-size:11px;
+
+    %% 2. TÍTULOS
+    Python["&nbsp;&nbsp;&nbsp;🐍 PYTHON [Base 0]&nbsp;&nbsp;&nbsp;"]:::tit
+    Rlang["&nbsp;&nbsp;&nbsp;🔵 R [Base 1]&nbsp;&nbsp;&nbsp;"]:::tit
+    Julia["&nbsp;&nbsp;&nbsp;🟣 JULIA [Base 1]&nbsp;&nbsp;&nbsp;"]:::tit
+
+    %% 3. DEFINICIÓN DE LA VARIABLE INICIAL (Padding masivo de 10 espacios)
+    Py_Def["&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ruta = [(lat0, lon0), (6.2442, -75.5812), ...]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"]:::codigo
+    R_Def["&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ruta <- list(c(lat1, lon1), c(6.2442, -75.5812), ...)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"]:::codigo
+    Ju_Def["&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ruta = [(lat1, lon1), (6.2442, -75.5812), ...]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"]:::codigo
+
+    Python --- Py_Def
+    Rlang --- R_Def
+    Julia --- Ju_Def
+
+    %% --- FLUJO PYTHON ---
+    Py_Def --- Py_Cmd["ruta[1]"]
+    Py_Cmd --> Py_Out["&nbsp;Terminal: (6.2442, -75.5812)&nbsp;"]:::terminal
+    
+    Py_Out -->|"[0]"| Py_Lat["Lat: 6.2442"]:::var
+    Py_Out -->|"lat, lon = ruta[1]"| Py_Unpack["Desempaquetado"]:::var
+
+    %% --- FLUJO R ---
+    R_Def --- R_CmdS["ruta[2]"]
+    R_Def --- R_CmdE["ruta[[2]]"]
+    
+    R_CmdS --> R_OutS["&nbsp;Terminal: [[1]]<br/>&nbsp;[1] 6.2442 -75.5812&nbsp;"]:::terminal
+    R_OutS --> R_Box["📦 CAJA CERRADA<br/>[Lista con vector]"]:::caja
+    
+    R_CmdE --> R_OutE["&nbsp;Terminal: [1] 6.2442 -75.5812&nbsp;"]:::terminal
+    R_OutE -->|"Abre la caja"| R_Vec["🔓 PAQUETE ABIERTO<br/>(Vector)"]:::abierto
+    
+    R_Box -->|"[[1]]"| R_Vec
+    R_Box -.->|"Error Matemático"| R_Fail{"❌ No operable"}:::err
+    R_Vec -->|"[1]"| R_Lat["Lat: 6.2442"]:::var
+
+    %% --- FLUJO JULIA ---
+    Ju_Def --- Ju_Cmd["ruta[2]"]
+    Ju_Cmd --> Ju_Out["&nbsp;Terminal: (6.2442, -75.5812)&nbsp;"]:::terminal
+    
+    Ju_Out -->|"[1]"| Ju_Lat["Lat: 6.2442"]:::var
+    Ju_Out -->|"lat, _ = ruta[2]"| Ju_Unpack["Desempaquetado"]:::var
+```
+
+```{=latex}
+\end{landscape}
+```
+
+
 
 
 ### Resumen de Operaciones en Listas/Vectores
 
 | Operación | Python | R | Julia |
 |:---|:---:|:---:|:---:|
-| **Creación** | `[x, y, z]` | `c(x, y, z)` | `[x, y, z]` |
-| **Agregar** | `.append(x)` | `c(vector, x)` | `push!(array, x)` |
+| **Creación** | `[x, y, z]` | `list(x, y, z)` o `c(x, y, z)` | `[x, y, z]` |
+| **Extraer contenido (Listas)** | `[i]` | `[[i]]` | `[i]` |
+| **Desempaquetado** | `a, b = lista` | *No nativo (Base)* | `a, b = lista` |
+| **Agregar (final)** | `.append(x)` | `c(vector, x)` | `push!(array, x)` |
+**Insertar (pos i)** | `.insert(i, val)` | `append(x, val, after=i)` | `insert!(x, i, val)` |
 | **Último Elemento** | `[-1]` | `[length(x)]` | `[end]` |
 | **Rango (*Slicing*)** | `[2:5]` (Excluye el 5) | `[3:5]` (Incluye el 5) | `[3:5]` (Incluye el 5) |
 | **Largo total** | `len(x)` | `length(x)` | `length(x)` |
 | **Máximo** | `max(x)` | `max(x)` | `maximum(x)` |
 | **Promedio** | `sum(x)/len(x)` | `mean(x)` | `sum(x)/length(x)` |
 
-: Equivalencias para el manejo de secuencias ordenadas {#tbl-operaciones_listas tbl-colwidths="[20,25,30,25]"}
+: Equivalencias para el manejo de secuencias ordenadas {#tbl-operaciones_listas tbl-colwidths="[25,25,25,25]"}
 
 ---
 
@@ -651,7 +982,7 @@ Para evitar errores al manipular datos espaciales en R, es vital entender esta d
 **Regla de oro en R:** Usa `c()` para colecciones de datos homogéneos. Usa `list()` cuando necesites agrupar geometrías complejas, atributos mixtos o emular la estructura de un diccionario clave-valor.
 :::
 
-## Conjuntos (*Sets*)
+## Conjuntos (*sets*)
 
 Los **Conjuntos** son estructuras de datos que almacenan colecciones de elementos **sin orden y sin duplicados**. Son la traducción computacional de la teoría matemática de conjuntos. En el análisis espacial, son indispensables para obtener listas de valores únicos (por ejemplo, extraer todos los códigos de municipios de una gran base de datos sin repeticiones) y para realizar operaciones espaciales lógicas como intersecciones, uniones o diferencias de atributos entre dos zonas geográficas.
 
@@ -1429,7 +1760,7 @@ println("Servicios: ", join(punto_gps["facilidades"], ", "))
 * En **Python y Julia**, pedir una clave inexistente (como `info_bogota["clima"]`) hará que el programa **colapse inmediatamente** (`KeyError`). Por eso, es mejor práctica usar la función segura `.get()` cuando no estamos seguros de si el atributo existe.
 * En **R**, la aproximación es mucho más laxa. Si pides `info_bogota$clima`, R no arrojará ningún error, simplemente devolverá `NULL` (vacío). Esto puede ser peligroso porque el programa sigue ejecutándose silenciosamente, pero los cálculos posteriores podrían fallar o contaminarse con datos nulos.
 
-## Guía de Selección de Estructuras de Datos
+## Guía de selección de estructuras de datos
 
 Saber elegir la estructura de datos correcta es la diferencia entre un script que procesa millones de coordenadas en segundos y uno que colapsa tu computadora. A continuación, te presentamos una guía práctica para tomar esta decisión en tus proyectos de análisis espacial.
 
@@ -1442,8 +1773,8 @@ Hazte las siguientes preguntas sobre los datos que necesitas almacenar:
    * **SÍ:** Pasa a la pregunta 2.
    * **NO:** Pasa a la pregunta 3.
 
-2. **¿Necesitarás agregar, borrar o modificar datos después de crearlos?**
-   * **SÍ (Mutables):** Usa una **Lista** (o Vector `c()` en R). *Ideal para acumular resultados de un cálculo.*
+2. **¿Necesitarás agregar, borrar o intercalar datos después de crearlos?**
+   * **SÍ (Mutables):** Usa una **Lista** (o Vector `c()` en R). *Ideal para acumular resultados al final de un proceso (`append`) o intercalar nuevas paradas en medio de una ruta (`insert`).*
    * **NO (Inmutables):** Usa una **Tupla** (en Python/Julia). *Ideal para fijar pares de coordenadas exactas (Lat, Lon) que nadie deba alterar por error.*
 
 3. **¿Cómo vas a buscar la información?**
@@ -1452,32 +1783,32 @@ Hazte las siguientes preguntas sobre los datos que necesitas almacenar:
 
 ---
 
-### Casos de Uso Comunes en Geomática
+### Casos de uso comunes en geomática
 
 | Escenario | Estructura Recomendada | ¿Por qué? |
 |:---|:---:|:---|
 | Coordenada estática `(X, Y)` | **Tupla** | Protege el dato. Si un algoritmo intenta mover la X sin mover la Y, el programa arroja error y salva la topología. |
-| Perfil de elevación de una ruta | **Lista / Vector** | Mantiene el orden estricto de los datos. Permite usar funciones matemáticas rápidas (`max`, `mean`). |
+| Perfil de elevación de una ruta | **Lista / Vector** | Mantiene el orden estricto de los datos y permite mutabilidad posicional. Permite usar funciones matemáticas rápidas (`max`, `mean`). |
 | Tabla de atributos de un lote | **Diccionario** | Permite acceder a los datos intuitivamente por nombre (ej. `lote["propietario"]`) en lugar de recordar en qué columna numérica estaban. |
 | Intersectar áreas de influencia | **Conjunto (Set)** | Permite operaciones de Teoría de Conjuntos nativas y ultrarrápidas (`union`, `intersect`) para saber, por ejemplo, qué fincas están en zona de riesgo. |
 
-: Escenarios prácticos para la selección de estructuras de datos {#tbl-seleccion_estructuras}
+: Escenarios prácticos para la selección de estructuras de datos {#tbl-seleccion_estructuras tbl-colwidths="[25,20,55]"}
 
-
+::: {.callout-warning icon="false"}
+### ⚠️ La Trampa de R (Recordatorio)
+Si en tu análisis decidiste usar una **Lista** en R (`list()`) para agrupar geometrías complejas, nunca olvides la regla de oro de la extracción: usar un corchete simple `[i]` te devuelve una caja cerrada con la que no puedes hacer matemáticas. Para extraer el dato real y operar con él, **siempre debes abrir la caja con el doble corchete `[[i]]`**.
+:::
 
 ::: {.callout-tip}
 ### Consejo de Rendimiento
 Si estás procesando *Big Data* espacial (ej. nubes de puntos LiDAR con millones de registros), evita usar **Listas** si vas a realizar búsquedas frecuentes ("¿Existe este punto en la lista?"). Buscar en una lista obliga al computador a revisar elemento por elemento. Por el contrario, buscar en un **Conjunto** o en las claves de un **Diccionario** es casi instantáneo debido a cómo se estructuran internamente en la memoria (Tablas Hash).
 :::
 
-
-## Resumen de Aprendizajes (Cheat Sheet)
+## Resumen de aprendizajes (cheat sheet)
 
 En este capítulo hemos explorado cómo organizar, almacenar y manipular grupos de datos usando las cuatro estructuras fundamentales de la programación. A continuación, se presenta tu **Hoja de Referencia (Cheat Sheet)** para traducir estos conceptos entre Python, R y Julia.
 
-
-
-### 1. Creación y Propiedades Fundamentales
+### 1. Creación y propiedades fundamentales
 
 | Estructura | Python | R | Julia | Mutabilidad |
 |:---|:---|:---|:---|:---:|
@@ -1488,11 +1819,12 @@ En este capítulo hemos explorado cómo organizar, almacenar y manipular grupos 
 
 : Definición de estructuras de datos y mutabilidad {#tbl-cheat_creacion tbl-colwidths="[20,20,25,20,15]"}
 
-### 2. Acceso, Índices y Extracción (*Slicing*)
+### 2. Acceso, índices y extracción (*Slicing*)
 
 | Operación | Python (Base 0) | R (Base 1) | Julia (Base 1) |
 |:---|:---|:---|:---|
 | **Primer Elemento** | `lista[0]` | `vector[1]` o `lista[[1]]` | `array[1]` |
+| **Desempaquetado** | `a, b = tupla` | *Paso a paso:* `a <- v[1]` | `a, b = tupla` |
 | **Último Elemento** | `lista[-1]` | `vector[length(vector)]` | `array[end]` |
 | **Rango (*Slicing*)** | `lista[2:5]` *(Excluye el 5)* | `vector[3:5]` *(Incluye el 5)* | `array[3:5]` *(Incluye el 5)* |
 | **Acceso a Diccionario** | `dict["clave"]` | `lista$clave` | `dict["clave"]` |
@@ -1500,12 +1832,13 @@ En este capítulo hemos explorado cómo organizar, almacenar y manipular grupos 
 
 : Reglas de indexación y acceso a elementos {#tbl-cheat_acceso tbl-colwidths="[25,25,25,25]"}
 
-### 3. Operaciones Principales y Modificaciones
+### 3. Operaciones principales y modificaciones
 
 | Objetivo / Acción | Python | R | Julia |
 |:---|:---|:---|:---|
 | **Tamaño / Longitud** | `len(datos)` | `length(datos)` | `length(datos)` |
 | **Agregar al final** | `lista.append(x)` | `v <- c(v, x)` | `push!(array, x)` |
+| **Insertar en posición *i***| `lista.insert(i, x)` | `append(v, list(x), after=i)`| `insert!(array, i, x)` |
 | **Eliminar Duplicados** | `set(lista)` | `unique(vector)` | `unique(array)` o `Set(array)`|
 | **Valor Máximo** | `max(lista)` | `max(vector)` | `maximum(array)` |
 | **Intersección (Comunes)** | `set1 & set2` | `intersect(v1, v2)` | `intersect(s1, s2)` |
@@ -1521,14 +1854,14 @@ En este capítulo hemos explorado cómo organizar, almacenar y manipular grupos 
 1. **La trampa del Índice de Origen:** Nunca olvides que Python empieza a contar desde `0`, mientras que R y Julia empiezan desde `1`. Migrar un código de análisis de series de tiempo de R a Python sin ajustar los índices resultará en datos desplazados o errores de ejecución (*IndexError*).
 2. **La ilusión de las Listas en R:** En Python y Julia, los corchetes `[]` crean listas o arreglos dinámicos. En R, una verdadera colección homogénea se crea con la función concatenar `c()`. El comando `list()` en R equivale en comportamiento a un Diccionario o a una estructura anidada.
 3. **Tuplas para Topología:** Acostúmbrate a guardar las coordenadas geográficas siempre como Tuplas en Python y Julia. Su inmutabilidad evitará que un bucle mal programado altere silenciosamente la posición espacial de tus datos originales.
+4. **El laberinto de los corchetes en R:** Cuando trabajes con listas complejas (`list()`) en R, recuerda la metáfora de la caja fuerte. Un corchete simple `[i]` te devuelve una sub-lista (la caja cerrada), mientras que el doble corchete `[[i]]` te entrega el vector operable (el paquete abierto listo para usarse). ¡Confundirlos es una causa muy común de errores matemáticos!
 :::
-
 
 ## Ejercicios
 
 Para poner en práctica los conceptos aprendidos sobre estructuras de datos, deberás resolver los siguientes dos ejercicios. Puedes elegir resolverlos en **Python, R o Julia** (o implementar la solución en varios lenguajes si deseas retarte).
 
-### Ejercicio 1: Rutas de monitoreo (Tuplas y Listas)
+### Ejercicio 1: Rutas de monitoreo (tuplas y listas)
 
 
 
@@ -1546,7 +1879,7 @@ Para poner en práctica los conceptos aprendidos sobre estructuras de datos, deb
 5. Crea una nueva lista/vector paralela llamada `elevaciones` que contenga las alturas de los cuatro puntos: `[850.5, 920.0, 1050.2, 1180.8]`.
 6. Calcula e imprime la elevación máxima alcanzada en el recorrido y el número total de puntos visitados (vértices), utilizando las funciones nativas (ej. `max()`, `len()`, `length()`).
 
-### Ejercicio 2: Metadatos y Ecosistemas (Diccionarios y Conjuntos)
+### Ejercicio 2: Metadatos y ecosistemas (diccionarios y conjuntos)
 
 **Contexto:** Estás diseñando el esquema de base de datos para los Parques Nacionales Naturales (PNN). Necesitas estructurar los atributos de un parque usando un modelo de clave-valor (similar a GeoJSON) y depurar una lista de observaciones de campo que tiene datos duplicados.
 
@@ -1564,7 +1897,7 @@ Para poner en práctica los conceptos aprendidos sobre estructuras de datos, deb
    Convierte esta colección en un **Conjunto** (*Set* o usando `unique()`) para eliminar los duplicados y guárdalo en la variable `observaciones_unicas`.
 5. Utiliza una **operación lógica de conjuntos** (intersección) entre la lista oficial de ecosistemas del parque (guardada dentro de tu diccionario en el paso 1) y tus `observaciones_unicas`. Imprime el resultado para saber qué ecosistemas oficiales fueron efectivamente avistados hoy.
 
-### Entregables y Criterios de Evaluación
+### Entregables y criterios de evaluación
 
 El objetivo de esta evaluación no es solo que el código funcione, sino que seas capaz de documentar y explicar tus decisiones técnicas.
 
@@ -1586,4 +1919,3 @@ Sube tu carpeta del proyecto (que debe contener tus scripts, el archivo `.qmd` y
 * **Entrega:** Deberás enviar únicamente el enlace (URL) a tu repositorio de GitHub para la calificación.
 
 
-https://gispro.gishub.org/book/python/data-structures.html#creating-and-using-tuples

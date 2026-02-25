@@ -1,0 +1,9 @@
+format:
+  pdf:
+    mermaid-format: png
+    include-in-header: preambulo.tex
+    chromecast-args: 
+      - "--no-sandbox"
+      - "--disable-gpu"
+      - "--disable-dev-shm-usage"
+      - "--headless"

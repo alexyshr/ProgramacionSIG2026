@@ -8,7 +8,7 @@
 
 <meta name="author" content="Alexys H. Rodríguez-Avellaneda, PhD">
 
-<title>Programación SIG: Python, R y Julia - 8&nbsp; Introducción a Python, R y Julia</title>
+<title>Programación SIG: Python, R y Julia - 10&nbsp; Introducción a Python, R y Julia</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -66,7 +66,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./13-estructuras_datos_geo.html" rel="next">
-<link href="./07-operaciones_cadenas.html" rel="prev">
+<link href="./09-funciones_clases.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -145,7 +145,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./05-variables_tipos_de_datos.html">Fundamentos</a></li><li class="breadcrumb-item"><a href="./12-introduccion_python_r_julia.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Introducción a Python, R y Julia</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./05-variables_tipos_de_datos.html">Fundamentos</a></li><li class="breadcrumb-item"><a href="./12-introduccion_python_r_julia.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introducción a Python, R y Julia</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -246,14 +246,26 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./08-ciclos_condicionales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Bucles y Declaraciones Condicionales</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-funciones_clases.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Funciones y Clases: El camino a la Modularización</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./12-introduccion_python_r_julia.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Introducción a Python, R y Julia</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introducción a Python, R y Julia</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./13-estructuras_datos_geo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Estructuras de Datos Geoespaciales</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Estructuras de Datos Geoespaciales</span></span></a>
   </div>
 </li>
       </ul>
@@ -270,7 +282,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./41-practica_1_benchmark_raster.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Evaluación Comparativa de Procesamiento Geoespacial</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Evaluación Comparativa de Procesamiento Geoespacial</span></span></a>
   </div>
 </li>
       </ul>
@@ -287,13 +299,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./61-presentacion_1_clase1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Temas por Charlar</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Temas por Charlar</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./62-presentacion_2_benchmark.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Benchmark geoespacial: cómo leer los resultados</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Benchmark geoespacial: cómo leer los resultados</span></span></a>
   </div>
 </li>
       </ul>
@@ -415,41 +427,38 @@ window.Quarto = {
     <h2 id="toc-title">Tabla de Contenidos</h2>
    
   <ul>
-  <li><a href="#introducción-a-python-r-y-julia" id="toc-introducción-a-python-r-y-julia" class="nav-link active" data-scroll-target="#introducción-a-python-r-y-julia"><span class="header-section-number">9</span> Introducción a Python, R y Julia</a>
-  <ul class="collapse">
-  <li><a href="#funciones-j_eval-y-j_plot-en-r" id="toc-funciones-j_eval-y-j_plot-en-r" class="nav-link" data-scroll-target="#funciones-j_eval-y-j_plot-en-r"><span class="header-section-number">9.1</span> Funciones j_eval y j_plot en R</a></li>
-  <li><a href="#introducción" id="toc-introducción" class="nav-link" data-scroll-target="#introducción"><span class="header-section-number">9.2</span> Introducción</a>
+  <li><a href="#funciones-j_eval-y-j_plot-en-r" id="toc-funciones-j_eval-y-j_plot-en-r" class="nav-link active" data-scroll-target="#funciones-j_eval-y-j_plot-en-r"><span class="header-section-number">10.1</span> Funciones j_eval y j_plot en R</a></li>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link" data-scroll-target="#introducción"><span class="header-section-number">10.2</span> Introducción</a>
   <ul class="collapse">
   <li><a href="#ejecución-de-código-en-cada-lenguaje" id="toc-ejecución-de-código-en-cada-lenguaje" class="nav-link" data-scroll-target="#ejecución-de-código-en-cada-lenguaje">Ejecución de código en cada lenguaje</a></li>
   <li><a href="#sobre-los-bloques-de-código" id="toc-sobre-los-bloques-de-código" class="nav-link" data-scroll-target="#sobre-los-bloques-de-código">Sobre los bloques de código</a></li>
   <li><a href="#alcance-del-capítulo" id="toc-alcance-del-capítulo" class="nav-link" data-scroll-target="#alcance-del-capítulo">Alcance del capítulo</a></li>
   </ul></li>
-  <li><a href="#ayuda-y-documentación" id="toc-ayuda-y-documentación" class="nav-link" data-scroll-target="#ayuda-y-documentación"><span class="header-section-number">9.3</span> Ayuda y documentación</a></li>
-  <li><a href="#instalación-y-carga-de-paquetes" id="toc-instalación-y-carga-de-paquetes" class="nav-link" data-scroll-target="#instalación-y-carga-de-paquetes"><span class="header-section-number">9.4</span> Instalación y carga de paquetes</a></li>
-  <li><a href="#objetos-básicos-y-estructuras-de-datos" id="toc-objetos-básicos-y-estructuras-de-datos" class="nav-link" data-scroll-target="#objetos-básicos-y-estructuras-de-datos"><span class="header-section-number">9.5</span> Objetos básicos y estructuras de datos</a>
+  <li><a href="#ayuda-y-documentación" id="toc-ayuda-y-documentación" class="nav-link" data-scroll-target="#ayuda-y-documentación"><span class="header-section-number">10.3</span> Ayuda y documentación</a></li>
+  <li><a href="#instalación-y-carga-de-paquetes" id="toc-instalación-y-carga-de-paquetes" class="nav-link" data-scroll-target="#instalación-y-carga-de-paquetes"><span class="header-section-number">10.4</span> Instalación y carga de paquetes</a></li>
+  <li><a href="#objetos-básicos-y-estructuras-de-datos" id="toc-objetos-básicos-y-estructuras-de-datos" class="nav-link" data-scroll-target="#objetos-básicos-y-estructuras-de-datos"><span class="header-section-number">10.5</span> Objetos básicos y estructuras de datos</a>
   <ul class="collapse">
   <li><a href="#sec-diagrama-estructuras" id="toc-sec-diagrama-estructuras" class="nav-link" data-scroll-target="#sec-diagrama-estructuras">Relación entre estructuras y componentes SIG</a></li>
   </ul></li>
-  <li><a href="#comandos-básicos-y-manipulación-de-tablas" id="toc-comandos-básicos-y-manipulación-de-tablas" class="nav-link" data-scroll-target="#comandos-básicos-y-manipulación-de-tablas"><span class="header-section-number">9.6</span> 4. Comandos básicos y manipulación de tablas</a>
+  <li><a href="#comandos-básicos-y-manipulación-de-tablas" id="toc-comandos-básicos-y-manipulación-de-tablas" class="nav-link" data-scroll-target="#comandos-básicos-y-manipulación-de-tablas"><span class="header-section-number">10.6</span> 4. Comandos básicos y manipulación de tablas</a>
   <ul class="collapse">
   <li><a href="#operaciones-numéricas-y-matemáticas-básicas" id="toc-operaciones-numéricas-y-matemáticas-básicas" class="nav-link" data-scroll-target="#operaciones-numéricas-y-matemáticas-básicas">Operaciones numéricas y matemáticas básicas</a></li>
   </ul></li>
-  <li><a href="#lectura-y-escritura-de-datos" id="toc-lectura-y-escritura-de-datos" class="nav-link" data-scroll-target="#lectura-y-escritura-de-datos"><span class="header-section-number">9.7</span> 5. Lectura y escritura de datos</a></li>
-  <li><a href="#indexación-y-filtrado" id="toc-indexación-y-filtrado" class="nav-link" data-scroll-target="#indexación-y-filtrado"><span class="header-section-number">9.8</span> 6. Indexación y filtrado</a></li>
-  <li><a href="#estadística-descriptiva-básica" id="toc-estadística-descriptiva-básica" class="nav-link" data-scroll-target="#estadística-descriptiva-básica"><span class="header-section-number">9.9</span> 7. Estadística descriptiva básica</a></li>
-  <li><a href="#gráficos-básicos" id="toc-gráficos-básicos" class="nav-link" data-scroll-target="#gráficos-básicos"><span class="header-section-number">9.10</span> 8. Gráficos básicos</a></li>
-  <li><a href="#transformación-de-datos" id="toc-transformación-de-datos" class="nav-link" data-scroll-target="#transformación-de-datos"><span class="header-section-number">9.11</span> 9. Transformación de datos</a></li>
-  <li><a href="#resumen-comparativo-cheat-sheet" id="toc-resumen-comparativo-cheat-sheet" class="nav-link" data-scroll-target="#resumen-comparativo-cheat-sheet"><span class="header-section-number">9.12</span> 10. Resumen comparativo (cheat sheet)</a>
+  <li><a href="#lectura-y-escritura-de-datos" id="toc-lectura-y-escritura-de-datos" class="nav-link" data-scroll-target="#lectura-y-escritura-de-datos"><span class="header-section-number">10.7</span> 5. Lectura y escritura de datos</a></li>
+  <li><a href="#indexación-y-filtrado" id="toc-indexación-y-filtrado" class="nav-link" data-scroll-target="#indexación-y-filtrado"><span class="header-section-number">10.8</span> 6. Indexación y filtrado</a></li>
+  <li><a href="#estadística-descriptiva-básica" id="toc-estadística-descriptiva-básica" class="nav-link" data-scroll-target="#estadística-descriptiva-básica"><span class="header-section-number">10.9</span> 7. Estadística descriptiva básica</a></li>
+  <li><a href="#gráficos-básicos" id="toc-gráficos-básicos" class="nav-link" data-scroll-target="#gráficos-básicos"><span class="header-section-number">10.10</span> 8. Gráficos básicos</a></li>
+  <li><a href="#transformación-de-datos" id="toc-transformación-de-datos" class="nav-link" data-scroll-target="#transformación-de-datos"><span class="header-section-number">10.11</span> 9. Transformación de datos</a></li>
+  <li><a href="#resumen-comparativo-cheat-sheet" id="toc-resumen-comparativo-cheat-sheet" class="nav-link" data-scroll-target="#resumen-comparativo-cheat-sheet"><span class="header-section-number">10.12</span> 10. Resumen comparativo (cheat sheet)</a>
   <ul class="collapse">
   <li><a href="#observaciones-finales" id="toc-observaciones-finales" class="nav-link" data-scroll-target="#observaciones-finales">Observaciones finales</a></li>
   <li><a href="#librerías-de-referencia-caja-de-herramientas" id="toc-librerías-de-referencia-caja-de-herramientas" class="nav-link" data-scroll-target="#librerías-de-referencia-caja-de-herramientas">Librerías de referencia (caja de herramientas)</a></li>
   </ul></li>
-  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">9.13</span> Ejercicios</a>
+  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">10.13</span> Ejercicios</a>
   <ul class="collapse">
   <li><a href="#ejercicio-1-hidrología-del-río-magdalena-vectores-y-matemáticas" id="toc-ejercicio-1-hidrología-del-río-magdalena-vectores-y-matemáticas" class="nav-link" data-scroll-target="#ejercicio-1-hidrología-del-río-magdalena-vectores-y-matemáticas">Ejercicio 1: Hidrología del Río Magdalena (Vectores y Matemáticas)</a></li>
   <li><a href="#ejercicio-2-calidad-del-aire-en-bogotá-dataframes-y-filtrado" id="toc-ejercicio-2-calidad-del-aire-en-bogotá-dataframes-y-filtrado" class="nav-link" data-scroll-target="#ejercicio-2-calidad-del-aire-en-bogotá-dataframes-y-filtrado">Ejercicio 2: Calidad del Aire en Bogotá (DataFrames y Filtrado)</a></li>
   <li><a href="#entregables-y-criterios-de-evaluación" id="toc-entregables-y-criterios-de-evaluación" class="nav-link" data-scroll-target="#entregables-y-criterios-de-evaluación">Entregables y Criterios de Evaluación</a></li>
-  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -457,9 +466,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./05-variables_tipos_de_datos.html">Fundamentos</a></li><li class="breadcrumb-item"><a href="./12-introduccion_python_r_julia.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Introducción a Python, R y Julia</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./05-variables_tipos_de_datos.html">Fundamentos</a></li><li class="breadcrumb-item"><a href="./12-introduccion_python_r_julia.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introducción a Python, R y Julia</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Introducción a Python, R y Julia</span></h1>
+<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introducción a Python, R y Julia</span></h1>
 </div>
 
 
@@ -476,7 +485,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Fecha de publicación</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">19 de febrero de 2026</p>
+      <p class="date">25 de febrero de 2026</p>
     </div>
   </div>
   
@@ -488,13 +497,11 @@ window.Quarto = {
 </header>
 
 
-<section id="introducción-a-python-r-y-julia" class="level1" data-number="9">
-<h1 data-number="9"><span class="header-section-number">9</span> Introducción a Python, R y Julia</h1>
-<section id="funciones-j_eval-y-j_plot-en-r" class="level2" data-number="9.1">
-<h2 data-number="9.1" class="anchored" data-anchor-id="funciones-j_eval-y-j_plot-en-r"><span class="header-section-number">9.1</span> Funciones j_eval y j_plot en R</h2>
+<section id="funciones-j_eval-y-j_plot-en-r" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="funciones-j_eval-y-j_plot-en-r"><span class="header-section-number">10.1</span> Funciones j_eval y j_plot en R</h2>
 </section>
-<section id="introducción" class="level2" data-number="9.2">
-<h2 data-number="9.2" class="anchored" data-anchor-id="introducción"><span class="header-section-number">9.2</span> Introducción</h2>
+<section id="introducción" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="introducción"><span class="header-section-number">10.2</span> Introducción</h2>
 <p>Este capítulo presenta una <strong>introducción práctica y comparativa</strong> a los lenguajes <strong>Python, R y Julia</strong>, enfocada en el uso de <strong>comandos básicos</strong> y en la lectura e interpretación de resultados en consola. El objetivo no es profundizar en programación avanzada, sino ofrecer una <strong>puerta de entrada común</strong> para estudiantes que se inician en el uso de herramientas computacionales para geocomputación.</p>
 <section id="ejecución-de-código-en-cada-lenguaje" class="level3">
 <h3 class="anchored" data-anchor-id="ejecución-de-código-en-cada-lenguaje">Ejecución de código en cada lenguaje</h3>
@@ -532,8 +539,8 @@ window.Quarto = {
 <p>Este contenido servirá como base para los capítulos posteriores, donde se utilizarán estos lenguajes para la creación de mapas, análisis de datos espaciales y visualización geográfica.</p>
 </section>
 </section>
-<section id="ayuda-y-documentación" class="level2" data-number="9.3">
-<h2 data-number="9.3" class="anchored" data-anchor-id="ayuda-y-documentación"><span class="header-section-number">9.3</span> Ayuda y documentación</h2>
+<section id="ayuda-y-documentación" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="ayuda-y-documentación"><span class="header-section-number">10.3</span> Ayuda y documentación</h2>
 <table class="table">
 <colgroup>
 <col style="width: 20%">
@@ -669,8 +676,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="instalación-y-carga-de-paquetes" class="level2" data-number="9.4">
-<h2 data-number="9.4" class="anchored" data-anchor-id="instalación-y-carga-de-paquetes"><span class="header-section-number">9.4</span> Instalación y carga de paquetes</h2>
+<section id="instalación-y-carga-de-paquetes" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="instalación-y-carga-de-paquetes"><span class="header-section-number">10.4</span> Instalación y carga de paquetes</h2>
 <table class="table">
 <colgroup>
 <col style="width: 20%">
@@ -804,13 +811,13 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="objetos-básicos-y-estructuras-de-datos" class="level2" data-number="9.5">
-<h2 data-number="9.5" class="anchored" data-anchor-id="objetos-básicos-y-estructuras-de-datos"><span class="header-section-number">9.5</span> Objetos básicos y estructuras de datos</h2>
+<section id="objetos-básicos-y-estructuras-de-datos" class="level2" data-number="10.5">
+<h2 data-number="10.5" class="anchored" data-anchor-id="objetos-básicos-y-estructuras-de-datos"><span class="header-section-number">10.5</span> Objetos básicos y estructuras de datos</h2>
 <p>El manejo eficiente de vectores y matrices es el corazón del procesamiento ráster. A continuación, se presenta una comparativa de cómo se declaran y manipulan los objetos básicos.</p>
 <div id="tbl-comparativa-datos" class="quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-comparativa-datos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabla&nbsp;9.1: Comparativa de estructuras de datos
+Tabla&nbsp;10.1: Comparativa de estructuras de datos
 </figcaption>
 <div aria-describedby="tbl-comparativa-datos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="table">
@@ -880,7 +887,7 @@ Tabla&nbsp;9.1: Comparativa de estructuras de datos
 <img src="images/fig-relacion-geo.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-relacion-geo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;9.1
+Figura&nbsp;10.1
 </figcaption>
 </figure>
 </div>
@@ -894,7 +901,7 @@ Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Como se observa en la <a href="#fig-relacion-geo" class="quarto-xref">Figura&nbsp;<span>9.1</span></a>, la <strong>Matriz</strong> es la estructura reina para el análisis ráster, mientras que los <strong>DataFrames</strong> son los que nos permiten realizar consultas sobre las bases de datos de predios o coberturas.</p>
+<p>Como se observa en la <a href="#fig-relacion-geo" class="quarto-xref">Figura&nbsp;<span>10.1</span></a>, la <strong>Matriz</strong> es la estructura reina para el análisis ráster, mientras que los <strong>DataFrames</strong> son los que nos permiten realizar consultas sobre las bases de datos de predios o coberturas.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled">
@@ -1149,8 +1156,8 @@ None</code></pre>
 </div>
 </section>
 </section>
-<section id="comandos-básicos-y-manipulación-de-tablas" class="level2" data-number="9.6">
-<h2 data-number="9.6" class="anchored" data-anchor-id="comandos-básicos-y-manipulación-de-tablas"><span class="header-section-number">9.6</span> 4. Comandos básicos y manipulación de tablas</h2>
+<section id="comandos-básicos-y-manipulación-de-tablas" class="level2" data-number="10.6">
+<h2 data-number="10.6" class="anchored" data-anchor-id="comandos-básicos-y-manipulación-de-tablas"><span class="header-section-number">10.6</span> 4. Comandos básicos y manipulación de tablas</h2>
 <table class="table">
 <colgroup>
 <col style="width: 20%">
@@ -1813,8 +1820,8 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 </section>
 </section>
-<section id="lectura-y-escritura-de-datos" class="level2" data-number="9.7">
-<h2 data-number="9.7" class="anchored" data-anchor-id="lectura-y-escritura-de-datos"><span class="header-section-number">9.7</span> 5. Lectura y escritura de datos</h2>
+<section id="lectura-y-escritura-de-datos" class="level2" data-number="10.7">
+<h2 data-number="10.7" class="anchored" data-anchor-id="lectura-y-escritura-de-datos"><span class="header-section-number">10.7</span> 5. Lectura y escritura de datos</h2>
 <table class="table">
 <colgroup>
 <col style="width: 20%">
@@ -2038,8 +2045,8 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 </div>
 </section>
-<section id="indexación-y-filtrado" class="level2" data-number="9.8">
-<h2 data-number="9.8" class="anchored" data-anchor-id="indexación-y-filtrado"><span class="header-section-number">9.8</span> 6. Indexación y filtrado</h2>
+<section id="indexación-y-filtrado" class="level2" data-number="10.8">
+<h2 data-number="10.8" class="anchored" data-anchor-id="indexación-y-filtrado"><span class="header-section-number">10.8</span> 6. Indexación y filtrado</h2>
 <p>En esta sección aprenderemos a extraer subconjuntos de datos. En Geomática, esto es vital para aislar, por ejemplo, municipios que superen una altitud crítica o departamentos que pertenecen a una región específica.</p>
 <table class="table">
 <colgroup>
@@ -2242,8 +2249,8 @@ Municipios en tierras altas:
 </div>
 </div>
 </section>
-<section id="estadística-descriptiva-básica" class="level2" data-number="9.9">
-<h2 data-number="9.9" class="anchored" data-anchor-id="estadística-descriptiva-básica"><span class="header-section-number">9.9</span> 7. Estadística descriptiva básica</h2>
+<section id="estadística-descriptiva-básica" class="level2" data-number="10.9">
+<h2 data-number="10.9" class="anchored" data-anchor-id="estadística-descriptiva-básica"><span class="header-section-number">10.9</span> 7. Estadística descriptiva básica</h2>
 <p>El análisis estadístico permite entender la distribución de variables geográficas, como la precipitación acumulada o la densidad de población.</p>
 <table class="table">
 <colgroup>
@@ -2450,8 +2457,8 @@ max    2625.000000</code></pre>
 </div>
 </div>
 </section>
-<section id="gráficos-básicos" class="level2" data-number="9.10">
-<h2 data-number="9.10" class="anchored" data-anchor-id="gráficos-básicos"><span class="header-section-number">9.10</span> 8. Gráficos básicos</h2>
+<section id="gráficos-básicos" class="level2" data-number="10.10">
+<h2 data-number="10.10" class="anchored" data-anchor-id="gráficos-básicos"><span class="header-section-number">10.10</span> 8. Gráficos básicos</h2>
 <p>La visualización es el primer paso del análisis exploratorio de datos (EDA). En SIG, usamos barras para comparar atributos entre regiones y los histogramas para entender la distribución de variables como la elevación o la precipitación.</p>
 <table class="table">
 <colgroup>
@@ -2606,55 +2613,103 @@ max    2625.000000</code></pre>
 </div>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb146"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb146-1"><a href="#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="co"># #| eval: false</span></span>
-<span id="cb146-2"><a href="#cb146-2" aria-hidden="true" tabindex="-1"></a><span class="fu">j_plot</span>(<span class="st">'</span></span>
-<span id="cb146-3"><a href="#cb146-3" aria-hidden="true" tabindex="-1"></a><span class="st">using Plots</span></span>
-<span id="cb146-4"><a href="#cb146-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb146-5"><a href="#cb146-5" aria-hidden="true" tabindex="-1"></a><span class="st"># Datos de Colombia</span></span>
-<span id="cb146-6"><a href="#cb146-6" aria-hidden="true" tabindex="-1"></a><span class="st">ciudades = ["Bogotá", "Medellín", "Cali", "Quibdó"]</span></span>
-<span id="cb146-7"><a href="#cb146-7" aria-hidden="true" tabindex="-1"></a><span class="st">altitudes = [2625, 1495, 1018, 43]</span></span>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb146"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb146-1"><a href="#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Usamos j_eval para procesar la lógica sin que j_plot interfiera</span></span>
+<span id="cb146-2"><a href="#cb146-2" aria-hidden="true" tabindex="-1"></a><span class="fu">j_eval</span>(<span class="st">'</span></span>
+<span id="cb146-3"><a href="#cb146-3" aria-hidden="true" tabindex="-1"></a><span class="st">    # Modo silencioso para el servidor gráfico</span></span>
+<span id="cb146-4"><a href="#cb146-4" aria-hidden="true" tabindex="-1"></a><span class="st">    ENV["GKSwstype"] = "100" </span></span>
+<span id="cb146-5"><a href="#cb146-5" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb146-6"><a href="#cb146-6" aria-hidden="true" tabindex="-1"></a><span class="st">    using Plots</span></span>
+<span id="cb146-7"><a href="#cb146-7" aria-hidden="true" tabindex="-1"></a><span class="st">    gr()</span></span>
 <span id="cb146-8"><a href="#cb146-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb146-9"><a href="#cb146-9" aria-hidden="true" tabindex="-1"></a><span class="st"># En j_plot, el gráfico se genera en el dispositivo configurado</span></span>
-<span id="cb146-10"><a href="#cb146-10" aria-hidden="true" tabindex="-1"></a><span class="st">p1 = bar(ciudades, altitudes, title="Altitud Municipios", legend=false)</span></span>
-<span id="cb146-11"><a href="#cb146-11" aria-hidden="true" tabindex="-1"></a><span class="st">display(p1)</span></span>
+<span id="cb146-9"><a href="#cb146-9" aria-hidden="true" tabindex="-1"></a><span class="st">    # Datos</span></span>
+<span id="cb146-10"><a href="#cb146-10" aria-hidden="true" tabindex="-1"></a><span class="st">    ciudades = ["Bogotá", "Medellín", "Cali", "Quibdó"]</span></span>
+<span id="cb146-11"><a href="#cb146-11" aria-hidden="true" tabindex="-1"></a><span class="st">    altitudes = [2625, 1495, 1018, 43]</span></span>
 <span id="cb146-12"><a href="#cb146-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb146-13"><a href="#cb146-13" aria-hidden="true" tabindex="-1"></a><span class="st">muestra = [2625, 1495, 1018, 43, 18, 2527, 959, 467, 2150, 1850]</span></span>
-<span id="cb146-14"><a href="#cb146-14" aria-hidden="true" tabindex="-1"></a><span class="st">p2 = histogram(muestra, bins=5, title="Histograma Altitudes")</span></span>
-<span id="cb146-15"><a href="#cb146-15" aria-hidden="true" tabindex="-1"></a><span class="st">display(p2)</span></span>
-<span id="cb146-16"><a href="#cb146-16" aria-hidden="true" tabindex="-1"></a><span class="st">'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;">using Plots</span>
-</pre>
-<pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;"># Datos de Colombia
+<span id="cb146-13"><a href="#cb146-13" aria-hidden="true" tabindex="-1"></a><span class="st">    # Creamos los objetos de gráfico explícitamente</span></span>
+<span id="cb146-14"><a href="#cb146-14" aria-hidden="true" tabindex="-1"></a><span class="st">    p1 = bar(ciudades, altitudes, title="Altitud Municipios", legend=false)</span></span>
+<span id="cb146-15"><a href="#cb146-15" aria-hidden="true" tabindex="-1"></a><span class="st">    muestra = [2625, 1495, 1018, 43, 18, 2527, 959, 467, 2150, 1850]</span></span>
+<span id="cb146-16"><a href="#cb146-16" aria-hidden="true" tabindex="-1"></a><span class="st">    p2 = histogram(muestra, bins=5, title="Histograma Altitudes")</span></span>
+<span id="cb146-17"><a href="#cb146-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb146-18"><a href="#cb146-18" aria-hidden="true" tabindex="-1"></a><span class="st">    # Los combinamos en un objeto final</span></span>
+<span id="cb146-19"><a href="#cb146-19" aria-hidden="true" tabindex="-1"></a><span class="st">    p_final = plot(p1, p2, layout = (1, 2), size = (800, 400))</span></span>
+<span id="cb146-20"><a href="#cb146-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb146-21"><a href="#cb146-21" aria-hidden="true" tabindex="-1"></a><span class="st">    # Guardamos el objeto p_final directamente. </span></span>
+<span id="cb146-22"><a href="#cb146-22" aria-hidden="true" tabindex="-1"></a><span class="st">    # Esto evita el error "No current plot" porque no dependemos del estado global.</span></span>
+<span id="cb146-23"><a href="#cb146-23" aria-hidden="true" tabindex="-1"></a><span class="st">    savefig(p_final, "temp_grafica_julia.png")</span></span>
+<span id="cb146-24"><a href="#cb146-24" aria-hidden="true" tabindex="-1"></a><span class="st">'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;pre class='julia-code' style='display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:"Lucida Console", Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;'&gt;
+&lt;span style='color:#28a745; font-weight:bold;'&gt;julia&amp;gt; &lt;/span&gt;&lt;span style='color:#008b8b;'&gt;# Modo silencioso para el servidor gráfico&lt;/span&gt;
+&lt;/pre&gt;
+&lt;pre class='julia-output' style='display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:"Lucida Console", Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;'&gt;
 
-</pre>
-<pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;">ciudades = ["Bogotá", "Medellín", "Cali", "Quibdó"]</span>
-</pre>
-<pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;">4-element Vector{String}:
+&lt;/pre&gt;
+&lt;pre class='julia-code' style='display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:"Lucida Console", Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;'&gt;
+&lt;span style='color:#28a745; font-weight:bold;'&gt;julia&amp;gt; &lt;/span&gt;&lt;span style='color:#008b8b;'&gt;ENV["GKSwstype"] = "100"&lt;/span&gt;
+&lt;/pre&gt;
+&lt;pre class='julia-output' style='display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:"Lucida Console", Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;'&gt;
+"100"
+
+&lt;/pre&gt;
+&lt;pre class='julia-code' style='display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:"Lucida Console", Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;'&gt;
+&lt;span style='color:#28a745; font-weight:bold;'&gt;julia&amp;gt; &lt;/span&gt;&lt;span style='color:#008b8b;'&gt;using Plots&lt;/span&gt;
+&lt;/pre&gt;
+&lt;pre class='julia-output' style='display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:"Lucida Console", Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;'&gt;
+
+&lt;/pre&gt;
+&lt;pre class='julia-code' style='display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:"Lucida Console", Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;'&gt;
+&lt;span style='color:#28a745; font-weight:bold;'&gt;julia&amp;gt; &lt;/span&gt;&lt;span style='color:#008b8b;'&gt;gr()&lt;/span&gt;
+&lt;/pre&gt;
+&lt;pre class='julia-output' style='display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:"Lucida Console", Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;'&gt;
+Plots.GRBackend()
+
+&lt;/pre&gt;
+&lt;pre class='julia-code' style='display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:"Lucida Console", Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;'&gt;
+&lt;span style='color:#28a745; font-weight:bold;'&gt;julia&amp;gt; &lt;/span&gt;&lt;span style='color:#008b8b;'&gt;# Datos&lt;/span&gt;
+&lt;/pre&gt;
+&lt;pre class='julia-output' style='display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:"Lucida Console", Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;'&gt;
+
+&lt;/pre&gt;
+&lt;pre class='julia-code' style='display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:"Lucida Console", Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;'&gt;
+&lt;span style='color:#28a745; font-weight:bold;'&gt;julia&amp;gt; &lt;/span&gt;&lt;span style='color:#008b8b;'&gt;ciudades = ["Bogotá", "Medellín", "Cali", "Quibdó"]&lt;/span&gt;
+&lt;/pre&gt;
+&lt;pre class='julia-output' style='display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:"Lucida Console", Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;'&gt;
+4-element Vector{String}:
  "Bogotá"
  "Medellín"
  "Cali"
  "Quibdó"
 
-</pre>
-<pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;">altitudes = [2625, 1495, 1018, 43]</span>
-</pre>
-<pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;"># En j_plot, el gráfico se genera en el dispositivo configurado
+&lt;/pre&gt;
+&lt;pre class='julia-code' style='display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:"Lucida Console", Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;'&gt;
+&lt;span style='color:#28a745; font-weight:bold;'&gt;julia&amp;gt; &lt;/span&gt;&lt;span style='color:#008b8b;'&gt;altitudes = [2625, 1495, 1018, 43]&lt;/span&gt;
+&lt;/pre&gt;
+&lt;pre class='julia-output' style='display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:"Lucida Console", Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;'&gt;
 4-element Vector{Int64}:
  2625
  1495
  1018
    43
 
-</pre>
-<pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;">p1 = bar(ciudades, altitudes, title="Altitud Municipios", legend=false)</span>
-</pre>
-<pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;"></pre>
-<pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;">display(p1)</span>
-</pre>
-<pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;"></pre>
-<pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;">muestra = [2625, 1495, 1018, 43, 18, 2527, 959, 467, 2150, 1850]</span>
-</pre>
-<pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;">10-element Vector{Int64}:
+&lt;/pre&gt;
+&lt;pre class='julia-code' style='display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:"Lucida Console", Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;'&gt;
+&lt;span style='color:#28a745; font-weight:bold;'&gt;julia&amp;gt; &lt;/span&gt;&lt;span style='color:#008b8b;'&gt;# Creamos los objetos de gráfico explícitamente&lt;/span&gt;
+&lt;/pre&gt;
+&lt;pre class='julia-output' style='display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:"Lucida Console", Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;'&gt;
+
+&lt;/pre&gt;
+&lt;pre class='julia-code' style='display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:"Lucida Console", Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;'&gt;
+&lt;span style='color:#28a745; font-weight:bold;'&gt;julia&amp;gt; &lt;/span&gt;&lt;span style='color:#008b8b;'&gt;p1 = bar(ciudades, altitudes, title="Altitud Municipios", legend=false)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;pre class='julia-output' style='display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:"Lucida Console", Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;'&gt;
+
+&lt;/pre&gt;
+&lt;pre class='julia-code' style='display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:"Lucida Console", Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;'&gt;
+&lt;span style='color:#28a745; font-weight:bold;'&gt;julia&amp;gt; &lt;/span&gt;&lt;span style='color:#008b8b;'&gt;muestra = [2625, 1495, 1018, 43, 18, 2527, 959, 467, 2150, 1850]&lt;/span&gt;
+&lt;/pre&gt;
+&lt;pre class='julia-output' style='display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:"Lucida Console", Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;'&gt;
+10-element Vector{Int64}:
  2625
  1495
  1018
@@ -2666,20 +2721,61 @@ max    2625.000000</code></pre>
  2150
  1850
 
-</pre>
-<pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;">p2 = histogram(muestra, bins=5, title="Histograma Altitudes")</span>
-</pre>
-<pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;"></pre>
-<pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;">display(p2)</span>
-</pre>
-<pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;"></pre>
-<p><img src="12-introduccion_python_r_julia_files/figure-html/graficos_julia_ejecucion-1.png" class="img-fluid" width="672"></p>
+&lt;/pre&gt;
+&lt;pre class='julia-code' style='display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:"Lucida Console", Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;'&gt;
+&lt;span style='color:#28a745; font-weight:bold;'&gt;julia&amp;gt; &lt;/span&gt;&lt;span style='color:#008b8b;'&gt;p2 = histogram(muestra, bins=5, title="Histograma Altitudes")&lt;/span&gt;
+&lt;/pre&gt;
+&lt;pre class='julia-output' style='display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:"Lucida Console", Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;'&gt;
+
+&lt;/pre&gt;
+&lt;pre class='julia-code' style='display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:"Lucida Console", Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;'&gt;
+&lt;span style='color:#28a745; font-weight:bold;'&gt;julia&amp;gt; &lt;/span&gt;&lt;span style='color:#008b8b;'&gt;# Los combinamos en un objeto final&lt;/span&gt;
+&lt;/pre&gt;
+&lt;pre class='julia-output' style='display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:"Lucida Console", Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;'&gt;
+
+&lt;/pre&gt;
+&lt;pre class='julia-code' style='display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:"Lucida Console", Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;'&gt;
+&lt;span style='color:#28a745; font-weight:bold;'&gt;julia&amp;gt; &lt;/span&gt;&lt;span style='color:#008b8b;'&gt;p_final = plot(p1, p2, layout = (1, 2), size = (800, 400))&lt;/span&gt;
+&lt;/pre&gt;
+&lt;pre class='julia-output' style='display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:"Lucida Console", Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;'&gt;
+
+&lt;/pre&gt;
+&lt;pre class='julia-code' style='display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:"Lucida Console", Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;'&gt;
+&lt;span style='color:#28a745; font-weight:bold;'&gt;julia&amp;gt; &lt;/span&gt;&lt;span style='color:#008b8b;'&gt;# Guardamos el objeto p_final directamente.&lt;/span&gt;
+&lt;/pre&gt;
+&lt;pre class='julia-output' style='display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:"Lucida Console", Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;'&gt;
+
+&lt;/pre&gt;
+&lt;pre class='julia-code' style='display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:"Lucida Console", Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;'&gt;
+&lt;span style='color:#28a745; font-weight:bold;'&gt;julia&amp;gt; &lt;/span&gt;&lt;span style='color:#008b8b;'&gt;# Esto evita el error "No current plot" porque no dependemos del estado global.&lt;/span&gt;
+&lt;/pre&gt;
+&lt;pre class='julia-output' style='display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:"Lucida Console", Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;'&gt;
+
+&lt;/pre&gt;
+&lt;pre class='julia-code' style='display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:"Lucida Console", Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;'&gt;
+&lt;span style='color:#28a745; font-weight:bold;'&gt;julia&amp;gt; &lt;/span&gt;&lt;span style='color:#008b8b;'&gt;savefig(p_final, "temp_grafica_julia.png")&lt;/span&gt;
+&lt;/pre&gt;
+&lt;pre class='julia-output' style='display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:"Lucida Console", Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;'&gt;
+"/home/rstudio/work/01_prog_sig/temp_grafica_julia.png"
+
+&lt;/pre&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb148"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb148-1"><a href="#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. R se encarga de mostrar la imagen con el formato que pediste</span></span>
+<span id="cb148-2"><a href="#cb148-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"temp_grafica_julia.png"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="temp_grafica_julia.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+</figure>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 </section>
-<section id="transformación-de-datos" class="level2" data-number="9.11">
-<h2 data-number="9.11" class="anchored" data-anchor-id="transformación-de-datos"><span class="header-section-number">9.11</span> 9. Transformación de datos</h2>
+<section id="transformación-de-datos" class="level2" data-number="10.11">
+<h2 data-number="10.11" class="anchored" data-anchor-id="transformación-de-datos"><span class="header-section-number">10.11</span> 9. Transformación de datos</h2>
 <p>En el análisis de datos espaciales, frecuentemente necesitamos derivar nuevas variables a partir de las existentes, como convertir unidades de medida (metros a pies) o categorizar valores (crear rangos climáticos).</p>
 <table class="table">
 <colgroup>
@@ -2713,24 +2809,24 @@ max    2625.000000</code></pre>
 <div class="tab-content">
 <div id="tabset-10-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-10-1-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb147"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb147-1"><a href="#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="co"># #| eval: false</span></span>
-<span id="cb147-2"><a href="#cb147-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb147-3"><a href="#cb147-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb147-4"><a href="#cb147-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Definimos un DataFrame con municipios y su altitud en metros (msnm)</span></span>
-<span id="cb147-5"><a href="#cb147-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb147-6"><a href="#cb147-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"municipio"</span>: [<span class="st">"Bogotá"</span>, <span class="st">"Medellín"</span>, <span class="st">"Cali"</span>],</span>
-<span id="cb147-7"><a href="#cb147-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"altitud_m"</span>: [<span class="dv">2625</span>, <span class="dv">1495</span>, <span class="dv">1018</span>]</span>
-<span id="cb147-8"><a href="#cb147-8" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb147-9"><a href="#cb147-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb147-10"><a href="#cb147-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Creación de una columna mediante una operación aritmética simple</span></span>
-<span id="cb147-11"><a href="#cb147-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Convertimos metros a pies (aprox. 3.28 pies por metro)</span></span>
-<span id="cb147-12"><a href="#cb147-12" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"altitud_ft"</span>] <span class="op">=</span> df[<span class="st">"altitud_m"</span>] <span class="op">*</span> <span class="fl">3.28</span></span>
-<span id="cb147-13"><a href="#cb147-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb147-14"><a href="#cb147-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Creación de una columna con lógica condicional (Clasificación climática)</span></span>
-<span id="cb147-15"><a href="#cb147-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Usamos una función lambda para evaluar cada fila</span></span>
-<span id="cb147-16"><a href="#cb147-16" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"clima"</span>] <span class="op">=</span> df[<span class="st">"altitud_m"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="st">"Frío"</span> <span class="cf">if</span> x <span class="op">&gt;</span> <span class="dv">2000</span> <span class="cf">else</span> <span class="st">"Templado"</span>)</span>
-<span id="cb147-17"><a href="#cb147-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb147-18"><a href="#cb147-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb149"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb149-1"><a href="#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="co"># #| eval: false</span></span>
+<span id="cb149-2"><a href="#cb149-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb149-3"><a href="#cb149-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb149-4"><a href="#cb149-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Definimos un DataFrame con municipios y su altitud en metros (msnm)</span></span>
+<span id="cb149-5"><a href="#cb149-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb149-6"><a href="#cb149-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"municipio"</span>: [<span class="st">"Bogotá"</span>, <span class="st">"Medellín"</span>, <span class="st">"Cali"</span>],</span>
+<span id="cb149-7"><a href="#cb149-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"altitud_m"</span>: [<span class="dv">2625</span>, <span class="dv">1495</span>, <span class="dv">1018</span>]</span>
+<span id="cb149-8"><a href="#cb149-8" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb149-9"><a href="#cb149-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb149-10"><a href="#cb149-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Creación de una columna mediante una operación aritmética simple</span></span>
+<span id="cb149-11"><a href="#cb149-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Convertimos metros a pies (aprox. 3.28 pies por metro)</span></span>
+<span id="cb149-12"><a href="#cb149-12" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"altitud_ft"</span>] <span class="op">=</span> df[<span class="st">"altitud_m"</span>] <span class="op">*</span> <span class="fl">3.28</span></span>
+<span id="cb149-13"><a href="#cb149-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb149-14"><a href="#cb149-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Creación de una columna con lógica condicional (Clasificación climática)</span></span>
+<span id="cb149-15"><a href="#cb149-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Usamos una función lambda para evaluar cada fila</span></span>
+<span id="cb149-16"><a href="#cb149-16" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"clima"</span>] <span class="op">=</span> df[<span class="st">"altitud_m"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="st">"Frío"</span> <span class="cf">if</span> x <span class="op">&gt;</span> <span class="dv">2000</span> <span class="cf">else</span> <span class="st">"Templado"</span>)</span>
+<span id="cb149-17"><a href="#cb149-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb149-18"><a href="#cb149-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  municipio  altitud_m  altitud_ft     clima
 0    Bogotá       2625     8610.00      Frío
@@ -2741,21 +2837,21 @@ max    2625.000000</code></pre>
 </div>
 <div id="tabset-10-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-2-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb149"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb149-1"><a href="#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="co"># #| eval: false</span></span>
-<span id="cb149-2"><a href="#cb149-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Creamos el data frame base</span></span>
-<span id="cb149-3"><a href="#cb149-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb149-4"><a href="#cb149-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">municipio =</span> <span class="fu">c</span>(<span class="st">"Bogotá"</span>, <span class="st">"Medellín"</span>, <span class="st">"Cali"</span>),</span>
-<span id="cb149-5"><a href="#cb149-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">altitud_m =</span> <span class="fu">c</span>(<span class="dv">2625</span>, <span class="dv">1495</span>, <span class="dv">1018</span>)</span>
-<span id="cb149-6"><a href="#cb149-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb149-7"><a href="#cb149-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb149-8"><a href="#cb149-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Creación de columna usando el operador de asignación $</span></span>
-<span id="cb149-9"><a href="#cb149-9" aria-hidden="true" tabindex="-1"></a><span class="co"># La operación se aplica de forma vectorizada a toda la columna</span></span>
-<span id="cb149-10"><a href="#cb149-10" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>altitud_ft <span class="ot">&lt;-</span> df<span class="sc">$</span>altitud_m <span class="sc">*</span> <span class="fl">3.28</span></span>
-<span id="cb149-11"><a href="#cb149-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb149-12"><a href="#cb149-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Creación de columna con lógica condicional usando ifelse()</span></span>
-<span id="cb149-13"><a href="#cb149-13" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>clima <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(df<span class="sc">$</span>altitud_m <span class="sc">&gt;</span> <span class="dv">2000</span>, <span class="st">"Frío"</span>, <span class="st">"Templado"</span>)</span>
-<span id="cb149-14"><a href="#cb149-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb149-15"><a href="#cb149-15" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(df)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb151"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb151-1"><a href="#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="co"># #| eval: false</span></span>
+<span id="cb151-2"><a href="#cb151-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Creamos el data frame base</span></span>
+<span id="cb151-3"><a href="#cb151-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb151-4"><a href="#cb151-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">municipio =</span> <span class="fu">c</span>(<span class="st">"Bogotá"</span>, <span class="st">"Medellín"</span>, <span class="st">"Cali"</span>),</span>
+<span id="cb151-5"><a href="#cb151-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">altitud_m =</span> <span class="fu">c</span>(<span class="dv">2625</span>, <span class="dv">1495</span>, <span class="dv">1018</span>)</span>
+<span id="cb151-6"><a href="#cb151-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb151-7"><a href="#cb151-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb151-8"><a href="#cb151-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Creación de columna usando el operador de asignación $</span></span>
+<span id="cb151-9"><a href="#cb151-9" aria-hidden="true" tabindex="-1"></a><span class="co"># La operación se aplica de forma vectorizada a toda la columna</span></span>
+<span id="cb151-10"><a href="#cb151-10" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>altitud_ft <span class="ot">&lt;-</span> df<span class="sc">$</span>altitud_m <span class="sc">*</span> <span class="fl">3.28</span></span>
+<span id="cb151-11"><a href="#cb151-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb151-12"><a href="#cb151-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Creación de columna con lógica condicional usando ifelse()</span></span>
+<span id="cb151-13"><a href="#cb151-13" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>clima <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(df<span class="sc">$</span>altitud_m <span class="sc">&gt;</span> <span class="dv">2000</span>, <span class="st">"Frío"</span>, <span class="st">"Templado"</span>)</span>
+<span id="cb151-14"><a href="#cb151-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb151-15"><a href="#cb151-15" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(df)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  municipio altitud_m altitud_ft    clima
 1    Bogotá      2625    8610.00     Frío
@@ -2778,43 +2874,43 @@ max    2625.000000</code></pre>
 <div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb151"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb151-1"><a href="#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">DataFrames</span></span>
-<span id="cb151-2"><a href="#cb151-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb151-3"><a href="#cb151-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Definimos el DataFrame con datos de Colombia</span></span>
-<span id="cb151-4"><a href="#cb151-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> <span class="fu">DataFrame</span>(</span>
-<span id="cb151-5"><a href="#cb151-5" aria-hidden="true" tabindex="-1"></a>    municipio <span class="op">=</span> [<span class="st">"Bogotá"</span>, <span class="st">"Medellín"</span>, <span class="st">"Cali"</span>],</span>
-<span id="cb151-6"><a href="#cb151-6" aria-hidden="true" tabindex="-1"></a>    altitud_m <span class="op">=</span> [<span class="fl">2625</span>, <span class="fl">1495</span>, <span class="fl">1018</span>]</span>
-<span id="cb151-7"><a href="#cb151-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb151-8"><a href="#cb151-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb151-9"><a href="#cb151-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Creación de columna: El punto (.) indica que la operación es vectorizada (broadcast)</span></span>
-<span id="cb151-10"><a href="#cb151-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Es fundamental en Julia para operar sobre todos los elementos de la columna</span></span>
-<span id="cb151-11"><a href="#cb151-11" aria-hidden="true" tabindex="-1"></a>df.altitud_ft <span class="op">=</span> df.altitud_m <span class="op">.*</span> <span class="fl">3.28</span></span>
-<span id="cb151-12"><a href="#cb151-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb151-13"><a href="#cb151-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Creación con lógica condicional usando una comprensión de lista</span></span>
-<span id="cb151-14"><a href="#cb151-14" aria-hidden="true" tabindex="-1"></a>df.clima <span class="op">=</span> [x <span class="op">&gt;</span> <span class="fl">2000</span> ? <span class="st">"Frío"</span> <span class="op">:</span> <span class="st">"Templado"</span> for x <span class="kw">in</span> df.altitud_m]</span>
-<span id="cb151-15"><a href="#cb151-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb151-16"><a href="#cb151-16" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(df)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb153"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb153-1"><a href="#cb153-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">DataFrames</span></span>
+<span id="cb153-2"><a href="#cb153-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb153-3"><a href="#cb153-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Definimos el DataFrame con datos de Colombia</span></span>
+<span id="cb153-4"><a href="#cb153-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> <span class="fu">DataFrame</span>(</span>
+<span id="cb153-5"><a href="#cb153-5" aria-hidden="true" tabindex="-1"></a>    municipio <span class="op">=</span> [<span class="st">"Bogotá"</span>, <span class="st">"Medellín"</span>, <span class="st">"Cali"</span>],</span>
+<span id="cb153-6"><a href="#cb153-6" aria-hidden="true" tabindex="-1"></a>    altitud_m <span class="op">=</span> [<span class="fl">2625</span>, <span class="fl">1495</span>, <span class="fl">1018</span>]</span>
+<span id="cb153-7"><a href="#cb153-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb153-8"><a href="#cb153-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb153-9"><a href="#cb153-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Creación de columna: El punto (.) indica que la operación es vectorizada (broadcast)</span></span>
+<span id="cb153-10"><a href="#cb153-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Es fundamental en Julia para operar sobre todos los elementos de la columna</span></span>
+<span id="cb153-11"><a href="#cb153-11" aria-hidden="true" tabindex="-1"></a>df.altitud_ft <span class="op">=</span> df.altitud_m <span class="op">.*</span> <span class="fl">3.28</span></span>
+<span id="cb153-12"><a href="#cb153-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb153-13"><a href="#cb153-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Creación con lógica condicional usando una comprensión de lista</span></span>
+<span id="cb153-14"><a href="#cb153-14" aria-hidden="true" tabindex="-1"></a>df.clima <span class="op">=</span> [x <span class="op">&gt;</span> <span class="fl">2000</span> ? <span class="st">"Frío"</span> <span class="op">:</span> <span class="st">"Templado"</span> for x <span class="kw">in</span> df.altitud_m]</span>
+<span id="cb153-15"><a href="#cb153-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb153-16"><a href="#cb153-16" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(df)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb152"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb152-1"><a href="#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="co"># #| eval: false</span></span>
-<span id="cb152-2"><a href="#cb152-2" aria-hidden="true" tabindex="-1"></a><span class="fu">j_eval</span>(<span class="st">'</span></span>
-<span id="cb152-3"><a href="#cb152-3" aria-hidden="true" tabindex="-1"></a><span class="st">using DataFrames</span></span>
-<span id="cb152-4"><a href="#cb152-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb152-5"><a href="#cb152-5" aria-hidden="true" tabindex="-1"></a><span class="st"># Recreamos el DataFrame en el entorno de Julia</span></span>
-<span id="cb152-6"><a href="#cb152-6" aria-hidden="true" tabindex="-1"></a><span class="st">df = DataFrame(</span></span>
-<span id="cb152-7"><a href="#cb152-7" aria-hidden="true" tabindex="-1"></a><span class="st">    municipio = ["Bogotá", "Medellín", "Cali"],</span></span>
-<span id="cb152-8"><a href="#cb152-8" aria-hidden="true" tabindex="-1"></a><span class="st">    altitud_m = [2625, 1495, 1018]</span></span>
-<span id="cb152-9"><a href="#cb152-9" aria-hidden="true" tabindex="-1"></a><span class="st">)</span></span>
-<span id="cb152-10"><a href="#cb152-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb152-11"><a href="#cb152-11" aria-hidden="true" tabindex="-1"></a><span class="st"># Aplicamos las transformaciones</span></span>
-<span id="cb152-12"><a href="#cb152-12" aria-hidden="true" tabindex="-1"></a><span class="st">df.altitud_ft = df.altitud_m .* 3.28</span></span>
-<span id="cb152-13"><a href="#cb152-13" aria-hidden="true" tabindex="-1"></a><span class="st">df.clima = [x &gt; 2000 ? "Frío" : "Templado" for x in df.altitud_m]</span></span>
-<span id="cb152-14"><a href="#cb152-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb152-15"><a href="#cb152-15" aria-hidden="true" tabindex="-1"></a><span class="st"># Mostramos el resultado final</span></span>
-<span id="cb152-16"><a href="#cb152-16" aria-hidden="true" tabindex="-1"></a><span class="st">println(df)</span></span>
-<span id="cb152-17"><a href="#cb152-17" aria-hidden="true" tabindex="-1"></a><span class="st">'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb154"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb154-1"><a href="#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="co"># #| eval: false</span></span>
+<span id="cb154-2"><a href="#cb154-2" aria-hidden="true" tabindex="-1"></a><span class="fu">j_eval</span>(<span class="st">'</span></span>
+<span id="cb154-3"><a href="#cb154-3" aria-hidden="true" tabindex="-1"></a><span class="st">using DataFrames</span></span>
+<span id="cb154-4"><a href="#cb154-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-5"><a href="#cb154-5" aria-hidden="true" tabindex="-1"></a><span class="st"># Recreamos el DataFrame en el entorno de Julia</span></span>
+<span id="cb154-6"><a href="#cb154-6" aria-hidden="true" tabindex="-1"></a><span class="st">df = DataFrame(</span></span>
+<span id="cb154-7"><a href="#cb154-7" aria-hidden="true" tabindex="-1"></a><span class="st">    municipio = ["Bogotá", "Medellín", "Cali"],</span></span>
+<span id="cb154-8"><a href="#cb154-8" aria-hidden="true" tabindex="-1"></a><span class="st">    altitud_m = [2625, 1495, 1018]</span></span>
+<span id="cb154-9"><a href="#cb154-9" aria-hidden="true" tabindex="-1"></a><span class="st">)</span></span>
+<span id="cb154-10"><a href="#cb154-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-11"><a href="#cb154-11" aria-hidden="true" tabindex="-1"></a><span class="st"># Aplicamos las transformaciones</span></span>
+<span id="cb154-12"><a href="#cb154-12" aria-hidden="true" tabindex="-1"></a><span class="st">df.altitud_ft = df.altitud_m .* 3.28</span></span>
+<span id="cb154-13"><a href="#cb154-13" aria-hidden="true" tabindex="-1"></a><span class="st">df.clima = [x &gt; 2000 ? "Frío" : "Templado" for x in df.altitud_m]</span></span>
+<span id="cb154-14"><a href="#cb154-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-15"><a href="#cb154-15" aria-hidden="true" tabindex="-1"></a><span class="st"># Mostramos el resultado final</span></span>
+<span id="cb154-16"><a href="#cb154-16" aria-hidden="true" tabindex="-1"></a><span class="st">println(df)</span></span>
+<span id="cb154-17"><a href="#cb154-17" aria-hidden="true" tabindex="-1"></a><span class="st">'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;">using DataFrames</span>
 </pre>
 <pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;"></pre>
@@ -2850,8 +2946,8 @@ max    2625.000000</code></pre>
 </div>
 </div>
 </section>
-<section id="resumen-comparativo-cheat-sheet" class="level2" data-number="9.12">
-<h2 data-number="9.12" class="anchored" data-anchor-id="resumen-comparativo-cheat-sheet"><span class="header-section-number">9.12</span> 10. Resumen comparativo (cheat sheet)</h2>
+<section id="resumen-comparativo-cheat-sheet" class="level2" data-number="10.12">
+<h2 data-number="10.12" class="anchored" data-anchor-id="resumen-comparativo-cheat-sheet"><span class="header-section-number">10.12</span> 10. Resumen comparativo (cheat sheet)</h2>
 <p>Esta tabla sirve como guía de referencia rápida para transitar entre los tres lenguajes durante el desarrollo de proyectos de análisis espacial.</p>
 <table class="table">
 <colgroup>
@@ -3002,8 +3098,8 @@ max    2625.000000</code></pre>
 </blockquote>
 </section>
 </section>
-<section id="ejercicios" class="level2" data-number="9.13">
-<h2 data-number="9.13" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">9.13</span> Ejercicios</h2>
+<section id="ejercicios" class="level2" data-number="10.13">
+<h2 data-number="10.13" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">10.13</span> Ejercicios</h2>
 <p>Para poner en práctica los conceptos introductorios abordados en este capítulo, deberás resolver los siguientes dos ejercicios. Puedes elegir resolverlos en <strong>Python, R o Julia</strong> (o implementar la solución en varios lenguajes si deseas retarte).</p>
 <section id="ejercicio-1-hidrología-del-río-magdalena-vectores-y-matemáticas" class="level3">
 <h3 class="anchored" data-anchor-id="ejercicio-1-hidrología-del-río-magdalena-vectores-y-matemáticas">Ejercicio 1: Hidrología del Río Magdalena (Vectores y Matemáticas)</h3>
@@ -3057,7 +3153,6 @@ max    2625.000000</code></pre>
 </ul>
 
 
-</section>
 </section>
 </section>
 
@@ -3451,13 +3546,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./07-operaciones_cadenas.html" class="pagination-link" aria-label="Operaciones con Cadenas de Texto (Strings)">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Operaciones con Cadenas de Texto (Strings)</span></span>
+      <a href="./09-funciones_clases.html" class="pagination-link" aria-label="Funciones y Clases: El camino a la Modularización">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Funciones y Clases: El camino a la Modularización</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./13-estructuras_datos_geo.html" class="pagination-link" aria-label="Estructuras de Datos Geoespaciales">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Estructuras de Datos Geoespaciales</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Estructuras de Datos Geoespaciales</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

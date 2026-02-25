@@ -32,3 +32,39 @@ Versiones de paquetes `Julia` en el sistema:
 | `Plots` | Paquete | 1.41.4 | `julia -e "using Plots; println(pkgversion(Plots))"` | `using Plots; pkgversion(Plots)` |
 | `DataFrames` | Paquete | 1.8.1 | `julia -e "using DataFrames; println(pkgversion(DataFrames))"` | `using DataFrames; pkgversion(DataFrames)` |
 
+
+## 🩺 Guía Corta: Instalación de Paquetes Julia + Cirugía OpenSSL
+
+Cuando necesite instalar un paquete (por ejemplo, `GeoInterfaceRecipes`), abra la terminal de su contenedor (el prompt que se ve como `root@contenedor:/#`) y ejecute estos 3 pasos en un solo comando combinado:
+
+```bash
+# 1. Instalar el paquete (si arroja error rojo de precompilación, ignórelo, es normal)
+julia -e 'using Pkg; Pkg.add("GeoInterfaceRecipes")'
+
+# 2. Aplicar la cirugía inmediata a los nuevos artefactos que llegaron
+find /root/.julia/artifacts -name "libssl.so*" -exec ln -sf /usr/lib/x86_64-linux-gnu/libssl.so.3 {} \;
+find /root/.julia/artifacts -name "libcrypto.so*" -exec ln -sf /usr/lib/x86_64-linux-gnu/libcrypto.so.3 {} \;
+
+# 3. Sanar y compilar todo con el OpenSSL del sistema
+julia -e 'using Pkg; Pkg.precompile()'
+```
+
+## Sincronizar versiones de paquetes en Julia (no tuvo efectos - no funcionó)
+
+De forma dirigida solo para esos tres, para minimizar riesgos
+
+```bash
+# En la terminal de Linux
+julia -e 'using Pkg; Pkg.add(["GeoJSON", "GeoInterfaceRecipes", "Plots"])'
+
+# Aplicar cirugía solo a lo nuevo
+find /root/.julia/artifacts -name "libssl.so*" -exec ln -sf /usr/lib/x86_64-linux-gnu/libssl.so.3 {} \;
+find /root/.julia/artifacts -name "libcrypto.so*" -exec ln -sf /usr/lib/x86_64-linux-gnu/libcrypto.so.3 {} \;
+
+# Precompilar
+julia -e 'using Pkg; Pkg.precompile()'
+```
+## Librerías adicionales
+
+* GeoInterfaceRecipes
+* 

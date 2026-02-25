@@ -44,7 +44,7 @@ Dentro de la carpeta deben existir los archivos descargados en el paso anterior:
 
 Este procedimiento instalará dos imágenes (una con la base de datos espacial y otra con Python, R y Julia) y configurará una red interna para comunicar su máquina anfitriona (Windows) con las dos máquinas virtuales Linux.
 
-Desde una terminal situada en dicha carpeta, ejecute:
+Estando Docker Desktop abierto, desde una terminal situada en la carpeta que contiene `sig_unal_completo.tar` y `docker-compose.yml`, ejecute:
 
 ```bash
 docker load -i sig_unal_completo.tar

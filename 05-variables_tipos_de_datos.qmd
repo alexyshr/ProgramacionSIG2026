@@ -1546,31 +1546,6 @@ mensaje
 Comparativa de manejo de memoria y mutabilidad.
 :::
 
-
-
-
-### Nota sobre especificadores de formato {#sec-especificadores-formato}
-
-Aunque Python y Julia tienen formas nativas más simples (`f""` y `""`), el uso de **s, d, f** es un estándar universal inspirado en el lenguaje C para controlar la apariencia de los datos:
-
-* **En R:** Es el estándar para controlar la salida prolija.
-    * *Ejemplo:* `sprintf("%s tiene %d m", "Ruiz", 5321)`
-* **En Python:** Estilo "antiguo" con el operador `%`. Útil para entender código heredado.
-    * *Ejemplo:* `"%s tiene %d m" % ("Ruiz", 5321)`
-* **En Julia:** Requiere la macro `@sprintf` de la librería `Printf`.
-    * *Ejemplo:* `using Printf; @sprintf("%s tiene %d m", "Ruiz", 5321)`
-
-Ejemplos controlando los decimales:
-
-* **En R:** Se usa el símbolo `%` como prefijo obligatorio.
-    * *Ejemplo:* `sprintf("%.4f", 4.892)`
-* **En Python:** Dentro de las f-strings, se usa el prefijo `:` para indicar el formato.
-    * *Ejemplo:* `f"{4.892:.4f}"`
-* **En Julia:** Se usa la macro `@sprintf` (librería `Printf`) con el prefijo `%`.
-    * *Ejemplo:* `using Printf; @sprintf("%.4f", 4.892)`
-
-En todos los lenguajes, la instrucción **`.4f`** le indica al intérprete que debe mostrar el número decimal (float) con exactamente **4 decimales**, rellenando con ceros o redondeando si es necesario.
-
 ## Operaciones básicas con texto
 
 ::: {.panel-tabset}

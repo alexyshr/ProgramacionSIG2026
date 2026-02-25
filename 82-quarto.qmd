@@ -70,6 +70,7 @@ Renderizar a PDF, mostrando todos los detalles en la consola:
 
 ```bash
 quarto render archivo.qmd --to pdf --trace --verbose`
+QUARTO_LOG_LEVEL=debug quarto render archivo.qmd --to pdf
 ```
 
 Chequear estado de instalación de Quarto

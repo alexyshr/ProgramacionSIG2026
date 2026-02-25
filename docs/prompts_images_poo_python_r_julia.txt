@@ -1,0 +1,24 @@
+python_classes_analogy.png:
+
+A 3D isometric educational illustration of a futuristic kitchen. In the center, a heavy metallic mold labeled 'CLASS' is stamping out a glowing, high-tech corn arepa. The arepa is not just food; it is a smart object. Embedded inside the arepa is a Swiss Army knife and a mini calculator. Bright neon arrows point to the arepa, with floating text saying 'Data + Methods'. Clean white background, cute 3D clay render style, vibrant colors, highly detailed.
+
+
+r_classes_analogy.png:
+A 3D educational illustration of a simple, transparent plastic tupperware lunchbox sitting on a desk. Inside the lunchbox, there are glowing numbers representing raw data. On the lid of the lunchbox, there is a bright yellow sticky note (Post-it) with the word 'CLASS' written on it. A cartoonish, friendly robot inspector with a magnifying glass is carefully reading the sticky note to decide what tool to use. 3D clay render style, soft lighting, pastel colors, isometric perspective.
+
+julia_struct_analogy.png
+A 3D illustration of a highly organized professional kitchen. On a stainless steel table, there is an indestructible, transparent glass box containing precisely measured ingredients (numbers and data). Standing behind the table are three highly specialized robot chefs, each holding a different tool. A 'Head Chef' robot is scanning the glass box with a laser beam and pointing directly to the one specific chef that has the perfect recipe for those exact ingredients. Clean, technical, 3D Pixar style, bright studio lighting.
+
+Gráfica con 3 paneles:
+comparativa_despacho_python_r_julia.png
+A 3D educational infographic illustration split into three vertical panels comparing three processes. Left panel (Python): A futuristic, self-contained food truck where a smart, glowing object is cooking itself using its own built-in tools like a Swiss army knife. Middle panel (R language): A slow, vintage post office where a tired cartoon robot is manually reading a yellow sticky note on a plastic box while holding a massive, heavy instruction manual. Right panel (Julia language): A hyper-fast, futuristic laser-guided industrial factory where glowing blue lasers instantly scan raw ingredients and shoot them through a high-speed glowing glass tube. Clean 3D Pixar style, clay render, vibrant colors, bright studio lighting, clear visual contrast between the slow middle panel and the lightning-fast right panel.
+
+Los tres páneles de manera independiente:
+despacho_python.png
+A 3D educational illustration of a futuristic, self-contained food truck painted in blue and yellow. Inside the glowing food truck, a smart, glowing digital object is cooking itself on a stove using its own built-in robotic arms and tools, including a Swiss army knife and a mini calculator. A speech bubble above the truck says 'I know what to do!'. Clean 3D Pixar style, cute clay render, vibrant colors, bright studio lighting, solid white background.
+
+despacho_r.png
+A 3D educational illustration of a slow, vintage post office. A tired, friendly cartoon robot worker is manually reading a bright yellow sticky note on a transparent plastic box. The robot is holding a massive, heavy instruction manual and looks overwhelmed. 3D clay render, pastel colors, soft lighting.
+
+despacho_julia.png
+A 3D educational illustration of a hyper-fast, futuristic laser-guided industrial factory. Glowing blue lasers are instantly scanning raw geometric ingredients on a conveyor belt. The ingredients are then shot at light speed through a glowing, high-tech glass tube. 3D Pixar style, clean and technical, dynamic motion, bright studio lighting

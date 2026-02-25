@@ -9,7 +9,13 @@ Descargue e instale la versión oficial de **Docker Desktop** desde el siguiente
 
 -   **URL**: <https://www.docker.com/products/docker-desktop/>
 -  Descargue la versión más reciente para el sistema operativo de su máquina local y verifique que el instalador coincida con la arquitectura de su máquina.
--   **Instalación**: Ejecute el instalador y asegúrese de aceptar la actualización del kernel de WSL 2 si el sistema lo solicita, o previamente usar en el terminal `wsl --update`. Durante la instalación, asegúrese de activar la opción **"Use WSL 2 instead of Hyper-V"**.
+- **Instalación**: Para instalar en una carpeta específica (ej: `E:\Docker`) seleccionada por el usuario. Ejecute en PowerShell como administrador. Asegúrese de aceptar la actualización del kernel de WSL 2 si el sistema lo solicita, o previamente usar en el terminal `wsl --update`. Durante la instalación, asegúrese de activar la opción **"Use WSL 2 instead of Hyper-V"**.
+
+```bash
+Start-Process "Docker Desktop Installer.exe" -ArgumentList "install", "--installation-dir=E:\Docker" -Wait
+```
+
+-   **Instalación alternativa**: Ejecute el instalador y asegúrese de aceptar la actualización del kernel de WSL 2 si el sistema lo solicita, o previamente usar en el terminal `wsl --update`. Durante la instalación, asegúrese de activar la opción **"Use WSL 2 instead of Hyper-V"**.
 
 
 ## Preparación Docker Desktop {#sec-preparacion_docker}
@@ -36,12 +42,14 @@ Antes de iniciar la carga o instalación de imágenes/contenedores, es imperativ
 * **Configuración de Swap en el Contenedor (WSL2)**: Dado que Docker opera sobre el subsistema Linux, debe configurar el archivo de intercambio global de WSL2:
     a. Abra el explorador de archivos y diríjase a su carpeta de usuario (escriba `%USERPROFILE%` en la barra de direcciones).
     b. Cree un archivo nuevo llamado `.wslconfig` (asegúrese de que no tenga extensión `.txt` al final).
-    c. Pegue el siguiente contenido para definir la RAM y asegurar **32 GB de swap** para sus procesos espaciales (sugerido, depende de su espacio en disco):
+    c. Defina la RAM (`memory`) y asegure suficiente memoria `swap` (ej: **32 GB de swap**) para sus procesos espaciales (sugerido, depende de su espacio en disco).
+    d. Cambie la ruta del archivo `swap.vhdx` a un disco veloz y con suficiente espacio de disco.
 
 ```ini
 [wsl2]
 memory=12GB # RAM máxima física asignada a Linux
 swap=32GB   # Memoria de intercambio para evitar el cierre de contenedores
+swapfile=X:\RutaConSuficienteEspacioEnDisco\\swap.vhdx
 ```
 
 ::: {.callout-tip}

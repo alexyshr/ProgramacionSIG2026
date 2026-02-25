@@ -29,7 +29,6 @@ execute:
 engine: knitr
 ---
 
-# Introducción a Python, R y Julia
 
 ## Funciones j_eval y j_plot en R
 
@@ -1157,26 +1156,42 @@ histogram(muestra_altitudes,
 :::
 :::
 
+
 ```{r}
 #| label: graficos_julia_ejecucion
-#| results: asis
-# #| eval: false
-j_plot('
-using Plots
+#| echo: true
+#| fig-align: "center"
+#| out-width: "85%"
 
-# Datos de Colombia
-ciudades = ["Bogotá", "Medellín", "Cali", "Quibdó"]
-altitudes = [2625, 1495, 1018, 43]
+# 1. Usamos j_eval para procesar la lógica sin que j_plot interfiera
+j_eval('
+    # Modo silencioso para el servidor gráfico
+    ENV["GKSwstype"] = "100" 
+    
+    using Plots
+    gr()
 
-# En j_plot, el gráfico se genera en el dispositivo configurado
-p1 = bar(ciudades, altitudes, title="Altitud Municipios", legend=false)
-display(p1)
+    # Datos
+    ciudades = ["Bogotá", "Medellín", "Cali", "Quibdó"]
+    altitudes = [2625, 1495, 1018, 43]
 
-muestra = [2625, 1495, 1018, 43, 18, 2527, 959, 467, 2150, 1850]
-p2 = histogram(muestra, bins=5, title="Histograma Altitudes")
-display(p2)
+    # Creamos los objetos de gráfico explícitamente
+    p1 = bar(ciudades, altitudes, title="Altitud Municipios", legend=false)
+    muestra = [2625, 1495, 1018, 43, 18, 2527, 959, 467, 2150, 1850]
+    p2 = histogram(muestra, bins=5, title="Histograma Altitudes")
+
+    # Los combinamos en un objeto final
+    p_final = plot(p1, p2, layout = (1, 2), size = (800, 400))
+
+    # Guardamos el objeto p_final directamente. 
+    # Esto evita el error "No current plot" porque no dependemos del estado global.
+    savefig(p_final, "temp_grafica_julia.png")
 ')
+
+# 2. R se encarga de mostrar la imagen con el formato que pediste
+knitr::include_graphics("temp_grafica_julia.png")
 ```
+
 :::
 
 ## 9. Transformación de datos

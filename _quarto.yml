@@ -44,8 +44,8 @@ book:
         - 05-variables_tipos_de_datos.qmd
         - 06-estructuras_datos.qmd
         - 07-operaciones_cadenas.qmd
-        #- 08-ciclos_condicionales.qmd
-        #- 09-funciones_clases.qmd
+        - 08-ciclos_condicionales.qmd
+        - 09-funciones_clases.qmd
         #- 10-trabajando_con_archivos.qmd
         #- 11-matrices_dataframes.qmd
         - 12-introduccion_python_r_julia.qmd
@@ -136,10 +136,22 @@ format:
       - left=2.5cm
       - right=2.5cm
     
+    # Salida mermaid a PDF
+    mermaid-format: png
+    mermaid:
+      chrome-args: 
+        - "--no-sandbox"
+        - "--disable-gpu"
+        - "--disable-dev-shm-usage"
+        - "--headless"
+
     # CONFIGURACIÓN LaTeX (se inserta en el preámbulo)
     include-in-header:
       text: |
+        % para girar a landscape \blandscape y retornar \elandscape
+        \usepackage{pdflscape}      
         \usepackage{emptypage}   % Elimina números en páginas vacías
+        
         % \usepackage[spanish]{babel}
 
         %PAQUETES APRA COLOREO DE TABLAS

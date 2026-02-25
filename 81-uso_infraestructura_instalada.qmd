@@ -1,7 +1,441 @@
 # Uso de la Infraestructura Instalada {#sec-anexo_infraestructura}
 
+## (NEW - use it) Configuración de Mermaid a pdf en Docker (Resumido)
 
-## Configuración inicial del entorno (Pre-flight) {#sec-preflight}
+* Borra las dos últimas líneas de configuración de Google-Chrome en /etc/R/Rprofile.site
+
+```text
+#Elimina estas líneas en Rprofile.site
+Sys.setenv(CHROMOTE_CHROME = "/usr/bin/google-chrome")
+options(chromote.args = c("--no-sandbox", "--disable-gpu", "--headless"))
+```
+
+* Instala Chromium ejecutando el archivo `install_chromium.sh` el cual descomprime el archivo `quarto-chromium-869685.tar.gz` a las carpetas requeridas (`chromium/linux-869685/`)
+
+```bash
+/home/rstudio/work/install_chromium.sh
+```
+* Agrega esta nueva configuración para apuntar a Chromium
+
+```bash
+cat <<EOF >> /etc/R/Rprofile.site
+
+# --- Configuración Mermaid/Chromium para Docker ---
+# Definir ruta del binario manual
+Sys.setenv(QUARTO_CHROMIUM = "/root/.local/share/quarto/chromium/linux-869685/chrome-linux/chrome")
+
+# Argumentos de seguridad y rendimiento para contenedores
+Sys.setenv(QUARTO_CHROME_ARGUMENTS = "--no-sandbox --disable-gpu --disable-dev-shm-usage --headless")
+EOF
+```
+
+* Corre estos comandos para crear un link a Chromium y asegurar que Quarto cargue primero Chromium en lugar de Google-Chrome
+
+
+```bash
+# Crear carpeta
+mkdir -p /tmp/bin
+
+# Crear el enlace simbólico: Se redirigen las peticiones de `google-chrome` hacia el Chromium funcional de Quarto.
+ln -s /root/.local/share/quarto/chromium/linux-869685/chrome-linux/chrome /tmp/bin/google-chrome
+
+# Actualizar el Path: Se coloca el nuevo directorio al principio de la variable de entorno para que el sistema lo encuentre primero.
+export PATH="/tmp/bin:$PATH"
+echo 'export PATH="/tmp/bin:$PATH"' >> ~/.bashrc
+# Validación: Confirmar que el comando `which` apunta ahora a nuestra ruta temporal.
+which google-chrome
+```
+
+* Agrega estas líneas a .bashrc para definir variables de entorno relacionadas con Chromium en cada nueva terminal que se cree dentro de VSCode.
+
+```bash
+cat <<EOF >> ~/.bashrc
+
+# --- Configuración Quarto + Chromium para Docker ---
+export QUARTO_CHROMIUM="/root/.local/share/quarto/chromium/linux-869685/chrome-linux/chrome"
+export QUARTO_CHROME_ARGUMENTS="--no-sandbox --disable-gpu --disable-dev-shm-usage --headless"
+EOF
+
+# Aplicar los cambios inmediatamente
+source ~/.bashrc
+```
+
+## (NEW ) Configuración de Mermaid a pdf en Docker (este es el mismo punto anterior pero con más detalles)
+
+Esta guía detalla la solución técnica para renderizar diagramas Mermaid en pdf dentro de contenedores, evitando los conflictos de seguridad del kernel y los errores al usar Google Chrome (`/usr/bin/google-chrome`).
+
+### Instalación de Chromium y verificación
+
+Es el paso fundamental para obtener el binario funcional dentro del entorno de Linux del contenedor.
+
+* **Instalación inicial:** Ejecutar el comando de Quarto para descargar el motor del navegador.
+
+```bash
+quarto install chromium
+```
+
+* **Verificar si Quarto reconoce Chromium**:
+
+```bash
+quarto check
+```
+
+Busca la línea que dice **Chromium**. Si aparece una ruta (como `/root/.local/share/quarto/...`), el navegador está instalado y listo para usar. Si no está instalado dice `Chromium: (not installed)`
+
+* **Localizar la ruta del binario:** Confirmar dónde se almacenó el ejecutable para configurar las rutas de Quarto.
+
+```bash
+find / -name chrome -type f 2>/dev/null | grep quarto
+# Ruta esperada: /root/.local/share/quarto/chromium/linux-869685/chrome-linux/chrome
+```
+
+* **Verificar dependencias de sistema:** Asegurar que el binario tenga acceso a todas las librerías compartidas necesarias. No debe salir nada después de ejecutar el comando.
+```bash
+ldd /root/.local/share/quarto/chromium/linux-869685/chrome-linux/chrome | grep "not found"
+```
+
+---
+
+### El engaño al sistema (solución al error de Chrome)
+
+Dado que el sistema y Quarto suelen priorizar la ruta `/usr/bin/google-chrome` (que falla en Docker por restricciones de Snap o del kernel), creamos un binario falso con alta prioridad.
+
+* **Crear directorio de binarios temporales:** Se genera una carpeta con prioridad en el sistema.
+
+```bash
+mkdir -p /tmp/bin
+```
+* **Crear el enlace simbólico:** Se redirigen las peticiones de `google-chrome` hacia el Chromium funcional de Quarto.
+
+```bash
+ln -s /root/.local/share/quarto/chromium/linux-869685/chrome-linux/chrome /tmp/bin/google-chrome
+```
+* **Actualizar el Path:** Se coloca el nuevo directorio al principio de la variable de entorno para que el sistema lo encuentre primero.
+```bash
+export PATH="/tmp/bin:$PATH"
+echo 'export PATH="/tmp/bin:$PATH"' >> ~/.bashrc
+```
+* **Validación:** Confirmar que el comando `which` apunta ahora a nuestra ruta temporal.
+```bash
+which google-chrome
+```
+
+---
+
+### Configuración global de R (Rprofile.site)
+
+Para que todos los archivos `.qmd` reconozcan esta configuración automáticamente sin añadir código repetitivo, editamos el archivo de configuración global del sitio en el contenedor.
+
+```bash
+cat <<EOF >> /etc/R/Rprofile.site
+
+# --- Configuración Mermaid/Chromium para Docker ---
+# Definir ruta del binario manual
+Sys.setenv(QUARTO_CHROMIUM = "/root/.local/share/quarto/chromium/linux-869685/chrome-linux/chrome")
+
+# Argumentos de seguridad y rendimiento para contenedores
+Sys.setenv(QUARTO_CHROME_ARGUMENTS = "--no-sandbox --disable-gpu --disable-dev-shm-usage --headless")
+EOF
+```
+
+---
+
+
+### Configuración de variables en ~/.bashrc
+
+```bash
+cat <<EOF >> ~/.bashrc
+
+# --- Configuración Quarto + Chromium para Docker ---
+export QUARTO_CHROMIUM="/root/.local/share/quarto/chromium/linux-869685/chrome-linux/chrome"
+export QUARTO_CHROME_ARGUMENTS="--no-sandbox --disable-gpu --disable-dev-shm-usage --headless"
+EOF
+
+# Aplicar los cambios inmediatamente
+source ~/.bashrc
+```
+
+### Configuración del proyecto (_quarto.yml)
+
+Si estás trabajando en un proyecto de Quarto, puedes definir estos parámetros de forma centralizada en el archivo `_quarto.yml`. Esto evita tener que configurar cada archivo `.qmd` por separado.
+
+```yaml
+project:
+  title: "Mi Proyecto de Investigación"
+
+format:
+  html: default
+  pdf:
+    keep-tex: true
+    mermaid-format: png
+    include-in-header:
+      - text: \usepackage{pdflscape}
+    chrome-args: 
+      - "--no-sandbox"
+      - "--disable-gpu"
+      - "--disable-dev-shm-usage"
+      - "--headless"
+```
+
+
+---
+
+### Evitar el uso de configuración redundante en archivos individuales
+
+Para compilar archivos `.qmd` de forma independiente (por ejemplo, capítulos de un libro) sin tener que repetir el bloque de configuración de Chromium en cada uno, cree un archivo llamado `_metadata.yml` en la carpeta correspondiente con el siguiente contenido:
+
+```yaml
+format:
+  html: default
+  pdf:
+    mermaid-format: png
+    include-in-header:
+      - text: \usepackage{pdflscape}
+    chrome-args: 
+      - "--no-sandbox"
+      - "--disable-gpu"
+      - "--disable-dev-shm-usage"
+      - "--headless"
+```
+
+---
+
+### Diagrama ajustado al ancho de página
+
+Usamos `%%| fig-width` para controlar la resolución interna y `out-width` para el tamaño real en el papel.
+
+```mermaid
+%%| label: fig-flujo
+%%| fig-cap: "El flujo completo: Desde la declaración hasta el desempaquetado."
+%%| fig-width: 8
+%%| fig-align: center
+%%| out-width: "100%"
+graph TD
+  A[PYTHON Base 0] --> B(ruta[1])
+  B --> C[Terminal: 6.2442, -75.58]
+  C --> D[Lat: 6.2442]
+  C --> E[Desempaquetado]
+```
+
+* **out-width: "100%":** Esto es lo más importante; obliga al diagrama a expandirse hasta los márgenes del PDF sin salirse.
+* **fig-width:** Si el texto del diagrama se ve muy pequeño o borroso, aumenta este valor (ej. a `10` o `12`). Si se ve muy gigante, bájalo. 
+* **fig-cap:** Agregar un pie de figura (`fig-cap`) le da ese aspecto de "Libro" o "Paper" profesional que buscas.
+
+---
+
+### Estructura del documento .qmd
+
+Para compilar exitosamente, el encabezado yaml debe forzar el formato png para Mermaid, que es el método más estable para "fotografiar" el diagrama dentro de entornos sin interfaz gráfica.
+
+`````yaml
+---
+title: "Prueba Mermaid"
+format:
+  pdf:
+    mermaid-format: png
+    chrome-args: 
+      - "--no-sandbox"
+      - "--disable-gpu"
+      - "--disable-dev-shm-usage"
+      - "--headless"
+---
+
+Compilación individual funcionó con este:
+---
+format:
+  html: default
+  pdf:
+    keep-tex: true
+    mermaid-format: png
+    include-in-header:
+      - text: \usepackage{pdflscape}
+---
+
+### Diagrama funcional
+::: {.content-visible when-format="pdf"}
+\blandscape
+:::
+
+```{mermaid}
+graph TD
+  A[Inicio] --> B[Procesamiento en Docker]
+  B --> C[PDF generado exitosamente]
+```
+::: {.content-visible when-format="pdf"}
+\elandscape
+:::
+
+`````
+
+
+
+### Diagnóstico y pruebas manuales
+
+Si el renderizado falla, se puede ejecutar una prueba de navegación directa para confirmar que Chromium responde correctamente a los flags de seguridad.
+
+```bash
+/root/.local/share/quarto/chromium/linux-869685/chrome-linux/chrome --headless --no-sandbox --disable-gpu --remote-debugging-port=9222 about:blank
+```
+*(Si el comando permite la conexión al puerto 9222 sin errores de librerías, el sistema está operativo).*
+
+### Crear el instalador local de Chromium para instalarlo sin Internet
+
+* Instala `quarto install chromium`
+* Crear el comprimido en tu carpeta de trabajo persistente
+```bash
+tar -czvf /home/rstudio/work/quarto-chromium-869685.tar.gz -C /root/.local/share/quarto/ chromium
+```
+
+* Comando de instalación rápida (restaurar)
+
+    * Uso del script de restauración
+```bash
+# Dar permisos de ejecución (solo la primera vez)
+chmod +x /home/rstudio/work/install_chromium.sh
+
+# Ejecutar la restauración relámpago
+/home/rstudio/work/install_chromium.sh
+```
+
+    * Como alternativa corres los comandos individuales que hay en `install_chromium.sh`
+
+```bash
+# Asegurar que el directorio base de Quarto exista
+mkdir -p /root/.local/share/quarto/
+
+# Descomprimir el instalador directamente en su destino
+tar -xzvf /home/rstudio/work/quarto-chromium-869685.tar.gz -C /root/.local/share/quarto/
+```
+
+* Verificación de la restauración
+
+Tras ejecutar cualquiera de los métodos anteriores, puedes verificar que el binario de Chromium está en su sitio y listo para operar con el siguiente comando:
+
+```bash
+ls -l /root/.local/share/quarto/chromium/linux-869685/chrome-linux/chrome
+```
+*(Deberías ver el archivo listado con permisos `-rwxr-xr-x`, lo que confirma que Chromium está operativo para renderizar tus diagramas Mermaid).*
+
+
+## (NEW - do not use) Configuración inicial del entorno (Pre-flight) {#sec-preflight}
+
+Para automatizar el soporte de gráficos mermaid, ejecute estos comandos en la terminal del contenedor `contenedor_sig_unal` inmediatamente después de iniciar los servicios con `docker compose up -d` on con `docker compose start`:
+
+
+**Contexto del problema**: Al compilar documentos Quarto (`.qmd`) en contenedores Docker, el motor interno que Quarto usa para dibujar diagramas Mermaid suele colapsar por las restricciones de seguridad del sistema (el "sandbox"). Para solucionar esto de forma definitiva, utilizaremos R (`DiagrammeR` y `webshot2`) para procesar la gráfica e incrustarla limpiamente tanto en HTML como en PDF.
+
+* **Paso 1**: Instalar la librería requerida
+
+```bash
+Rscript -e "install.packages('DiagrammeR', dependencies=TRUE)"
+```
+
+* **Paso 2**: Configurar el entorno global de R (`Rprofile.site`)
+
+
+Google Chrome se instaló en el contenedor para compilar código `mermaid` dentro de Quarto.Necesitamos indicarle a R dónde está el navegador Chrome y cómo abrirlo sin que el contenedor Docker lo bloquee.
+
+Copien y peguen este bloque completo en la terminal. El comando limpiará cualquier configuración conflictiva anterior y escribirá la configuración correcta:
+
+```bash
+# 1. Limpiar configuraciones previas (para evitar duplicados o errores)
+sed -i '/CHROMOTE/d' /etc/R/Rprofile.site
+sed -i '/chromote/d' /etc/R/Rprofile.site
+
+# 2. Inyectar la configuración limpia
+cat << 'EOF' >> /etc/R/Rprofile.site
+
+# --- Configuración segura de Chromote para Docker ---
+Sys.setenv(CHROMOTE_CHROME = "/usr/bin/google-chrome")
+options(chromote.args = c("--no-sandbox", "--disable-gpu", "--headless", "--remote-debugging-port=9222", "--disable-dev-shm-usage"))
+EOF
+```
+
+* **Paso 3**: Configuración de contingencia en el documento (ppcional pero recomendado)
+
+Aunque el Paso 2 configura el sistema globalmente, es una excelente práctica (especialmente si comparten su código o lo corren en otro equipo) incluir las variables de entorno directamente en un bloque de configuración (`setup`) dentro de su script. Esto garantiza que el documento sea autónomo y sobreviva a cualquier entorno.
+
+
+* **Paso 4**: Crear el archivo .qmd de prueba
+
+Creen un archivo llamado `prueba_mermaid.qmd` y peguen exactamente este código. Noten que usamos un bloque `{r}` regular en lugar de `{mermaid}` para forzar al sistema a usar nuestra ruta segura.
+
+``````markdown
+---
+title: "Prueba Mermaid vía Knitr"
+format:
+  html: default
+  pdf: default
+execute:
+  echo: false
+---
+
+```{.r}
+#| label: setup_chrome
+#| include: false
+# 1. Configuración de Chrome inyectada directamente para sobrevivir a Docker
+Sys.setenv(CHROMOTE_CHROME = "/usr/bin/google-chrome")
+
+if (requireNamespace("chromote", quietly = TRUE)) {
+  chromote::set_chrome_args(c(
+    "--no-sandbox", 
+    "--disable-dev-shm-usage", 
+    "--headless"
+  ))
+}
+
+# 2. Cargar la librería que le permite a knitr entender Mermaid
+library(DiagrammeR)
+```
+
+```{.r}
+#| label: plot-mermaid
+#| echo: false
+# Este bloque genera la gráfica interactiva en HTML o la imagen estática en PDF
+mermaid("
+graph TD
+  A[Anyone] -->|Can help| B(Go to [github.com/yuzutech/kroki](https://github.com/yuzutech/kroki))
+  B --> C{How to contribute?}
+  C --> D[Reporting bugs]
+  C --> E[Sharing ideas]
+  C --> F[Advocating]
+")
+```
+
+``````
+
+> En el contenido del archivo `prueba_mermaid.qmd`, en las dos partes donde aparece, cambie `{.r}` por `{r}` .
+
+* **Paso 5**: Compilar el documento
+
+```bash
+quarto render prueba_mermaid.qmd --to all
+```
+
+### Test adicionales (Chrome)
+
+* Ejecute uno de lo siguientes comandos para comprobar si Google Chrome web browser está instalado correctamente:
+
+```bash
+google-chrome --version
+```
+
+```bash
+which google-chrome
+```
+
+```bash
+quarto check
+```
+
+* Prueba de vida de Chrome (diagnóstico). Si aparece mucho texto tipo HTML, Chrome está funcionando correctamente.
+
+```bash
+/usr/bin/google-chrome --headless --no-sandbox --disable-dev-shm-usage --dump-dom https://example.com
+```
+
+
+## (OLD - No usar) Configuración inicial del entorno (Pre-flight) {#sec-preflight_old}
 
 Para automatizar el soporte de gráficos y capturas sin configurar cada archivo individualmente, ejecute estos comandos en la terminal del contenedor `contenedor_sig_unal` inmediatamente después de iniciar los servicios con `docker compose up -d`:
 
@@ -10,10 +444,7 @@ Para automatizar el soporte de gráficos y capturas sin configurar cada archivo 
 | **Automatización R** | `echo 'Sys.setenv(CHROMOTE_CHROME = "/opt/google/chrome/chrome")' >> /etc/R/Rprofile.site` | Configura la ruta de Chrome para todo el sistema R de forma persistente. (si falla usa `/usr/lib/R/etc/Rprofile.site`. El `R.home("etc")` en nuestro sistema es `/usr/lib/R/etc`)|
 | **Seguridad Root** | `echo 'options(chromote.args = c("--no-sandbox", "--disable-gpu", "--headless", "--remote-debugging-port=9222"))' >> /etc/R/Rprofile.site` | Habilita el modo *headless* y evita bloqueos de *sandbox* al ejecutar como root. (si falla usa `/usr/lib/R/etc/Rprofile.site`. El `R.home("etc")` en nuestro sistema es `/usr/lib/R/etc`)|
 
-: Comandos de configuración global del contenedor {#tbl-preflight}
-
-/usr/bin/google-chrome
-/usr/lib/R/etc/Rprofile.site /etc/R/Rprofile.site
+: Comandos de configuración global del contenedor {#tbl-preflight_old_1}
 
 Google Chrome se necesita para compilar código `mermaid` dentro de Quarto. Ejecute uno de lo siguientes comandos para comprobar si Google Chrome web browser está instalado correctamente:
 
@@ -29,7 +460,7 @@ which google-chrome
 quarto check
 ```
 
-La imagen cargada del archivo tar ya incluye los programas descritos a continuación en @tbl-preflight_old. Esta tabla se deja como referencia para facilitar una futura compilación. La tabla descrita líneas abajo servirá para complementar el archivo Dockerfile.
+La imagen cargada del archivo tar ya incluye los programas descritos a continuación en @tbl-preflight_old_2. Esta tabla se deja como referencia para facilitar una futura compilación. La tabla descrita líneas abajo servirá para complementar el archivo Dockerfile.
 
 | Categoría | Comando de Configuración | Propósito |
 |:--- |:--- |:--- |
@@ -39,9 +470,7 @@ La imagen cargada del archivo tar ya incluye los programas descritos a continuac
 | **Librerías Python**| `pip3 install selenium` | Habilita la automatización de capturas para visualizaciones dinámicas de Python. |
 | **Librerías Julia** | `julia -e 'using Pkg; Pkg.add(["FileIO", "ImageIO"])'` | Soporte esencial para procesar y exportar gráficos en el ecosistema Julia. |
 
-: Comandos de configuración global del contenedor ya incluidos en la imagen cargada a partir del archivo .tar {#tbl-preflight_old}
-
-
+: Comandos de configuración global del contenedor ya incluidos en la imagen cargada a partir del archivo .tar {#tbl-preflight_old_2}
 
 
 ### Ventajas de esta configuración {#sec-ventajas}
@@ -724,7 +1153,7 @@ println("--- Verificación Finalizada ---")
 ```{r}
 #| label: julia_verificacion
 #| results: asis
-# #| eval: false
+#| eval: false
 j_plot('
 using LibPQ
 using LibGEOS
@@ -798,6 +1227,7 @@ println("--- Verificación Finalizada ---")
 ```{r}
 #| label: julia_verificacion2
 #| results: asis
+#| eval: false
 # Validación de Motores SIG y Conectividad
 j_plot('
 using LibPQ, LibGEOS, ArchGDAL, Plots

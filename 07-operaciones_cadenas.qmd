@@ -20,7 +20,7 @@ En el análisis de datos espaciales, gran parte del tiempo se invierte en la lim
 ## Objetivos de aprendizaje
 
 
-## 1. Creación y Propiedades Básicas
+## 1. Creación y propiedades básicas
 
 Una cadena de texto (`string`) se puede definir con comillas simples o dobles. Para textos largos (como descripciones de metadatos geográficos), usamos comillas triples.
 
@@ -175,11 +175,33 @@ println(separador)
 
 :::
 
-### 1.1 Interpolación de Cadenas
+### 1.1 Interpolación y formateo de cadenas {#sec-especificadores-formato}
 
-La interpolación nos permite insertar variables directamente dentro de un texto sin tener que estar abriendo y cerrando comillas constantemente.
+La interpolación nos permite insertar variables directamente dentro de un texto sin tener que estar abriendo y cerrando comillas constantemente. Además, es la herramienta principal para controlar la cantidad de decimales que mostramos en pantalla.
+
+Aunque hoy en día lenguajes como Python y Julia tienen herramientas modernas y muy limpias para hacer esto (`f""` y `$`), la gran mayoría de los lenguajes heredaron un estándar universal creado hace décadas por el lenguaje C. Comprender este estándar es vital, no solo porque es la forma nativa de hacerlo en R, sino porque te permitirá leer código heredado en casi cualquier otro lenguaje.
+
+#### Los especificadores universales (estilo C)
+
+Este estándar utiliza códigos especiales que comienzan con el símbolo de porcentaje (`%`) para reservar el espacio donde irá una variable y decirle al intérprete qué tipo de dato debe esperar:
+
+| Código | Significado | Tipo de Dato Esperado | Ejemplo de uso |
+|:---:|:---|:---|:---|
+| **`%s`** | **S**tring | Cadenas de texto | Nombres de ciudades, IDs de parcelas. |
+| **`%d`** | **D**ecimal / Integer | Números enteros | Conteo de población, años, vértices. |
+| **`%f`** | **F**loat | Números decimales | Coordenadas, elevaciones, áreas. |
+
+: Especificadores de formato estándar heredados de C {#tbl-especificadores-formato tbl-colwidths="[15,25,25,35]"}
+
+#### Control de precisión decimal (el uso de `.4f`)
+
+El caso de uso más importante en geomática es el control de los decimales. Las coordenadas suelen tener una precisión altísima en la memoria (ej. `10.836482`), pero en un reporte quizás solo necesitamos 4 decimales.
+
+Para lograr esto, modificamos el especificador `%f` agregándole un punto y el número de decimales deseados: **`.4f`**. Esto le indica al computador que debe mostrar el número redondeándolo exactamente a 4 cifras, rellenando con ceros si es necesario. En Python, esta misma lógica se aplica dentro de las llaves de las f-strings usando dos puntos (`:.4f`).
 
 
+
+Veamos cómo conviven los métodos modernos y los clásicos en los tres lenguajes:
 
 ::: {.panel-tabset}
 
@@ -193,9 +215,18 @@ La interpolación nos permite insertar variables directamente dentro de un texto
 #| eval: false
 pico = "Pico Cristóbal Colón"
 altura = 5700
+latitud = 10.836482
 
-# F-strings (Interpolación directa)
+# 1. F-strings (Interpolación directa y moderna)
 print(f"El {pico} tiene una altitud de {altura} msnm.")
+
+# Control de decimales con F-strings (Ej. 4 decimales)
+print(f"Latitud exacta: {latitud:.4f}")
+
+# 2. Método antiguo (Estilo C con operador %)
+# Es muy común encontrarlo en código heredado o librerías antiguas
+# %s para texto, %d para enteros, %f para decimales
+print("El %s tiene una altitud de %d msnm y latitud %.4f." % (pico, altura, latitud))
 ```
 :::
 :::
@@ -204,9 +235,18 @@ print(f"El {pico} tiene una altitud de {altura} msnm.")
 #| label: python_str_interp
 pico = "Pico Cristóbal Colón"
 altura = 5700
+latitud = 10.836482
 
-# F-strings (Interpolación directa)
+# 1. F-strings (Interpolación directa y moderna)
 print(f"El {pico} tiene una altitud de {altura} msnm.")
+
+# Control de decimales con F-strings (Ej. 4 decimales)
+print(f"Latitud exacta: {latitud:.4f}")
+
+# 2. Método antiguo (Estilo C con operador %)
+# Es muy común encontrarlo en código heredado o librerías antiguas
+# %s para texto, %d para enteros, %f para decimales
+print("El %s tiene una altitud de %d msnm y latitud %.4f." % (pico, altura, latitud))
 ```
 
 ### R
@@ -219,10 +259,18 @@ print(f"El {pico} tiene una altitud de {altura} msnm.")
 #| eval: false
 pico <- "Pico Cristóbal Colón"
 altura <- 5700
+latitud <- 10.836482
 
-# En R usamos sprintf (%s para texto, %d para enteros)
+# En R usamos sprintf de forma nativa como estándar principal
+# %s para texto, %d para enteros, %f para decimales
 mensaje <- sprintf("El %s tiene una altitud de %d msnm.", pico, altura)
-cat(mensaje)
+cat(mensaje, "\n")
+
+# Control de decimales obligando a 4 cifras (%.4f)
+cat(sprintf("Latitud exacta: %.4f\n", latitud))
+
+# Todo en una sola línea combinada
+cat(sprintf("El %s está en la latitud %.4f\n", pico, latitud))
 ```
 :::
 :::
@@ -231,10 +279,18 @@ cat(mensaje)
 #| label: r_str_interp
 pico <- "Pico Cristóbal Colón"
 altura <- 5700
+latitud <- 10.836482
 
-# En R usamos sprintf (%s para texto, %d para enteros)
+# En R usamos sprintf de forma nativa como estándar principal
+# %s para texto, %d para enteros, %f para decimales
 mensaje <- sprintf("El %s tiene una altitud de %d msnm.", pico, altura)
-cat(mensaje)
+cat(mensaje, "\n")
+
+# Control de decimales obligando a 4 cifras (%.4f)
+cat(sprintf("Latitud exacta: %.4f\n", latitud))
+
+# Todo en una sola línea combinada
+cat(sprintf("El %s está en la latitud %.4f\n", pico, latitud))
 ```
 
 ### Julia
@@ -247,9 +303,22 @@ cat(mensaje)
 #| eval: false
 pico = "Pico Cristóbal Colón"
 altura = 5700
+latitud = 10.836482
 
-# Julia usa el símbolo $ para interpolar variables
+# 1. Julia usa el símbolo $ para interpolar variables (Recomendado)
 println("El $pico tiene una altitud de $altura msnm.")
+
+# 2. Método clásico y control de decimales
+# Requiere cargar la librería estándar Printf para usar @sprintf
+using Printf
+
+# Controlando la latitud a 4 decimales
+lat_formateada = @sprintf("%.4f", latitud)
+println("Latitud exacta: $lat_formateada")
+
+# Usando el estilo C completo
+# %s para texto, %d para enteros, %f para decimales
+println(@sprintf("El %s está en la latitud %.4f", pico, latitud))
 ```
 :::
 :::
@@ -260,9 +329,22 @@ println("El $pico tiene una altitud de $altura msnm.")
 j_eval(r"-(
 pico = "Pico Cristóbal Colón"
 altura = 5700
+latitud = 10.836482
 
-# Julia usa el símbolo $ para interpolar variables
+# 1. Julia usa el símbolo $ para interpolar variables (Recomendado)
 println("El $pico tiene una altitud de $altura msnm.")
+
+# 2. Método clásico y control de decimales
+# Requiere cargar la librería estándar Printf para usar @sprintf
+using Printf
+
+# Controlando la latitud a 4 decimales
+lat_formateada = @sprintf("%.4f", latitud)
+println("Latitud exacta: $lat_formateada")
+
+# Usando el estilo C completo
+# %s para texto, %d para enteros, %f para decimales
+println(@sprintf("El %s está en la latitud %.4f", pico, latitud))
 )-")
 ```
 
@@ -278,9 +360,12 @@ println("El $pico tiene una altitud de $altura msnm.")
 | **Repetir** | `* n` | `strrep(str, n)` | `^ n` |
 | **Longitud** | `len(str)` | `nchar(str)` | `length(str)` |
 | **Interpolación** | `f"Texto {var}"` | `sprintf("Texto %s", var)` | `"Texto $var"` |
----
+| **Marcadores (Formato)** | `%s`, `%d`, `%f`<br>*(Método clásico)* | `%s`, `%d`, `%f` | `%s`, `%d`, `%f`<br>*(Req. `Printf`)* |
+| **Precisión (4 dec)** | `f"{v:.4f}"` | `sprintf("%.4f", v)` | `@sprintf("%.4f", v)` |
 
-## 2. Métodos de Limpieza y Transformación
+: Operaciones principales con cadenas de texto {#tbl-operaciones_strings tbl-colwidths="[28,24,24,24]"}
+
+## 2. Métodos de limpieza y transformación
 
 Los datos de entidades como el DANE o el IGAC a veces vienen con errores de digitación o espacios accidentales. Veamos cómo limpiar un topónimo colombiano.
 
@@ -436,7 +521,7 @@ println("Limpio:   '$registro_final'")
 ---
 
 
-## 3. Separación y Unión (Split & Join)
+## 3. Separación y unión (Split & Join)
 
 Es muy común recibir coordenadas en formato de texto separado por comas, o necesitar armar rutas de archivos uniendo directorios para exportar nuestros Shapefiles.
 
@@ -610,7 +695,7 @@ println("Ruta generada: $ruta_completa")
 
 ---
 
-## 4. Formateo de Precisión (WKT y SQL)
+## 4. Formateo de precisión (WKT y SQL)
 
 Construir geometrías en formato de texto (Well-Known Text) o consultas a bases de datos espaciales requiere un control preciso de la interpolación y los decimales.
 
@@ -814,7 +899,7 @@ println(sql_query)
 
 
 
-### Explicación técnica: El "Radar" de Miles en Julia
+### Explicación técnica: el "radar" de miles en Julia
 
 A diferencia de Python, Julia no tiene un flag nativo (como el `:,`) para formatear miles automáticamente en el macro `@sprintf`. Por ello, utilizamos una **Expresión Regular (Regex)** que actúa como un "radar" de posiciones:
 
@@ -874,11 +959,13 @@ println("Población formateada: $poblacion_fmt")
 
 [^1]: En Colombia, el estándar suele preferir el punto (.) como separador de miles. Para aplicarlo, simplemente cambie el carácter de reemplazo en cada función: `f"{var:,}"`, `format(var, big.mark=",", scientific = FALSE)`, `replace(string(v), r"..." => ",")`.
 
-## Resumen de Aprendizajes (Cheat Sheet)
+
+
+## Resumen de aprendizajes (Cheat Sheet)
 
 En este capítulo hemos explorado cómo limpiar, transformar, dividir y dar formato de precisión a los datos de texto (Strings), habilidades esenciales para procesar topónimos, coordenadas crudas y construir consultas espaciales. A continuación, se presenta tu **Hoja de Referencia (Cheat Sheet)** para traducir estos conceptos entre Python, R y Julia.
 
-### 1. Creación y Propiedades Fundamentales
+### 1. Creación y propiedades fundamentales
 
 | Operación | Python | R | Julia |
 | :--- | :--- | :--- | :--- |
@@ -888,10 +975,12 @@ En este capítulo hemos explorado cómo limpiar, transformar, dividir y dar form
 | **Repetir** | `* n` | `strrep(str, n)` | `^ n` |
 | **Longitud** | `len(str)` | `nchar(str)` | `length(str)` |
 | **Interpolación** | `f"Texto {var}"` | `sprintf("Texto %s", var)` | `"Texto $var"` |
+| **Marcadores (Formato)** | `%s`, `%d`, `%f`<br>*(Método clásico)* | `%s`, `%d`, `%f` | `%s`, `%d`, `%f`<br>*(Req. `Printf`)* |
+
 
 : Sintaxis básica para creación y medición de cadenas {#tbl-cheat_str_creacion tbl-colwidths="[25,25,25,25]"}
 
-### 2. Transformaciones y Limpieza
+### 2. Transformaciones y limpieza
 
 | Operación | Python | R | Julia |
 | :--- | :--- | :--- | :--- |
@@ -903,14 +992,14 @@ En este capítulo hemos explorado cómo limpiar, transformar, dividir y dar form
 
 : Métodos nativos para estandarización de texto {#tbl-cheat_str_limpieza tbl-colwidths="[25,25,25,25]"}
 
-### 3. Split, Join y Formateo de Precisión
+### 3. Split, join y formateo de precisión
 
 | Operación | Python | R | Julia |
 | :--- | :--- | :--- | :--- |
 | **Separar (Split)** | `str.split(",")` | `unlist(strsplit(str, ","))` | `split(str, ",")` |
 | **Unir (Join)** | `"/".join(array)` | `paste(arr, collapse="/")` | `join(array, "/")` |
 | **Texto a Decimal** | `float(cadena)` | `as.numeric(cadena)` | `parse(Float64, cadena)` |
-| **Control Decimal** | `f"{lon:.4f}"` | `sprintf("%.4f", lon)` | `@sprintf("%.4f", lon)` |
+| **Control Decimal (4 dec)** | `f"{lon:.4f}"` | `sprintf("%.4f", lon)` | `@sprintf("%.4f", lon)` |
 | **Separador Miles** | `f"{v:,}"` | `format(v, big.mark=",", scientific=F)`| `replace(string(v), r"..." => ",")`|
 
 : Funciones críticas para parseo de coordenadas y WKT {#tbl-cheat_str_format tbl-colwidths="[25,25,25,25]"}
@@ -918,7 +1007,7 @@ En este capítulo hemos explorado cómo limpiar, transformar, dividir y dar form
 ---
 
 ::: {.callout-important}
-### Conclusiones Críticas del Módulo
+### Conclusiones críticas del módulo
 
 1. **La trampa del Split en R:** A diferencia de Python y Julia (que devuelven arreglos simples), la función `strsplit()` en R siempre devuelve una *Lista*. Si intentas aplicar cálculos matemáticos directamente al resultado de un `strsplit` sin desempaquetarlo antes (usando `[[1]]` o `unlist()`), R arrojará un error.
 2. **Cuidado con la Notación Científica:** Al formatear grandes números (como poblaciones o áreas en metros cuadrados), R y Julia pueden saltar a notación científica (ej. `1e+06`). En geomática, esto rompe las consultas SQL y las etiquetas de los mapas. Acostúmbrate a forzar la salida decimal (ej. `scientific = FALSE` en R).
@@ -929,7 +1018,7 @@ En este capítulo hemos explorado cómo limpiar, transformar, dividir y dar form
 
 Para poner en práctica los conceptos aprendidos sobre manipulación de cadenas de texto, deberás resolver los siguientes dos ejercicios. Puedes elegir resolverlos en **Python, R o Julia** (o implementar la solución en varios lenguajes si deseas retarte).
 
-### Ejercicio 1: Limpieza de Topónimos (PNN Macarena)
+### Ejercicio 1: Limpieza de topónimos (PNN Macarena)
 
 **Contexto:** Has recibido una base de datos antigua del IGAC con los nombres de las áreas protegidas de Colombia. Los datos fueron ingresados manualmente a lo largo de los años, por lo que tienen serios problemas de formato (espacios extra, mayúsculas inconsistentes y errores de digitación). Necesitas estandarizar el nombre del Parque Nacional Natural Serranía de la Macarena para cruzarlo con el sistema actual.
 
@@ -943,7 +1032,7 @@ Para poner en práctica los conceptos aprendidos sobre manipulación de cadenas 
 6. Imprime un reporte final utilizando **interpolación de cadenas** que diga exactamente:
    `"El área protegida limpia es: [AQUI_TU_VARIABLE] y su nombre tiene [AQUI_LONGITUD] caracteres."`
 
-### Ejercicio 2: Parseo de Coordenadas y WKT (Volcán Galeras)
+### Ejercicio 2: Parseo de coordenadas y WKT (Volcán Galeras)
 
 **Contexto:** Un sensor sísmico ubicado en el Volcán Galeras (Nariño) envía las alertas a través de mensajes de texto planos. Tu objetivo es extraer las coordenadas de ese mensaje de texto, convertirlas a formato numérico, y ensamblar un punto espacial estándar (Well-Known Text) para insertarlo en la base de datos PostGIS del Servicio Geológico.
 
@@ -957,7 +1046,7 @@ Para poner en práctica los conceptos aprendidos sobre manipulación de cadenas 
 6. El sensor reportó una anomalía térmica que afectó un área de `1250000` metros cuadrados. Formatea este número agregando un **separador de miles** (coma o punto) para que sea legible en el reporte final.
 7. Imprime el WKT generado y el área afectada formateada.
 
-### Entregables y Criterios de Evaluación
+### Entregables y criterios de evaluación
 
 El objetivo de esta evaluación no es solo que el código funcione, sino que seas capaz de documentar y explicar tus decisiones técnicas.
 
