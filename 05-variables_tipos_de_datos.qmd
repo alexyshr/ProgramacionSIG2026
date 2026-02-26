@@ -141,6 +141,7 @@ numero_dptos
 ```{r}
 #| label: julia_variables
 #| results: asis
+#| code-fold: true
 # #| eval: false
 j_eval('
 # Variable numérica
@@ -291,6 +292,7 @@ println(datos_ubicacion)
 ```{r}
 #| label: julia_asignacion_variables
 #| results: asis
+#| code-fold: true
 # #| eval: false
 j_eval('
 # Iniciar con un número (Latitud de Monserrate)
@@ -483,6 +485,7 @@ lista = [3.45, -76.53] # Difícil de leer en modelos de optimización
 ```{r}
 #| label: julia_varname
 #| results: asis
+#| code-fold: true
 # #| eval: false
 j_eval('
 # Nombres de variables recomendados
@@ -787,6 +790,7 @@ latitud_ruiz
 ```{r}
 #| label: julia_tipos_datos
 #| results: asis
+#| code-fold: true
 # #| eval: false
 j_eval('
 # Representa el número de elementos en el dataset
@@ -960,6 +964,7 @@ println("Nombre del archivo: 'Mapa_Relieve_Colombia.shp'")
 ```{r}
 #| label: julia_escape
 #| results: asis
+#| code-fold: true
 # #| eval: false
 j_eval('
 # Salto de línea para separar información de capas geográficas
@@ -1119,6 +1124,7 @@ println("Nombre del archivo: 'Mapa_Relieve_Colombia.shp'")
 ```{r}
 #| label: julia_escape_comentarios
 #| results: asis
+#| code-fold: true
 # #| eval: false
 j_eval('
 # Comentario de bloque: Información de procesamiento
@@ -1466,6 +1472,7 @@ mensaje
 ```{r}
 #| label: julia_trabajo_variables
 #| results: asis
+#| code-fold: true
 # #| eval: false
 j_eval('
 # Inicialización de variables necesarias
@@ -1736,6 +1743,7 @@ println("Texto limpio: '", ubicacion_limpia, "'")
 ```{r}
 #| label: julia_texto
 #| results: asis
+#| code-fold: true
 # #| eval: false
 j_eval('
 # Inicialización de la variable de texto

@@ -197,6 +197,7 @@ println("Cartagena: ", cartagena)
 ```{r}
 #| label: julia_tuplas
 #| results: asis
+#| code-fold: true
 # #| eval: false
 j_eval('
 # Creación de una tupla estática (Latitud, Longitud) de Bogotá
@@ -766,6 +767,7 @@ println("Elevación promedio: ", round(elev_promedio, digits=1), " metros")
 ```{r}
 #| label: julia_listas
 #| results: asis
+#| code-fold: true
 # #| eval: false
 j_eval('
 # 1. CREACIÓN DE ARREGLOS (Listas)
@@ -1225,6 +1227,7 @@ end
 ```{r}
 #| label: julia_conjuntos
 #| results: asis
+#| code-fold: true
 # #| eval: false
 j_eval('
 # 1. CREACIÓN Y LIMPIEZA DE DUPLICADOS
@@ -1671,6 +1674,7 @@ println("Servicios: ", join(punto_gps["facilidades"], ", "))
 ```{r}
 #| label: julia_diccionarios
 #| results: asis
+#| code-fold: true
 # #| eval: false
 j_eval('
 # 1. CREACIÓN DE DICCIONARIOS

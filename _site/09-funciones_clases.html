@@ -1192,6 +1192,8 @@ Nota técnica: ¿Por qué usamos atan2 en lugar de arcsin en el código?
 </div>
 </div>
 </div>
+<details class="code-fold">
+<summary>Código</summary>
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># #| eval: false</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">j_eval</span>(r<span class="st">"-(</span></span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="st"># --- FUNCIÓN 1: CÁLCULO MATEMÁTICO BÁSICO ---</span></span>
@@ -1288,6 +1290,7 @@ Nota técnica: ¿Por qué usamos atan2 en lugar de arcsin en el código?
 <span id="cb41-94"><a href="#cb41-94" aria-hidden="true" tabindex="-1"></a><span class="st">println(describir_punto(4.6097, -74.0817, ciudad="</span>Bogotá<span class="st">", elevacion=2640))</span></span>
 <span id="cb41-95"><a href="#cb41-95" aria-hidden="true" tabindex="-1"></a><span class="st">println(describir_punto(10.3997, -75.4795, ciudad="</span>Cartagena<span class="st">", costero=true))</span></span>
 <span id="cb41-96"><a href="#cb41-96" aria-hidden="true" tabindex="-1"></a><span class="st">)-"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <pre><code>Starting Julia ...</code></pre>
 <pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;"># --- FUNCIÓN 1: CÁLCULO MATEMÁTICO BÁSICO ---</span>
 </pre>
@@ -1626,7 +1629,7 @@ La Analogía: El Molde y la Arepa
 <div id="fig-analogia-python" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-analogia-python-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/python_classes_analogy.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%">
+<img src="./images/python_classes_analogy.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-analogia-python-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figura&nbsp;9.3: <strong>El paradigma de Python (POO Clásica):</strong> La Clase actúa como una fábrica o molde que estampa objetos. Cada objeto (la arepa) no solo contiene datos, sino que lleva incrustadas sus propias herramientas y métodos (como la navaja suiza o la calculadora) para resolver problemas por sí mismo.
@@ -1652,7 +1655,7 @@ Figura&nbsp;9.3: <strong>El paradigma de Python (POO Clásica):</strong> La Clas
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
-<pre class="mermaid mermaid-js">%%{init: {"flowchart": {"nodeSpacing": -90, "rankSpacing": -90}}}%%
+<pre class="mermaid mermaid-js">%%{init: {"flowchart": {"nodeSpacing": -90, "rankSpacing": -90, "useMaxWidth": true}}}%%
 flowchart TB
     %% ESTILOS
     classDef num fill:#E67E22,color:#FFF,stroke:none,font-weight:bold,font-size:16px
@@ -1829,7 +1832,7 @@ La analogía: el recipiente común y el post-it
 <div id="fig-analogia-r" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-analogia-r-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/r_classes_analogy.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%">
+<img src="./images/r_classes_analogy.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-analogia-r-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figura&nbsp;9.5: <strong>El paradigma de R (Sistema S3):</strong> Los objetos no tienen herramientas por dentro; son contenedores plásticos estándar (listas) llenos de datos crudos. Lo que les da “poder” es una simple etiqueta o post-it (la Clase S3). Las funciones externas actúan como inspectores que leen esta etiqueta para decidir qué herramienta usar.
@@ -2074,7 +2077,7 @@ La analogía: el contenedor rígido y los chefs expertos
 <div id="fig-analogia-julia" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-analogia-julia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/julia_struct_analogy.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%">
+<img src="./images/julia_struct_analogy.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-analogia-julia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figura&nbsp;9.8: <strong>El paradigma de Julia (Despacho Múltiple):</strong> Los datos están resguardados en contenedores inmutables (Structs). Las funciones son chefs externos altamente especializados. Cuando pides una operación, el compilador (el “Jefe de Cocina”) escanea con láser los tipos de datos exactos y llama instantáneamente al chef que tiene la receta matemática perfecta para esa combinación.
@@ -2584,7 +2587,7 @@ Figura&nbsp;9.10: Ejecución del código en Julia instanciando las estructuras e
             <meta name=&quot;viewport&quot; content=&quot;width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot; />
             <style>
-                #map_4502779539493d53a207adf50939a1e0 {
+                #map_9d424b9ad51fd69fb69e5a013dc75d30 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -2621,14 +2624,14 @@ Figura&nbsp;9.10: Ejecución del código en Julia instanciando las estructuras e
 <body>
     
     
-            <div class=&quot;folium-map&quot; id=&quot;map_4502779539493d53a207adf50939a1e0&quot; ></div>
+            <div class=&quot;folium-map&quot; id=&quot;map_9d424b9ad51fd69fb69e5a013dc75d30&quot; ></div>
         
 </body>
 <script>
     
     
-            var map_4502779539493d53a207adf50939a1e0 = L.map(
-                &quot;map_4502779539493d53a207adf50939a1e0&quot;,
+            var map_9d424b9ad51fd69fb69e5a013dc75d30 = L.map(
+                &quot;map_9d424b9ad51fd69fb69e5a013dc75d30&quot;,
                 {
                     center: [5.42695, -74.83144999999999],
                     crs: L.CRS.EPSG3857,
@@ -2645,7 +2648,7 @@ Figura&nbsp;9.10: Ejecución del código en Julia instanciando las estructuras e
 
         
     
-            var tile_layer_bef47c6d979800209e0076a9daf0c978 = L.tileLayer(
+            var tile_layer_8a7c6c9e29a2fe0d4e9da95a5f680ddc = L.tileLayer(
                 &quot;https://tile.openstreetmap.org/{z}/{x}/{y}.png&quot;,
                 {
   &quot;minZoom&quot;: 0,
@@ -2662,77 +2665,77 @@ Figura&nbsp;9.10: Ejecución del código en Julia instanciando las estructuras e
             );
         
     
-            tile_layer_bef47c6d979800209e0076a9daf0c978.addTo(map_4502779539493d53a207adf50939a1e0);
+            tile_layer_8a7c6c9e29a2fe0d4e9da95a5f680ddc.addTo(map_9d424b9ad51fd69fb69e5a013dc75d30);
         
     
-            var marker_803bd31ad2a00ec6f2d089db98bca30f = L.marker(
+            var marker_2b45fe397d2a870e091f18aab6f4f2f7 = L.marker(
                 [4.6097, -74.0817],
                 {
 }
-            ).addTo(map_4502779539493d53a207adf50939a1e0);
+            ).addTo(map_9d424b9ad51fd69fb69e5a013dc75d30);
         
     
-        var popup_61de1b685c08af69e953b64fe5166369 = L.popup({
+        var popup_18e990a895d7390fc43c5ed95b8c87f1 = L.popup({
   &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_189ce7abdef2f4118a7c8156f89a10fa = $(`<div id=&quot;html_189ce7abdef2f4118a7c8156f89a10fa&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;>Bogotá</div>`)[0];
-                popup_61de1b685c08af69e953b64fe5166369.setContent(html_189ce7abdef2f4118a7c8156f89a10fa);
+                var html_3a26318bffbbbcdc535c1e0bde76db31 = $(`<div id=&quot;html_3a26318bffbbbcdc535c1e0bde76db31&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;>Bogotá</div>`)[0];
+                popup_18e990a895d7390fc43c5ed95b8c87f1.setContent(html_3a26318bffbbbcdc535c1e0bde76db31);
             
         
 
-        marker_803bd31ad2a00ec6f2d089db98bca30f.bindPopup(popup_61de1b685c08af69e953b64fe5166369)
+        marker_2b45fe397d2a870e091f18aab6f4f2f7.bindPopup(popup_18e990a895d7390fc43c5ed95b8c87f1)
         ;
 
         
     
     
-            var marker_81ad809b60a82688d66b9059bba34d0e = L.marker(
+            var marker_9a121f3cab07ed711b95e2469a4922bf = L.marker(
                 [6.2442, -75.5812],
                 {
 }
-            ).addTo(map_4502779539493d53a207adf50939a1e0);
+            ).addTo(map_9d424b9ad51fd69fb69e5a013dc75d30);
         
     
-        var popup_20f761f0860df85814b6f2d53c5b3251 = L.popup({
+        var popup_5418aa0211f6f8ce927c1779a39f455a = L.popup({
   &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_d0146f2fb18da5d1260dda7852289fb8 = $(`<div id=&quot;html_d0146f2fb18da5d1260dda7852289fb8&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;>Medellín</div>`)[0];
-                popup_20f761f0860df85814b6f2d53c5b3251.setContent(html_d0146f2fb18da5d1260dda7852289fb8);
+                var html_c04f5072216c3cfc0a7b3e64e9f0add6 = $(`<div id=&quot;html_c04f5072216c3cfc0a7b3e64e9f0add6&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;>Medellín</div>`)[0];
+                popup_5418aa0211f6f8ce927c1779a39f455a.setContent(html_c04f5072216c3cfc0a7b3e64e9f0add6);
             
         
 
-        marker_81ad809b60a82688d66b9059bba34d0e.bindPopup(popup_20f761f0860df85814b6f2d53c5b3251)
+        marker_9a121f3cab07ed711b95e2469a4922bf.bindPopup(popup_5418aa0211f6f8ce927c1779a39f455a)
         ;
 
         
     
     
-            var poly_line_724b47f7cb2703b9c69208323bb7fa07 = L.polyline(
+            var poly_line_dbbb276edef61b4805c78e4586ce8c9e = L.polyline(
                 [[4.6097, -74.0817], [6.2442, -75.5812]],
                 {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: false, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.2, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;noClip&quot;: false, &quot;opacity&quot;: 1.0, &quot;smoothFactor&quot;: 1.0, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
-            ).addTo(map_4502779539493d53a207adf50939a1e0);
+            ).addTo(map_9d424b9ad51fd69fb69e5a013dc75d30);
         
     
-            var marker_b0fd5916bf48288acfeadeb12b6824ef = L.marker(
+            var marker_1db162ed79d0318a3c202971307efa91 = L.marker(
                 [5.42695, -74.83144999999999],
                 {
 }
-            ).addTo(map_4502779539493d53a207adf50939a1e0);
+            ).addTo(map_9d424b9ad51fd69fb69e5a013dc75d30);
         
     
-            var div_icon_2cbb724b145fe530eb4caa9d2a525fbb = L.divIcon({
+            var div_icon_0900d02f42036e31de40bad9c80dffaf = L.divIcon({
   &quot;html&quot;: &quot;&quot;,
   &quot;className&quot;: &quot;empty&quot;,
 });
         
     
-            marker_b0fd5916bf48288acfeadeb12b6824ef.bindTooltip(
+            marker_1db162ed79d0318a3c202971307efa91.bindTooltip(
                 `<div>
                      Distancia: 246.14 km
                  </div>`,
@@ -2744,7 +2747,7 @@ Figura&nbsp;9.10: Ejecución del código en Julia instanciando las estructuras e
             );
         
     
-                marker_b0fd5916bf48288acfeadeb12b6824ef.setIcon(div_icon_2cbb724b145fe530eb4caa9d2a525fbb);
+                marker_1db162ed79d0318a3c202971307efa91.setIcon(div_icon_0900d02f42036e31de40bad9c80dffaf);
             
 </script>
 </html>" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen=""></iframe></div></div>
@@ -3044,8 +3047,8 @@ Figura&nbsp;9.10: Ejecución del código en Julia instanciando las estructuras e
 </div>
 <div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>mapa_final</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="leaflet html-widget html-fill-item" id="htmlwidget-045e526e02e7e2a10044" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-045e526e02e7e2a10044">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addMarkers","args":[[4.6097,6.2442],[-74.0817,-75.5812],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["Bogotá","Medellín"],null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addPolylines","args":[[[[{"lng":[-74.0817,-75.5812],"lat":[4.6097,6.2442]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"red","weight":3,"opacity":0.5,"fill":false,"fillColor":"red","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addPopups","args":[5.42695,-74.83144999999999,"<b>Distancia:<\/b> 246.14 km",null,null,{"maxWidth":300,"minWidth":50,"autoPan":true,"keepInView":false,"closeButton":true,"className":""}]}],"limits":{"lat":[4.6097,6.2442],"lng":[-75.5812,-74.0817]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-d260abcbefd922050b29" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-d260abcbefd922050b29">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addMarkers","args":[[4.6097,6.2442],[-74.0817,-75.5812],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["Bogotá","Medellín"],null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addPolylines","args":[[[[{"lng":[-74.0817,-75.5812],"lat":[4.6097,6.2442]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"red","weight":3,"opacity":0.5,"fill":false,"fillColor":"red","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addPopups","args":[5.42695,-74.83144999999999,"<b>Distancia:<\/b> 246.14 km",null,null,{"maxWidth":300,"minWidth":50,"autoPan":true,"keepInView":false,"closeButton":true,"className":""}]}],"limits":{"lat":[4.6097,6.2442],"lng":[-75.5812,-74.0817]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
@@ -3464,7 +3467,7 @@ Nota Técnica: El Motor de Interoperabilidad Geomática
 <div id="fig-analogia-motores" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-analogia-motores-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/comparativa_despacho_python_r_julia.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+<img src="./images/comparativa_despacho_python_r_julia.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-analogia-motores-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figura&nbsp;9.11: <strong>Analogía de los motores de ejecución:</strong> El Food Truck autónomo (Python), la lenta Oficina de Correos de revisión manual (R) y la veloz Fábrica Industrial Láser (Julia).
@@ -3472,7 +3475,7 @@ Figura&nbsp;9.11: <strong>Analogía de los motores de ejecución:</strong> El Fo
 </figure>
 </div>
 <p>Técnicamente, podemos estructurar el flujo de decisiones de cada motor mediante el siguiente diagrama:</p>
-<div class="cell" data-fig-width="10" data-out-width="100%" data-layout-align="center">
+<div class="cell" data-fig-width="6.5" data-out-width="80%" data-fig-responsive="true" data-layout-align="center">
 <div class="cell-output-display">
 <div id="fig-diagrama-motores" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">

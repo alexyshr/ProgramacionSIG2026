@@ -5,7 +5,7 @@
 Resumen de herramientas requeridas:
 
 |Herramienta | Uso | Detalles |
-|:--|:----|:---|
+|:---|:-|:--|
 |git | - |@sec-anexo_git_github|
 |GitHub + SSH (local y contenedor) | - |@sec-cuenta_github, @sec-ssh-github, @sec-ssh-linux |
 |VSCode + Extensiones + Tinytex (local y contenedor)| - | @sec-anexo_vscode, @sec-extensiones-vscode, @sec-tinytex|

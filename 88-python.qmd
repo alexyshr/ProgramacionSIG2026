@@ -55,3 +55,9 @@ Para verificar las versiones inSstaladas, puede ejecutar `pip3 list` en la termi
 | `pyproj` | Paquete | 3.7.2 | `pip3 show pyproj` | `import pyproj; pyproj.__version__` |
 | `fiona` | Paquete | 1.10.1 | `pip3 show fiona` | `import fiona; fiona.__version__` |
 | `rasterio` | Paquete | 1.5.0 | `pip3 show rasterio` | `import rasterio; rasterio.__version__` |
+
+
+## Librerías adicionales
+
+* colorama
+

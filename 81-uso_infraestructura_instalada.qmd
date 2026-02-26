@@ -2,6 +2,8 @@
 
 ## (NEW - use it) Configuración de Mermaid a pdf en Docker (Resumido)
 
+Para que los gráficos de mermaid y los mapas dinámicos se exporten a pdf (en archivos qmd), antes de compilar el proyecto (`quarto render`) ejecute estos pasos:
+
 * Borra las dos últimas líneas de configuración de Google-Chrome en /etc/R/Rprofile.site
 
 ```text
@@ -60,7 +62,7 @@ EOF
 source ~/.bashrc
 ```
 
-## (NEW ) Configuración de Mermaid a pdf en Docker (este es el mismo punto anterior pero con más detalles)
+## (NEW - don't use) Configuración de Mermaid a pdf en Docker (este es el mismo punto anterior pero con más detalles)
 
 Esta guía detalla la solución técnica para renderizar diagramas Mermaid en pdf dentro de contenedores, evitando los conflictos de seguridad del kernel y los errores al usar Google Chrome (`/usr/bin/google-chrome`).
 
@@ -281,14 +283,15 @@ Si el renderizado falla, se puede ejecutar una prueba de navegación directa par
 ### Crear el instalador local de Chromium para instalarlo sin Internet
 
 * Instala `quarto install chromium`
+
 * Crear el comprimido en tu carpeta de trabajo persistente
+
 ```bash
 tar -czvf /home/rstudio/work/quarto-chromium-869685.tar.gz -C /root/.local/share/quarto/ chromium
 ```
 
-* Comando de instalación rápida (restaurar)
+* Comando de instalación rápida (restaurar `quarto-chromium-869685.tar.gz`)
 
-    * Uso del script de restauración
 ```bash
 # Dar permisos de ejecución (solo la primera vez)
 chmod +x /home/rstudio/work/install_chromium.sh
@@ -297,7 +300,7 @@ chmod +x /home/rstudio/work/install_chromium.sh
 /home/rstudio/work/install_chromium.sh
 ```
 
-    * Como alternativa corres los comandos individuales que hay en `install_chromium.sh`
+* Alternativa de instalación: corres los comandos individuales que hay en `install_chromium.sh`
 
 ```bash
 # Asegurar que el directorio base de Quarto exista
@@ -500,22 +503,23 @@ El motor de ejecución de los archivos Quarto (`.qmd`) dentro del contenedor ins
 
 `Python` se ejecuta mediante el paquete de R `reticulate`, mientras que `Julia` suele hacerlo a través del paquete `JuliaCall`. Debido a que este último presenta problemas de compatibilidad con librerías geoespaciales en `R`, se desarrollaron con apoyo de inteligencia artificial las funciones `j_eval` y `j_plot`, las cuales utilizan el paquete `JuliaConnectoR` en su lugar.
 
-Las funciones `j_eval` y `j_plot` son usadas para ejecutar código **Julia** en **R**. `j_eval` ejecuta comandos que no tengan salidas gráficas, y `j_plot` es necesaria cuándo el código Julia produce salidas gráficas.
+Las funciones `j_eval` y `j_plot` son usadas para ejecutar código **Julia** en **R**. `j_eval` ejecuta comandos que no tengan salidas gráficas, y `j_plot` es necesaria cuándo el código Julia produce salidas gráficas. Puede usar el siguiente chunk de código al inicio de sus archivos qmd
 
-```{r}
+````markdown
+```{.r}
 #| label: j_eval_j_plot
 #| code-fold: true
 #| results: asis
 # #| include: false
 source("./docs/j_eval_j_plot.r")
 ```
+````
 
 
 ### Flujo de ejecución de texto con j_eval {#sec-flujo-jeval}
 
 Para entender por qué los resultados aparecen con colores y cómo se gestionan los bloques de código, observe el siguiente flujo de ejecución de la función `j_eval`:
 
-fig-flujo-jeval
 
 ::: {#fig-flujo-jeval}
 ![](images/fig-flujo-jeval.png){width=100%}
@@ -1152,61 +1156,68 @@ println("--- Verificación Finalizada ---")
 
 ```{r}
 #| label: julia_verificacion
+#| code-fold: true
+#| echo: true
 #| results: asis
-#| eval: false
-j_plot('
-using LibPQ
-using LibGEOS
-using ArchGDAL
-using Plots
+#| fig-align: "center"
+#| out-width: "85%"
 
-println("--- Inicio de Verificación de Julia SIG ---")
-
-# 1. Prueba de conexión a la base de datos PostGIS
-try
-    conn = LibPQ.Connection("host=db-postgis dbname=sig_db_unal user=profe_unal password=geomatica2025")
-    println("✅ Conexión a PostGIS: Exitosa")
-    close(conn)
-catch e
-    println("❌ Error de conexión a PostGIS: ", e)
-end
-
-# 2. Verificación de LibGEOS y Visualización de Geometría
-try
-    # Creamos un punto y le aplicamos un buffer de 1.0 unidades
-    # Esto valida la integración de Julia con la librería GEOS del sistema
-    punto = LibGEOS.readgeom("POINT (0 0)")
-    buffer_geom = LibGEOS.buffer(punto, 1.0)
+# 1. Ejecutamos toda la lógica diagnóstica con j_eval usando println normal
+j_eval('
+    # Configuramos el entorno para que no pida monitor (Headless)
+    ENV["GKSwstype"] = "100" 
     
-    println("✅ LibGEOS operativo: Motores geométricos verificados")
-    
-    # Graficamos el objeto del buffer
-    # fillcolor y alpha ayudan a ver que es un polígono real
-    plt = plot(buffer_geom, 
-               title="Validación Julia SIG: Buffer GEOS", 
-               fillcolor=:blue, 
-               fillalpha=0.3, 
-               aspect_ratio=:equal, 
-               legend=false)
-    
-    # display() es OBLIGATORIO para mostrar gráficos dentro de bloques try/catch
-    display(plt) 
-    
-catch e
-    println("❌ Error en LibGEOS o Visualización: ", e)
-end
+    using LibPQ
+    using LibGEOS
+    using ArchGDAL
+    using Plots
+    gr()
 
-# 3. Verificación de ArchGDAL (Usando llamada de bajo nivel)
-try
-    # Accedemos directamente al motor de C para evitar errores de exportación
-    gdal_ver = ArchGDAL.GDAL.gdalversioninfo("--version")
-    println("✅ ArchGDAL operativo (Versión GDAL: $gdal_ver)")
-catch e
-    println("❌ Error en ArchGDAL: ", e)
-end
+    println("--- Inicio de Verificación de Julia SIG ---")
 
-println("--- Verificación Finalizada ---")
+    # 1. Prueba de conexión a PostGIS
+    try
+        conn = LibPQ.Connection("host=db-postgis dbname=sig_db_unal user=profe_unal password=geomatica2025")
+        println("✅ Conexión a PostGIS: Exitosa")
+        close(conn)
+    catch e
+        println("❌ Error de conexión a PostGIS: ", e)
+    end
+
+    # 2. Verificación de LibGEOS y Geometría
+    try
+        punto = LibGEOS.readgeom("POINT (0 0)")
+        buffer_geom = LibGEOS.buffer(punto, 1.0)
+        println("✅ LibGEOS operativo: Motores geométricos verificados")
+        
+        # Generamos el gráfico y lo guardamos directamente
+        plt = plot(buffer_geom, 
+                   title="Validación Julia SIG: Buffer GEOS", 
+                   fillcolor=:blue, 
+                   fillalpha=0.3, 
+                   aspect_ratio=:equal, 
+                   legend=false)
+        
+        savefig(plt, "verificacion_geos.png")
+    catch e
+        println("❌ Error en LibGEOS o Visualización: ", e)
+    end
+
+    # 3. Verificación de ArchGDAL
+    try
+        gdal_ver = ArchGDAL.GDAL.gdalversioninfo("--version")
+        println("✅ ArchGDAL operativo (Versión GDAL: ", gdal_ver, ")")
+    catch e
+        println("❌ Error en ArchGDAL: ", e)
+    end
+
+    println("--- Verificación Finalizada ---")
 ')
+
+# 2. Insertamos el gráfico generado de forma segura
+if (file.exists("verificacion_geos.png")) {
+  knitr::include_graphics("verificacion_geos.png")
+}
 ```
 
 
@@ -1216,20 +1227,6 @@ println("--- Verificación Finalizada ---")
 ```{julia}
 #| label: julia_verificacion2_codigo
 #| eval: false
-
-
-# codigo
-
-```
-:::
-:::
-
-```{r}
-#| label: julia_verificacion2
-#| results: asis
-#| eval: false
-# Validación de Motores SIG y Conectividad
-j_plot('
 using LibPQ, LibGEOS, ArchGDAL, Plots
 
 # 1. Prueba de conexión a PostGIS
@@ -1254,10 +1251,63 @@ try
 catch e
     println("❌ Error en motores geométricos o gráficos: ", e)
 end
+```
+:::
+:::
+
+
+
+
+
+
+
+```{r}
+#| label: julia_verificacion2
+#| code-fold: true
+#| fig-align: "center"
+#| out-width: "85%"
+
+# 1. Ejecutamos la validación técnica con j_eval usando println normal
+j_eval('
+    # Configuración de entorno silencioso
+    ENV["GKSwstype"] = "100" 
+    using LibPQ, LibGEOS, ArchGDAL, Plots
+    gr()
+
+    # 1. Prueba de conexión a PostGIS
+    try
+        conn = LibPQ.Connection("host=db-postgis dbname=sig_db_unal user=profe_unal password=geomatica2025")
+        println("✅ Conexión a PostGIS: Exitosa")
+        close(conn)
+    catch e
+        println("❌ Error de conexión: ", e)
+    end
+
+    # 2. Prueba de Motores Geométricos (GEOS)
+    try
+        punto = LibGEOS.readgeom("POINT (0 0)")
+        buffer_geom = LibGEOS.buffer(punto, 1.0)
+        println("✅ Motores geométricos operativos (GEOS)")
+        
+        # Generamos la visualización y la guardamos físicamente
+        plt = plot(buffer_geom, 
+                   title="Validación SIG: Buffer GEOS", 
+                   fillcolor=:blue, 
+                   fillalpha=0.3, 
+                   aspect_ratio=:equal,
+                   legend=false)
+        
+        savefig(plt, "verificacion_sig_final.png")
+    catch e
+        println("❌ Error en motores geométricos o gráficos: ", e)
+    end
 ')
+
+# 2. Si se generó el gráfico, lo incluimos de forma segura para R y Quarto
+if (file.exists("verificacion_sig_final.png")) {
+  knitr::include_graphics("verificacion_sig_final.png")
+}
 ```
 
 
 :::
-
-

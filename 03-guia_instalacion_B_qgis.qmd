@@ -158,21 +158,55 @@ Finalmente, debe vincular su entorno local con su cuenta de Google Cloud. Este c
 ```bash
 pixi run earthengine authenticate
 ```
-
 Siga las instrucciones en pantalla, seleccione su proyecto de Google Cloud y copie el código de verificación si el sistema se lo solicita. ¡Ya está listo para procesar datos satelitales a escala global!
+
+
+### Lanzar QGIS a través de PIXI
+
+Una vez realizada la Autenticación de Google Earth Engine, puede lanzar QGIS usando el siguiente método
+
+* Abra el PowerShell en la carpeta dónde configuró el proyecto PIXI (`geocd`)
+
+* Ejecute el siguiente comando:
+
+```bash
+pixi run qgis
+```
 
 
 ### Trabajar GEE dentro de QGIS
 
 Una vez que el entorno está configurado y autenticado, el siguiente paso es integrar **Google Earth Engine** directamente en la interfaz de QGIS. Para esto, utilizaremos el complemento desarrollado por el equipo de **OpenGeos**: El Plugin: **GEE Data Catalog**. Este complemento permite navegar por los miles de datasets de Earth Engine (Sentinel, Landsat, MODIS, etc.) y cargarlos en el lienzo de QGIS con un solo clic, utilizando el motor de procesamiento en la nube.
 
-### Recursos Adicionales
 
 * **Repositorio oficial:** [opengeos/qgis-gee-data-catalogs-plugin](https://github.com/opengeos/qgis-gee-data-catalogs-plugin)
 
 * Video Guía **Earth Engine Data Catalogs Plugin for QGIS**: [aquí](https://youtu.be/nZ3D6wLKJQw) 
 
 * Video Guía **Time Series Satellite Images in Seconds**: [aquí](https://youtu.be/8IW6XqnUjgg) 
+
+
+::: {.callout-note collapse="true"}
+### Forzar autenticación GEE dentro de QGIS (PIXI)
+
+Si las imágenes de GEE no cargan dentro de QGIS, la [video-guía anterior](https://youtu.be/nZ3D6wLKJQw?t=574) (en el tiempo 574 del video) muestra unos comandos alternativos a ejecutar dentro de la consola de Python. Esos comandos se muestran a continuación.
+
+Abra la Consola de Python dentro de QGIS (lanzado con `pixi run qgis`) y ejecute los siguientes comandos:
+
+```python
+import ee
+
+# Autenticarse con GEE
+ee.Authenticate()
+#Respuesta esperada: True
+
+# Inicializar el Proyecto GEE
+ee.Initialize(project = "Tu ID de proyecto GEE")
+#Respuesta esperada: Nada
+```
+
+:::
+
 
 ## Otras referencias importantes
 

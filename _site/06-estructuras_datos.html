@@ -693,6 +693,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+<details class="code-fold">
+<summary>Código</summary>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># #| eval: false</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">j_eval</span>(<span class="st">'</span></span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="st"># Creación de una tupla estática (Latitud, Longitud) de Bogotá</span></span>
@@ -718,6 +720,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a><span class="st">println("Cali: ", cali)</span></span>
 <span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a><span class="st">println("Cartagena: ", cartagena)</span></span>
 <span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a><span class="st">'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <pre><code>Starting Julia ...</code></pre>
 <pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;"># Creación de una tupla estática (Latitud, Longitud) de Bogotá</span>
 </pre>
@@ -1490,6 +1493,8 @@ Ruta final con parada intercalada: [(4.6097, -74.0817), (6.2442, -75.5812), (5.0
 </div>
 </div>
 </div>
+<details class="code-fold">
+<summary>Código</summary>
 <div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="co"># #| eval: false</span></span>
 <span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a><span class="fu">j_eval</span>(<span class="st">'</span></span>
 <span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a><span class="st"># 1. CREACIÓN DE ARREGLOS (Listas)</span></span>
@@ -1578,6 +1583,7 @@ Ruta final con parada intercalada: [(4.6097, -74.0817), (6.2442, -75.5812), (5.0
 <span id="cb101-86"><a href="#cb101-86" aria-hidden="true" tabindex="-1"></a><span class="st">elev_promedio = sum(elevaciones) / length(elevaciones)</span></span>
 <span id="cb101-87"><a href="#cb101-87" aria-hidden="true" tabindex="-1"></a><span class="st">println("Elevación promedio: ", round(elev_promedio, digits=1), " metros")</span></span>
 <span id="cb101-88"><a href="#cb101-88" aria-hidden="true" tabindex="-1"></a><span class="st">'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;"># 1. CREACIÓN DE ARREGLOS (Listas)</span>
 </pre>
 <pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;"></pre>
@@ -2141,14 +2147,14 @@ El dilema en R: ¿Vectores <code>c()</code> o Listas <code>list()</code>?
 <span id="cb103-5"><a href="#cb103-5" aria-hidden="true" tabindex="-1"></a>regiones_visitadas <span class="op">=</span> {<span class="st">"Andina"</span>, <span class="st">"Caribe"</span>, <span class="st">"Pacífica"</span>}</span>
 <span id="cb103-6"><a href="#cb103-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Regiones:"</span>, regiones_visitadas)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Regiones: {'Andina', 'Caribe', 'Pacífica'}</code></pre>
+<pre><code>Regiones: {'Caribe', 'Pacífica', 'Andina'}</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb105"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear un conjunto desde una lista (elimina duplicados automáticamente)</span></span>
 <span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a>codigos_dptos <span class="op">=</span> [<span class="st">"ANT"</span>, <span class="st">"BOG"</span>, <span class="st">"VAL"</span>, <span class="st">"ANT"</span>, <span class="st">"BOG"</span>]</span>
 <span id="cb105-3"><a href="#cb105-3" aria-hidden="true" tabindex="-1"></a>codigos_unicos <span class="op">=</span> <span class="bu">set</span>(codigos_dptos)</span>
 <span id="cb105-4"><a href="#cb105-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Códigos únicos:"</span>, codigos_unicos)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Códigos únicos: {'VAL', 'BOG', 'ANT'}</code></pre>
+<pre><code>Códigos únicos: {'ANT', 'VAL', 'BOG'}</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb107"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. AGREGAR ELEMENTOS</span></span>
 <span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Agregar una región nueva</span></span>
@@ -2157,7 +2163,7 @@ El dilema en R: ¿Vectores <code>c()</code> o Listas <code>list()</code>?
 <span id="cb107-5"><a href="#cb107-5" aria-hidden="true" tabindex="-1"></a>regiones_visitadas.add(<span class="st">"Caribe"</span>) </span>
 <span id="cb107-6"><a href="#cb107-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Regiones actualizadas:"</span>, regiones_visitadas)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Regiones actualizadas: {'Andina', 'Caribe', 'Pacífica', 'Orinoquía'}</code></pre>
+<pre><code>Regiones actualizadas: {'Caribe', 'Orinoquía', 'Pacífica', 'Andina'}</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb109"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. OPERACIONES DE CONJUNTOS (Venn)</span></span>
 <span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Especies observadas en dos polígonos diferentes</span></span>
@@ -2168,19 +2174,19 @@ El dilema en R: ¿Vectores <code>c()</code> o Listas <code>list()</code>?
 <span id="cb109-7"><a href="#cb109-7" aria-hidden="true" tabindex="-1"></a>comunes <span class="op">=</span> area_a.intersection(area_b)</span>
 <span id="cb109-8"><a href="#cb109-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Especies en ambas áreas:"</span>, comunes)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Especies en ambas áreas: {'Pino', 'Frailejón'}</code></pre>
+<pre><code>Especies en ambas áreas: {'Frailejón', 'Pino'}</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb111"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Diferencia: Especies exclusivas del Área A</span></span>
 <span id="cb111-2"><a href="#cb111-2" aria-hidden="true" tabindex="-1"></a>solo_a <span class="op">=</span> area_a <span class="op">-</span> area_b</span>
 <span id="cb111-3"><a href="#cb111-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Especies exclusivas de A:"</span>, solo_a)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Especies exclusivas de A: {'Aliso', 'Roble'}</code></pre>
+<pre><code>Especies exclusivas de A: {'Roble', 'Aliso'}</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb113"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Unión: Todas las especies registradas</span></span>
 <span id="cb113-2"><a href="#cb113-2" aria-hidden="true" tabindex="-1"></a>todas_especies <span class="op">=</span> area_a.union(area_b)</span>
 <span id="cb113-3"><a href="#cb113-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Todas las especies:"</span>, todas_especies)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Todas las especies: {'Aliso', 'Yagrumo', 'Frailejón', 'Palma de Cera', 'Pino', 'Roble'}</code></pre>
+<pre><code>Todas las especies: {'Roble', 'Palma de Cera', 'Pino', 'Yagrumo', 'Frailejón', 'Aliso'}</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb115"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. MEMBRESÍA (Comprobar si existe)</span></span>
 <span id="cb115-2"><a href="#cb115-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="st">"Pino"</span> <span class="kw">in</span> comunes:</span>
@@ -2347,6 +2353,8 @@ El dilema en R: ¿Vectores <code>c()</code> o Listas <code>list()</code>?
 </div>
 </div>
 </div>
+<details class="code-fold">
+<summary>Código</summary>
 <div class="sourceCode cell-code" id="cb131"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a href="#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="co"># #| eval: false</span></span>
 <span id="cb131-2"><a href="#cb131-2" aria-hidden="true" tabindex="-1"></a><span class="fu">j_eval</span>(<span class="st">'</span></span>
 <span id="cb131-3"><a href="#cb131-3" aria-hidden="true" tabindex="-1"></a><span class="st"># 1. CREACIÓN Y LIMPIEZA DE DUPLICADOS</span></span>
@@ -2385,6 +2393,7 @@ El dilema en R: ¿Vectores <code>c()</code> o Listas <code>list()</code>?
 <span id="cb131-36"><a href="#cb131-36" aria-hidden="true" tabindex="-1"></a><span class="st">    println("El Pino está en la zona de intersección.")</span></span>
 <span id="cb131-37"><a href="#cb131-37" aria-hidden="true" tabindex="-1"></a><span class="st">end</span></span>
 <span id="cb131-38"><a href="#cb131-38" aria-hidden="true" tabindex="-1"></a><span class="st">'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;"># 1. CREACIÓN Y LIMPIEZA DE DUPLICADOS</span>
 </pre>
 <pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;"></pre>
@@ -3080,6 +3089,8 @@ $area_km2
 </div>
 </div>
 </div>
+<details class="code-fold">
+<summary>Código</summary>
 <div class="sourceCode cell-code" id="cb173"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb173-1"><a href="#cb173-1" aria-hidden="true" tabindex="-1"></a><span class="co"># #| eval: false</span></span>
 <span id="cb173-2"><a href="#cb173-2" aria-hidden="true" tabindex="-1"></a><span class="fu">j_eval</span>(<span class="st">'</span></span>
 <span id="cb173-3"><a href="#cb173-3" aria-hidden="true" tabindex="-1"></a><span class="st"># 1. CREACIÓN DE DICCIONARIOS</span></span>
@@ -3145,6 +3156,7 @@ $area_km2
 <span id="cb173-63"><a href="#cb173-63" aria-hidden="true" tabindex="-1"></a><span class="st">println("Punto: ", punto_gps["nombre"], " a ", punto_gps["elevacion"], " msnm")</span></span>
 <span id="cb173-64"><a href="#cb173-64" aria-hidden="true" tabindex="-1"></a><span class="st">println("Servicios: ", join(punto_gps["facilidades"], ", "))</span></span>
 <span id="cb173-65"><a href="#cb173-65" aria-hidden="true" tabindex="-1"></a><span class="st">'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;"># 1. CREACIÓN DE DICCIONARIOS</span>
 </pre>
 <pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;"></pre>

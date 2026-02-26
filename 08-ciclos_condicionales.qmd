@@ -274,6 +274,7 @@ end
 ```{r}
 #| label: julia_ciclos_for
 #| results: asis
+#| code-fold: true
 # #| eval: false
 j_eval(r"-(
 # 1. Sintaxis básica del ciclo for
@@ -604,6 +605,7 @@ end
 ```{r}
 #| label: julia_ciclos_while
 #| results: asis
+#| code-fold: true
 # #| eval: false
 j_eval(r"-(
 # 1. Estructura básica de un ciclo while
@@ -1065,6 +1067,7 @@ println("Puntos en el Este: $este_count | Oeste: $oeste_count")
 ```{r}
 #| label: julia_condicionales
 #| results: asis
+#| code-fold: true
 # #| eval: false
 j_eval(r"-(
 coordenadas = [
@@ -1274,6 +1277,7 @@ end
 ```{r}
 #| label: julia_operadores_logicos
 #| results: asis
+#| code-fold: true
 # #| eval: false
 j_eval(r"-(
 alturas = [1500, 2500, 800]

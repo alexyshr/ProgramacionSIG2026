@@ -85,7 +85,7 @@ writeLines(s2_path, "s2_shared_path.txt")
 
 ```{r}
 #| label: path_to_raster
-#| code-fold: true
+# #| code-fold: true
 
 library(starsdata)
 library(terra)
@@ -317,7 +317,7 @@ del b4, res
 
 ```{python}
 #| label: duracion_py
-#| code-fold: true
+# #| code-fold: true
 
 import rasterio
 import numpy as np
@@ -611,7 +611,7 @@ gc()
 
 ```{r}
 #| label: t_terra
-#| code-fold: true
+# #| code-fold: true
 
 # library(terra)
 # ------------------------------------------------
@@ -740,7 +740,7 @@ gc()
 
 ```{r}
 #| label: t_stars
-#| code-fold: true
+# #| code-fold: true
 
 # library(stars)
 
@@ -840,9 +840,10 @@ kable(resultados,
 
 ```{r}
 #| label: tabla_resultados
-#| echo: false
+#| code-fold: true
 #| message: false
 #| warning: false
+# #| echo: false
 library(knitr)
 library(kableExtra)
 
@@ -901,7 +902,7 @@ En otras palabras, Julia está optimizada para **flujos de trabajo complejos**, 
 | **R (terra)** | ⚠️ Parcial | Optimiza en C++ pero no expone pipeline diferido |
 | **R (stars)** | ❌ No | `proxy` limitado, sin DAG composable completo |
 
-\* **Nota sobre R (dplyr + dbplyr):**  
+**Nota sobre R (dplyr + dbplyr):**  
 No es una solución espacial por sí misma. El pipeline composable existe, pero requiere un **backend espacial** (por ejemplo: PostGIS, DuckDB + spatial, Spark, BigQuery GIS). Sin ese backend, no aplica directamente a raster/cubos geoespaciales.
 
 **Nota sobre `stars`:**  
@@ -1146,8 +1147,8 @@ if(file.exists("s2_shared_path.txt")) file.remove("s2_shared_path.txt")
 
 ```{r}
 #| label: liberar_recursos
-#| include: false
 #| code-fold: true
+# #| include: false
 
 # Eliminar variables
 #rm(res_terra, res_stars, r, s)

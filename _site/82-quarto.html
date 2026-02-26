@@ -399,11 +399,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#opciones-del-encabezado-yml" id="toc-opciones-del-encabezado-yml" class="nav-link active" data-scroll-target="#opciones-del-encabezado-yml"><span class="header-section-number">C.1</span> Opciones del encabezado <code>yml</code></a></li>
   <li><a href="#resumen-de-comandos-quarto" id="toc-resumen-de-comandos-quarto" class="nav-link" data-scroll-target="#resumen-de-comandos-quarto"><span class="header-section-number">C.2</span> Resumen de comandos Quarto</a></li>
-  <li><a href="#sec-opciones-chunks" id="toc-sec-opciones-chunks" class="nav-link" data-scroll-target="#sec-opciones-chunks"><span class="header-section-number">C.3</span> Control de ejecución en Quarto - opciones de <code>chunks</code></a>
+  <li><a href="#gestión-eficiente-de-renderizado-en-quarto" id="toc-gestión-eficiente-de-renderizado-en-quarto" class="nav-link" data-scroll-target="#gestión-eficiente-de-renderizado-en-quarto"><span class="header-section-number">C.3</span> Gestión Eficiente de Renderizado en Quarto</a>
+  <ul class="collapse">
+  <li><a href="#hoja-de-referencia-comandos-de-renderizado" id="toc-hoja-de-referencia-comandos-de-renderizado" class="nav-link" data-scroll-target="#hoja-de-referencia-comandos-de-renderizado">Hoja de Referencia: Comandos de Renderizado</a></li>
+  <li><a href="#trucos-extra-para-un-flujo-de-autor-ágil" id="toc-trucos-extra-para-un-flujo-de-autor-ágil" class="nav-link" data-scroll-target="#trucos-extra-para-un-flujo-de-autor-ágil">Trucos extra para un flujo de autor ágil</a></li>
+  </ul></li>
+  <li><a href="#sec-opciones-chunks" id="toc-sec-opciones-chunks" class="nav-link" data-scroll-target="#sec-opciones-chunks"><span class="header-section-number">C.4</span> Control de ejecución en Quarto - opciones de <code>chunks</code></a>
   <ul class="collapse">
   <li><a href="#recomendaciones-de-uso-según-el-contexto" id="toc-recomendaciones-de-uso-según-el-contexto" class="nav-link" data-scroll-target="#recomendaciones-de-uso-según-el-contexto">Recomendaciones de uso según el contexto</a></li>
   </ul></li>
-  <li><a href="#instalación-de-extensiones-de-quarto" id="toc-instalación-de-extensiones-de-quarto" class="nav-link" data-scroll-target="#instalación-de-extensiones-de-quarto"><span class="header-section-number">C.4</span> Instalación de Extensiones de Quarto</a>
+  <li><a href="#instalación-de-extensiones-de-quarto" id="toc-instalación-de-extensiones-de-quarto" class="nav-link" data-scroll-target="#instalación-de-extensiones-de-quarto"><span class="header-section-number">C.5</span> Instalación de Extensiones de Quarto</a>
   <ul class="collapse">
   <li><a href="#el-proceso-de-instalación" id="toc-el-proceso-de-instalación" class="nav-link" data-scroll-target="#el-proceso-de-instalación">El proceso de instalación</a></li>
   <li><a href="#gestión-de-archivos-del-proyecto" id="toc-gestión-de-archivos-del-proyecto" class="nav-link" data-scroll-target="#gestión-de-archivos-del-proyecto">Gestión de archivos del proyecto</a></li>
@@ -486,8 +491,79 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Chequear estado de instalación de Quarto</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> check</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="sec-opciones-chunks" class="level2" data-number="C.3">
-<h2 data-number="C.3" class="anchored" data-anchor-id="sec-opciones-chunks"><span class="header-section-number">C.3</span> Control de ejecución en Quarto - opciones de <code>chunks</code></h2>
+<section id="gestión-eficiente-de-renderizado-en-quarto" class="level2" data-number="C.3">
+<h2 data-number="C.3" class="anchored" data-anchor-id="gestión-eficiente-de-renderizado-en-quarto"><span class="header-section-number">C.3</span> Gestión Eficiente de Renderizado en Quarto</h2>
+<p>A continuación, se presenta la hoja de ruta para optimizar los tiempos de compilación de tu libro, especialmente cuando trabajas con motores pesados de Julia y R.</p>
+<section id="hoja-de-referencia-comandos-de-renderizado" class="level3">
+<h3 class="anchored" data-anchor-id="hoja-de-referencia-comandos-de-renderizado">Hoja de Referencia: Comandos de Renderizado</h3>
+<p>La ejecución de estos comandos depende de la existencia del archivo <code>_quarto.yml</code> en la carpeta de proyecto. Si desea trabajar con archivos individuales puede cambiar temporalmente el nombre de este archivo a <code>_quarto.yml.back</code></p>
+<div id="tbl-quarto-comandos" class="quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-quarto-comandos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;C.1: Comandos esenciales para la gestión de flujos en Quarto
+</figcaption>
+<div aria-describedby="tbl-quarto-comandos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Acción</th>
+<th style="text-align: left;">Comando</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Trabajar en vivo</strong> (Previsualización dinámica)</td>
+<td style="text-align: left;"><code>quarto preview</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Renderizar solo el capítulo actual</strong></td>
+<td style="text-align: left;"><code>quarto render archivo.qmd</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Generar el libro completo</strong> (Ensamblaje final)</td>
+<td style="text-align: left;"><code>quarto render</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Forzar ejecución total</strong> (Ignorar el <code>freeze</code>)</td>
+<td style="text-align: left;"><code>quarto render --execute</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<hr>
+</section>
+<section id="trucos-extra-para-un-flujo-de-autor-ágil" class="level3">
+<h3 class="anchored" data-anchor-id="trucos-extra-para-un-flujo-de-autor-ágil">Trucos extra para un flujo de autor ágil</h3>
+<p>Para evitar esperas innecesarias y optimizar tu productividad, aplica estas estrategias de previsualización y almacenamiento de resultados:</p>
+<section id="el-flujo-de-edición-en-vivo-quarto-preview" class="level4">
+<h4 class="anchored" data-anchor-id="el-flujo-de-edición-en-vivo-quarto-preview">1. El flujo de edición en vivo (<code>quarto preview</code>)</h4>
+<p>En lugar de renderizar el libro manualmente cada vez que haces un cambio, abre una terminal en la raíz de tu proyecto y ejecuta el comando de previsualización.</p>
+<p>Al usar este comando, se levantará un servidor local. Cada vez que realices una edición en tu archivo <code>.qmd</code> y presiones <strong><code>Ctrl + S</code></strong> (Guardar), Quarto detectará el cambio y refrescará <strong>únicamente</strong> ese capítulo en tu navegador. Esto mantiene la sesión de Julia/R “tibia” y permite ver cambios casi instantáneos en mapas y ecuaciones.</p>
+</section>
+<section id="uso-de-caché-para-procesos-pesados-cache-true" class="level4">
+<h4 class="anchored" data-anchor-id="uso-de-caché-para-procesos-pesados-cache-true">2. Uso de Caché para procesos pesados (<code>#| cache: true</code>)</h4>
+<p>Si tienes un bloque de código que realiza una tarea costosa (como una conexión a PostGIS o un análisis ráster masivo en Julia), no permitas que se ejecute cada vez que guardas el archivo. Utiliza la opción de caché a nivel de celda:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: analisis-espacial-costoso</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| cache: true</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| results: asis</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Este código solo se ejecutará de nuevo si modificas el contenido de este bloque.</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Quarto guarda los resultados en la carpeta '_cache' para reutilizarlos.</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">j_eval</span>(<span class="st">" ... proceso de Julia que tarda varios minutos ... "</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p><strong>Nota de experto:</strong> Mientras que <code>freeze: auto</code> (en el <code>_quarto.yml</code>) protege tus capítulos terminados para que no se re-ejecuten al compilar el libro completo, el uso de <code>#| cache: true</code> protege tu flujo de trabajo diario dentro del capítulo que estás escribiendo actualmente.</p>
+</blockquote>
+</section>
+</section>
+</section>
+<section id="sec-opciones-chunks" class="level2" data-number="C.4">
+<h2 data-number="C.4" class="anchored" data-anchor-id="sec-opciones-chunks"><span class="header-section-number">C.4</span> Control de ejecución en Quarto - opciones de <code>chunks</code></h2>
 <p>Para que sus informes técnicos sean profesionales, no basta con que el código funcione; es necesario controlar qué se muestra y qué se oculta al lector final. En Quarto, esto se logra mediante el uso de “opciones de chunk” utilizando la sintaxis de la tubería de comentarios (<code>#|</code>).</p>
 <table class="table">
 <colgroup>
@@ -608,16 +684,16 @@ Sintaxis Correcta
 </div>
 <div class="callout-body-container callout-body">
 <p>Recuerde que las opciones deben ir al inicio del chunk, justo después de los corchetes del lenguaje:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Su código aquí...</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Su código aquí...</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
 </section>
-<section id="instalación-de-extensiones-de-quarto" class="level2" data-number="C.4">
-<h2 data-number="C.4" class="anchored" data-anchor-id="instalación-de-extensiones-de-quarto"><span class="header-section-number">C.4</span> Instalación de Extensiones de Quarto</h2>
+<section id="instalación-de-extensiones-de-quarto" class="level2" data-number="C.5">
+<h2 data-number="C.5" class="anchored" data-anchor-id="instalación-de-extensiones-de-quarto"><span class="header-section-number">C.5</span> Instalación de Extensiones de Quarto</h2>
 <p>Las extensiones permiten ampliar las funcionalidades nativas de Quarto, añadiendo nuevos formatos de salida, filtros personalizados o librerías de componentes visuales. Para que el proceso de descarga desde repositorios remotos sea exitoso y seguro, es fundamental haber completado previamente la configuración descrita en la <a href="84-git_github.html#sec-ssh-linux" class="quarto-xref"><span>Sección E.7</span></a>.</p>
 <section id="el-proceso-de-instalación" class="level3">
 <h3 class="anchored" data-anchor-id="el-proceso-de-instalación">El proceso de instalación</h3>
@@ -625,7 +701,7 @@ Sintaxis Correcta
 <section id="ejemplo-práctico-librería-de-iconos-fontawesome" class="level4">
 <h4 class="anchored" data-anchor-id="ejemplo-práctico-librería-de-iconos-fontawesome">Ejemplo práctico: Librería de iconos FontAwesome</h4>
 <p>Como caso de estudio, instalaremos la extensión oficial para el uso de iconos vectoriales. Ejecuta el siguiente comando en tu terminal:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> add quarto-ext/fontawesome</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> add quarto-ext/fontawesome</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">

@@ -6,7 +6,7 @@
 #| label: j_eval_j_plot
 #| code-fold: true
 #| results: asis
-#| include: false
+# #| include: false
 source("./docs/j_eval_j_plot.r")
 ```
 
@@ -123,6 +123,7 @@ println("Tipo de geometría: ", typeof(plaza_bolivar))
 ```{r}
 #| label: julia_geoms_basicas
 #| results: asis
+#| code-fold: true
 j_eval(r"-(
 using LibGEOS
 
@@ -269,6 +270,7 @@ println(gt)
 ```{r}
 #| label: julia_tablas_espaciales
 #| results: asis
+#| code-fold: true
 j_eval(r"-(
 import Pkg
 Pkg.add(["GeoTables", "Meshes"])

@@ -9,7 +9,7 @@
 ```{r}
 #| label: j_eval_j_plot
 #| code-fold: true
-#| include: false
+# #| include: false
 source("./docs/j_eval_j_plot.r")
 ```
 
@@ -153,6 +153,7 @@ println(separador)
 ```{r}
 #| label: julia_str_basico
 #| results: asis
+#| code-fold: true
 j_eval(r"-(
 lugar = "Pico Cristóbal Colón"
 departamento = "Magdalena" # En Julia siempre comillas dobles
@@ -326,6 +327,7 @@ println(@sprintf("El %s está en la latitud %.4f", pico, latitud))
 ```{r}
 #| label: julia_str_interp
 #| results: asis
+#| code-fold: true
 j_eval(r"-(
 pico = "Pico Cristóbal Colón"
 altura = 5700
@@ -488,6 +490,7 @@ println("Limpio:   '$registro_final'")
 ```{r}
 #| label: julia_str_metodos
 #| results: asis
+#| code-fold: true
 j_eval(r"-(
 toponimo = "   sAnTuaRio de fAuna Y flora iGuaQue   "
 
@@ -667,6 +670,7 @@ println("Ruta generada: $ruta_completa")
 ```{r}
 #| label: julia_str_split
 #| results: asis
+#| code-fold: true
 j_eval(r"-(
 # Separar coordenadas
 coord_str = "4.5981,-74.0758"
@@ -866,6 +870,7 @@ println(sql_query)
 ```{r}
 #| label: julia_str_format
 #| results: asis
+#| code-fold: true
 j_eval(r"-(
 using Printf
 
@@ -933,6 +938,7 @@ println("Población formateada: $poblacion_fmt")
 ```{r}
 #| label: julia_regex_miles
 #| results: asis
+#| code-fold: true
 j_eval(r"-(
 # Ejemplo con la población estimada de la sabana de Bogotá
 poblacion = 10700000

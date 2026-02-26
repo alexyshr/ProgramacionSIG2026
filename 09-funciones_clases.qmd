@@ -645,6 +645,7 @@ println(describir_punto(10.3997, -75.4795, ciudad="Cartagena", costero=true))
 ```{r}
 #| label: julia_funciones
 #| results: asis
+#| code-fold: true
 # #| eval: false
 j_eval(r"-(
 # --- FUNCIÓN 1: CÁLCULO MATEMÁTICO BÁSICO ---
@@ -849,7 +850,7 @@ Para visualizar cómo Python maneja la memoria, imaginemos una cocina:
 
 *Como ilustra la siguiente figura, en Python el paradigma es encapsulado: el objeto nace con sus datos y sus herramientas listas para usar.*
 
-![**El paradigma de Python (POO Clásica):** La Clase actúa como una fábrica o molde que estampa objetos. Cada objeto (la arepa) no solo contiene datos, sino que lleva incrustadas sus propias herramientas y métodos (como la navaja suiza o la calculadora) para resolver problemas por sí mismo.](./images/python_classes_analogy.png){#fig-analogia-python fig-align="center" width="85%"}
+![**El paradigma de Python (POO Clásica):** La Clase actúa como una fábrica o molde que estampa objetos. Cada objeto (la arepa) no solo contiene datos, sino que lleva incrustadas sus propias herramientas y métodos (como la navaja suiza o la calculadora) para resolver problemas por sí mismo.](./images/python_classes_analogy.png){#fig-analogia-python fig-align="center" width="50%"}
 
 #### La anatomía del molde
 
@@ -872,9 +873,11 @@ A continuación, visualizamos este ciclo de vida completo: primero, el diagrama 
 #| fig-cap: "Diagrama del flujo de instanciación: El molde (Clase) y las arepas (Objetos)."
 #| results: asis
 #| echo: false
+#| out-width: "100%"
+#| fig-width: 7
 
 mermaid_code <- c(
-  "%%{init: {\"flowchart\": {\"nodeSpacing\": -90, \"rankSpacing\": -90}}}%%",
+  "%%{init: {\"flowchart\": {\"nodeSpacing\": -90, \"rankSpacing\": -90, \"useMaxWidth\": true}}}%%",
   "flowchart TB",
   "    %% ESTILOS",
   "    classDef num fill:#E67E22,color:#FFF,stroke:none,font-weight:bold,font-size:16px",
@@ -1052,7 +1055,7 @@ Si en Python teníamos un molde de hierro para hacer arepas, en R la cocina func
 
 *En R, el sistema es mucho más flexible e informal, dependiendo enteramente de cómo etiquetamos nuestros contenedores de datos:*
 
-![**El paradigma de R (Sistema S3):** Los objetos no tienen herramientas por dentro; son contenedores plásticos estándar (listas) llenos de datos crudos. Lo que les da "poder" es una simple etiqueta o post-it (la Clase S3). Las funciones externas actúan como inspectores que leen esta etiqueta para decidir qué herramienta usar.](./images/r_classes_analogy.png){#fig-analogia-r fig-align="center" width="85%"}
+![**El paradigma de R (Sistema S3):** Los objetos no tienen herramientas por dentro; son contenedores plásticos estándar (listas) llenos de datos crudos. Lo que les da "poder" es una simple etiqueta o post-it (la Clase S3). Las funciones externas actúan como inspectores que leen esta etiqueta para decidir qué herramienta usar.](./images/r_classes_analogy.png){#fig-analogia-r fig-align="center" width="50%"}
 
 #### La anatomía del sistema S3
 
@@ -1285,7 +1288,7 @@ Si Python es un molde de hierro y R es un post-it, Julia es una cocina de alta e
 
 *Julia lleva la separación entre datos y herramientas al extremo, usando una estrategia de clasificación ultrarrápida:*
 
-![**El paradigma de Julia (Despacho Múltiple):** Los datos están resguardados en contenedores inmutables (Structs). Las funciones son chefs externos altamente especializados. Cuando pides una operación, el compilador (el "Jefe de Cocina") escanea con láser los tipos de datos exactos y llama instantáneamente al chef que tiene la receta matemática perfecta para esa combinación.](./images/julia_struct_analogy.png){#fig-analogia-julia fig-align="center" width="85%"}
+![**El paradigma de Julia (Despacho Múltiple):** Los datos están resguardados en contenedores inmutables (Structs). Las funciones son chefs externos altamente especializados. Cuando pides una operación, el compilador (el "Jefe de Cocina") escanea con láser los tipos de datos exactos y llama instantáneamente al chef que tiene la receta matemática perfecta para esa combinación.](./images/julia_struct_analogy.png){#fig-analogia-julia fig-align="center" width="50%"}
 
 #### La anatomía de la arquitectura en Julia
 
@@ -2196,6 +2199,7 @@ Para garantizar que la memoria se mantenga y el gráfico se exporte correctament
 #| results: asis
 #| echo: false
 #| fig-align: center
+#| code-fold: true
 #| out-width: "70%"
 #| fig-pos: "H"
 
@@ -2348,16 +2352,17 @@ A lo largo del capítulo vimos cómo se estructuran las clases, pero queda una p
 
 *La siguiente analogía visualiza las diferencias entre los tres motores de ejecución:*
 
-![**Analogía de los motores de ejecución:** El Food Truck autónomo (Python), la lenta Oficina de Correos de revisión manual (R) y la veloz Fábrica Industrial Láser (Julia).](./images/comparativa_despacho_python_r_julia.png){#fig-analogia-motores fig-align="center" width="100%"}
+![**Analogía de los motores de ejecución:** El Food Truck autónomo (Python), la lenta Oficina de Correos de revisión manual (R) y la veloz Fábrica Industrial Láser (Julia).](./images/comparativa_despacho_python_r_julia.png){#fig-analogia-motores fig-align="center" width="85%"}
 
 Técnicamente, podemos estructurar el flujo de decisiones de cada motor mediante el siguiente diagrama:
 
 ```{mermaid}
 %%| label: fig-diagrama-motores
 %%| fig-cap: "Flujo lógico de los motores de ejecución: Python, R y Julia."
-%%| fig-width: 10
-%%| out-width: 100%
+%%| fig-width: 6.5
+%%| out-width: 80%
 %%| fig-align: center
+%%| fig-responsive: true
 
 flowchart LR
     %% ESTILOS DE LOS NODOS (Pasteles para que resalten)

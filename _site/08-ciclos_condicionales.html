@@ -778,6 +778,8 @@ Distancia a (3.4516, -76.5320): 3.63 grados</code></pre>
 </div>
 </div>
 </div>
+<details class="code-fold">
+<summary>Código</summary>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># #| eval: false</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">j_eval</span>(r<span class="st">"-(</span></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="st"># 1. Sintaxis básica del ciclo for</span></span>
@@ -818,6 +820,7 @@ Distancia a (3.4516, -76.5320): 3.63 grados</code></pre>
 <span id="cb29-38"><a href="#cb29-38" aria-hidden="true" tabindex="-1"></a><span class="st">    println("</span><span class="sc">$</span>i. <span class="sc">$</span>ciudad<span class="st">")</span></span>
 <span id="cb29-39"><a href="#cb29-39" aria-hidden="true" tabindex="-1"></a><span class="st">end</span></span>
 <span id="cb29-40"><a href="#cb29-40" aria-hidden="true" tabindex="-1"></a><span class="st">)-"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <pre><code>Starting Julia ...</code></pre>
 <pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;"># 1. Sintaxis básica del ciclo for</span>
 </pre>
@@ -1101,12 +1104,15 @@ Procesando coordenada: (6.2442, -75.5812)</code></pre>
 <span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># SOLO si el ciclo while terminó de forma natural (sin usar 'break').</span></span>
 <span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"✗ No se logró estabilizar la señal tras </span><span class="sc">{</span>max_intentos<span class="sc">}</span><span class="ss"> intentos."</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Intento 1: Lectura (4.7946)
-Intento 2: Lectura (4.1096)
-Intento 3: Lectura (4.4999)
-Intento 4: Lectura (4.9688)
-Intento 5: Lectura (4.5173)
-✓ Señal estable encontrada en 5 intentos!</code></pre>
+<pre><code>Intento 1: Lectura (4.2848)
+Intento 2: Lectura (4.3400)
+Intento 3: Lectura (4.1505)
+Intento 4: Lectura (4.8821)
+Intento 5: Lectura (4.2270)
+Intento 6: Lectura (4.3974)
+Intento 7: Lectura (4.1004)
+Intento 8: Lectura (4.6488)
+✓ Señal estable encontrada en 8 intentos!</code></pre>
 </div>
 </div>
 </div>
@@ -1222,11 +1228,11 @@ Procesando coordenada: (6.2442, -75.5812)</code></pre>
 <span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a>    }</span>
 <span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Intento 1: Lectura (4.1687)
-Intento 2: Lectura (4.0423)
-Intento 3: Lectura (4.3196)
-Intento 4: Lectura (4.0692)
-Intento 5: Lectura (4.6781)
+<pre><code>Intento 1: Lectura (4.4944)
+Intento 2: Lectura (4.3474)
+Intento 3: Lectura (4.7538)
+Intento 4: Lectura (4.9592)
+Intento 5: Lectura (4.6113)
 ✓ Señal estable encontrada en 5 intentos!</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Comprobamos la bandera fuera del ciclo</span></span>
@@ -1295,6 +1301,8 @@ Intento 5: Lectura (4.6781)
 </div>
 </div>
 </div>
+<details class="code-fold">
+<summary>Código</summary>
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># #| eval: false</span></span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">j_eval</span>(r<span class="st">"-(</span></span>
 <span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="st"># 1. Estructura básica de un ciclo while</span></span>
@@ -1340,6 +1348,7 @@ Intento 5: Lectura (4.6781)
 <span id="cb51-43"><a href="#cb51-43" aria-hidden="true" tabindex="-1"></a><span class="st">    println("</span>✗ No se logró estabilizar la señal tras <span class="sc">$</span>max_intentos intentos.<span class="st">")</span></span>
 <span id="cb51-44"><a href="#cb51-44" aria-hidden="true" tabindex="-1"></a><span class="st">end</span></span>
 <span id="cb51-45"><a href="#cb51-45" aria-hidden="true" tabindex="-1"></a><span class="st">)-"</span><span class="er">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;"># 1. Estructura básica de un ciclo while</span>
 </pre>
 <pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;"></pre>
@@ -1425,9 +1434,8 @@ Procesando coordenada: (6.2442, -75.5812)
        <span style="color:#008b8b;">    end</span>
        <span style="color:#008b8b;">end</span>
 </pre>
-<pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;">Intento 1: Lectura (4.2066)
-Intento 2: Lectura (4.5241)
-✓ Señal estable encontrada en 2 intentos!
+<pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;">Intento 1: Lectura (4.6109)
+✓ Señal estable encontrada en 1 intentos!
 
 </pre>
 <pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;">if !senal_encontrada</span>
@@ -1988,6 +1996,8 @@ Tabla&nbsp;8.3: Operadores de comparación matemáticos
 </div>
 </div>
 </div>
+<details class="code-fold">
+<summary>Código</summary>
 <div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co"># #| eval: false</span></span>
 <span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="fu">j_eval</span>(r<span class="st">"-(</span></span>
 <span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a><span class="st">coordenadas = [</span></span>
@@ -2055,6 +2065,7 @@ Tabla&nbsp;8.3: Operadores de comparación matemáticos
 <span id="cb79-65"><a href="#cb79-65" aria-hidden="true" tabindex="-1"></a><span class="st">println("</span>Puntos en el Norte<span class="sc">:</span> <span class="er">$</span>norte_count <span class="sc">|</span> Sur<span class="sc">:</span> <span class="er">$</span>sur_count<span class="st">")</span></span>
 <span id="cb79-66"><a href="#cb79-66" aria-hidden="true" tabindex="-1"></a><span class="st">println("</span>Puntos en el Este<span class="sc">:</span> <span class="er">$</span>este_count <span class="sc">|</span> Oeste<span class="sc">:</span> <span class="er">$</span>oeste_count<span class="st">")</span></span>
 <span id="cb79-67"><a href="#cb79-67" aria-hidden="true" tabindex="-1"></a><span class="st">)-"</span><span class="er">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;">coordenadas = [</span>
        <span style="color:#008b8b;">    (4.6097, -74.0817),   </span>
        <span style="color:#008b8b;">    (-4.2153, -69.9406),  </span>
@@ -2380,6 +2391,8 @@ La metáfora del portero y el colador (Operadores lógicos en R y Julia)
 </div>
 </div>
 </div>
+<details class="code-fold">
+<summary>Código</summary>
 <div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># #| eval: false</span></span>
 <span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="fu">j_eval</span>(r<span class="st">"-(</span></span>
 <span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a><span class="st">alturas = [1500, 2500, 800]</span></span>
@@ -2406,6 +2419,7 @@ La metáfora del portero y el colador (Operadores lógicos en R y Julia)
 <span id="cb83-24"><a href="#cb83-24" aria-hidden="true" tabindex="-1"></a><span class="st">    println("</span>Motivo<span class="sc">:</span> El <span class="st">'if'</span> y el <span class="st">'&amp;&amp;'</span> exigen una sola cédula (true<span class="sc">/</span>false), no la lista completa.<span class="st">")</span></span>
 <span id="cb83-25"><a href="#cb83-25" aria-hidden="true" tabindex="-1"></a><span class="st">end</span></span>
 <span id="cb83-26"><a href="#cb83-26" aria-hidden="true" tabindex="-1"></a><span class="st">)-"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;">alturas = [1500, 2500, 800]</span>
 </pre>
 <pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;">3-element Vector{Int64}:

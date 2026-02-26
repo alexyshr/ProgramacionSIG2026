@@ -79,6 +79,54 @@ Chequear estado de instalación de Quarto
 quarto check
 ```
 
+## Gestión Eficiente de Renderizado en Quarto
+
+A continuación, se presenta la hoja de ruta para optimizar los tiempos de compilación de tu libro, especialmente cuando trabajas con motores pesados de Julia y R.
+
+### Hoja de Referencia: Comandos de Renderizado
+
+La ejecución de estos comandos depende de la existencia del archivo `_quarto.yml` en la carpeta de proyecto. Si desea trabajar con archivos individuales puede cambiar temporalmente el nombre de este archivo a `_quarto.yml.back`
+
+| Acción | Comando |
+|:---|:---|
+| **Trabajar en vivo** (Previsualización dinámica) | `quarto preview` |
+| **Renderizar solo el capítulo actual** | `quarto render archivo.qmd` |
+| **Generar el libro completo** (Ensamblaje final) | `quarto render` |
+| **Forzar ejecución total** (Ignorar el `freeze`) | `quarto render --execute` |
+
+: Comandos esenciales para la gestión de flujos en Quarto {#tbl-quarto-comandos tbl-colwidths="[40,60]"}
+
+---
+
+### Trucos extra para un flujo de autor ágil
+
+Para evitar esperas innecesarias y optimizar tu productividad, aplica estas estrategias de previsualización y almacenamiento de resultados:
+
+#### 1. El flujo de edición en vivo (`quarto preview`)
+En lugar de renderizar el libro manualmente cada vez que haces un cambio, abre una terminal en la raíz de tu proyecto y ejecuta el comando de previsualización.
+
+
+
+Al usar este comando, se levantará un servidor local. Cada vez que realices una edición en tu archivo `.qmd` y presiones **`Ctrl + S`** (Guardar), Quarto detectará el cambio y refrescará **únicamente** ese capítulo en tu navegador. Esto mantiene la sesión de Julia/R "tibia" y permite ver cambios casi instantáneos en mapas y ecuaciones.
+
+#### 2. Uso de Caché para procesos pesados (`#| cache: true`)
+Si tienes un bloque de código que realiza una tarea costosa (como una conexión a PostGIS o un análisis ráster masivo en Julia), no permitas que se ejecute cada vez que guardas el archivo. Utiliza la opción de caché a nivel de celda:
+
+
+
+```r
+#| label: analisis-espacial-costoso
+#| cache: true
+#| results: asis
+
+# Este código solo se ejecutará de nuevo si modificas el contenido de este bloque.
+# Quarto guarda los resultados en la carpeta '_cache' para reutilizarlos.
+j_eval(" ... proceso de Julia que tarda varios minutos ... ")
+```
+
+> **Nota de experto:** Mientras que `freeze: auto` (en el `_quarto.yml`) protege tus capítulos terminados para que no se re-ejecuten al compilar el libro completo, el uso de `#| cache: true` protege tu flujo de trabajo diario dentro del capítulo que estás escribiendo actualmente.
+
+
 ## Control de ejecución en Quarto - opciones de `chunks` {#sec-opciones-chunks}
 
 Para que sus informes técnicos sean profesionales, no basta con que el código funcione; es necesario controlar qué se muestra y qué se oculta al lector final. En Quarto, esto se logra mediante el uso de "opciones de chunk" utilizando la sintaxis de la tubería de comentarios (`#|`).

@@ -35,7 +35,7 @@ engine: knitr
 ```{r}
 #| label: j_eval_j_plot
 #| code-fold: true
-#| include: false
+# #| include: false
 source("./docs/j_eval_j_plot.r")
 ```
 
@@ -179,12 +179,13 @@ println("Ubicación del código: ", pathof(DataFrames))
 | Instalar paquete | Agregar librerías externas | `pip3 install ...` | `install.packages()` | `Pkg.add()` |
 | Cargar paquete | Habilitar funciones del paquete | `import ...` | `library()` | `using ...` |
 
-::: {.panel-tabset}
+:::: {.panel-tabset}
 
 ### Python
-```{.python}
+
+```{python}
 #| label: instalacion_python
-# #| eval: false
+#| eval: false
 
 # En terminal usamos pip3 
 # para asegurar la versión de Python 3.x
@@ -207,7 +208,7 @@ print(Fore.RED + "Librería cargada en Python" + Style.RESET_ALL)
 ### R
 ```{r}
 #| label: instalacion_r
-# #| eval: false
+#| eval: false
 
 # Este comando carga el paquete con require() o lo instala
 # si no existe
@@ -248,26 +249,50 @@ println(Crayon(foreground=:red), "Librería cargada en Julia")
 :::
 :::
 
-```{.julia}
-#| label: instalacion_julia_ejecucion
-#| kernel: julia-1.10
+```{r}
+#| label: instalacion_julia_ejecucion_paso1
 #| results: asis
-# #| eval: false
-#j_eval('
+#| code-fold: true
+#| eval: false
+
+# PASO 1: CON ASIS. Ejecutamos la instalación y mostramos texto limpio.
+cat(j_eval(r"-(
 using Pkg
-# Verificamos si "Crayons" ya está en el proyecto; si no, lo instalamos
+
+# Verificamos si 'Crayons' ya está en el proyecto; si no, lo instalamos
 if !haskey(Pkg.dependencies(), Base.UUID("a83e43d3-9d41-5979-9952-4e448995a975"))
     Pkg.add("Crayons")
 end
-using Crayons
-println("Librería cargada en Julia")
 
-# Aparecerán caracteres especiales al inicio del texto
-# porque el HTML no entiende la instrucción colorear en rojo
-println(Crayon(foreground=:red), "Librería cargada en Julia")
-#')
+using Crayons
+
+# Retornamos solo el mensaje normal para que se integre al Markdown
+return "Librería cargada en Julia\n"
+)-"))
 ```
-:::
+
+> Nota: El siguiente código no puede tener `#|results: asis` porque se daña el `panel-tabset` al tener código de escape ANSI (`\033[31m...`). Esto implica que verá unas líneas de código HTML que debe ignorar.
+
+```{r}
+#| label: instalacion_julia_ejecucion_paso2
+#| code-fold: true
+#| eval: false
+
+# PASO 2: SIN ASIS. Aislamos el código ANSI para proteger el Tabset.
+resultado_color <- j_eval(r"-(
+# Como la sesión de Julia sigue abierta, 'Crayons' ya está cargado.
+# Solo capturamos el texto con el código de escape ANSI (color rojo).
+mensaje_color = string(Crayon(foreground=:red), "Librería cargada en Julia (con escape ANSI)")
+
+return mensaje_color
+)-")
+
+# Quarto encierra esta salida en un bloque de código seguro
+cat(resultado_color)
+```
+
+
+::::
 
 ## Objetos básicos y estructuras de datos
 
@@ -291,7 +316,7 @@ Para entender por qué usamos diferentes estructuras de datos, es útil ver cóm
 
 
 ::: {#fig-relacion-geo}
-![](images/fig-relacion-geo.png){width=100%}
+![Relación entre estructuras y componentes SIG](images/fig-relacion-geo.png){fig-align="center" width=50%}
 Mapeo de estructuras de programación a componentes de datos espaciales.
 :::
 
@@ -401,6 +426,7 @@ typeof(df_colombia)
 # describe() da un resumen estadístico de la tabla
 println(describe(df_colombia))
 ```
+
 :::
 :::
 
@@ -408,6 +434,7 @@ println(describe(df_colombia))
 ```{r}
 #| label: objetos_julia_ejecucion
 #| results: asis
+#| code-fold: true
 # #| eval: false
 j_eval('
 # 1. Vectores: Se definen con corchetes (similar a Python)
@@ -438,6 +465,7 @@ typeof(df_colombia)
 println(describe(df_colombia))
 ')
 ```
+
 :::
 
 ## 4. Comandos básicos y manipulación de tablas
@@ -601,12 +629,14 @@ df_ext = vcat(df, nuevo)
 df_sorted = sort(df_ext, :pob_2023, rev=true)
 println(df_sorted)
 ```
+
 :::
 :::
 
 ```{r}
 #| label: comandos_julia_ejecucion
 #| results: asis
+#| code-fold: true
 # #| eval: false
 j_eval('
 using DataFrames
@@ -627,6 +657,7 @@ df_ext = vcat(df, nuevo)
 println(sort(df_ext, :pob_2023, rev=true))
 ')
 ```
+
 :::
 
 ### Operaciones numéricas y matemáticas básicas
@@ -712,12 +743,14 @@ println("Logaritmo base 10: ", log(10, 3)) # Nota: En Julia log(base, x)
 # 4. Valor absoluto
 println("Absoluto: ", abs(-3.4))
 ```
+
 :::
 :::
 
 ```{r}
 #| label: operaciones_julia_ejecucion
 #| results: asis
+#| code-fold: true
 # #| eval: false
 j_eval('
 # Ejecución de operaciones matemáticas vía j_eval
@@ -730,6 +763,7 @@ println("Absoluto: ", abs(-3.4))
 println("Pi: ", pi)
 ')
 ```
+
 :::
 
 ## 5. Lectura y escritura de datos
@@ -825,12 +859,14 @@ println(df)
 # Guardar datos en el disco
 CSV.write("municipios_altitud.csv", df)
 ```
+
 :::
 :::
 
 ```{r}
 #| label: lectura_julia_ejecucion
 #| results: asis
+#| code-fold: true
 # #| eval: false
 j_eval('
 using CSV
@@ -854,6 +890,7 @@ println(df)
 CSV.write("municipios_altitud.csv", df)
 ')
 ```
+
 :::
 
 
@@ -944,12 +981,14 @@ tierras_altas = filter(row -> row.altitud > 1500, df)
 # 3. Filtrado abreviado (Sintaxis de Julia 1.7+)
 andinos_altos = df[(df.altitud .> 1000) .& (df.departamento .!= "Chocó"), :]
 ```
+
 :::
 :::
 
 ```{r}
 #| label: indexacion_julia_ejecucion
 #| results: asis
+#| code-fold: true
 # #| eval: false
 j_eval('
 using DataFrames
@@ -965,6 +1004,7 @@ println("Municipios con altitud > 1000 msnm:")
 println(filter(row -> row.altitud > 1000, df))
 ')
 ```
+
 :::
 
 ## 7. Estadística descriptiva básica
@@ -1035,12 +1075,14 @@ println("Desviación: ", std(altitudes))
 df = DataFrame(msnm = altitudes)
 println(describe(df))
 ```
+
 :::
 :::
 
 ```{r}
 #| label: estadistica_julia_ejecucion
 #| results: asis
+#| code-fold: true
 # #| eval: false
 j_eval('
 using Statistics
@@ -1056,6 +1098,7 @@ df = DataFrame(msnm = altitudes)
 println(describe(df))
 ')
 ```
+
 :::
 
 
@@ -1153,6 +1196,7 @@ histogram(muestra_altitudes,
           color=:orange, 
           title="Frecuencia de Altitudes")
 ```
+
 :::
 :::
 
@@ -1160,6 +1204,8 @@ histogram(muestra_altitudes,
 ```{r}
 #| label: graficos_julia_ejecucion
 #| echo: true
+#| results: asis
+#| code-fold: true
 #| fig-align: "center"
 #| out-width: "85%"
 
@@ -1272,12 +1318,14 @@ df.clima = [x > 2000 ? "Frío" : "Templado" for x in df.altitud_m]
 
 println(df)
 ```
+
 :::
 :::
 
 ```{r}
 #| label: transformacion_julia_ejecucion
 #| results: asis
+#| code-fold: true
 # #| eval: false
 j_eval('
 using DataFrames
@@ -1296,6 +1344,7 @@ df.clima = [x > 2000 ? "Frío" : "Templado" for x in df.altitud_m]
 println(df)
 ')
 ```
+
 :::
 
 

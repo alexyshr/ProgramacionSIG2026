@@ -86,9 +86,13 @@ crossref:  # <--- PERSONALIZACIÓN DE REFERENCIAS
   sec-prefix: "Sección"
   eq-prefix: "Ecuación"
 
+execute:
+  freeze: auto  # 'auto' re-ejecuta solo si el archivo .qmd cambió
+  
 # CONFIGURACIÓN DE BIBLIOGRAFÍA (GLOBAL)
 bibliography: referencias.bib     # Archivo BibTeX con todas las referencias
-csl: https://www.zotero.org/styles/apa  # Estilo de citación: APA
+#csl: https://www.zotero.org/styles/apa  # Estilo de citación: APA
+csl: apa.csl # Descargado de https://www.zotero.org/styles/apa
 link-citations: true             # Enlaza citas con la bibliografía
 
 # NIVEL GLOBAL (RECOMENDADO)
