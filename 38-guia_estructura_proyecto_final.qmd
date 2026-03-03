@@ -1,0 +1,145 @@
+---
+title: "Guía y Estructura del Proyecto Final"
+subtitle: "Asignatura: Programación en SIG - Maestría en Geomática"
+author: "Alexys H. Rodríguez-Avellaneda Ph.D."
+format:
+  html:
+    toc: true
+    theme: cosmo
+    code-fold: true
+    code-summary: "Mostrar código"
+  pdf:
+    toc: true
+    number-sections: true
+---
+
+## Introducción al proyecto final
+
+El proyecto final es la culminación práctica del curso, donde integraremos la **Ciencia de Datos Espaciales** con un enfoque multilingüe (**Python, R, Julia**). El objetivo es representar y analizar un fenómeno natural, social o económico utilizando herramientas de programación avanzada y datos espaciales, bajo los principios de **Open Science**.
+
+La idea es construir un documento fácil de entender, con una narrativa clara, que sirva de guía para otros investigadores o profesionales que deseen replicar su metodología.
+
+### Propósitos estratégicos
+1. **Proyecto de Investigación:** Que este trabajo sirva como un avance técnico o prototipo para su proyecto de tesis de maestría.
+2. **Participación en LatinGeo:** Los mejores proyectos podrán ser adaptados para presentarse en la conferencia virtual **`LatinGeo: Python, R, Julia`**.
+
+---
+
+## Estructura del documento final
+
+Siguiendo el enfoque de ciencia abierta, deben entregar un repositorio público en **GitHub** con el archivo fuente (`.qmd`), el renderizado (**HTML** y **PDF**) y los scripts necesarios.
+
+### Secciones del informe:
+1. **Título del Proyecto:** Claro y descriptivo.
+2. **Introducción y Justificación:** Definición del problema y su relevancia espacial.
+3. **Estado del Arte / Revisión Bibliográfica:** Revisión técnica de cómo se ha abordado el problema con programación y SIG.
+4. **Objetivos:** Un objetivo general y dos específicos.
+5. **Área de Estudio:** Delimitación geográfica (incluir mapa base de Colombia o zona de interés).
+6. **Fuentes de Datos:** Descripción de datasets (APIs, GEE, Catálogos, Kaggle, etc.).
+7. **Metodología y Código:** 
+    
+    * Explicación del flujo de trabajo y librerías usadas.
+    * **Integración del Código:** El informe debe incluir los fragmentos de código más importantes (el "core" del análisis). Use bloques de código comentados para que el lector entienda la lógica del geoprocesamiento.
+8. **Resultados y Discusión:** Cartografía temática generada y análisis crítico.
+9. **Conclusiones:** Logros y limitaciones técnicas encontradas.
+10. **Referencias:** Bibliografía en formato APA.
+11. **Anexos:**
+
+    * Detalles técnicos adicionales que no se incluyeron en el cuerpo principal para no perder el hilo narrativo.
+    * **Anexo de Configuración de Entorno (Obligatorio):** Debe indicar detalladamente los cambios realizados dentro del contenedor **Docker** (ej: instalación de librerías adicionales) para poder ejecutar el proyecto con éxito.
+    * **Gestión de Entornos y Virtualización Alternativa:** Si el contenedor Docker proporcionado para la clase no es suficiente para los requerimientos de su proyecto (por ejemplo, necesidad de drivers específicos para GPU, librerías de Julia de última versión o paquetes de R complejos), puede optar por configurar su propio entorno utilizando alternativas como `conda`, `mamba`, `pixi` o entornos nativos. No obstante, para garantizar la **reproducibilidad**, es obligatorio:
+        * Adjuntar los archivos de definición de entorno (`environment.yml`, `requirements.txt`, `Project.toml` o `renv.lock`).
+        * Documentar detalladamente en el **Anexo de Virtualización** el proceso de instalación paso a paso, asegurando que cualquier otro investigador pueda recrear su laboratorio de análisis desde cero.
+
+---
+
+## Temas y retos de implementación
+
+Pueden orientar su proyecto hacia uno de estos ejes tecnológicos:
+
+### A. Geocomputación Avanzada
+
+* **Geocomputación en la Nube:** Uso intensivo de GEE y `geemap`.
+* **Pipelines Composables:** Flujos de datos que conectan diferentes librerías geo.
+* **DuckDB Espacial:** Procesamiento de grandes volúmenes de datos vectoriales.
+* **Automatización:** Uso de **GitHub Actions** para flujos de trabajo geoespaciales.
+
+### B. GeoAI y Machine Learning
+Para interesados en Visión por Computadora aplicada a SIG, exploren las herramientas de [OpenGeoAI](https://opengeoai.org/):
+
+* **SamGeo (Segment Anything Model for Geospatial):** Segmentación de imágenes satelitales mediante texto o máscaras interactivas.
+* **Detección de Objetos:** Edificios, paneles solares, barcos o cuerpos de agua.
+* **LLMs y SIG:** Interacción con datos espaciales usando modelos de lenguaje.
+* **Kaggle:** Explorar recursos de ML aplicados a Geomática en [kaggle.com](https://www.kaggle.com/).
+
+### C. Desarrollo de Software
+* **Creación de Paquetes/Extensiones:** Desarrollo de librerías en Python, R o Julia.
+* **Virtualización:** Uso de Docker o entornos reproducibles para análisis espacial.
+
+---
+
+## Recursos, plataformas y datos
+
+Para no empezar desde cero, exploren estas plataformas con casos de uso y datos abiertos:
+
+* **NASA Lifelines Data Studios:** Paquetes enfocados en casos humanitarios:
+    * [Incendios Forestales (Wildfires)](https://nasalifelines.org/hfs-data-series/wildfire-early-warning-and-rapid-response/)
+    * [Inundaciones (Flooding)](https://nasalifelines.org/hfs-data-series/flood-early-warning-2/)
+    * [Deslizamientos (Landslides)](https://nasalifelines.org/hfs-data-series/landslide-risk-and-monitoring/)
+    * [Evaluación de Daños](https://nasalifelines.org/hfs-data-series/building-damage-assessment/)
+    * [Derechos Humanos](https://nasalifelines.org/hfs-data-series/human-rights/)
+* **Sentinel Hub Education:** Guías para índices satelitales y uso de plugins en QGIS. [Explorar](https://www.sentinel-hub.com/explore/education/)
+* **NASA ARSET:** [Guía de Recursos Históricos (PDF)](https://earthdata.nasa.gov/s3fs-public/2025-05/OnlineResourceGuide_2024_Revised_V2_0.pdf?VersionId=EOGXiksocNpuRIa0TFTRac.gRe8eNEl3). Capacitaciones en agricultura, salud y recursos hídricos.
+
+::: {.callout-note}
+## Oportunidad Estratégica: LatinGeo y NASA Lifelines
+Contamos con una noticia importante: **NASA Lifelines** está gestionando la participación virtual del **Profesor Qiusheng Wu (OpenGeos)** para nuestra conferencia. Por ello, les sugiero fuertemente trabajar con **datos de la NASA** y enfocar sus proyectos en temas de **acción humanitaria** (analizando el impacto de fenómenos naturales) mediante el uso de SIG y sensores remotos. Estos trabajos tendrán una visibilidad especial en el evento.
+:::
+
+::: {.callout-tip}
+## Caso de Estudio Recomendado: Inundaciones en el Sinú
+Los invito a explorar el fenómeno de las **inundaciones en la cuenca del río Sinú**. Es un tema de gran relevancia nacional para el cual tengo propuestas, datos e ideas técnicas ya estructuradas. Si algún grupo está interesado en abordar esta problemática, por favor acérquense para orientarlos en el desarrollo del modelo. Preferiblemente conocimientos en GEE.
+:::
+
+---
+
+## Bibliografía de consulta por lenguaje
+
+Utilicen este esquema de pestañas para guiar su implementación técnica:
+
+::: {.panel-tabset}
+
+### Python
+* [Geocomputation with Python](https://py.geocompx.org/)
+* [Spatial Data Science with R and Python](https://r-spatial.org/python/)
+* [Introduction to Python for GIS (Michael Dorman)](https://geobgu.xyz/py-2025/)
+* [Introduction to GIS Programming (Qiusheng Wu)](https://gispro.gishub.org/)
+
+### R
+* [Geocomputation with R](https://r.geocompx.org/)
+* [Spatial Data Visualization with tmap](https://tmap.geocompx.org/)
+* [Spatial Data Science with R](https://r-spatial.org/book/)
+* [Spatial Statistics for Data Science (Paula Moraga)](https://www.paulamoraga.com/book-spatial/)
+
+### Julia
+* [Geocomputation with Julia](https://jl.geocompx.org/)
+* [Geospatial Data Science with Julia (Júlio Hoffimann)](https://juliaearth.github.io/geospatial-data-science-with-julia/)
+
+### General
+* [OpenGeos GitHub (Qiusheng Wu)](https://github.com/opengeos)
+* [Collection of Resources for Data Science](https://github.com/javedali99/r-resources-for-data-science)
+:::
+
+---
+
+## Recomendaciones clave
+
+* **Datos Primero:** Verifiquen la disponibilidad de datos en Colombia (IGAC, IDEAM, Geoportal del DANE) antes de finalizar su tema.
+* **Open Science y Reproducibilidad:** El repositorio debe ser reproducible. Si el código no corre en nuestros contenedores o no está bien documentado en el anexo de virtualización, no cumple el estándar.
+* **Narrativa Técnica:** Busquen que el informe sea didáctico. Expliquen el "por qué" de cada decisión tomada en el código.
+* **Menos es más:** Un análisis riguroso y automatizado es mejor que un modelo complejo que no funciona o es imposible de replicar.
+
+::: {.callout-important}
+## Nota Importante
+Si tiene alguna objeción con respecto a este documento, por favor comuníquelo con tiempo. Presente sus justificaciones y revisaremos oportunidades de mejora.
+:::

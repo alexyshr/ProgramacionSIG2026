@@ -54,7 +54,7 @@ La **fórmula de Haversine** calcula la distancia de círculo máximo (*great-ci
 
 Matemáticamente, adaptada a las variables de nuestro código, la ecuación general se ve así:
 
-$$distancia = 2 \cdot radio \cdot \arcsin\left(\sqrt{\sin^2\left(\frac{lat2 - lat1}{2}\right) + \cos(lat1) \cdot \cos(lat2) \cdot \sin^2\left(\frac{lon2 - lon1}{2}\right)}\right)$$
+$$\textstyle distancia = 2 \cdot radio \cdot \arcsin\left(\sqrt{\sin^2\left(\frac{lat2 - lat1}{2}\right) + \cos(lat1) \cdot \cos(lat2) \cdot \sin^2\left(\frac{lon2 - lon1}{2}\right)}\right)$$
 
 Donde:
 
@@ -420,6 +420,7 @@ cat("\n--- Creación de atributos dinámicos ---\n")
 cat(describir_punto(4.6097, -74.0817, ciudad="Bogotá", elevacion=2640), "\n")
 cat(describir_punto(10.3997, -75.4795, ciudad="Cartagena", costero=TRUE), "\n")
 ```
+
 :::
 :::
 
@@ -745,6 +746,79 @@ println(describir_punto(10.3997, -75.4795, ciudad="Cartagena", costero=true))
 ```
 
 :::
+
+### Un ejemplo en R para entender fácilmente el uso de `...`
+
+
+**El poder de los tres puntos (`...`) en R: Creando funciones envolventes (Wrappers)**
+
+En los ejemplos anteriores vimos cómo capturar argumentos adicionales. Sin embargo, una de las utilidades más prácticas y utilizadas de los tres puntos (`...`) en R (el equivalente directo a `**kwargs` en Python) es la creación de **funciones envolventes o *wrappers***.
+
+Imagina que en tu grupo de investigación han decidido estandarizar el estilo visual de todas sus publicaciones. Quieren que todas las gráficas de dispersión usen por defecto un tipo de punto sólido y el color verde institucional de la Universidad. 
+
+Sería extremadamente tedioso y poco eficiente programar una función personalizada que tenga que declarar explícitamente decenas de parámetros gráficos posibles (`main`, `xlab`, `ylab`, `cex`, `lwd`, `xlim`, `ylim`, etc.) solo para pasárselos a la función base `plot()`. 
+
+Gracias a los `...`, podemos definir nuestros valores por defecto (nuestro sello institucional) y decirle a R: *"Atrapa cualquier otro parámetro extra que el usuario envíe y pásalo directamente al motor de ploteo interno"*. Veamos cómo implementar esto:
+
+```{r}
+#| label: r_plot_unal_ejemplo
+#| fig-width: 6
+#| out-width: 50%
+#| fig-align: center
+# #| eval: false
+
+# --- FUNCIÓN 4: WRAPPER GRÁFICO (Uso práctico de los tres puntos '...') ---
+
+# Vamos a crear una función de ploteo institucional llamada 'plot_unal'.
+# Queremos que por defecto siempre use un tipo de punto sólido (pch = 16) 
+# y un color verde específico, pero que el usuario pueda cambiar libremente 
+# el título, los ejes o cualquier otro parámetro gráfico de la función original plot().
+
+plot_unal <- function(x, y, ...) {
+    # RECIBE: 
+    # x: Vector de datos para el eje X
+    # y: Vector de datos para el eje Y
+    # ... : Los tres puntos atrapan CUALQUIER otro parámetro con nombre 
+    #       (como main="Título", xlab="Eje X", col="red", etc.) que el usuario envíe.
+    
+    # 1. Ejecutamos la función base 'plot'
+    # 2. Le pasamos obligatoriamente 'x' e 'y'
+    # 3. Le pasamos nuestros valores por defecto (pch y col)
+    # 4. Y le "entregamos" los tres puntos (...) al final.
+    #    Esto significa: "R, toma todos los parámetros extra que el usuario 
+    #    haya escrito y pásaselos directamente a tu función interna plot()".
+    
+    plot(x, y, pch = 16, col = "#8CC63F", ...)
+}
+
+cat("\n--- Ploteo con parámetros dinámicos (...)---\n")
+
+# Creamos unos datos de ejemplo (ej. Temperaturas a lo largo de 5 días)
+dias <- c(1, 2, 3, 4, 5)
+temperaturas <- c(14.5, 15.2, 13.8, 16.0, 15.5)
+
+# USO 1: Llamada básica. 
+# Solo pasamos 'x' e 'y'. R usará los círculos verdes que definimos por defecto,
+# y dejará los nombres de los ejes y el título en blanco (o con valores estándar).
+plot_unal(dias, temperaturas)
+
+# USO 2: Llamada avanzada aprovechando los tres puntos (...).
+# Pasamos 'x' e 'y', pero también enviamos 'main', 'xlab' e 'ylab'.
+# Nuestra función plot_unal NO sabe qué son estos parámetros, pero gracias 
+# a los '...', los atrapa y se los reenvía intactos a la función interna plot().
+plot_unal(dias, temperaturas, 
+          main = "Temperaturas en el Campus Bogotá", 
+          xlab = "Día de la semana", 
+          ylab = "Temperatura (°C)")
+
+# USO 3: Sobrescribiendo parámetros.
+# Si el usuario pasa un parámetro que la función interna plot() reconoce, 
+# se aplicará. Por ejemplo, podemos cambiar el tamaño del punto con 'cex'.
+plot_unal(dias, temperaturas, 
+          main = "Temperaturas (Puntos Grandes)", 
+          cex = 2.5) # 'cex' es atrapado por los '...' y agranda los puntos
+```
+
 
 ### Resumen de sintaxis: estructura de funciones
 

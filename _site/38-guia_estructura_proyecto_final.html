@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.550">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Alexys H. Rodríguez-Avellaneda Ph.D.">
+
+<title>Programación SIG: Python, R y Julia - 13&nbsp; Guía y Estructura del Proyecto Final</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./41-practica_1_benchmark_raster.html" rel="next">
+<link href="./13-estructuras_datos_geo.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Sin resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./38-guia_estructura_proyecto_final.html">Proyecto Final</a></li><li class="breadcrumb-item"><a href="./38-guia_estructura_proyecto_final.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Guía y Estructura del Proyecto Final</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Programación SIG: Python, R y Julia</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bienvenida</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-prefacio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prefacio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Instalación y Entornos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-introduccion-entornos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción a Entornos de Desarrollo SIG</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-guia_instalacion_A_docker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción A: Docker (Python, R, Julia)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-guia_instalacion_B_qgis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción B: QGIS y PyQGIS</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-guia_instalacion_C_ArcGIS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Fundamentos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-variables_tipos_de_datos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Variables y tipos de datos</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-estructuras_datos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Estructuras de datos</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-operaciones_cadenas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Operaciones con Cadenas de Texto (Strings)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-ciclos_condicionales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Bucles y Declaraciones Condicionales</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-funciones_clases.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Funciones y Clases: El camino a la Modularización</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-trabajando_con_archivos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Trabajando con Archivos</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-introduccion_python_r_julia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Introducción a Python, R y Julia</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-estructuras_datos_geo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Estructuras de Datos Geoespaciales</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Proyecto Final</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./38-guia_estructura_proyecto_final.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Guía y Estructura del Proyecto Final</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">Prácticas</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./41-practica_1_benchmark_raster.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Evaluación Comparativa de Procesamiento Geoespacial</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Presentaciones</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./61-presentacion_1_clase1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Temas por Charlar</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./62-presentacion_2_benchmark.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Benchmark geoespacial: cómo leer los resultados</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+ <span class="menu-text">Apéndices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./80-instalacion_herramientas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Resumen instalación de herramientas</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./81-uso_infraestructura_instalada.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Uso de la Infraestructura Instalada</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./82-quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Quarto: Orquestación y Configuración</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./83-docker_desktop.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Docker: Gestión de Contenedores e Imágenes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./84-git_github.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Git y GitHub: Sincronización Local-Remota</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./85-vscode.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Visual Studio Code (VScode): Extensiones e Interfaz</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./86-windows.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">Temas técnicos sobre Windows</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./87-linux_ubuntu.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">H</span>&nbsp; <span class="chapter-title">Temas Técnicos sobre Linux</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./88-python.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">I</span>&nbsp; <span class="chapter-title">Adicionales Sobre Python</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./89-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">J</span>&nbsp; <span class="chapter-title">Adicionales Sobre R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./90-julia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">K</span>&nbsp; <span class="chapter-title">Adicionales Sobre Julia</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./91-qgis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">L</span>&nbsp; <span class="chapter-title">Adicionales Sobre QGIS</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./92-arcgispro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">M</span>&nbsp; <span class="chapter-title">Adicionales sobre ArcGIS Pro</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./93-postgresql.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">N</span>&nbsp; <span class="chapter-title">Adicionales sobre ArcGIS Pro</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./98-errata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">O</span>&nbsp; <span class="chapter-title">Errata</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./99-referencias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referencias Bibliográficas</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de Contenidos</h2>
+   
+  <ul>
+  <li><a href="#introducción-al-proyecto-final" id="toc-introducción-al-proyecto-final" class="nav-link active" data-scroll-target="#introducción-al-proyecto-final"><span class="header-section-number">13.1</span> Introducción al proyecto final</a>
+  <ul class="collapse">
+  <li><a href="#propósitos-estratégicos" id="toc-propósitos-estratégicos" class="nav-link" data-scroll-target="#propósitos-estratégicos">Propósitos estratégicos</a></li>
+  </ul></li>
+  <li><a href="#estructura-del-documento-final" id="toc-estructura-del-documento-final" class="nav-link" data-scroll-target="#estructura-del-documento-final"><span class="header-section-number">13.2</span> Estructura del documento final</a>
+  <ul class="collapse">
+  <li><a href="#secciones-del-informe" id="toc-secciones-del-informe" class="nav-link" data-scroll-target="#secciones-del-informe">Secciones del informe:</a></li>
+  </ul></li>
+  <li><a href="#temas-y-retos-de-implementación" id="toc-temas-y-retos-de-implementación" class="nav-link" data-scroll-target="#temas-y-retos-de-implementación"><span class="header-section-number">13.3</span> Temas y retos de implementación</a>
+  <ul class="collapse">
+  <li><a href="#a.-geocomputación-avanzada" id="toc-a.-geocomputación-avanzada" class="nav-link" data-scroll-target="#a.-geocomputación-avanzada">A. Geocomputación Avanzada</a></li>
+  <li><a href="#b.-geoai-y-machine-learning" id="toc-b.-geoai-y-machine-learning" class="nav-link" data-scroll-target="#b.-geoai-y-machine-learning">B. GeoAI y Machine Learning</a></li>
+  <li><a href="#c.-desarrollo-de-software" id="toc-c.-desarrollo-de-software" class="nav-link" data-scroll-target="#c.-desarrollo-de-software">C. Desarrollo de Software</a></li>
+  </ul></li>
+  <li><a href="#recursos-plataformas-y-datos" id="toc-recursos-plataformas-y-datos" class="nav-link" data-scroll-target="#recursos-plataformas-y-datos"><span class="header-section-number">13.4</span> Recursos, plataformas y datos</a></li>
+  <li><a href="#bibliografía-de-consulta-por-lenguaje" id="toc-bibliografía-de-consulta-por-lenguaje" class="nav-link" data-scroll-target="#bibliografía-de-consulta-por-lenguaje"><span class="header-section-number">13.5</span> Bibliografía de consulta por lenguaje</a></li>
+  <li><a href="#recomendaciones-clave" id="toc-recomendaciones-clave" class="nav-link" data-scroll-target="#recomendaciones-clave"><span class="header-section-number">13.6</span> Recomendaciones clave</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./38-guia_estructura_proyecto_final.html">Proyecto Final</a></li><li class="breadcrumb-item"><a href="./38-guia_estructura_proyecto_final.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Guía y Estructura del Proyecto Final</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Guía y Estructura del Proyecto Final</span></h1>
+<p class="subtitle lead">Asignatura: Programación en SIG - Maestría en Geomática</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Alexys H. Rodríguez-Avellaneda Ph.D. </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introducción-al-proyecto-final" class="level2" data-number="13.1">
+<h2 data-number="13.1" class="anchored" data-anchor-id="introducción-al-proyecto-final"><span class="header-section-number">13.1</span> Introducción al proyecto final</h2>
+<p>El proyecto final es la culminación práctica del curso, donde integraremos la <strong>Ciencia de Datos Espaciales</strong> con un enfoque multilingüe (<strong>Python, R, Julia</strong>). El objetivo es representar y analizar un fenómeno natural, social o económico utilizando herramientas de programación avanzada y datos espaciales, bajo los principios de <strong>Open Science</strong>.</p>
+<p>La idea es construir un documento fácil de entender, con una narrativa clara, que sirva de guía para otros investigadores o profesionales que deseen replicar su metodología.</p>
+<section id="propósitos-estratégicos" class="level3">
+<h3 class="anchored" data-anchor-id="propósitos-estratégicos">Propósitos estratégicos</h3>
+<ol type="1">
+<li><strong>Proyecto de Investigación:</strong> Que este trabajo sirva como un avance técnico o prototipo para su proyecto de tesis de maestría.</li>
+<li><strong>Participación en LatinGeo:</strong> Los mejores proyectos podrán ser adaptados para presentarse en la conferencia virtual <strong><code>LatinGeo: Python, R, Julia</code></strong>.</li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="estructura-del-documento-final" class="level2" data-number="13.2">
+<h2 data-number="13.2" class="anchored" data-anchor-id="estructura-del-documento-final"><span class="header-section-number">13.2</span> Estructura del documento final</h2>
+<p>Siguiendo el enfoque de ciencia abierta, deben entregar un repositorio público en <strong>GitHub</strong> con el archivo fuente (<code>.qmd</code>), el renderizado (<strong>HTML</strong> y <strong>PDF</strong>) y los scripts necesarios.</p>
+<section id="secciones-del-informe" class="level3">
+<h3 class="anchored" data-anchor-id="secciones-del-informe">Secciones del informe:</h3>
+<ol type="1">
+<li><p><strong>Título del Proyecto:</strong> Claro y descriptivo.</p></li>
+<li><p><strong>Introducción y Justificación:</strong> Definición del problema y su relevancia espacial.</p></li>
+<li><p><strong>Estado del Arte / Revisión Bibliográfica:</strong> Revisión técnica de cómo se ha abordado el problema con programación y SIG.</p></li>
+<li><p><strong>Objetivos:</strong> Un objetivo general y dos específicos.</p></li>
+<li><p><strong>Área de Estudio:</strong> Delimitación geográfica (incluir mapa base de Colombia o zona de interés).</p></li>
+<li><p><strong>Fuentes de Datos:</strong> Descripción de datasets (APIs, GEE, Catálogos, Kaggle, etc.).</p></li>
+<li><p><strong>Metodología y Código:</strong></p>
+<ul>
+<li>Explicación del flujo de trabajo y librerías usadas.</li>
+<li><strong>Integración del Código:</strong> El informe debe incluir los fragmentos de código más importantes (el “core” del análisis). Use bloques de código comentados para que el lector entienda la lógica del geoprocesamiento.</li>
+</ul></li>
+<li><p><strong>Resultados y Discusión:</strong> Cartografía temática generada y análisis crítico.</p></li>
+<li><p><strong>Conclusiones:</strong> Logros y limitaciones técnicas encontradas.</p></li>
+<li><p><strong>Referencias:</strong> Bibliografía en formato APA.</p></li>
+<li><p><strong>Anexos:</strong></p>
+<ul>
+<li>Detalles técnicos adicionales que no se incluyeron en el cuerpo principal para no perder el hilo narrativo.</li>
+<li><strong>Anexo de Configuración de Entorno (Obligatorio):</strong> Debe indicar detalladamente los cambios realizados dentro del contenedor <strong>Docker</strong> (ej: instalación de librerías adicionales) para poder ejecutar el proyecto con éxito.</li>
+<li><strong>Gestión de Entornos y Virtualización Alternativa:</strong> Si el contenedor Docker proporcionado para la clase no es suficiente para los requerimientos de su proyecto (por ejemplo, necesidad de drivers específicos para GPU, librerías de Julia de última versión o paquetes de R complejos), puede optar por configurar su propio entorno utilizando alternativas como <code>conda</code>, <code>mamba</code>, <code>pixi</code> o entornos nativos. No obstante, para garantizar la <strong>reproducibilidad</strong>, es obligatorio:
+<ul>
+<li>Adjuntar los archivos de definición de entorno (<code>environment.yml</code>, <code>requirements.txt</code>, <code>Project.toml</code> o <code>renv.lock</code>).</li>
+<li>Documentar detalladamente en el <strong>Anexo de Virtualización</strong> el proceso de instalación paso a paso, asegurando que cualquier otro investigador pueda recrear su laboratorio de análisis desde cero.</li>
+</ul></li>
+</ul></li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="temas-y-retos-de-implementación" class="level2" data-number="13.3">
+<h2 data-number="13.3" class="anchored" data-anchor-id="temas-y-retos-de-implementación"><span class="header-section-number">13.3</span> Temas y retos de implementación</h2>
+<p>Pueden orientar su proyecto hacia uno de estos ejes tecnológicos:</p>
+<section id="a.-geocomputación-avanzada" class="level3">
+<h3 class="anchored" data-anchor-id="a.-geocomputación-avanzada">A. Geocomputación Avanzada</h3>
+<ul>
+<li><strong>Geocomputación en la Nube:</strong> Uso intensivo de GEE y <code>geemap</code>.</li>
+<li><strong>Pipelines Composables:</strong> Flujos de datos que conectan diferentes librerías geo.</li>
+<li><strong>DuckDB Espacial:</strong> Procesamiento de grandes volúmenes de datos vectoriales.</li>
+<li><strong>Automatización:</strong> Uso de <strong>GitHub Actions</strong> para flujos de trabajo geoespaciales.</li>
+</ul>
+</section>
+<section id="b.-geoai-y-machine-learning" class="level3">
+<h3 class="anchored" data-anchor-id="b.-geoai-y-machine-learning">B. GeoAI y Machine Learning</h3>
+<p>Para interesados en Visión por Computadora aplicada a SIG, exploren las herramientas de <a href="https://opengeoai.org/">OpenGeoAI</a>:</p>
+<ul>
+<li><strong>SamGeo (Segment Anything Model for Geospatial):</strong> Segmentación de imágenes satelitales mediante texto o máscaras interactivas.</li>
+<li><strong>Detección de Objetos:</strong> Edificios, paneles solares, barcos o cuerpos de agua.</li>
+<li><strong>LLMs y SIG:</strong> Interacción con datos espaciales usando modelos de lenguaje.</li>
+<li><strong>Kaggle:</strong> Explorar recursos de ML aplicados a Geomática en <a href="https://www.kaggle.com/">kaggle.com</a>.</li>
+</ul>
+</section>
+<section id="c.-desarrollo-de-software" class="level3">
+<h3 class="anchored" data-anchor-id="c.-desarrollo-de-software">C. Desarrollo de Software</h3>
+<ul>
+<li><strong>Creación de Paquetes/Extensiones:</strong> Desarrollo de librerías en Python, R o Julia.</li>
+<li><strong>Virtualización:</strong> Uso de Docker o entornos reproducibles para análisis espacial.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="recursos-plataformas-y-datos" class="level2" data-number="13.4">
+<h2 data-number="13.4" class="anchored" data-anchor-id="recursos-plataformas-y-datos"><span class="header-section-number">13.4</span> Recursos, plataformas y datos</h2>
+<p>Para no empezar desde cero, exploren estas plataformas con casos de uso y datos abiertos:</p>
+<ul>
+<li><strong>NASA Lifelines Data Studios:</strong> Paquetes enfocados en casos humanitarios:
+<ul>
+<li><a href="https://nasalifelines.org/hfs-data-series/wildfire-early-warning-and-rapid-response/">Incendios Forestales (Wildfires)</a></li>
+<li><a href="https://nasalifelines.org/hfs-data-series/flood-early-warning-2/">Inundaciones (Flooding)</a></li>
+<li><a href="https://nasalifelines.org/hfs-data-series/landslide-risk-and-monitoring/">Deslizamientos (Landslides)</a></li>
+<li><a href="https://nasalifelines.org/hfs-data-series/building-damage-assessment/">Evaluación de Daños</a></li>
+<li><a href="https://nasalifelines.org/hfs-data-series/human-rights/">Derechos Humanos</a></li>
+</ul></li>
+<li><strong>Sentinel Hub Education:</strong> Guías para índices satelitales y uso de plugins en QGIS. <a href="https://www.sentinel-hub.com/explore/education/">Explorar</a></li>
+<li><strong>NASA ARSET:</strong> <a href="https://earthdata.nasa.gov/s3fs-public/2025-05/OnlineResourceGuide_2024_Revised_V2_0.pdf?VersionId=EOGXiksocNpuRIa0TFTRac.gRe8eNEl3">Guía de Recursos Históricos (PDF)</a>. Capacitaciones en agricultura, salud y recursos hídricos.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Oportunidad Estratégica: LatinGeo y NASA Lifelines
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Contamos con una noticia importante: <strong>NASA Lifelines</strong> está gestionando la participación virtual del <strong>Profesor Qiusheng Wu (OpenGeos)</strong> para nuestra conferencia. Por ello, les sugiero fuertemente trabajar con <strong>datos de la NASA</strong> y enfocar sus proyectos en temas de <strong>acción humanitaria</strong> (analizando el impacto de fenómenos naturales) mediante el uso de SIG y sensores remotos. Estos trabajos tendrán una visibilidad especial en el evento.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Caso de Estudio Recomendado: Inundaciones en el Sinú
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Los invito a explorar el fenómeno de las <strong>inundaciones en la cuenca del río Sinú</strong>. Es un tema de gran relevancia nacional para el cual tengo propuestas, datos e ideas técnicas ya estructuradas. Si algún grupo está interesado en abordar esta problemática, por favor acérquense para orientarlos en el desarrollo del modelo. Preferiblemente conocimientos en GEE.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="bibliografía-de-consulta-por-lenguaje" class="level2" data-number="13.5">
+<h2 data-number="13.5" class="anchored" data-anchor-id="bibliografía-de-consulta-por-lenguaje"><span class="header-section-number">13.5</span> Bibliografía de consulta por lenguaje</h2>
+<p>Utilicen este esquema de pestañas para guiar su implementación técnica:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Julia</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false">General</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<ul>
+<li><a href="https://py.geocompx.org/">Geocomputation with Python</a></li>
+<li><a href="https://r-spatial.org/python/">Spatial Data Science with R and Python</a></li>
+<li><a href="https://geobgu.xyz/py-2025/">Introduction to Python for GIS (Michael Dorman)</a></li>
+<li><a href="https://gispro.gishub.org/">Introduction to GIS Programming (Qiusheng Wu)</a></li>
+</ul>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<ul>
+<li><a href="https://r.geocompx.org/">Geocomputation with R</a></li>
+<li><a href="https://tmap.geocompx.org/">Spatial Data Visualization with tmap</a></li>
+<li><a href="https://r-spatial.org/book/">Spatial Data Science with R</a></li>
+<li><a href="https://www.paulamoraga.com/book-spatial/">Spatial Statistics for Data Science (Paula Moraga)</a></li>
+</ul>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<ul>
+<li><a href="https://jl.geocompx.org/">Geocomputation with Julia</a></li>
+<li><a href="https://juliaearth.github.io/geospatial-data-science-with-julia/">Geospatial Data Science with Julia (Júlio Hoffimann)</a></li>
+</ul>
+</div>
+<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
+<ul>
+<li><a href="https://github.com/opengeos">OpenGeos GitHub (Qiusheng Wu)</a></li>
+<li><a href="https://github.com/javedali99/r-resources-for-data-science">Collection of Resources for Data Science</a></li>
+</ul>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="recomendaciones-clave" class="level2" data-number="13.6">
+<h2 data-number="13.6" class="anchored" data-anchor-id="recomendaciones-clave"><span class="header-section-number">13.6</span> Recomendaciones clave</h2>
+<ul>
+<li><strong>Datos Primero:</strong> Verifiquen la disponibilidad de datos en Colombia (IGAC, IDEAM, Geoportal del DANE) antes de finalizar su tema.</li>
+<li><strong>Open Science y Reproducibilidad:</strong> El repositorio debe ser reproducible. Si el código no corre en nuestros contenedores o no está bien documentado en el anexo de virtualización, no cumple el estándar.</li>
+<li><strong>Narrativa Técnica:</strong> Busquen que el informe sea didáctico. Expliquen el “por qué” de cada decisión tomada en el código.</li>
+<li><strong>Menos es más:</strong> Un análisis riguroso y automatizado es mejor que un modelo complejo que no funciona o es imposible de replicar.</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Nota Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si tiene alguna objeción con respecto a este documento, por favor comuníquelo con tiempo. Presente sus justificaciones y revisaremos oportunidades de mejora.</p>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./13-estructuras_datos_geo.html" class="pagination-link" aria-label="Estructuras de Datos Geoespaciales">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Estructuras de Datos Geoespaciales</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./41-practica_1_benchmark_raster.html" class="pagination-link" aria-label="Evaluación Comparativa de Procesamiento Geoespacial">
+        <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Evaluación Comparativa de Procesamiento Geoespacial</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

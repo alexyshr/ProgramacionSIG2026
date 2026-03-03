@@ -1,5 +1,5 @@
 # ==============================================================================
-# MOTOR DE INTEROPERABILIDAD GEOMÁTICA (UNAL) - VERSIÓN PRO (NIVEL MAESTRÍA)
+# MOTOR DE INTEROPERABILIDAD GEOMÁTICA - VERSIÓN PRO
 # ==============================================================================
 
 .j_render_output <- function(res_raw) {
@@ -22,7 +22,6 @@
   res_l <- gsub("\033\\[[0-9;]*m", "", res_raw)
   partes <- strsplit(res_l, "\n")[[1]]
   
-  # Inicialización estricta
   out_triple <- 0; out_comentario <- 0; out_comillas <- 0; out_bloque <- 0
   current_mode <- "none" 
 
@@ -35,25 +34,34 @@
     if (is_code) {
       p_clean <- if (is_prompt) sub("^julia> ", "", p) else p
       
+      # --- NUEVA LÓGICA DE LIMPIEZA PARA EL RENDERER ---
+      p_ev <- p_clean
+      p_ev <- gsub('""".*?"""', '""', p_ev)
+      
+      if (out_triple == 0 && grepl('"""', p_ev)) {
+          p_ev <- sub('""".*', '""', p_ev)
+      } else if (out_triple == 1 && grepl('"""', p_ev)) {
+          p_ev <- sub('.*"""', '""', p_ev)
+      } else if (out_triple == 1) {
+          p_ev <- "" 
+      }
+      
       n_triples <- lengths(regmatches(p_clean, gregexpr('"""', p_clean, fixed = TRUE)))
-      if (n_triples > 0) out_triple <- (out_triple + n_triples) %% 2
+      out_triple <- (out_triple + n_triples) %% 2
       
       n_abre <- lengths(regmatches(p_clean, gregexpr("#=", p_clean, fixed = TRUE)))
       n_cierra <- lengths(regmatches(p_clean, gregexpr("=#", p_clean, fixed = TRUE)))
-      if (n_abre > 0 || n_cierra > 0) out_comentario <- out_comentario + n_abre - n_cierra
+      out_comentario <- out_comentario + n_abre - n_cierra
       
-      if (out_triple == 0 && out_comentario <= 0) {
-        # Limpieza para no confundir el parser
-        p_ev <- gsub('"""', '', p_clean, fixed = TRUE)
+      if (out_triple == 0 && out_comentario <= 0 && p_ev != "") {
         p_ev <- gsub('"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"', '""', p_ev, perl = TRUE)
         p_ev <- gsub("'[^'\\\\]*(?:\\\\.[^'\\\\]*)*'", "''", p_ev, perl = TRUE)
         p_ev <- sub("#.*", "", p_ev) 
         
         n_comillas <- lengths(regmatches(p_ev, gregexpr('"', p_ev, fixed = TRUE)))
-        if (n_comillas > 0) out_comillas <- (out_comillas + n_comillas) %% 2
+        out_comillas <- (out_comillas + n_comillas) %% 2
         
         if (out_comillas == 0) {
-          # FIX PRO: Contar apariciones exactas, no solo presencias (grepl)
           patron_abrir <- "\\b(do|function|for|if|begin|let|while|macro|try|module|baremodule|struct|quote)\\b"
           abrir_out <- lengths(regmatches(p_ev, gregexpr(patron_abrir, p_ev))) + 
                        lengths(regmatches(p_ev, gregexpr("(", p_ev, fixed = TRUE))) + 
@@ -66,6 +74,7 @@
           out_bloque <- out_bloque + abrir_out - cerrar_out
         }
       }
+      # --- FIN DE LA NUEVA LÓGICA ---
       
       if (fmt_html) {
         if (current_mode != "code") {
@@ -105,21 +114,31 @@ j_eval <- function(cmd) {
     if (trimws(l) == "" && en_comentario_multi == 0 && en_triple_comilla == 0 && en_comillas == 0 && en_bloque == 0) next
     buffer <- paste0(buffer, l, "\n")
     
+    l_clean <- l
+    l_clean <- gsub('""".*?"""', '""', l_clean)
+    
+    if (en_triple_comilla == 0 && grepl('"""', l_clean)) {
+        l_clean <- sub('""".*', '""', l_clean)
+    } else if (en_triple_comilla == 1 && grepl('"""', l_clean)) {
+        l_clean <- sub('.*"""', '""', l_clean)
+    } else if (en_triple_comilla == 1) {
+        l_clean <- ""
+    }
+    
     num_triples <- lengths(regmatches(l, gregexpr('"""', l, fixed = TRUE)))
-    if (num_triples > 0) en_triple_comilla <- (en_triple_comilla + num_triples) %% 2
+    en_triple_comilla <- (en_triple_comilla + num_triples) %% 2
     
     num_com_abre <- lengths(regmatches(l, gregexpr("#=", l, fixed = TRUE)))
     num_com_cierra <- lengths(regmatches(l, gregexpr("=#", l, fixed = TRUE)))
-    if (num_com_abre > 0 || num_com_cierra > 0) en_comentario_multi <- en_comentario_multi + num_com_abre - num_com_cierra
-    
-    if (en_triple_comilla == 0 && en_comentario_multi <= 0) {
-      l_clean <- gsub('"""', '', l, fixed = TRUE)
+    en_comentario_multi <- en_comentario_multi + num_com_abre - num_com_cierra
+
+    if (en_triple_comilla == 0 && en_comentario_multi <= 0 && l_clean != "") {
       l_clean <- gsub('"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"', '""', l_clean, perl = TRUE)
       l_clean <- gsub("'[^'\\\\]*(?:\\\\.[^'\\\\]*)*'", "''", l_clean, perl = TRUE)
       l_clean <- sub("#.*", "", l_clean)
       
       num_comillas <- lengths(regmatches(l_clean, gregexpr('"', l_clean, fixed = TRUE)))
-      if (num_comillas > 0) en_comillas <- (en_comillas + num_comillas) %% 2
+      en_comillas <- (en_comillas + num_comillas) %% 2
       
       if (en_comillas == 0) {
         patron_abrir <- "\\b(do|function|for|if|begin|let|while|macro|try|module|baremodule|struct|quote)\\b"
@@ -145,7 +164,6 @@ j_eval <- function(cmd) {
       temp_res <- tail(lineas_res[!grepl("^julia>", lineas_res)], 1)
       if (length(temp_res) > 0) resultado_final <- temp_res
       
-      # Reset seguro del buffer
       buffer <- ""; en_bloque <- 0; en_comillas <- 0; en_comentario_multi <- 0; en_triple_comilla <- 0
     }
   }
@@ -163,21 +181,31 @@ j_plot <- function(cmd, n = "tmp_plot.png", dpi = 300, w = 800, h = NULL, ratio 
     if (trimws(l) == "" && en_comentario_multi == 0 && en_triple_comilla == 0 && en_comillas == 0 && en_bloque == 0) next
     buffer <- paste0(buffer, l, "\n")
     
+    l_clean <- l
+    l_clean <- gsub('""".*?"""', '""', l_clean)
+    
+    if (en_triple_comilla == 0 && grepl('"""', l_clean)) {
+        l_clean <- sub('""".*', '""', l_clean)
+    } else if (en_triple_comilla == 1 && grepl('"""', l_clean)) {
+        l_clean <- sub('.*"""', '""', l_clean)
+    } else if (en_triple_comilla == 1) {
+        l_clean <- ""
+    }
+    
     num_triples <- lengths(regmatches(l, gregexpr('"""', l, fixed = TRUE)))
-    if (num_triples > 0) en_triple_comilla <- (en_triple_comilla + num_triples) %% 2
+    en_triple_comilla <- (en_triple_comilla + num_triples) %% 2
     
     num_com_abre <- lengths(regmatches(l, gregexpr("#=", l, fixed = TRUE)))
     num_com_cierra <- lengths(regmatches(l, gregexpr("=#", l, fixed = TRUE)))
-    if (num_com_abre > 0 || num_com_cierra > 0) en_comentario_multi <- en_comentario_multi + num_com_abre - num_com_cierra
-    
-    if (en_triple_comilla == 0 && en_comentario_multi <= 0) {
-      l_clean <- gsub('"""', '', l, fixed = TRUE)
+    en_comentario_multi <- en_comentario_multi + num_com_abre - num_com_cierra
+
+    if (en_triple_comilla == 0 && en_comentario_multi <= 0 && l_clean != "") {
       l_clean <- gsub('"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"', '""', l_clean, perl = TRUE)
       l_clean <- gsub("'[^'\\\\]*(?:\\\\.[^'\\\\]*)*'", "''", l_clean, perl = TRUE)
       l_clean <- sub("#.*", "", l_clean)
       
       num_comillas <- lengths(regmatches(l_clean, gregexpr('"', l_clean, fixed = TRUE)))
-      if (num_comillas > 0) en_comillas <- (en_comillas + num_comillas) %% 2
+      en_comillas <- (en_comillas + num_comillas) %% 2
       
       if (en_comillas == 0) {
         patron_abrir <- "\\b(do|function|for|if|begin|let|while|macro|try|module|baremodule|struct|quote)\\b"
@@ -196,7 +224,7 @@ j_plot <- function(cmd, n = "tmp_plot.png", dpi = 300, w = 800, h = NULL, ratio 
     if (en_bloque <= 0 && en_comillas == 0 && en_comentario_multi <= 0 && en_triple_comilla == 0) {
       res_log <- JuliaConnectoR::juliaCall("_unal_core_executor", buffer, TRUE, n, dpi, as.integer(w), as.integer(h), as.integer(fontsize))
       .j_render_output(res_log)
-      buffer <- "" 
+      buffer <- ""; en_bloque <- 0; en_comillas <- 0; en_comentario_multi <- 0; en_triple_comilla <- 0
     }
   }
   
