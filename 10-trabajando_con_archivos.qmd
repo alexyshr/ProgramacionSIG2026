@@ -24,8 +24,6 @@ source("./docs/j_eval_j_plot.r")
 
 ## Introducción
 
-
-
 En el mundo real de la geomática, no todos los datos espaciales llegan a nuestras manos en formatos geográficos perfectamente estructurados como Shapefiles (`.shp`) o GeoPackages (`.gpkg`). Con muchísima frecuencia, los analistas espaciales deben lidiar con datos "crudos": coordenadas GPS capturadas en libretas de campo electrónicas y guardadas en archivos de texto plano, bases de datos socioeconómicas del DANE en formato CSV, o registros de estaciones meteorológicas del IDEAM que contienen valores nulos o errores de tipeo.
 
 Antes de poder visualizar un mapa o ejecutar una herramienta de geoprocesamiento espacial usando librerías avanzadas como `geopandas` o `sf`, es fundamental saber cómo comunicarnos con el sistema operativo para abrir, leer, limpiar y guardar estos archivos desde cero. 
@@ -41,9 +39,267 @@ Al finalizar esta sección, el estudiante será capaz de:
 3. **Implementar manejo robusto de excepciones:** Construir bloques de control predictivos (`try...except`, `tryCatch`) que capturen errores específicos (como archivos no encontrados o formatos de datos inválidos) sin interrumpir el flujo del programa.
 4. **Estructurar información asimétrica:** Transformar texto crudo en estructuras de memoria eficientes (como listas de diccionarios) que sirvan de puente hacia la construcción de *DataFrames* espaciales.
 
+## Una nota sobre las rutas de los archivos (paths)
+
+En programación, es un error técnico grave usar **rutas absolutas** (por ejemplo, `C:\Usuarios\Maestria\SIG\data\COL.geo.json`). Si compartes tu código con otro investigador o ejecutas el script en un servidor Linux, la estructura de carpetas no existirá y el programa fallará inmediatamente.
+
+La solución estándar es usar **rutas relativas** en combinación con los **constructores de rutas nativos** de cada lenguaje. Esto garantiza que tu script encuentre los datos basándose en el directorio de trabajo actual y que los separadores de carpetas (`/` en Mac/Linux, `\` en Windows) se asignen dinámicamente según el sistema operativo.
+
+Para navegar de forma relativa, los sistemas informáticos utilizan dos comodines estándar:
+
+* `.` (un punto): Representa el **directorio actual** (la carpeta donde se está ejecutando el script o *notebook*).
+* `..` (dos puntos): Representa el **directorio superior** (la carpeta "padre"). Se utiliza para retroceder niveles en el árbol de archivos. 
+
+
+
+Por ejemplo, si tu script está dentro de una subcarpeta llamada `scripts/` y quieres acceder a los datos que están en una carpeta paralela, usarías `..` para salir de `scripts/` y luego entrarías a la ruta deseada (ej. `../data/mi_archivo.csv`).
+
+### Ejemplo aplicado: Construcción de rutas y mapa estático
+
+A continuación, asumiremos que nuestro entorno de ejecución está en la raíz del proyecto y necesitamos abrir un límite  nacional ubicado exactamente en la ruta relativa: `data/vector/geojson/COL.geo.json`. 
+
+El código demuestra cómo ensamblar esta ruta independientemente del sistema operativo, abrir el dato espacial y generar un gráfico estático.
+
+::: {.panel-tabset}
+
+### Python
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{python}
+#| label: python_rutas_mapa_codigo
+#| eval: false
+
+import geopandas as gpd
+import matplotlib.pyplot as plt
+from pathlib import Path
+
+# 1. Construcción segura de la ruta relativa
+# Path(".") hace referencia al directorio actual.
+# El operador '/' es sobrecargado por pathlib para unir carpetas correctamente.
+ruta_archivo = Path(".") / "data" / "vector" / "geojson" / "COL.geo.json"
+
+# Blindaje con try-except para evitar colapso si la ruta no existe
+try:
+    # 2. Leer el archivo espacial usando geopandas
+    colombia_gdf = gpd.read_file(ruta_archivo)
+
+    # 3. Graficar el mapa estático
+    fig, ax = plt.subplots(figsize=(6, 6))
+    colombia_gdf.plot(ax=ax, color="lightgreen", edgecolor="black", linewidth=0.5)
+    ax.set_title("Límites de Colombia (Python)")
+    ax.set_axis_off() # Ocultamos los ejes para una visualización más cartográfica
+    plt.show()
+except Exception as e:
+    # 4. Manejo del error en caso de fallo en la lectura
+    print(f"No se pudo generar el mapa. Verifica la ruta: {ruta_archivo}")
+
+```
+
+:::
+:::
+
+```{python}
+#| label: python_rutas_mapa
+#| fig-width: 8
+#| out-width: "50%"
+#| fig-align: center
+# #| eval: false
+
+import geopandas as gpd
+import matplotlib.pyplot as plt
+from pathlib import Path
+
+# 1. Construcción segura de la ruta relativa
+# Path(".") hace referencia al directorio actual.
+# El operador '/' es sobrecargado por pathlib para unir carpetas correctamente.
+ruta_archivo = Path(".") / "data" / "vector" / "geojson" / "COL.geo.json"
+
+# Blindaje con try-except para evitar colapso en Quarto
+try:
+    # 2. Leer el archivo espacial
+    colombia_gdf = gpd.read_file(ruta_archivo)
+
+    # 3. Graficar el mapa estático
+    fig, ax = plt.subplots(figsize=(6, 6))
+    colombia_gdf.plot(ax=ax, color="lightgreen", edgecolor="black", linewidth=0.5)
+    ax.set_title("Límites de Colombia (Python)")
+    ax.set_axis_off() # Ocultamos los ejes para una visualización más cartográfica
+    plt.show()
+except Exception as e:
+    # 4. Mensaje controlado en consola si falla la ruta
+    print(f"No se pudo generar el mapa. Verifica la ruta: {ruta_archivo}")
+```
+
+### R
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{r}
+#| label: r_rutas_mapa_codigo
+#| eval: false
+
+library(sf)
+
+# 1. Construcción segura de la ruta relativa
+# file.path se encarga de usar el separador adecuado del sistema operativo
+ruta_archivo <- file.path(".", "data", "vector", "geojson", "COL.geo.json")
+
+# Blindaje comprobando si el archivo existe
+if (file.exists(ruta_archivo)) {
+    # 2. Leer el archivo espacial 
+    # quiet = TRUE evita que se imprima la metadata en la consola durante la lectura
+    colombia_sf <- st_read(ruta_archivo, quiet = TRUE)
+
+    # 3. Graficar el mapa estático
+    # st_geometry extrae solo el contorno espacial para un renderizado rápido
+    plot(st_geometry(colombia_sf), 
+         col = "lightgreen", 
+         border = "black", 
+         lwd = 0.5,
+         main = "Límites de Colombia (R)")
+} else {
+    # 4. Control del error si la ruta es inválida    
+    cat(sprintf("No se pudo generar el mapa. Verifica la ruta: %s\n", ruta_archivo))
+}
+
+```
+:::
+:::
+
+```{r}
+#| label: r_rutas_mapa
+#| out-width: "80%"
+# #| eval: false
+
+library(sf)
+
+# 1. Construcción segura de la ruta relativa
+# file.path se encarga de usar el separador adecuado del sistema operativo
+ruta_archivo <- file.path(".", "data", "vector", "geojson", "COL.geo.json")
+
+# Blindaje comprobando si el archivo existe
+if (file.exists(ruta_archivo)) {
+    # 2. Leer el archivo espacial 
+    # quiet = TRUE evita que se imprima la metadata en la consola durante la lectura    
+    colombia_sf <- st_read(ruta_archivo, quiet = TRUE)
+
+    # 3. Graficar el mapa estático
+    # st_geometry extrae solo el contorno espacial para un renderizado rápido    
+    plot(st_geometry(colombia_sf), 
+         col = "lightgreen", 
+         border = "black", 
+         lwd = 0.5,
+         main = "Límites de Colombia (R)")
+} else {
+    # 4. Control de error    
+    cat(sprintf("No se pudo generar el mapa. Verifica la ruta: %s\n", ruta_archivo))
+}
+```
+
+
+### Julia
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+```{julia}
+#| label: julia_rutas_mapa_codigo
+#| eval: false
+
+using GeoDataFrames
+using Plots
+
+# 1. Construcción segura de la ruta relativa
+# joinpath une los segmentos de la ruta utilizando el separador nativo del SO
+ruta_archivo = joinpath(".", "data", "vector", "geojson", "COL.geo.json")
+
+# 2. Leer el archivo espacial
+colombia_gdf = GeoDataFrames.read(ruta_archivo)
+
+# 3. Graficar el mapa estático
+# Plots soporta nativamente la visualización de la columna geometry
+plot(colombia_gdf.geometry, 
+     fillcolor = :lightgreen, 
+     linecolor = :black, 
+     linewidth = 0.5,
+     title = "Límites de Colombia (Julia)", 
+     legend = false,
+     axis = false,
+     aspect_ratio = :equal) # aspect_ratio = :equal evita que el mapa se deforme
+```
+
+:::
+:::
+
+```{r}
+#| label: julia_rutas_mapa
+#| out-width: "60%"
+#| fig-align: "center"
+#| echo: false
+#| results: asis
+# #| eval: false
+
+
+# Envolvemos en invisible() para que no imprima texto basura en el PDF/HTML
+invisible(j_eval(r"-(
+using GeoDataFrames
+using Plots
+
+# 1. Definición de rutas relativas con joinpath (robusto para SO)
+# j_eval asume el directorio de trabajo del .qmd
+f_entrada = joinpath(".", "data", "vector", "geojson", "COL.geo.json")
+f_salida = joinpath(".", "images", "plots", "mapa_colombia_julia.png")
+
+# Garantizar la existencia del directorio images/plots para guardar la imagen
+output_dir = dirname(f_salida)
+if !isdir(output_dir)
+    mkpath(output_dir)
+end
+
+# Blindaje general para proteger la ejecución en Quarto
+try
+    if isfile(f_entrada)
+        # 2. Leer GeoJSON
+        colombia_gdf = GeoDataFrames.read(f_entrada)
+
+        # 3. Generar gráfico en variable 'p' asegurando la relación de aspecto cartográfica
+        p = plot(colombia_gdf.geometry,
+             fillcolor = :lightgreen,
+             linecolor = :black,
+             linewidth = 0.5,
+             title = "Límites de Colombia (Julia)",
+             legend = false,
+             axis = false,
+             aspect_ratio = :equal)
+
+        # GUARDAR FÍSICAMENTE la imagen en disco
+        savefig(p, f_salida)
+    else
+        # 4. Si no hay archivo, guardar imagen con mensaje de error claro
+        p_error = plot(title = "❌ Archivo no encontrado:\n$f_entrada", legend=false, axis=false, grid=false)
+        savefig(p_error, f_salida)
+    end
+catch e
+    # Capturar fallo crítico y guardar mensaje en imagen
+    p_crash = plot(title = "❌ Fallo crítico detectado:\n$(typeof(e))", titlefontsize=10, legend=false, axis=false, grid=false)
+    savefig(p_crash, f_salida)
+end
+)-"))
+
+# Inserto la imagen usando R de forma segura
+knitr::include_graphics("images/plots/mapa_colombia_julia.png")
+```
+
+:::
+
+
+
 ## Creando un archivo de muestra
 
-En este ejercicio, vamos a crear un archivo de texto plano (`coordenadas_colombia.txt`) que contendrá las coordenadas (Latitud, Longitud) de cinco de las principales ciudades de Colombia: Bogotá, Medellín, Cali, Barranquilla y Cartagena. Esto nos servirá como base para leer datos tabulares más adelante.
+En este ejercicio, vamos a crear un archivo de texto plano (`coordenadas_colombia_p.txt`) que contendrá las coordenadas (Latitud, Longitud) de cinco de las principales ciudades de Colombia: Bogotá, Medellín, Cali, Barranquilla y Cartagena. Esto nos servirá como base para leer datos tabulares más adelante.
 
 ::: {.panel-tabset}
 
@@ -65,13 +321,13 @@ datos_muestra = """4.7110,-74.0721
 10.3910,-75.4794"""
 
 # 2. Definimos la variable 'f_txt' que almacena la ruta y nombre del archivo
-f_txt = "coordenadas_colombia.txt"
+f_txt = "coordenadas_colombia_p.txt"
 
 # 3. Manejo de excepciones completo para la creación del archivo
 try:
     # 'w' indica modo escritura (write). 'with' cierra el archivo automáticamente.
     # Asignamos el archivo abierto a la variable 'con' (conexión)
-    with open(f_txt, "w") as con:
+    with open(f_txt, "w", encoding="utf-8") as con:
         # Escribimos los datos en la conexión. 
         # Python retorna la cantidad de caracteres escritos.
         caracteres_escritos = con.write(datos_muestra)
@@ -107,13 +363,13 @@ datos_muestra = """4.7110,-74.0721
 10.3910,-75.4794"""
 
 # 2. Definimos la variable 'f_txt' que almacena la ruta y nombre del archivo
-f_txt = "coordenadas_colombia.txt"
+f_txt = "coordenadas_colombia_p.txt"
 
 # 3. Manejo de excepciones completo para la creación del archivo
 try:
     # 'w' indica modo escritura (write). 'with' cierra el archivo automáticamente.
     # Asignamos el archivo abierto a la variable 'con' (conexión)
-    with open(f_txt, "w") as con:
+    with open(f_txt, "w", encoding="utf-8") as con:
         # Escribimos los datos en la conexión. 
         # Python retorna la cantidad de caracteres escritos.
         caracteres_escritos = con.write(datos_muestra)
@@ -167,7 +423,7 @@ tryCatch({
     writeLines(datos_muestra, f_txt)
     #
     # Alternativamente, abrimos la conexión al archivo explícitamente en la variable 'con'
-    #con <- file(f_txt, "w")
+    #con <- file(f_txt, "w", encoding="UTF-8")
 
     # Escribimos los datos usando esa conexión explícita
     # writeLines(datos_muestra, con)
@@ -318,6 +574,7 @@ end
 La función `strip(datos_muestra)` en Julia sirve para eliminar cualquier espacio en blanco o salto de línea (`\n`) que esté al principio o al final de la cadena de texto.
 
 Al definir nuestra variable con triple comilla y dar un "enter" para que el código se vea ordenado:
+
 ```julia
 datos_muestra = """
 4.7110,-74.0721
@@ -342,6 +599,11 @@ Para facilitar el estudio y la asimilación de los tres lenguajes, aquí detallo
 | **Ejecución de Éxito** | Bloque `else:` | Al final del bloque principal `tryCatch` | Al final del bloque `try` |
 | **Cierre garantizado** | Bloque `finally:` | Argumento `finally = {}` | Bloque `finally` |
 
+::: {.callout-important title="¡Cuidado con los acentos! (Encoding UTF-8)"}
+Al trabajar con datos en Colombia (o en español en general), es común tener caracteres especiales como tildes (Bogotá, Medellín) o la letra ñ. 
+Por defecto, Windows puede intentar leer estos archivos usando codificaciones antiguas. Para evitar que tu código colapse con un `UnicodeDecodeError` o que los textos se corrompan, **siempre** declara explícitamente `encoding="utf-8"` (en Python) o `encoding="UTF-8"` (en R) al abrir un archivo de texto. Julia maneja UTF-8 de forma nativa por defecto.
+:::
+
 ## Leyendo y escribiendo archivos
 
 En este paso, vamos a leer el archivo de coordenadas que creamos en la sección anterior, procesaremos cada línea para separar la latitud de la longitud, y guardaremos los resultados en un nuevo archivo con un formato mucho más legible.
@@ -358,18 +620,18 @@ En este paso, vamos a leer el archivo de coordenadas que creamos en la sección 
 #| eval: false
 
 # 1. Definimos las variables para los archivos de entrada y salida
-f_in = "coordenadas_colombia.txt"
-f_out = "coordenadas_formato.txt"
+f_in = "coordenadas_colombia_p.txt"
+f_out = "coordenadas_formato_p.txt"
 
 try:
     # 2. Abrimos el archivo de entrada en modo lectura ('r' de read)
-    with open(f_in, "r") as con_in:
+    with open(f_in, "r", encoding="utf-8") as con_in:
         # readlines() lee todas las líneas y devuelve una lista.
         # Cada elemento de la lista incluye el salto de línea (\n) al final.
         coordenadas = con_in.readlines()
 
     # 3. Abrimos el archivo de salida en modo escritura ('w' de write)
-    with open(f_out, "w") as con_out:
+    with open(f_out, "w", encoding="utf-8") as con_out:
         # Recorremos cada línea de la lista que leímos
         for linea in coordenadas:
             # strip() elimina espacios en blanco y el salto de línea (\n) de los extremos.
@@ -398,18 +660,18 @@ except Exception as e:
 # #| eval: false
 
 # 1. Definimos las variables para los archivos de entrada y salida
-f_in = "coordenadas_colombia.txt"
-f_out = "coordenadas_formato.txt"
+f_in = "coordenadas_colombia_p.txt"
+f_out = "coordenadas_formato_p.txt"
 
 try:
     # 2. Abrimos el archivo de entrada en modo lectura ('r' de read)
-    with open(f_in, "r") as con_in:
+    with open(f_in, "r", encoding="utf-8") as con_in:
         # readlines() lee todas las líneas y devuelve una lista.
         # Cada elemento de la lista incluye el salto de línea (\n) al final.
         coordenadas = con_in.readlines()
 
     # 3. Abrimos el archivo de salida en modo escritura ('w' de write)
-    with open(f_out, "w") as con_out:
+    with open(f_out, "w", encoding="utf-8") as con_out:
         # Recorremos cada línea de la lista que leímos
         for linea in coordenadas:
             # strip() elimina espacios en blanco y el salto de línea (\n) de los extremos.
@@ -446,12 +708,12 @@ f_out <- "coordenadas_formato_r.txt"
 
 tryCatch({
     # 2. Abrimos conexión de lectura y leemos las líneas
-    con_in <- file(f_in, "r")
+    con_in <- file(f_in, "r", encoding="UTF-8")
     coordenadas <- readLines(con_in, warn = FALSE)
     close(con_in) # Cerramos la conexión de entrada
 
     # 3. Abrimos conexión de escritura para el nuevo archivo
-    con_out <- file(f_out, "w")
+    con_out <- file(f_out, "w", encoding="UTF-8")
     
     # Iteramos sobre cada línea
     for (linea in coordenadas) {
@@ -488,12 +750,12 @@ f_out <- "coordenadas_formato_r.txt"
 
 tryCatch({
     # 2. Abrimos conexión de lectura y leemos las líneas
-    con_in <- file(f_in, "r")
+    con_in <- file(f_in, "r", encoding="UTF-8")
     coordenadas <- readLines(con_in, warn = FALSE)
     close(con_in) # Cerramos la conexión de entrada
 
     # 3. Abrimos conexión de escritura para el nuevo archivo
-    con_out <- file(f_out, "w")
+    con_out <- file(f_out, "w", encoding="UTF-8")
     
     # Iteramos sobre cada línea
     for (linea in coordenadas) {
@@ -1048,7 +1310,7 @@ def procesar_archivo_espacial(f_in):
         print(f"Iniciando el procesamiento del archivo: {f_in}")
 
         # Abrimos la conexión al archivo en modo lectura ('r')
-        with open(f_in, "r") as con_in:
+        with open(f_in, "r", encoding="utf-8") as con_in:
             # enumerate() nos da un índice entero (int) y la línea de texto (str)
             # El '1' indica que queremos empezar a contar desde la línea 1
             for num_linea, linea in enumerate(con_in, 1):
@@ -1095,7 +1357,7 @@ def procesar_archivo_espacial(f_in):
         print(f"Finalizó el procesamiento de '{f_in}'")
 
 # Llamada de ejemplo usando nuestro archivo (tipo str)
-procesar_archivo_espacial("coordenadas_colombia.txt")
+procesar_archivo_espacial("coordenadas_colombia_p.txt")
 ```
 :::
 :::
@@ -1119,7 +1381,7 @@ def procesar_archivo_espacial(f_in):
         print(f"Iniciando el procesamiento del archivo: {f_in}")
 
         # Abrimos la conexión al archivo en modo lectura ('r')
-        with open(f_in, "r") as con_in:
+        with open(f_in, "r", encoding="utf-8") as con_in:
             # enumerate() nos da un índice entero (int) y la línea de texto (str)
             # El '1' indica que queremos empezar a contar desde la línea 1
             for num_linea, linea in enumerate(con_in, 1):
@@ -1166,7 +1428,7 @@ def procesar_archivo_espacial(f_in):
         print(f"Finalizó el procesamiento de '{f_in}'")
 
 # Llamada de ejemplo usando nuestro archivo (tipo str)
-procesar_archivo_espacial("coordenadas_colombia.txt")
+procesar_archivo_espacial("coordenadas_colombia_p.txt")
 ```
 
 ### R
@@ -1197,7 +1459,11 @@ procesar_archivo_espacial <- function(f_in) {
         }
         
         # Abrimos la conexión y leemos. Devuelve un vector de caracteres (character vector)
-        con_in <- file(f_in, "r")
+        con_in <- file(f_in, "r", encoding="UTF-8")
+        # el argumento warn = FALSE en la función readLines se utiliza 
+        # principalmente para evitar que el programa arroje un mensaje 
+        # de advertencia si el archivo no termina con una línea 
+        # nueva vacía (un End Of Line o EOL)
         lineas <- readLines(con_in, warn = FALSE)
         close(con_in)
         
@@ -1246,7 +1512,7 @@ procesar_archivo_espacial <- function(f_in) {
 }
 
 # Llamada de ejemplo (pasamos un string)
-procesar_archivo_espacial("coordenadas_colombiar.txt")
+procesar_archivo_espacial("coordenadas_colombia_r.txt")
 ```
 :::
 :::
@@ -1274,7 +1540,7 @@ procesar_archivo_espacial <- function(f_in) {
         }
         
         # Abrimos la conexión y leemos. Devuelve un vector de caracteres (character vector)
-        con_in <- file(f_in, "r")
+        con_in <- file(f_in, "r", encoding="UTF-8")
         lineas <- readLines(con_in, warn = FALSE)
         close(con_in)
         
@@ -1323,7 +1589,7 @@ procesar_archivo_espacial <- function(f_in) {
 }
 
 # Llamada de ejemplo (pasamos un string)
-procesar_archivo_espacial("coordenadas_colombiar.txt")
+procesar_archivo_espacial("coordenadas_colombia_r.txt")
 ```
 
 ### Julia
@@ -1391,7 +1657,7 @@ function procesar_archivo_espacial(f_in)
 end
 
 # Llamada de ejemplo (String)
-procesar_archivo_espacial("coordenadas_colombiaj.txt")
+procesar_archivo_espacial("coordenadas_colombia_j.txt")
 ```
 :::
 :::
@@ -1459,7 +1725,7 @@ function procesar_archivo_espacial(f_in)
 end
 
 # Llamada de ejemplo (String)
-procesar_archivo_espacial("coordenadas_colombiaj.txt")
+procesar_archivo_espacial("coordenadas_colombia_j.txt")
 )-")
 ```
 
@@ -1503,11 +1769,11 @@ Barranquilla,10.9685,-74.7813
 Cartagena,10.3910,-75.4794"""
 
 # Guardamos el nombre del archivo en una variable de texto (str)
-f_csv = "ciudades_colombia.csv"
+f_csv = "ciudades_colombia_p.csv"
 
 # Bloque try-except para crear el archivo CSV
 try:
-    with open(f_csv, "w") as con_csv:
+    with open(f_csv, "w", encoding="utf-8") as con_csv:
         _ = con_csv.write(datos_csv)
     print(f"Archivo CSV '{f_csv}' creado exitosamente.\n")
 except Exception as e:
@@ -1525,7 +1791,7 @@ def leer_coordenadas_ciudades(nombre_archivo):
 
     try:
         # Abrimos conexión de lectura
-        with open(nombre_archivo, "r") as con_csv:
+        with open(nombre_archivo, "r", encoding="utf-8") as con_csv:
             # readlines() nos devuelve una lista (list) de textos (str)
             lineas = con_csv.readlines()
 
@@ -1589,11 +1855,11 @@ Barranquilla,10.9685,-74.7813
 Cartagena,10.3910,-75.4794"""
 
 # Guardamos el nombre del archivo en una variable de texto (str)
-f_csv = "ciudades_colombia.csv"
+f_csv = "ciudades_colombia_p.csv"
 
 # Bloque try-except para crear el archivo CSV
 try:
-    with open(f_csv, "w") as con_csv:
+    with open(f_csv, "w", encoding="utf-8") as con_csv:
         _ = con_csv.write(datos_csv)
     print(f"Archivo CSV '{f_csv}' creado exitosamente.\n")
 except Exception as e:
@@ -1611,7 +1877,7 @@ def leer_coordenadas_ciudades(nombre_archivo):
 
     try:
         # Abrimos conexión de lectura
-        with open(nombre_archivo, "r") as con_csv:
+        with open(nombre_archivo, "r", encoding="utf-8") as con_csv:
             # readlines() nos devuelve una lista (list) de textos (str)
             lineas = con_csv.readlines()
 
@@ -1673,7 +1939,7 @@ for ciudad in lista_ciudades:
 datos_csv <- "Ciudad,Latitud,Longitud\nBogotá,4.7110,-74.0721\nMedellín,6.2442,-75.5812\nCali,3.4516,-76.5320\nBarranquilla,10.9685,-74.7813\nCartagena,10.3910,-75.4794"
 
 # Nombre del archivo (character)
-f_csv <- "ciudades_colombiar.csv"
+f_csv <- "ciudades_colombia_r.csv"
 
 tryCatch({
     writeLines(datos_csv, f_csv)
@@ -1692,7 +1958,7 @@ leer_coordenadas_ciudades <- function(nombre_archivo) {
         if (!file.exists(nombre_archivo)) stop("FileNotFound")
         
         # Leemos el archivo. Retorna vector de caracteres (character vector)
-        con_csv <- file(nombre_archivo, "r")
+        con_csv <- file(nombre_archivo, "r", encoding="UTF-8")
         lineas <- readLines(con_csv, warn = FALSE)
         close(con_csv)
         
@@ -1755,7 +2021,7 @@ for (ciudad in lista_ciudades) {
 datos_csv <- "Ciudad,Latitud,Longitud\nBogotá,4.7110,-74.0721\nMedellín,6.2442,-75.5812\nCali,3.4516,-76.5320\nBarranquilla,10.9685,-74.7813\nCartagena,10.3910,-75.4794"
 
 # Nombre del archivo (character)
-f_csv <- "ciudades_colombiar.csv"
+f_csv <- "ciudades_colombia_r.csv"
 
 tryCatch({
     writeLines(datos_csv, f_csv)
@@ -1774,7 +2040,7 @@ leer_coordenadas_ciudades <- function(nombre_archivo) {
         if (!file.exists(nombre_archivo)) stop("FileNotFound")
         
         # Leemos el archivo. Retorna vector de caracteres (character vector)
-        con_csv <- file(nombre_archivo, "r")
+        con_csv <- file(nombre_archivo, "r", encoding="UTF-8")
         lineas <- readLines(con_csv, warn = FALSE)
         close(con_csv)
         
@@ -1844,7 +2110,7 @@ Cali,3.4516,-76.5320
 Barranquilla,10.9685,-74.7813
 Cartagena,10.3910,-75.4794"""
 
-f_csv = "ciudades_colombiaj.csv"
+f_csv = "ciudades_colombia_j.csv"
 
 try
     open(f_csv, "w") do con_csv
@@ -1920,7 +2186,7 @@ Cali,3.4516,-76.5320
 Barranquilla,10.9685,-74.7813
 Cartagena,10.3910,-75.4794"""
 
-f_csv = "ciudades_colombiaj.csv"
+f_csv = "ciudades_colombia_j.csv"
 
 try
     open(f_csv, "w") do con_csv
@@ -1985,6 +2251,18 @@ end
 
 :::
 
+::: {.callout-tip title="Pro-Tip: La forma 'Real' de leer datos tabulares"}
+En esta sección construimos un lector de CSV desde cero para entender cómo funcionan los ciclos, el manejo de strings y las excepciones. Sin embargo, en tu día a día como especialista SIG, **no reinventarás la rueda**. 
+
+Los tres lenguajes tienen librerías estándar o externas altamente optimizadas (escritas en C o C++) que leen archivos CSV con millones de registros en fracciones de segundo y manejan los tipos de datos automáticamente:
+
+* **Python:** Módulo estándar `import csv` o la todopoderosa librería `pandas` (`pd.read_csv()`).
+* **R:** Función base `read.csv()` o el paquete `readr` (`read_csv()`).
+* **Julia:** Paquetes como `CSV.jl` o `DelimitedFiles`.
+
+Dominar lo que vimos hoy te permitirá entender qué pasa "bajo el capó" cuando esas librerías fallan.
+:::
+
 ### Resumen comparativo: Estructuras y manipulación de listas
 
 A continuación, detallamos las diferencias para organizar registros y omitir encabezados de tablas en los tres lenguajes:
@@ -2003,7 +2281,7 @@ A continuación, detallamos las diferencias para organizar registros y omitir en
 
 
 
-¡Felicidades! Has completado uno de los capítulos más prácticos y fundamentales para tu carrera como analista espacial. Al dominar la lectura de archivos y el manejo de excepciones, has pasado de trabajar con "datos perfectos" a poder enfrentarte a la realidad del geoprocesamiento: bases de datos sucias, archivos incompletos y errores de formato.
+Al dominar la lectura de archivos y el manejo de excepciones, has pasado de trabajar con "datos perfectos" a poder enfrentarte a la realidad del geoprocesamiento: bases de datos sucias, archivos incompletos y errores de formato.
 
 Repasemos los conceptos clave que te llevas en la mochila:
 
@@ -2023,6 +2301,7 @@ A continuación, se presenta tu **Hoja de Referencia (Cheat Sheet)** para traduc
 | **Leer todo (Lista/Vector)**| `c.readlines()` | `readLines(c)` | `readlines(c)` |
 | **Iterador eficiente** | `for linea in c:` | `for(i in seq_along(l))` | `eachline(f)` |
 | **Escribir línea** | `c.write(texto)` | `writeLines(texto, c)` | `write(c, texto)` |
+| **Codificación (Tildes)** | `encoding="utf-8"` | `encoding="UTF-8"` | *Nativo por defecto* |
 
 : Diferencias en las operaciones de Entrada/Salida (I/O) {#tbl-io_archivos tbl-colwidths="[25,25,25,25]"}
 

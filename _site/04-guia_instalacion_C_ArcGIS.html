@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -200,14 +234,20 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./11-matrices_dataframes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Analítica Espacial: Arreglos y Tablas</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./12-introduccion_python_r_julia.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Introducción a Python, R y Julia</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Introducción a Python, R y Julia</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./13-estructuras_datos_geo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Estructuras de Datos Geoespaciales</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Estructuras de Datos Geoespaciales</span></span></a>
   </div>
 </li>
       </ul>
@@ -224,7 +264,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./38-guia_estructura_proyecto_final.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Guía y Estructura del Proyecto Final</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Guía y Estructura del Proyecto Final</span></span></a>
   </div>
 </li>
       </ul>
@@ -241,7 +281,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./41-practica_1_benchmark_raster.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Evaluación Comparativa de Procesamiento Geoespacial</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Evaluación Comparativa de Procesamiento Geoespacial</span></span></a>
   </div>
 </li>
       </ul>
@@ -258,13 +298,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./61-presentacion_1_clase1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Temas por Charlar</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Temas por Charlar</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./62-presentacion_2_benchmark.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Benchmark geoespacial: cómo leer los resultados</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Benchmark geoespacial: cómo leer los resultados</span></span></a>
   </div>
 </li>
       </ul>
@@ -386,7 +426,18 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Tabla de Contenidos</h2>
    
   <ul>
-  <li><a href="#section" id="toc-section" class="nav-link active" data-scroll-target="#section"><span class="header-section-number">4.1</span> </a></li>
+  <li><a href="#sec-arcgis-pro-gee" id="toc-sec-arcgis-pro-gee" class="nav-link active" data-scroll-target="#sec-arcgis-pro-gee"><span class="header-section-number">4.1</span> Instalación GEE en ArcGIS Pro</a>
+  <ul class="collapse">
+  <li><a href="#configuración-del-ambiente-python-con-conda" id="toc-configuración-del-ambiente-python-con-conda" class="nav-link" data-scroll-target="#configuración-del-ambiente-python-con-conda">Configuración del ambiente Python con Conda</a></li>
+  <li><a href="#descargar-la-caja-de-herramientas-toolbox" id="toc-descargar-la-caja-de-herramientas-toolbox" class="nav-link" data-scroll-target="#descargar-la-caja-de-herramientas-toolbox">Descargar la caja de herramientas (Toolbox)</a></li>
+  <li><a href="#agregar-la-caja-de-herramientas-gee-a-arcgis-pro" id="toc-agregar-la-caja-de-herramientas-gee-a-arcgis-pro" class="nav-link" data-scroll-target="#agregar-la-caja-de-herramientas-gee-a-arcgis-pro">Agregar la caja de herramientas GEE a ArcGIS Pro</a></li>
+  <li><a href="#actualizar-la-caja-de-herramientas-gee-opcional" id="toc-actualizar-la-caja-de-herramientas-gee-opcional" class="nav-link" data-scroll-target="#actualizar-la-caja-de-herramientas-gee-opcional">Actualizar la caja de herramientas GEE (Opcional)</a></li>
+  <li><a href="#instalar-google-cloud-sdk" id="toc-instalar-google-cloud-sdk" class="nav-link" data-scroll-target="#instalar-google-cloud-sdk">Instalar Google Cloud SDK</a></li>
+  <li><a href="#credenciales-para-gee" id="toc-credenciales-para-gee" class="nav-link" data-scroll-target="#credenciales-para-gee">Credenciales para GEE</a></li>
+  </ul></li>
+  <li><a href="#inicializar-gee-en-arcgis-pro" id="toc-inicializar-gee-en-arcgis-pro" class="nav-link" data-scroll-target="#inicializar-gee-en-arcgis-pro"><span class="header-section-number">4.2</span> Inicializar GEE en ArcGIS Pro</a></li>
+  <li><a href="#urls-y-enlaces-de-referencia-importantes" id="toc-urls-y-enlaces-de-referencia-importantes" class="nav-link" data-scroll-target="#urls-y-enlaces-de-referencia-importantes"><span class="header-section-number">4.3</span> URLs y enlaces de referencia importantes</a></li>
+  <li><a href="#fuentes-de-datos-alternativas-en-arcgis-pro" id="toc-fuentes-de-datos-alternativas-en-arcgis-pro" class="nav-link" data-scroll-target="#fuentes-de-datos-alternativas-en-arcgis-pro"><span class="header-section-number">4.4</span> Fuentes de datos alternativas en ArcGIS Pro</a></li>
   </ul>
 </nav>
     </div>
@@ -412,9 +463,218 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="section" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="section"><span class="header-section-number">4.1</span> </h2>
-<p>Falta</p>
+<section id="sec-arcgis-pro-gee" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="sec-arcgis-pro-gee"><span class="header-section-number">4.1</span> Instalación GEE en ArcGIS Pro</h2>
+<p>La guía resumida de instalación y uso se encuentra en el <a href="https://www.esri.com/arcgis-blog/products/arcgis-pro/imagery/bring-google-earth-engines-data-right-into-arcgis-pro">blog oficial de Esri</a>.</p>
+<p><strong>Procedimiento y requerimientos:</strong></p>
+<ol type="1">
+<li>Contar con una licencia activa de ArcGIS Pro.</li>
+<li>Instalar la caja de herramientas siguiendo el <a href="https://github.com/gee-community/arcgis-earthengine-toolbox/blob/main/docs/03_installation.md">procedimiento oficial</a>.</li>
+<li>Descargar la caja de herramientas <a href="https://github.com/gee-community/arcgis-earthengine-toolbox/releases/latest">desde este enlace</a>.</li>
+<li>Después de descomprimir el archivo, el procedimiento finaliza <a href="https://pro.arcgis.com/en/pro-app/latest/help/projects/connect-to-a-toolbox.htm">conectando la caja de herramientas</a> a tu proyecto en ArcGIS Pro.</li>
+</ol>
+<section id="configuración-del-ambiente-python-con-conda" class="level3">
+<h3 class="anchored" data-anchor-id="configuración-del-ambiente-python-con-conda">Configuración del ambiente Python con Conda</h3>
+<ol type="1">
+<li>Ejecutar <strong>ArcGIS Python Command Prompt</strong> como administrador: Ruta: <strong>Start Menu</strong> -&gt; <strong>All Apps</strong> -&gt; <strong>ArcGIS folder</strong> -&gt; <strong>Python Command Prompt</strong> (Clic derecho &gt; Ejecutar como administrador).</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/arcgispro/gee/python_commando_as_administrator.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%"></p>
+<figcaption>ArcGIS Python Command Prompt como administrador</figcaption>
+</figure>
+</div>
+<ol start="2" type="1">
+<li>Verificar los ambientes Conda disponibles:</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> env list</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li>Clonar el entorno principal de ArcGIS Pro para no alterar el entorno por defecto:</li>
+</ol>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">--name</span> gee <span class="at">--clone</span> arcgispro-py3</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>Mensaje de salida apenas inicia la clonación:</em></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Source:</span>      C:<span class="dt">\P</span>rogram Files<span class="dt">\A</span>rcGIS<span class="dt">\P</span>ro<span class="dt">\b</span>in<span class="dt">\P</span>ython<span class="dt">\e</span>nvs<span class="dt">\a</span>rcgispro-py3</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Destination:</span> D:<span class="dt">\P</span>rograms<span class="dt">\m</span>iniforge3<span class="dt">\e</span>nvs<span class="dt">\g</span>ee</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li>Inicializar Conda con el shell apropiado (opcional):</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> init cmd.exe</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="5" type="1">
+<li><p><strong>Reiniciar</strong> el Python Command Prompt (nuevamente como Administrador).</p></li>
+<li><p>Activar el nuevo entorno <code>gee</code>:</p></li>
+</ol>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate gee</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="7" type="1">
+<li>Desactivar la verificación SSL (opcional, útil en redes corporativas restrictivas):</li>
+</ol>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> config <span class="at">--set</span> ssl_verify false</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="8" type="1">
+<li>Instalar los paquetes necesarios de GEE desde el canal <code>conda-forge</code>:</li>
+</ol>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> install earthengine-api xee <span class="at">--channel</span> conda-forge</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p><strong>Alternativa (Si el comando anterior falla):</strong> &gt; Puedes usar <code>pip</code> para instalar los paquetes limpiando el entorno e intentándolo de nuevo:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> deactivate</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> env remove <span class="at">--name</span> gee</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">--name</span> gee <span class="at">--clone</span> arcgispro-py3</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate gee</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install earthengine-api xee</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Dependiendo de los warnings en consola, es posible que requieras estos paquetes:</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="st">"pyarrow&gt;=17,&lt;21"</span> pywin32</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</blockquote>
+<ol start="9" type="1">
+<li>Instalar otros paquetes requeridos desde el canal oficial de <code>esri</code> (dependiendo de tu versión):</li>
+</ol>
+<ul>
+<li>Para <strong>ArcGIS Pro 3.5 y anteriores</strong>:</li>
+</ul>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> install rasterio=1.3.9 <span class="at">--channel</span> esri</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Para <strong>ArcGIS Pro 3.6 y posteriores</strong>:</li>
+</ul>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> install rasterio=1.4.3 <span class="at">--channel</span> esri</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="10" type="1">
+<li>Intercambiar el entorno predeterminado de ArcGIS Pro para que use <code>gee</code> de ahora en adelante:</li>
+</ol>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">proswap</span> gee</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="11" type="1">
+<li>Cerrar el Python Command Prompt y abrir ArcGIS Pro.</li>
+</ol>
+<ul>
+<li>El ambiente por defecto ahora será <code>gee</code>.</li>
+<li>Verifica que los paquetes funcionen yendo a <strong>Analysis</strong> -&gt; <strong>Python</strong> -&gt; <strong>Python Window</strong> y ejecutando:</li>
+</ul>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ee</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xee</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rasterio</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+<section id="descargar-la-caja-de-herramientas-toolbox" class="level3">
+<h3 class="anchored" data-anchor-id="descargar-la-caja-de-herramientas-toolbox">Descargar la caja de herramientas (Toolbox)</h3>
+<p>Puedes clonar el repositorio mediante Git:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/gee-community/arcgis-earthengine-toolbox.git</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Alternativamente, descarga el archivo <code>.zip</code> directamente desde <a href="https://github.com/gee-community/arcgis-earthengine-toolbox">GitHub</a> y descomprímelo.</p>
+<ul>
+<li><p><strong>Opción A:</strong> Guardar la carpeta descargada directamente en el directorio de tu proyecto actual:</p>
+<p><code>C:\Users\&lt;username&gt;\Documents\ArcGIS\Projects\&lt;project_name&gt;\ArcGIS Earth Engine Toolbox</code></p></li>
+<li><p><strong>Opción B:</strong> Guardar la caja de herramientas en un directorio global para usarla en múltiples proyectos. Por ejemplo:</p>
+<p><code>D:\Programs\ArcGIS\Pro\arcgis-earthengine-toolbox</code></p></li>
+</ul>
+</section>
+<section id="agregar-la-caja-de-herramientas-gee-a-arcgis-pro" class="level3">
+<h3 class="anchored" data-anchor-id="agregar-la-caja-de-herramientas-gee-a-arcgis-pro">Agregar la caja de herramientas GEE a ArcGIS Pro</h3>
+<ol type="1">
+<li>Abre ArcGIS Pro.</li>
+<li>En el panel <strong>Catalog</strong> (Catálogo), haz clic derecho en <strong>Toolboxes</strong> (Cajas de herramientas) y selecciona <strong>Add Toolbox</strong> (Agregar caja de herramientas).</li>
+<li>Navega a la ruta donde descomprimiste los archivos (ej: <code>D:\Programs\ArcGIS\Pro\arcgis-earthengine-toolbox</code>) y selecciona el archivo de la herramienta.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/arcgispro/gee/gee_arcgispro_tool.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
+<figcaption>Caja de Herramientas GEE integrada en ArcGIS Pro</figcaption>
+</figure>
+</div>
+<p><em>Consulta el <a href="https://pro.arcgis.com/en/pro-app/latest/help/projects/connect-to-a-toolbox.htm">procedimiento oficial de Esri</a> si tienes dudas sobre cómo conectar una caja de herramientas.</em></p>
+</section>
+<section id="actualizar-la-caja-de-herramientas-gee-opcional" class="level3">
+<h3 class="anchored" data-anchor-id="actualizar-la-caja-de-herramientas-gee-opcional">Actualizar la caja de herramientas GEE (Opcional)</h3>
+<p>Si en el futuro requieres la versión más reciente del Toolbox, sigue el procedimiento descrito en la <a href="https://github.com/gee-community/arcgis-earthengine-toolbox/blob/main/docs/08_upgrades.md">documentación oficial de actualizaciones</a>.</p>
+<hr>
+</section>
+<section id="instalar-google-cloud-sdk" class="level3">
+<h3 class="anchored" data-anchor-id="instalar-google-cloud-sdk">Instalar Google Cloud SDK</h3>
+<p>Dado que GEE requiere validación en la nube de Google, necesitamos su herramienta de línea de comandos. Encuentra aquí la <a href="https://docs.cloud.google.com/sdk/docs/install-sdk">guía oficial de instalación de Google Cloud CLI</a>.</p>
+<ol type="1">
+<li>Selecciona o crea tu proyecto de Google Cloud en este <a href="https://console.cloud.google.com/projectselector2/home/dashboard">enlace</a>.</li>
+<li>Verifica que la facturación (<strong>Billing</strong>) esté habilitada para tu proyecto <a href="https://docs.cloud.google.com/billing/docs/how-to/verify-billing-enabled#confirm_billing_is_enabled_on_a_project">aquí</a>. <em>(Nota: GEE es gratuito, pero requiere tener facturación configurada como protocolo de Cloud).</em></li>
+<li>Descarga el <a href="https://dl.google.com/dl/cloudsdk/channels/rapid/GoogleCloudSDKInstaller.exe">instalador de Google Cloud CLI para Windows</a>.</li>
+<li>Ejecuta el instalador y sigue las instrucciones en pantalla.</li>
+</ol>
+<p><strong>⚠️ Importante:</strong> Al finalizar, <strong>desmarca</strong> la opción de abrir la consola (<em>Start Google Cloud SDK Shell</em>).</p>
+<ol start="5" type="1">
+<li>Abre una terminal de <strong>PowerShell</strong> y ejecuta:</li>
+</ol>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> init</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Se abrirá una pestaña en tu navegador web. Ingresa con tu cuenta de Google.</li>
+<li>Después de autorizar, recibirás un mensaje similar a <strong>“You are now authenticated with the gcloud CLI”</strong>.</li>
+</ul>
+<p>De regreso a tu consola de PowerShell:</p>
+<ul>
+<li>Te pedirá que indiques el número del proyecto que deseas utilizar (ej: <code>1</code>). Recuerda seleccionar el proyecto que tiene la facturación habilitada.</li>
+<li>Dirígete a <a href="https://console.developers.google.com/apis">este enlace de la Consola de APIs</a> y asegúrate de tener tu proyecto seleccionado.</li>
+<li>Ve a la pestaña <strong>Enable API and Services</strong>.</li>
+<li>Busca <strong>Compute Engine API</strong>, selecciónala y presiona <strong>Enable</strong>. Esto permitirá a Google Cloud seleccionar una zona y región de cómputo automáticamente, optimizando el uso de recursos. (Debe aparecer activa en tu lista de APIs).</li>
+</ul>
+<hr>
+</section>
+<section id="credenciales-para-gee" class="level3">
+<h3 class="anchored" data-anchor-id="credenciales-para-gee">Credenciales para GEE</h3>
+<p>Una vez que Google Cloud SDK está instalado, GEE utilizará sus credenciales por defecto para autenticarte dentro de ArcGIS Pro.</p>
+<ol type="1">
+<li>Encuentra tu <strong>Google Cloud Project ID</strong>:</li>
+</ol>
+<ul>
+<li>Recuerda que el <code>Project ID</code> suele ser diferente al <code>Project Name</code> (típicamente tiene un formato como <code>my-project-123456</code>).</li>
+<li>En la esquina superior derecha de la <a href="https://console.cloud.google.com/">Consola de Google Cloud</a>, haz clic en los tres puntos y selecciona <strong>Project settings</strong>. Allí podrás copiar tu <code>Project ID</code>.</li>
+</ul>
+<ol start="2" type="1">
+<li><p>Abre la consola <strong>Google Cloud SDK Shell</strong> (búscala en el menú inicio de Windows).</p></li>
+<li><p>Ejecuta el siguiente comando (esto se hace <strong>solo la primera vez</strong>):</p></li>
+</ol>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> auth application-default login</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Sigue el proceso en el navegador web para otorgar permisos. Al terminar verás el mensaje: <strong>“You are now authenticated with the gcloud CLI!”</strong>.</li>
+<li>Esto creará un archivo de seguridad llamado <code>application_default_credentials.json</code> en tu computador.</li>
+</ul>
+<ol start="4" type="1">
+<li>Asocia tu cuota de proyecto a esas credenciales. Ejecuta este comando reemplazando <code>TU_PROJECT_ID</code> con el ID exacto de tu proyecto:</li>
+</ol>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> auth application-default set-quota-project TU_PROJECT_ID</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Si todo es correcto, recibirás una confirmación similar a:</p>
+<p><strong><code>Credentials saved to file: [C:\Users\tu_usuario\AppData\Roaming\gcloud\application_default_credentials.json]</code></strong></p>
+<hr>
+</section>
+</section>
+<section id="inicializar-gee-en-arcgis-pro" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="inicializar-gee-en-arcgis-pro"><span class="header-section-number">4.2</span> Inicializar GEE en ArcGIS Pro</h2>
+<p>Una vez configurado el entorno y descargada la caja de herramientas, procede a inicializar Earth Engine dentro de la interfaz de ArcGIS Pro. Para ver el paso a paso, consulta la sección <span class="quarto-unresolved-ref">?sec-arcgis-pro-initialize-gee</span>.</p>
+<hr>
+</section>
+<section id="urls-y-enlaces-de-referencia-importantes" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="urls-y-enlaces-de-referencia-importantes"><span class="header-section-number">4.3</span> URLs y enlaces de referencia importantes</h2>
+<ul>
+<li>Documentación oficial y <a href="https://docs.cloud.google.com/sdk/auth_success">tutoriales de Google Cloud SDK</a>.</li>
+<li>Procedimiento completo de <a href="https://github.com/gee-community/arcgis-earthengine-toolbox/blob/main/docs/03_installation.md">instalación del GEE Toolbox</a>.</li>
+<li>Artículo de Esri: <a href="https://www.esri.com/arcgis-blog/products/arcgis-pro/imagery/bring-google-earth-engines-data-right-into-arcgis-pro">Cómo iniciar a trabajar con GEE en ArcGIS Pro</a>.</li>
+</ul>
+<hr>
+</section>
+<section id="fuentes-de-datos-alternativas-en-arcgis-pro" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="fuentes-de-datos-alternativas-en-arcgis-pro"><span class="header-section-number">4.4</span> Fuentes de datos alternativas en ArcGIS Pro</h2>
+<p>Aunque Earth Engine es muy potente, existen otras fuentes masivas de datos espaciales y catálogos en la nube que puedes aprovechar directamente en ArcGIS Pro:</p>
+<ul>
+<li><p>🌐 <strong>ArcGIS Living Atlas of the World</strong></p>
+<ul>
+<li>Totalmente integrado con ArcGIS Online y ArcGIS Pro (mediante la pestaña <code>Portal</code> en el Catálogo).</li>
+<li>Guía: <a href="https://www.esri.com/arcgis-blog/products/arcgis-living-atlas/imagery/law-imagery-layers-for-analysis">ArcGIS Living Atlas ready-to-use imagery layers for analysis</a></li>
+<li>Guía: <a href="https://www.esri.com/arcgis-blog/products/arcgis-online/imagery/large-scale-analysis-in-arcgis-online">Explore Ready-to-Use Imagery for Analysis</a></li>
+</ul></li>
+<li><p>📂 <strong>STAC Catalogs (SpatioTemporal Asset Catalogs)</strong></p>
+<ul>
+<li>Permite conectar inmensas bases de datos abiertas, como el <a href="https://planetarycomputer.microsoft.com/">Microsoft Planetary Computer</a>.</li>
+<li>Conecta la información estableciendo una <a href="https://pro.arcgis.com/en/pro-app/latest/help/data/imagery/create-a-stac-connection.htm">conexión STAC en ArcGIS</a> y aprovechando archivos <a href="https://github.com/Esri/arcgis-for-mpc/activity">.asc</a>.</li>
+</ul></li>
+<li><p>☁️ <strong>Cloud sources (Almacenamiento en la nube)</strong></p>
+<ul>
+<li>Conecta entornos de almacenamiento masivo directamente al Catálogo de ArcGIS Pro vía URLs o APIs, como por ejemplo buckets de <a href="https://enterprise.arcgis.com/en/server/10.8/cloud/amazon/connect-to-arcgis-server-on-aws-from-arcmap.htm">AWS (Amazon Web Services)</a>.</li>
+</ul></li>
+<li><p>🌍 <strong>Google Earth Engine Data Catalog</strong></p>
+<ul>
+<li>Operado mediante la caja de herramientas integrada. Ver <a href="#sec-arcgis-pro-gee" class="quarto-xref"><span>Sección 4.1</span></a> y <span class="quarto-unresolved-ref">?sec-arcgis-pro-gee-start</span>.</li>
+</ul></li>
+</ul>
 
 
 </section>

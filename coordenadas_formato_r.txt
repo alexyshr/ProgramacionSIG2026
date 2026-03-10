@@ -1,0 +1,5 @@
+Latitud: 4.7110, Longitud: -74.0721
+Latitud: 6.2442, Longitud: -75.5812
+Latitud: 3.4516, Longitud: -76.5320
+Latitud: 10.9685, Longitud: -74.7813
+Latitud: 10.3910, Longitud: -75.4794

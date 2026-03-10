@@ -1,0 +1,5 @@
+Presiona Ctrl + Shift + P
+
+Busca: Toggle Render Whitespace
+
+Activa Render Whitespace: all

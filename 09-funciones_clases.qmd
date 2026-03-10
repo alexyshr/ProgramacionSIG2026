@@ -34,7 +34,7 @@ Para eso existen las **funciones** (máquinas que procesan datos) y las **clases
 * Manejar parámetros opcionales, valores por defecto y argumentos dinámicos.
 * Entender los principios básicos de la Programación Orientada a Objetos (POO) para modelar elementos del mundo real.
 
-## 1. Funciones: bloques de código reutilizables
+## Funciones: bloques de código reutilizables
 
 Una función es como una receta de cocina: tú le pasas los ingredientes (parámetros de entrada), ella realiza un proceso interno (cuerpo de la función) y te entrega un resultado (valor de retorno). 
 
@@ -832,7 +832,7 @@ plot_unal(dias, temperaturas,
 : Diferencias en el empaquetado y argumentos de funciones {#tbl-funciones_argumentos tbl-colwidths="[25,25,25,25]"}
 
 
-## 2. Clases: organizando datos y comportamiento juntos
+## Clases: organizando datos y comportamiento juntos
 
 En el mundo del desarrollo de software, existen diferentes formas de estructurar el código. Tradicionalmente, la programación separaba los datos por un lado y las funciones que operaban sobre esos datos por el otro. Sin embargo, la **Programación Orientada a Objetos (POO)** propone un paradigma distinto: agrupar los datos y los comportamientos relacionados en una sola entidad unificada.
 
@@ -2184,7 +2184,7 @@ function graficar_ruta(origen::PuntoEspacial, destino::PuntoEspacial)
     try
         # Leemos el archivo GeoJSON como texto plano (String). 
         # Usamos Base.read explícitamente para evitar ambigüedades con otras funciones.
-        texto_json = Base.read("./data/COL.geo.json", String)
+        texto_json = Base.read("./data/vector/geojson/COL.geo.json", String)
         
         # Buscamos los delimitadores estructurales del arreglo de coordenadas en el JSON
         idx_inicio = findfirst("[[[", texto_json)
@@ -2331,7 +2331,7 @@ function graficar_ruta(origen::PuntoEspacial, destino::PuntoEspacial)
                 xlabel="Longitud", ylabel="Latitud", title="Mapa Cartográfico Estático")
                 
     try
-        texto_json = Base.read("./data/COL.geo.json", String)
+        texto_json = Base.read("./data/vector/geojson/COL.geo.json", String)
         idx_inicio = findfirst("[[[", texto_json)
         idx_fin = findlast("]]]", texto_json)
         

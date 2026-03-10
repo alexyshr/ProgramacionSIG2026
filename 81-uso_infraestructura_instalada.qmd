@@ -4,7 +4,7 @@
 
 Para que los gráficos de mermaid y los mapas dinámicos se exporten a pdf (en archivos qmd), antes de compilar el proyecto (`quarto render`) ejecute estos pasos:
 
-* Borra las dos últimas líneas de configuración de Google-Chrome en /etc/R/Rprofile.site
+* Borra las dos últimas líneas de configuración de Google-Chrome en `/etc/R/Rprofile.site`
 
 ```text
 #Elimina estas líneas en Rprofile.site

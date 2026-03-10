@@ -207,6 +207,10 @@ ee.Initialize(project = "Tu ID de proyecto GEE")
 
 :::
 
+#### Actualizar el plugin dentro de QGIS
+
+En el manú `GEE Data Catalogs`, asegúrece de ejecutar `Check for Updates`.
+
 
 ## Otras referencias importantes
 
