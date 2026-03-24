@@ -19,3 +19,19 @@
 	https://www.interamericangeoportal.org/pages/geo-ai
 	Licencia ArcGIS Pro - 2026
 7. GitHub Education (aplicar para obtener versión Pro)
+
+
+
+*****************
+
+
+1. URL
+
+https://meet.google.com/kgb-qzqx-phu
+
+2. Nueva version del contenedor docker
+
+3. Tareas
+
+4. Proyecto
+

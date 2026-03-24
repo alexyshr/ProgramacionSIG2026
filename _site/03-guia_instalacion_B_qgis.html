@@ -123,6 +123,35 @@ div.csl-indent {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -264,18 +293,12 @@ div.csl-indent {
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Introducción a Python, R y Julia</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./13-estructuras_datos_geo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Estructuras de Datos Geoespaciales</span></span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
- <span class="menu-text">Proyecto Final</span></a>
+ <span class="menu-text">Programación Geoespacial</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -283,8 +306,20 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./38-guia_estructura_proyecto_final.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Guía y Estructura del Proyecto Final</span></span></a>
+  <a href="./13-introduccion_geo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Introducción a Programación Geoespacial</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-vector.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Introducción a Python, R y Julia</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./25-estructuras_datos_geo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Estructuras de Datos Geoespaciales</span></span></a>
   </div>
 </li>
       </ul>
@@ -292,7 +327,7 @@ div.csl-indent {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
- <span class="menu-text">Prácticas</span></a>
+ <span class="menu-text">Proyecto Final</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -300,8 +335,8 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./41-practica_1_benchmark_raster.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Evaluación Comparativa de Procesamiento Geoespacial</span></span></a>
+  <a href="./38-guia_estructura_proyecto_final.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Guía y Estructura del Proyecto Final</span></span></a>
   </div>
 </li>
       </ul>
@@ -309,7 +344,7 @@ div.csl-indent {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
- <span class="menu-text">Presentaciones</span></a>
+ <span class="menu-text">Prácticas</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -317,14 +352,8 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./61-presentacion_1_clase1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Temas por Charlar</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./62-presentacion_2_benchmark.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Benchmark geoespacial: cómo leer los resultados</span></span></a>
+  <a href="./41-practica_1_benchmark_raster.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Evaluación Comparativa de Procesamiento Geoespacial</span></span></a>
   </div>
 </li>
       </ul>
@@ -332,12 +361,35 @@ div.csl-indent {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
- <span class="menu-text">Apéndices</span></a>
+ <span class="menu-text">Presentaciones</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./61-presentacion_1_clase1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Temas por Charlar</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./62-presentacion_2_benchmark.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Benchmark geoespacial: cómo leer los resultados</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
+ <span class="menu-text">Apéndices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./80-instalacion_herramientas.html" class="sidebar-item-text sidebar-link">
@@ -775,6 +827,20 @@ Requisito de Google Cloud
 <section id="trabajar-gee-dentro-de-qgis" class="level3">
 <h3 class="anchored" data-anchor-id="trabajar-gee-dentro-de-qgis">Trabajar GEE dentro de QGIS</h3>
 <p>Una vez que el entorno está configurado y autenticado, el siguiente paso es integrar <strong>Google Earth Engine</strong> directamente en la interfaz de QGIS. Para esto, utilizaremos el complemento desarrollado por el equipo de <strong>OpenGeos</strong>: El Plugin: <strong>GEE Data Catalog</strong>. Este complemento permite navegar por los miles de datasets de Earth Engine (Sentinel, Landsat, MODIS, etc.) y cargarlos en el lienzo de QGIS con un solo clic, utilizando el motor de procesamiento en la nube.</p>
+<section id="instalación-del-plugin" class="level4">
+<h4 class="anchored" data-anchor-id="instalación-del-plugin">Instalación del Plugin</h4>
+<ol type="1">
+<li>Abre QGIS usando <code>pixi run qgis</code></li>
+<li>Ve al menú <strong>Complementos</strong> <span class="math inline">\(\rightarrow\)</span> <strong>Administrar e instalar complementos…</strong></li>
+<li>Ve a la pestaña <strong>Configuración</strong>.</li>
+<li>Haz clic en <strong>Añadir…</strong> en la sección “Repositorios de complementos”.</li>
+<li>Asigna un nombre al repositorio, por ejemplo: <code>OpenGeos</code>.</li>
+<li>Ingresa la URL del repositorio: <code>https://qgis.gishub.org/plugins.xml</code></li>
+<li>Haz clic en <strong>Aceptar</strong>.</li>
+<li>Ve a la pestaña <strong>Todos</strong>.</li>
+<li>Busca <strong>“Earth Engine Data Catalogs”</strong>.</li>
+<li>Selecciona <strong>“Earth Engine Data Catalogs”</strong> en la lista y haz clic en <strong>Instalar complemento</strong>.</li>
+</ol>
 <ul>
 <li><p><strong>Repositorio oficial:</strong> <a href="https://github.com/opengeos/qgis-gee-data-catalogs-plugin">opengeos/qgis-gee-data-catalogs-plugin</a></p></li>
 <li><p>Video Guía <strong>Earth Engine Data Catalogs Plugin for QGIS</strong>: <a href="https://youtu.be/nZ3D6wLKJQw">aquí</a></p></li>
@@ -806,6 +872,7 @@ Forzar autenticación GEE dentro de QGIS (PIXI)
 </div>
 </div>
 </div>
+</section>
 <section id="actualizar-el-plugin-dentro-de-qgis" class="level4">
 <h4 class="anchored" data-anchor-id="actualizar-el-plugin-dentro-de-qgis">Actualizar el plugin dentro de QGIS</h4>
 <p>En el manú <code>GEE Data Catalogs</code>, asegúrece de ejecutar <code>Check for Updates</code>.</p>

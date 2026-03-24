@@ -179,6 +179,19 @@ pixi run qgis
 Una vez que el entorno está configurado y autenticado, el siguiente paso es integrar **Google Earth Engine** directamente en la interfaz de QGIS. Para esto, utilizaremos el complemento desarrollado por el equipo de **OpenGeos**: El Plugin: **GEE Data Catalog**. Este complemento permite navegar por los miles de datasets de Earth Engine (Sentinel, Landsat, MODIS, etc.) y cargarlos en el lienzo de QGIS con un solo clic, utilizando el motor de procesamiento en la nube.
 
 
+#### Instalación del Plugin
+
+1. Abre QGIS usando `pixi run qgis`
+2. Ve al menú **Complementos** $\rightarrow$ **Administrar e instalar complementos...**
+3. Ve a la pestaña **Configuración**.
+4. Haz clic en **Añadir...** en la sección "Repositorios de complementos".
+5. Asigna un nombre al repositorio, por ejemplo: `OpenGeos`.
+6. Ingresa la URL del repositorio: `https://qgis.gishub.org/plugins.xml`
+7. Haz clic en **Aceptar**.
+8. Ve a la pestaña **Todos**.
+9. Busca **"Earth Engine Data Catalogs"**.
+10. Selecciona **"Earth Engine Data Catalogs"** en la lista y haz clic en **Instalar complemento**.
+
 * **Repositorio oficial:** [opengeos/qgis-gee-data-catalogs-plugin](https://github.com/opengeos/qgis-gee-data-catalogs-plugin)
 
 * Video Guía **Earth Engine Data Catalogs Plugin for QGIS**: [aquí](https://youtu.be/nZ3D6wLKJQw) 

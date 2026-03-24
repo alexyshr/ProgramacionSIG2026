@@ -1,0 +1,18 @@
+Lista de pendientes para mañana:
+
+
+Tipos de geometría avanzados (Curvas y Superficies)
+
+Jerarquía de clases (sf / sfc / sfg)
+
+Predicados espaciales (Relaciones Topológicas)
+
+Operaciones de Geoprocesamiento (Buffer, Centroid, etc.)
+
+Relación Atributo-Geometría (AGR)
+
+Manejo de Unidades
+
+Geometrías vacías y validez.
+
+

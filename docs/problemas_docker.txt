@@ -1,0 +1,612 @@
+En Windows: Las extensiones se ubican en %USERPROFILE%\.vscode\extensions y los datos de configuración en %APPDATA%\Code.
+
+******
+Depuración de caché en el entorno remoto: La ruta ~/.vscode-server pertenece al sistema de archivos interno del sistema Linux (contenedor o WSL), no al directorio de Windows. Para limpiar el caché de extensiones directamente en el contenedor en ejecución, se debe ejecutar el siguiente comando en PowerShell: 
+
+docker exec -it 1808362d6848 rm -rf /root/.vscode-server /root/.vscode-server-insiders.
+
+Posteriormente, reiniciar la ventana del editor.
+
+*****
+
+Remover la extension Reditorsupport en VScode
+
+*****
+
+
+Reconstrucción del servidor en R: Si la desactivación de la extensión estabiliza el entorno, pero se requiere su uso, el paquete subyacente presenta problemas binarios. Ingresar al contenedor interactivo (
+
+docker exec -it 1808362d6848 R
+
+) y reinstalar la dependencia ejecutando 
+
+install.packages("languageserver")
+
+para corregir problemas de compilación de los sockets de comunicación.
+
+
+
+**** 
+
+Instalación Nueva de Julia
+
+Hacer los otros arreglos antes de exportar el contenedor
+
+
+# Análisis de la transición técnica a Julia 1.11.3
+
+## Superación de la cirugía de librerías y conflictos de grafos
+
+La intervención técnica previa, denominada "cirugía de OpenSSL", consistía en la creación de vínculos simbólicos manuales para forzar a Julia 1.10 a utilizar las librerías criptográficas del sistema operativo (`libssl.so.3` y `libcrypto.so.3`). Si bien esta medida permitía la carga de `ArchGDAL`, generaba una inestabilidad crítica en el *linker* dinámico al ser invocado desde R. Esta discrepancia de símbolos era el origen de los fallos en `JuliaConnectoR`, el cual requiere un árbol de dependencias coherente para establecer los *sockets* de comunicación.
+
+Adicionalmente, el error `KeyError: key "Graphs" not found` respondía a una falla estructural en el gestor de paquetes de la versión 1.10 al procesar extensiones (*weak dependencies*). La actualización a Julia 1.11.3 resuelve ambos frentes: incorpora artefactos binarios (*JLL*) compatibles de forma nativa con Ubuntu 24.04 (Noble) y utiliza un motor de resolución de metadatos rediseñado que elimina las colisiones en el archivo de manifiesto.
+
+---
+
+## Procedimiento de restauración técnica consolidado
+
+El siguiente bloque de comandos realiza la migración completa del núcleo, la purga de registros corruptos y la instalación de la suite geoespacial avanzada, incluyendo soporte para cubos de datos (*YAXArrays*) y visualización interactiva para entornos de servidor (*WGLMakie*).
+
+````bash
+# 1. Sustitución de binarios a la versión estable actual (v1.11.3)
+cd /tmp
+rm -rf /opt/julia
+wget https://julialang-s3.julialang.org/bin/linux/x64/1.11/julia-1.11.3-linux-x86_64.tar.gz
+tar -xvzf julia-1.11.3-linux-x86_64.tar.gz
+mv julia-1.11.3 /opt/julia
+
+# 2. Configuración de entorno y preferencias geoespaciales
+rm -rf /root/.julia/environments/v1.11
+mkdir -p /root/.julia/environments/v1.11
+printf "[LocalPreferences]\nGDAL_jll = { libgdal_path = \"/usr/lib/libgdal.so\" }\nGEOS_jll = { libgeos_path = \"/usr/lib/x86_64-linux-gnu/libgeos_c.so\" }\n" > /root/.julia/environments/v1.11/LocalPreferences.toml
+
+# 3. Instalación masiva de la suite técnica (Análisis + Visualización)
+julia -e '
+using Pkg
+ENV["JULIA_PKG_PRECOMPILE_AUTO"] = 0
+Pkg.Registry.update()
+
+# Matriz completa: Core, Grafos, Cubos de datos y Visualización Web
+paquetes = [
+    "Preferences", "Suppressor", "RCall", "LibGEOS", "Tables", "DataFrames", 
+    "Plots", "Statistics", "ArchGDAL", "LibPQ", "GeoDataFrames", "IJulia", 
+    "CSV", "CairoMakie", "WGLMakie", "AlgebraOfGraphics", "DimensionalData", 
+    "FlexiJoins", "GeoFormatTypes", "GeoInterface", "GeoJSON", "GeoMakie", 
+    "GeometryOps", "Makie", "MakieCore", "NaturalEarth", "Proj", "Rasters", 
+    "StatsBase", "Tyler", "GeoStats", "Graphs", "NCDatasets", "MetaGraphsNext", 
+    "Crayons", "GeoInterfaceRecipes", "YAXArrays", "Zarr", "RasterDataSources", 
+    "Meshes", "Colors", "ColorSchemes"
+]
+
+println("--- Iniciando instalacion en Julia 1.11.3 ---")
+Pkg.add(paquetes)
+
+println("--- Vinculando RCall e IJulia ---")
+Pkg.build("RCall")
+Pkg.build("IJulia")
+
+println("--- Forzando precompilacion total ---")
+Pkg.precompile()
+'
+````
+
+Este protocolo asegura que `JuliaConnectoR` en R opere sin requerir manipulaciones manuales en los binarios de la carpeta de artefactos.
+
+
+***
+
+Arreglar lo de chrome
+
+Procedimiento de redirección global y persistente
+Este bloque de comandos elimina la prioridad del Google Chrome estándar y establece un vínculo inmutable hacia el Chromium funcional. Al ejecutarse en /usr/local/bin, la configuración persistirá en cualquier nueva terminal o sesión de R sin necesidad de scripts de inicio adicionales.
+
+Bash
+# 1. Limpieza de configuraciones temporales previas
+rm -rf /tmp/bin/google-chrome
+sed -i '/QUARTO_CHROMIUM/d' ~/.bashrc
+sed -i '/QUARTO_CHROME_ARGUMENTS/d' ~/.bashrc
+sed -i '/\/tmp\/bin/d' ~/.bashrc
+
+# 2. Creación del enlace simbólico en ruta de sistema prioritaria
+# Al usar /usr/local/bin, se asegura precedencia sobre /usr/bin en la mayoría de distros
+ln -sf /root/.local/share/quarto/chromium/linux-869685/chrome-linux/chrome /usr/local/bin/google-chrome
+ln -sf /root/.local/share/quarto/chromium/linux-869685/chrome-linux/chrome /usr/local/bin/chrome
+
+# 3. Inyección de variables de entorno globales en .bashrc
+cat <<EOF >> ~/.bashrc
+# --- Configuración inmutable Quarto + Chromium ---
+export QUARTO_CHROMIUM="/root/.local/share/quarto/chromium/linux-869685/chrome-linux/chrome"
+export QUARTO_CHROME_ARGUMENTS="--no-sandbox --disable-gpu --disable-dev-shm-usage --headless"
+export PATH="/usr/local/bin:\$PATH"
+EOF
+
+# 4. Validación de la ruta efectiva
+source ~/.bashrc
+which google-chrome
+google-chrome --version
+
+
+
+*************************
+
+
+
+Creación del script de inicio del servicio
+Para una gestión profesional de servicios en contenedores, se recomienda encapsular el comando en un script ejecutable en una ruta de sistema. Esto permite realizar ajustes futuros sin necesidad de modificar los metadatos de Docker cada vez.
+
+Ejecute este bloque en la terminal del contenedor:
+
+Bash
+
+# 2. Definir el script de inicio oficial en una ruta de sistema
+***NO
+cat <<EOF > /usr/local/bin/start-geomatica.sh
+#!/bin/bash
+# Cargar variables de entorno del sistema (Chromium, PATH, etc.)
+source ~/.bashrc
+# Ejecutar Jupyter Lab con los parametros originales del proyecto
+# Nota: El puerto 8888 interno coincide con el mapeo externo 8889
+exec jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token='geomatica2025'
+EOF
+***NO
+
+
+ESTE SI
+
+cat <<EOF > /usr/local/bin/start-geomatica.sh
+#!/bin/bash
+# Cargar variables de entorno del sistema (Chromium, PATH, etc.)
+source ~/.bashrc
+# Ejecutar Jupyter Lab con los parametros originales del proyecto
+# Nota: El puerto 8888 interno coincide con el mapeo externo 8889
+exec jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token='geomatica2025'
+EOF
+
+# Asegurar permisos de ejecución para el punto de entrada
+chmod +x /usr/local/bin/start-geomatica.sh
+
+
+mater el Puerto corriendo
+fuser -k 8888/tcp
+o
+pkill -f jupyter-lab
+*******
+
+Arreglamos el Rprofile.site y el .bashrc
+
+Agregar las funciones j_eval, j_plot, lo de los puertos para gráficas de R y jupyterlab y los parámetros para chromium
+
+************
+
+Saneamiento previo al commit
+
+# 1. Limpieza de gestores de paquetes del sistema operativo
+apt-get clean
+rm -rf /var/lib/apt/lists/*
+
+# 2. Eliminación de instaladores y archivos temporales de Julia y Chromium
+# Se asume que la instalacion ya reside en /opt/julia y /root/.local/share/quarto/
+cd /tmp
+rm -f julia-1.11.3-linux-x86_64.tar.gz
+rm -rf julia-1.11.3
+rm -rf /tmp/* # 3. Purga de caches de Python (pip)
+rm -rf /root/.cache/pip
+
+# 4. Limpieza de historial para seguridad de la imagen
+history -c
+rm -f /root/.bash_history
+
+
+********
+Revisar lo de los Kernels
+
+quarto check
+
+#...
+#[✓] Checking Python 3 installation....OK
+#      Version: 3.12.3
+#      Path: /usr/bin/python3
+#      Jupyter: 5.9.1
+#      Kernels: julia-1.10, julia-1.11, python3, ir
+#...
+
+jupyter kernelspec list
+#Available kernels:
+#  julia-1.10    /root/.local/share/jupyter/kernels/julia-1.10
+#  julia-1.11    /root/.local/share/jupyter/kernels/julia-1.11
+#  ir            /usr/local/share/jupyter/kernels/ir
+#  python3       /usr/local/share/jupyter/kernels/python3
+
+# 1. Desinstalar el kernel de la versión 1.10
+jupyter kernelspec uninstall julia-1.10 -f
+
+# 2. Verificar la configuración del kernel 1.11
+# Es crítico confirmar que el ejecutable apunta a /opt/julia/bin/julia
+cat /root/.local/share/jupyter/kernels/julia-1.11/kernel.json
+
+# 3. Validar la lista actualizada de kernels
+jupyter kernelspec list
+
+
+quarto check
+
+#[✓] Checking Python 3 installation....OK
+#      Version: 3.12.3
+#      Path: /usr/bin/python3
+#      Jupyter: 5.9.1
+#      Kernels: julia-1.11, python3, ir
+
+
+**********************
+
+
+Auditoría y precarga de paquetes de TinyTeX
+
+
+# Instalación masiva de dependencias identificadas en el YAML
+quarto install tinytex --update-path
+
+
+export PATH="/root/.TinyTeX/bin/x86_64-linux:$PATH"
+# Verificar que ya es reconocido
+tlmgr --version
+
+
+
+# Actualizar el gestor tlmgr
+tlmgr update --self
+
+# Reintentar la instalación unificada de dependencias
+tlmgr install \
+  pdflscape emptypage colortbl fontspec newunicodechar \
+  fvextra xcolor listings fancyvrb lineno framed \
+  environ upquote microtype parskip caption hyperref \
+  atveryend rerunfilecheck unbroken infwarerr kvoptions \
+  graphics etoolbox booktabs longtable array multirow \
+  wrapfig amsmath amssymb unicode-math pdftexcmds \
+  lua-uni-algos selnolig babel-spanish titling abstract
+
+
+# Instalar los paquetes que agrupan amssymb, array y longtable
+tlmgr install amsfonts tools
+
+
+Una vez instalados los paquetes anteriores, es obligatorio refrescar la base de datos de fuentes del sistema operativo para que la "cirugía de emojis" no falle por falta de indexación:
+
+
+# Refrescar caché de fuentes del sistema
+fc-cache -fv
+# Regenerar formatos de LuaLaTeX para integrar nuevos paquetes
+fmtutil-sys --all
+
+
+# 2. Saneamiento profundo del sistema de archivos
+# Eliminación de caches de instalación y archivos temporales
+apt-get clean
+rm -rf /var/lib/apt/lists/*
+rm -rf /tmp/*
+rm -rf /root/.cache/pip
+
+# 3. Remoción de metadatos y registros obsoletos
+# Eliminar el kernel 1.10 de Jupyter para evitar errores de selección
+jupyter kernelspec uninstall julia-1.10 -f
+# Limpieza de historiales de comandos
+history -c
+rm -f /root/.bash_history
+
+
+
+***************** Finalizar lo de ReditorSupport
+
+
+1)
+ls /root/.vscode-server/extensions | grep -i "reditor"
+reditorsupport.r-2.8.7
+reditorsupport.r-syntax-0.1.4
+
+
+
+2) Eliminación de las carpetas físicas de REditorSupport
+rm -rf /root/.vscode-server/extensions/reditorsupport.r-2.8.7
+rm -rf /root/.vscode-server/extensions/reditorsupport.r-syntax-0.1.4
+
+# Verificación de la limpieza
+ls /root/.vscode-server/extensions | grep -i "reditor"
+
+
+3) Verificación de la librería en R
+
+R -e "packageVersion('languageserver')"
+
+
+4) instalar extension RedittorSupport en el contenedor
+
+
+5) crear un archive .r y ver si la opción de RdittorSuppor está habilitada (Abajo a la derecho en VSCODE)
+
+ 
+6) en Console se buscó de la lista RLanguage Server y salen unos errores
+
+
+
+Análisis de los errores detectados
+TypeError: this.task is not a function: Es una inconsistencia de la versión 2.8.7 de la extensión al intentar sincronizar cambios pendientes con el servidor de lenguaje.
+
+Argument is of length zero: Es una falla en el paquete languageserver (R) al intentar insertar comentarios de # nolint automáticamente.
+
+
+
+
+Ajuste de configuración inmutable
+Ejecute este comando en la terminal del contenedor para forzar una configuración estable en el servidor de VS Code:
+
+
+
+# Crear o actualizar la configuración de la máquina en el contenedor
+mkdir -p /root/.vscode-server/data/Machine/
+cat <<EOF > /root/.vscode-server/data/Machine/settings.json
+{
+    "r.lsp.enabled": true,
+    "r.lsp.diagnostics": false,
+    "r.bracketedPaste": true,
+    "r.plot.view": "httpgd",
+    "julia.executablePath": "/opt/julia/bin/julia",
+    "julia.enableTelemetry": false
+}
+EOF
+
+
+
+Nota técnica: Al establecer "r.lsp.diagnostics": false, el servidor seguirá proveyendo autocompletado y ayuda de funciones (hover), pero dejará de intentar calcular las "Code Actions" que están causando el colapso del proceso.
+
+
+
+
+rm -rf /root/.vscode-server/data/User/History/*
+rm -rf /root/.vscode-server/data/User/workspaceStorage/*
+rm -rf /root/.vscode-server/logs/*
+
+##### siguen los errores con languageserver
+
+Cambie el contenido de este archive
+/root/.vscode-server/data/Machine/settings.json
+
+original a eliminar:
+{
+    "r.lsp.enabled": true,
+    "r.lsp.diagnostics": false,
+    "r.bracketedPaste": true,
+    "r.plot.view": "httpgd",
+    "julia.executablePath": "/opt/julia/bin/julia",
+    "julia.enableTelemetry": false
+}
+
+
+por esto:
+{
+    "r.lsp.enabled": true,
+    "r.lsp.diagnostics": false,
+    "r.lsp.debug": false,
+    "r.bracketedPaste": true,
+    "r.plot.view": "httpgd",
+    "r.sessionWatcher": true,
+    "julia.executablePath": "/opt/julia/bin/julia",
+    "julia.enableTelemetry": false,
+    "julia.symbolServerCachePath": "/root/.julia/symbolserver",
+    "python.defaultInterpreterPath": "/usr/bin/python3",
+    "python.languageServer": "Pylance",
+    "quarto.lsp.enabled": true,
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.acceptSuggestionOnEnter": "on"
+}
+
+
+*******************
+
+#como no funcionaba la extension:
+
+- las borramos del contenedor con vscode
+
+- Cerramos vscode
+
+
+- Detener cualquier proceso residual del servidor en el contenedor
+docker exec -u root 1808362d6848 pkill -f vscode-server
+
+- Eliminar físicamente los directorios de metadatos y extensiones
+docker exec -u root 1808362d6848 rm -rf /root/.vscode-server
+docker exec -u root 1808362d6848 rm -rf /root/.vscode-server-insiders
+
+- Cargar el contenedor en VSCODE
+
+- Instalar las extensions: ReditorSupport, quarto, Julia
+
+- Inyección de configuración de estabilidad: Una vez reinstaladas, es imperativo establecer la configuración que evita el colapso del LSP. Ejecute esto en la terminal del contenedor:
+
+mkdir -p /root/.vscode-server/data/Machine/
+
+cat <<EOF > /root/.vscode-server/data/Machine/settings.json
+{
+    "r.lsp.enabled": false,
+    "quarto.lsp.enabled": false,
+    "r.alwaysUseActiveTerminal": false,
+    "r.rterm.linux": "/usr/bin/R",
+    "r.bracketedPaste": true,
+    "r.plot.view": "httpgd",
+    "r.sessionWatcher": true,
+    "julia.executablePath": "/opt/julia/bin/julia",
+    "julia.enableTelemetry": false,
+    "python.defaultInterpreterPath": "/usr/bin/python3"
+}
+EOF
+
+
+# Limpiar registros de la sesión de instalación externa
+
+history -c
+rm -rf /root/.vscode-server/data/User/History/*
+rm -rf /root/.vscode-server/logs/*
+rm -rf /tmp/* /var/tmp/*
+exit
+
+
+cerrar vscode
+
+
+******************
+
+
+
+# 1. Crear la imagen final de producción (no involucre la imagen postgis)
+# ID: 1808362d6848
+
+docker commit --change='CMD ["/usr/local/bin/start-geomatica.sh"]' --change='EXPOSE 8888 8787' 1808362d6848 image_sig_unal:v1.11_produccion_final
+
+# 2. Exportar el respaldo físico (ambas, la anterior image_sig_unal:v1.11_produccion_final y la de postgis)
+docker save -o sig_unal_v1.11_completo.tar image_sig_unal:v1.11_produccion_final postgis_unal:final
+
+
+
+
+
+***************
+
+
+Secuencia de despliegue desde archivo empaquetado
+Carga en el registro local: Este comando lee el archivo comprimido y extrae las capas del contenedor hacia el motor de Docker del equipo de destino.
+
+Bash
+docker load -i sig_unal_v1.11_final.tar
+Instanciación del servicio: Una vez extraída la imagen, se ejecuta el comando de creación para levantar el servidor en segundo plano (-d), establecer el túnel de puertos y montar el volumen para la persistencia de datos.
+
+Bash
+docker compose up -d
+
+
+
+
+********************
+
+
+- Limpieza profunda del motor de Docker
+
+
+# Eliminar forzosamente todo el contenido del motor de Docker
+docker system prune -a --volumes -f
+
+- Cerrar Docker desde la bandeja de Sistema, clic derecho y "Close Docker Deskptop"
+
+- Abrir PowerShell como administrador
+
+- Detener el subsistema de Linux ejecutando el siguiente comando:
+wsl --shutdown
+
+- Verificar que no existen distribuciones operando en segundo plano
+wsl --list --running
+
+- Iniciar la utilidad de discos ingresando:
+
+diskpart
+
+
+- Compactación del disco virtual en Windows. Ejecución de diskpart para compactación
+
+
+select vdisk file="E:\DockerData\DockerDesktopWSL\disk\docker_data.vhdx"
+attach vdisk readonly
+compact vdisk
+detach vdisk
+exit
+
+- Inicie docker desktop
+
+- Iniciar el conenedor desde cero
+
+docker load -i sig_unal_v1.11_completo.tar
+docker compose up -d
+
+
+***********
+
+Reparación de la imagen
+
+- Averiguar el error
+docker logs contenedor_sig_unal
+
+- Agregue al xml
+
+...
+    container_name: contenedor_sig_unal
+    # Sobrescribir el CMD defectuoso de la imagen
+    entrypoint: ["/bin/bash", "/usr/local/bin/start-geomatica.sh"]
+    tty: true
+...
+
+- Creación de contenedor de reparación
+
+docker run -it --name contenedor_reparacion image_sig_unal:v1.11_produccion_final bash
+
+
+- Ejecute en el contenedor
+
+# Verificar la integridad del script y sus permisos
+ls -l /usr/local/bin/start-geomatica.sh
+# Si el archivo no existe, debe recrearlo con el comando 'cat <<EOF' visto anteriormente.
+
+- Sellado correctivo de la imagen (Sintaxis PowerShell)
+# Ejecutar en PowerShell (fuera del contenedor)
+
+docker commit --change='CMD /usr/local/bin/start-geomatica.sh' --change='EXPOSE 8888 8787' contenedor_reparacion image_sig_unal:v1.11_produccion_final
+
+
+- Exportación del archivo .tar complete
+
+docker save -o sig_unal_v1.11_completo_corregido.tar image_sig_unal:v1.11_produccion_final postgis_unal:final
+
+
+- Limpieza de contenedores de prueba
+
+docker rm -f contenedor_reparacion
+
+
+- Limpieza de imágenes previas:
+
+docker rmi image_sig_unal:v1.11_produccion_final postgis_unal:final
+
+- Carga del nuevo paquete:
+
+docker load -i sig_unal_v1.11_completo_final.tar
+
+- Despliegue de producción:
+
+docker compose up -d
+
+- Verificación de hitos técnicos
+
+docker ps 
+
+Acceso a Jupyter Lab: Ingrese a 
+
+http://localhost:8889 
+
+y valide el token geomatica2025.
+
+Integridad de Julia: 
+
+julia --version 
+
+y verifique que responda la versión 1.11.3.
+
+
+
+
+
+***************
+
+
+
+
+https://yeesian.com/ArchGDAL.jl/latest/geometries/
+
+
+https://rpubs.com/JuliaWorkshop/GIS_with_Julia

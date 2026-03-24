@@ -1,0 +1,201 @@
+---
+title: "Documentación de consolidación del entorno geoespacial UNAL"
+author: "Alexys Rodríguez Avellaneda"
+date: "2026-03-18"
+format:
+  html:
+    toc: true
+    code-copy: true
+---
+
+## 1. Depuración y saneamiento del entorno de desarrollo
+
+Antes de la exportación final, es imperativo limpiar los metadatos corruptos del servidor de VS Code que causan fallos en los sockets de comunicación.
+
+### Limpieza de caché de extensiones
+Para eliminar residuos de sesiones previas en el contenedor, ejecute en la terminal del anfitrión (sustituya el ID del contenedor si es necesario):
+
+```bash
+# Limpiar directorios de metadatos de VS Code Server
+docker exec -it 1808362d6848 rm -rf /root/.vscode-server /root/.vscode-server-insiders
+```
+
+### Reconstrucción del servidor de R (LSP)
+Si se presentan problemas binarios con el servidor de lenguaje de R, reinstale la dependencia desde una sesión limpia:
+
+```r
+# Ejecutar dentro del contenedor
+install.packages("languageserver")
+```
+
+---
+
+## 2. Transición técnica a Julia 1.11.3
+
+La actualización a la versión 1.11.3 elimina la necesidad de "cirugías" manuales de OpenSSL y resuelve conflictos estructurales en el gestor de paquetes.
+
+### Procedimiento de instalación y configuración geoespacial
+
+```bash
+# 1. Actualización de binarios
+cd /tmp
+rm -rf /opt/julia
+wget [https://julialang-s3.julialang.org/bin/linux/x64/1.11/julia-1.11.3-linux-x86_64.tar.gz](https://julialang-s3.julialang.org/bin/linux/x64/1.11/julia-1.11.3-linux-x86_64.tar.gz)
+tar -xvzf julia-1.11.3-linux-x86_64.tar.gz
+mv julia-1.11.3 /opt/julia
+
+# 2. Configuración de preferencias para GDAL y GEOS del sistema
+rm -rf /root/.julia/environments/v1.11
+mkdir -p /root/.julia/environments/v1.11
+printf "[LocalPreferences]\nGDAL_jll = { libgdal_path = \"/usr/lib/libgdal.so\" }\nGEOS_jll = { libgeos_path = \"/usr/lib/x86_64-linux-gnu/libgeos_c.so\" }\n" > /root/.julia/environments/v1.11/LocalPreferences.toml
+
+# 3. Instalación de la suite técnica
+julia -e '
+using Pkg
+ENV["JULIA_PKG_PRECOMPILE_AUTO"] = 0
+Pkg.Registry.update()
+
+paquetes = [
+    "Preferences", "Suppressor", "RCall", "LibGEOS", "Tables", "DataFrames", 
+    "Plots", "Statistics", "ArchGDAL", "LibPQ", "GeoDataFrames", "IJulia", 
+    "CSV", "CairoMakie", "WGLMakie", "AlgebraOfGraphics", "DimensionalData", 
+    "FlexiJoins", "GeoFormatTypes", "GeoInterface", "GeoJSON", "GeoMakie", 
+    "GeometryOps", "Makie", "MakieCore", "NaturalEarth", "Proj", "Rasters", 
+    "StatsBase", "Tyler", "GeoStats", "Graphs", "NCDatasets", "MetaGraphsNext", 
+    "Crayons", "GeoInterfaceRecipes", "YAXArrays", "Zarr", "RasterDataSources", 
+    "Meshes", "Colors", "ColorSchemes"
+]
+
+Pkg.add(paquetes)
+Pkg.build("RCall")
+Pkg.build("IJulia")
+Pkg.precompile()
+'
+```
+
+---
+
+## 3. Configuración inmutable de Chromium para Quarto
+
+Este bloque establece un vínculo permanente hacia el motor de renderizado Chromium, evitando conflictos con versiones estándar de Google Chrome.
+
+```bash
+# Redirección de binarios
+ln -sf /root/.local/share/quarto/chromium/linux-869685/chrome-linux/chrome /usr/local/bin/google-chrome
+ln -sf /root/.local/share/quarto/chromium/linux-869685/chrome-linux/chrome /usr/local/bin/chrome
+
+# Inyección de variables en .bashrc
+cat <<EOF >> ~/.bashrc
+# --- Configuración inmutable Quarto + Chromium ---
+export QUARTO_CHROMIUM="/root/.local/share/quarto/chromium/linux-869685/chrome-linux/chrome"
+export QUARTO_CHROME_ARGUMENTS="--no-sandbox --disable-gpu --disable-dev-shm-usage --headless"
+export PATH="/usr/local/bin:\$PATH"
+EOF
+```
+
+---
+
+## 4. Gestión del servicio Jupyter Lab
+
+### Script de inicio (Entrypoint)
+Se define el script de arranque que actuará como PID 1 del contenedor.
+
+```bash
+cat <<EOF > /usr/local/bin/start-geomatica.sh
+#!/bin/bash
+source ~/.bashrc
+# Ejecución en primer plano con exec para evitar cierre del contenedor
+exec jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token='geomatica2025'
+EOF
+
+chmod +x /usr/local/bin/start-geomatica.sh
+```
+
+---
+
+## 5. Auditoría de Kernels y TinyTeX
+
+### Limpieza de Kernels obsoletos
+Eliminar referencias a versiones anteriores de Julia para evitar errores de selección en Jupyter:
+
+```bash
+jupyter kernelspec uninstall julia-1.10 -f
+jupyter kernelspec list
+```
+
+### Precarga de paquetes LaTeX
+Instalación masiva de dependencias para garantizar el renderizado a PDF sin conexión:
+
+```bash
+tlmgr update --self
+tlmgr install pdflscape emptypage colortbl fontspec newunicodechar \
+  fvextra xcolor listings fancyvrb lineno framed \
+  environ upquote microtype parskip caption hyperref \
+  atveryend rerunfilecheck unbroken infwarerr kvoptions \
+  graphics etoolbox booktabs longtable array multirow \
+  wrapfig amsmath amssymb unicode-math pdftexcmds \
+  lua-uni-algos selnolig babel-spanish titling abstract amsfonts tools
+
+fc-cache -fv
+fmtutil-sys --all
+```
+
+---
+
+## 6. Configuración de estabilidad en VS Code (Settings.json)
+
+Para prevenir el error `EPIPE`, desactivamos los servidores de lenguaje (LSP) en la configuración de la máquina del contenedor.
+
+```bash
+mkdir -p /root/.vscode-server/data/Machine/
+
+cat <<EOF > /root/.vscode-server/data/Machine/settings.json
+{
+    "r.lsp.enabled": false,
+    "quarto.lsp.enabled": false,
+    "r.alwaysUseActiveTerminal": false,
+    "r.rterm.linux": "/usr/bin/R",
+    "r.bracketedPaste": true,
+    "r.plot.view": "httpgd",
+    "r.sessionWatcher": true,
+    "julia.executablePath": "/opt/julia/bin/julia",
+    "julia.enableTelemetry": false,
+    "python.defaultInterpreterPath": "/usr/bin/python3"
+}
+EOF
+```
+
+---
+
+## 7. Saneamiento final y exportación de producción
+
+### Limpieza profunda
+```bash
+apt-get clean
+rm -rf /var/lib/apt/lists/*
+rm -rf /tmp/*
+rm -rf /root/.cache/pip
+rm -rf /root/.vscode-server/data/User/History/*
+rm -rf /root/.vscode-server/logs/*
+history -c
+rm -f /root/.bash_history
+```
+
+### Commit y empaquetado (PowerShell)
+```powershell
+# 1. Crear imagen de producción
+docker commit --change='CMD ["/usr/local/bin/start-geomatica.sh"]' --change='EXPOSE 8888 8787' 1808362d6848 image_sig_unal:v1.11_produccion_final
+
+# 2. Exportar respaldo unificado (Incluye PostGIS)
+docker save -o sig_unal_v1.11_completo.tar image_sig_unal:v1.11_produccion_final postgis_unal:final
+```
+
+---
+
+## 8. Protocolo de despliegue para usuarios finales
+
+1. **Cargar el archivo tar:**
+   `docker load -i sig_unal_v1.11_completo.tar`
+
+2. **Levantar servicios:**
+   `docker compose up -d`

@@ -66,5 +66,19 @@ julia -e 'using Pkg; Pkg.precompile()'
 ```
 ## Librerías adicionales
 
-* GeoInterfaceRecipes
-* Crayons
+* GeoInterfaceRecipes (instalada)
+* Crayons (instalada)
+* Leaflet (mejor no instalarla - poco mantenimiento - incompatibilidades)
+* YAXArrays.jl (instalada)
+* Zarr.jl (instalada)
+* RasterDataSources.jl (instalada)
+* Meshes.jl (instalaa)
+* Tyler.jl (instalada)
+* GLMakie.jl (instalada)
+* ColorSchemes.jl (instalada)
+* Colors.jl (instalada)
+* AlgebraOfGraphics.jl (instalada)
+* GeoMakie.jl (instalada)
+* StatsPlots
+
+

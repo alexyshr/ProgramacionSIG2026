@@ -49,7 +49,21 @@ book:
         - 10-trabajando_con_archivos.qmd
         - 11-matrices_dataframes.qmd
         - 12-introduccion_python_r_julia.qmd
-        - 13-estructuras_datos_geo.qmd
+    - part: "Programación Geoespacial"        # Segunda parte
+      chapters:
+        - 13-introduccion_geo.qmd
+        - 14-vector.qmd
+        # - 15-raster.qmd
+        # - 16-multidimensional.qmd
+        # - 17-mapas_dinamicos.qmd
+        # - 18-geoprocesamiento.qmd
+        # - 19-mapas_3d.qmd
+        # - 20-computacion_nube_gee.qmd
+        # - 21-datos_hiperespectrales.qmd
+        #- 22-duck_db.qmd
+        #- 23-dashboards.qmd
+        #- 24-apache_sedona.qmd
+        - 25-estructuras_datos_geo.qmd
     - part: "Proyecto Final"        # Segunda parte
       chapters:
         - 38-guia_estructura_proyecto_final.qmd
@@ -155,6 +169,9 @@ format:
     # CONFIGURACIÓN LaTeX (se inserta en el preámbulo)
     include-in-header:
       text: |
+        % Añade espacio entre párrafos y elimina la sangría
+        \usepackage{parskip}
+
         % para girar a landscape \blandscape y retornar \elandscape
         \usepackage{pdflscape}      
         \usepackage{emptypage}   % Elimina números en páginas vacías
