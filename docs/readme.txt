@@ -31,6 +31,8 @@ https://meet.google.com/kgb-qzqx-phu
 
 2. Nueva version del contenedor docker
 
+https://drive.google.com/file/d/1jpWNYLLToUoxtH0MZ5rrnk37ncudA5ae/view?usp=sharing
+
 3. Tareas
 
 4. Proyecto
