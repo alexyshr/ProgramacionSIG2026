@@ -1,5 +1,5 @@
 ﻿---
-title: "Introducción a Python, R y Julia"
+title: "Trabajando con Vectores: Estándar Simple Features"
 author: "Alexys H. Rodríguez-Avellaneda, PhD"
 date: last-modified
 format:
@@ -4050,7 +4050,7 @@ La imposición de un modelo de precisión permite estandarizar las tolerancias d
 
 
 
-## Extracción estructurada de coordenadas en topologías complejas (OLD: Revisar Luego)
+## Extracción estructurada de coordenadas en topologías complejas (OLD: Remover Luego)
 
 Comprender la jerarquía anidada de las multigeometrías es fundamental para el procesamiento analítico. A nivel algorítmico, un SIG no evalúa una figura como un dibujo, sino como un tensor multidimensional de vértices. 
 
@@ -4586,11 +4586,21 @@ Para garantizar que la representación gráfica mantenga la proporción geométr
 
 Comprender la jerarquía anidada de las multigeometrías es fundamental para el procesamiento analítico. A nivel algorítmico, un SIG no evalúa una figura como un dibujo, sino como un tensor multidimensional de vértices. 
 
+El ejemplo a continuación simulará un área protegida (tierra) con lagunas e inslas interiores. Todo lo que sea agua no hará pare del polígono (hueco). La tarea consiste en **extraer el tercer vértice** de los polígonos que conforman el área protegida.
+
+```{r}
+#| label: area_protegida
+#| fig-align: center
+#| out-width: "80%"
+# #| eval: false
+knitr::include_graphics("images/c14_plot_topologia_puntos_julia.png")
+```
+
 La topología de un `POLYGON` se define de manera estricta mediante anillos (Rings): un polígono está compuesto por **exactamente un anillo exterior** (cuya área representa masa sólida) y **cero o múltiples anillos interiores** (cuya área representa perforaciones o huecos). Por lo tanto, la naturaleza del espacio (tierra o agua) está dictada por su índice estructural:
 
 - El anillo principal define la masa (tierra).
 - Los anillos secundarios dentro del mismo polígono definen los huecos (cuerpos de agua).
-- Las masas de tierra desconectadas (islas) son simplemente polígonos adicionales dentro de un objeto `MULTIPOLYGON`.
+- Las masas de tierra desconectadas (islas) son simplemente **polígonos adicionales** dentro de un objeto `MULTIPOLYGON`.
 
 Para ilustrar este principio geométrico y validarlo mediante predicados espaciales, se simula un área protegida:
 
@@ -4631,8 +4641,10 @@ ext_isla = [(-74.05, 5.05), (-73.98, 5.05), (-73.98, 4.95), (-74.05, 4.95), (-74
 # 2. Ensamblaje de la Multigeometría
 # Estructura: [(exterior_pol1, [huecos_pol1]), (exterior_pol2, [huecos_pol2])]
 mpol_reserva = MultiPolygon([
-    (ext_reserva, [int_laguna1, int_laguna2]), 
-    (ext_isla, [])
+    (ext_reserva, [int_laguna1, int_laguna2]), # geoms[0].exterior
+                                               # geoms[0].interiors[0]
+                                               # geoms[0].interiors[1]
+    (ext_isla, [])                             # geoms[1].exterior
 ])
 
 # 3. Determinación estructural (Reglas OGC Simple Features)
@@ -4711,8 +4723,10 @@ ext_isla = [(-74.05, 5.05), (-73.98, 5.05), (-73.98, 4.95), (-74.05, 4.95), (-74
 # 2. Ensamblaje de la Multigeometría
 # Estructura: [(exterior_pol1, [huecos_pol1]), (exterior_pol2, [huecos_pol2])]
 mpol_reserva = MultiPolygon([
-    (ext_reserva, [int_laguna1, int_laguna2]), 
-    (ext_isla, [])
+    (ext_reserva, [int_laguna1, int_laguna2]), # geoms[0].exterior
+                                               # geoms[0].interiors[0]
+                                               # geoms[0].interiors[1]
+    (ext_isla, [])                             # geoms[1].exterior
 ])
 
 # 3. Determinación estructural (Reglas OGC Simple Features)
@@ -4788,8 +4802,8 @@ ext_isla <- rbind(c(-74.05, 5.05), c(-73.98, 5.05), c(-73.98, 4.95), c(-74.05, 4
 
 # 2. Ensamblaje en lista jerárquica (MULTIPOLYGON) - Objeto SFG
 mpol_reserva <- st_multipolygon(list(
-  list(ext_reserva, int_laguna1, int_laguna2), # Pol 1: Exterior y dos huecos
-  list(ext_isla)                               # Pol 2: Exterior únicamente (Isla)
+  list(ext_reserva, int_laguna1, int_laguna2), # Pol 1: Exterior y dos huecos      (mpol_reserva[[1]])
+  list(ext_isla)                               # Pol 2: Exterior únicamente (Isla) (mpol_reserva[[2]])
 ))
 
 # Instanciación en columna geométrica formal
@@ -4862,8 +4876,8 @@ ext_isla <- rbind(c(-74.05, 5.05), c(-73.98, 5.05), c(-73.98, 4.95), c(-74.05, 4
 
 # 2. Ensamblaje en lista jerárquica (MULTIPOLYGON) - Objeto SFG
 mpol_reserva <- st_multipolygon(list(
-  list(ext_reserva, int_laguna1, int_laguna2), # Pol 1: Exterior y dos huecos
-  list(ext_isla)                               # Pol 2: Exterior únicamente (Isla)
+  list(ext_reserva, int_laguna1, int_laguna2), # Pol 1: Exterior y dos huecos      (mpol_reserva[[1]])
+  list(ext_isla)                               # Pol 2: Exterior únicamente (Isla) (mpol_reserva[[2]])
 ))
 
 # Instanciación en columna geométrica formal
