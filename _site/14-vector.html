@@ -55,27 +55,7 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -508,65 +488,64 @@ window.Quarto = {
   <li><a href="#tipos-de-geometría" id="toc-tipos-de-geometría" class="nav-link" data-scroll-target="#tipos-de-geometría">Tipos de Geometría</a></li>
   </ul></li>
   <li><a href="#arquitectura-de-los-objetos-espaciales" id="toc-arquitectura-de-los-objetos-espaciales" class="nav-link" data-scroll-target="#arquitectura-de-los-objetos-espaciales"><span class="header-section-number">14.4</span> Arquitectura de los objetos espaciales</a></li>
-  <li><a href="#relación-entre-librerías-geoespaciales" id="toc-relación-entre-librerías-geoespaciales" class="nav-link" data-scroll-target="#relación-entre-librerías-geoespaciales"><span class="header-section-number">14.5</span> Relación entre librerías geoespaciales</a></li>
-  <li><a href="#creación-de-puntos-a-partir-de-primitivas-geométricas" id="toc-creación-de-puntos-a-partir-de-primitivas-geométricas" class="nav-link" data-scroll-target="#creación-de-puntos-a-partir-de-primitivas-geométricas"><span class="header-section-number">14.6</span> Creación de puntos a partir de primitivas geométricas</a>
+  <li><a href="#creación-de-puntos-a-partir-de-primitivas-geométricas" id="toc-creación-de-puntos-a-partir-de-primitivas-geométricas" class="nav-link" data-scroll-target="#creación-de-puntos-a-partir-de-primitivas-geométricas"><span class="header-section-number">14.5</span> Creación de puntos a partir de primitivas geométricas</a>
   <ul class="collapse">
   <li><a href="#resumen-sintáctico-creación-de-puntos-mediante-primitivas" id="toc-resumen-sintáctico-creación-de-puntos-mediante-primitivas" class="nav-link" data-scroll-target="#resumen-sintáctico-creación-de-puntos-mediante-primitivas">Resumen sintáctico: Creación de puntos mediante primitivas</a></li>
   </ul></li>
-  <li><a href="#más-allá-del-punto-líneas-polígonos-y-multigeometrías" id="toc-más-allá-del-punto-líneas-polígonos-y-multigeometrías" class="nav-link" data-scroll-target="#más-allá-del-punto-líneas-polígonos-y-multigeometrías"><span class="header-section-number">14.7</span> Más allá del Punto: Líneas, Polígonos y Multigeometrías</a>
+  <li><a href="#más-allá-del-punto-líneas-polígonos-y-multigeometrías" id="toc-más-allá-del-punto-líneas-polígonos-y-multigeometrías" class="nav-link" data-scroll-target="#más-allá-del-punto-líneas-polígonos-y-multigeometrías"><span class="header-section-number">14.6</span> Más allá del Punto: Líneas, Polígonos y Multigeometrías</a>
   <ul class="collapse">
   <li><a href="#el-concepto-de-multigeometría" id="toc-el-concepto-de-multigeometría" class="nav-link" data-scroll-target="#el-concepto-de-multigeometría">El concepto de Multigeometría</a></li>
   <li><a href="#resumen-sintáctico" id="toc-resumen-sintáctico" class="nav-link" data-scroll-target="#resumen-sintáctico">Resumen sintáctico:</a></li>
   </ul></li>
-  <li><a href="#creación-de-puntos-a-partir-de-texto-wkt-well-known-text" id="toc-creación-de-puntos-a-partir-de-texto-wkt-well-known-text" class="nav-link" data-scroll-target="#creación-de-puntos-a-partir-de-texto-wkt-well-known-text"><span class="header-section-number">14.8</span> Creación de puntos a partir de texto WKT (Well-Known Text)</a>
+  <li><a href="#creación-de-puntos-a-partir-de-texto-wkt-well-known-text" id="toc-creación-de-puntos-a-partir-de-texto-wkt-well-known-text" class="nav-link" data-scroll-target="#creación-de-puntos-a-partir-de-texto-wkt-well-known-text"><span class="header-section-number">14.7</span> Creación de puntos a partir de texto WKT (Well-Known Text)</a>
   <ul class="collapse">
   <li><a href="#resumen-sintáctico-creación-de-puntos-desde-wkt" id="toc-resumen-sintáctico-creación-de-puntos-desde-wkt" class="nav-link" data-scroll-target="#resumen-sintáctico-creación-de-puntos-desde-wkt">Resumen sintáctico: Creación de puntos desde WKT</a></li>
   </ul></li>
-  <li><a href="#creación-de-otras-multigeometrías-a-partir-de-texto-wkt" id="toc-creación-de-otras-multigeometrías-a-partir-de-texto-wkt" class="nav-link" data-scroll-target="#creación-de-otras-multigeometrías-a-partir-de-texto-wkt"><span class="header-section-number">14.9</span> Creación de otras multigeometrías a partir de texto WKT</a>
+  <li><a href="#creación-de-otras-multigeometrías-a-partir-de-texto-wkt" id="toc-creación-de-otras-multigeometrías-a-partir-de-texto-wkt" class="nav-link" data-scroll-target="#creación-de-otras-multigeometrías-a-partir-de-texto-wkt"><span class="header-section-number">14.8</span> Creación de otras multigeometrías a partir de texto WKT</a>
   <ul class="collapse">
   <li><a href="#resumen-sintáctico-1" id="toc-resumen-sintáctico-1" class="nav-link" data-scroll-target="#resumen-sintáctico-1">Resumen sintáctico</a></li>
   </ul></li>
-  <li><a href="#dimensiones-adicionales-coordenadas-z-y-m" id="toc-dimensiones-adicionales-coordenadas-z-y-m" class="nav-link" data-scroll-target="#dimensiones-adicionales-coordenadas-z-y-m"><span class="header-section-number">14.10</span> Dimensiones adicionales: Coordenadas Z y M</a>
+  <li><a href="#dimensiones-adicionales-coordenadas-z-y-m" id="toc-dimensiones-adicionales-coordenadas-z-y-m" class="nav-link" data-scroll-target="#dimensiones-adicionales-coordenadas-z-y-m"><span class="header-section-number">14.9</span> Dimensiones adicionales: Coordenadas Z y M</a>
   <ul class="collapse">
   <li><a href="#referenciación-lineal-y-segmentación-dinámica" id="toc-referenciación-lineal-y-segmentación-dinámica" class="nav-link" data-scroll-target="#referenciación-lineal-y-segmentación-dinámica">Referenciación Lineal y Segmentación Dinámica</a></li>
   <li><a href="#resumen-sintáctico-2" id="toc-resumen-sintáctico-2" class="nav-link" data-scroll-target="#resumen-sintáctico-2">Resumen sintáctico</a></li>
   </ul></li>
-  <li><a href="#el-formato-binario-wkb-well-known-binary" id="toc-el-formato-binario-wkb-well-known-binary" class="nav-link" data-scroll-target="#el-formato-binario-wkb-well-known-binary"><span class="header-section-number">14.11</span> El formato binario WKB (Well-Known Binary)</a>
+  <li><a href="#el-formato-binario-wkb-well-known-binary" id="toc-el-formato-binario-wkb-well-known-binary" class="nav-link" data-scroll-target="#el-formato-binario-wkb-well-known-binary"><span class="header-section-number">14.10</span> El formato binario WKB (Well-Known Binary)</a>
   <ul class="collapse">
   <li><a href="#resumen-sintáctico-codificación-binaria-wkb" id="toc-resumen-sintáctico-codificación-binaria-wkb" class="nav-link" data-scroll-target="#resumen-sintáctico-codificación-binaria-wkb">Resumen sintáctico: codificación binaria WKB</a></li>
   </ul></li>
-  <li><a href="#precisión-espacial-y-redondeo-topológico" id="toc-precisión-espacial-y-redondeo-topológico" class="nav-link" data-scroll-target="#precisión-espacial-y-redondeo-topológico"><span class="header-section-number">14.12</span> Precisión espacial y redondeo topológico</a>
+  <li><a href="#precisión-espacial-y-redondeo-topológico" id="toc-precisión-espacial-y-redondeo-topológico" class="nav-link" data-scroll-target="#precisión-espacial-y-redondeo-topológico"><span class="header-section-number">14.11</span> Precisión espacial y redondeo topológico</a>
   <ul class="collapse">
   <li><a href="#resumen-sintáctico-precisión-escalar-y-formato-wkb" id="toc-resumen-sintáctico-precisión-escalar-y-formato-wkb" class="nav-link" data-scroll-target="#resumen-sintáctico-precisión-escalar-y-formato-wkb">Resumen sintáctico: Precisión escalar y formato WKB</a></li>
   </ul></li>
-  <li><a href="#extracción-estructurada-de-coordenadas-en-topologías-complejas-old-remover-luego" id="toc-extracción-estructurada-de-coordenadas-en-topologías-complejas-old-remover-luego" class="nav-link" data-scroll-target="#extracción-estructurada-de-coordenadas-en-topologías-complejas-old-remover-luego"><span class="header-section-number">14.13</span> Extracción estructurada de coordenadas en topologías complejas (OLD: Remover Luego)</a>
+  <li><a href="#extracción-estructurada-de-coordenadas-en-topologías-complejas-old-remover-luego" id="toc-extracción-estructurada-de-coordenadas-en-topologías-complejas-old-remover-luego" class="nav-link" data-scroll-target="#extracción-estructurada-de-coordenadas-en-topologías-complejas-old-remover-luego"><span class="header-section-number">14.12</span> Extracción estructurada de coordenadas en topologías complejas (OLD: Remover Luego)</a>
   <ul class="collapse">
   <li><a href="#resumen-sintáctico-3" id="toc-resumen-sintáctico-3" class="nav-link" data-scroll-target="#resumen-sintáctico-3">Resumen sintáctico</a></li>
   </ul></li>
-  <li><a href="#extracción-estructurada-de-coordenadas-y-topologías-complejas" id="toc-extracción-estructurada-de-coordenadas-y-topologías-complejas" class="nav-link" data-scroll-target="#extracción-estructurada-de-coordenadas-y-topologías-complejas"><span class="header-section-number">14.14</span> Extracción estructurada de coordenadas y topologías complejas</a>
+  <li><a href="#extracción-estructurada-de-coordenadas-y-topologías-complejas" id="toc-extracción-estructurada-de-coordenadas-y-topologías-complejas" class="nav-link" data-scroll-target="#extracción-estructurada-de-coordenadas-y-topologías-complejas"><span class="header-section-number">14.13</span> Extracción estructurada de coordenadas y topologías complejas</a>
   <ul class="collapse">
   <li><a href="#resumen-sintáctico-4" id="toc-resumen-sintáctico-4" class="nav-link" data-scroll-target="#resumen-sintáctico-4">Resumen sintáctico</a></li>
   </ul></li>
-  <li><a href="#creación-de-puntos-a-partir-de-coordenadas-en-la-tabla" id="toc-creación-de-puntos-a-partir-de-coordenadas-en-la-tabla" class="nav-link" data-scroll-target="#creación-de-puntos-a-partir-de-coordenadas-en-la-tabla"><span class="header-section-number">14.15</span> Creación de puntos a partir de coordenadas en la tabla</a>
+  <li><a href="#creación-de-puntos-a-partir-de-coordenadas-en-la-tabla" id="toc-creación-de-puntos-a-partir-de-coordenadas-en-la-tabla" class="nav-link" data-scroll-target="#creación-de-puntos-a-partir-de-coordenadas-en-la-tabla"><span class="header-section-number">14.14</span> Creación de puntos a partir de coordenadas en la tabla</a>
   <ul class="collapse">
   <li><a href="#resumen-sintáctico-creación-de-puntos-espaciales" id="toc-resumen-sintáctico-creación-de-puntos-espaciales" class="nav-link" data-scroll-target="#resumen-sintáctico-creación-de-puntos-espaciales">Resumen sintáctico: Creación de puntos espaciales</a></li>
   </ul></li>
-  <li><a href="#lectura-de-archivos-vectoriales-externos" id="toc-lectura-de-archivos-vectoriales-externos" class="nav-link" data-scroll-target="#lectura-de-archivos-vectoriales-externos"><span class="header-section-number">14.16</span> Lectura de archivos vectoriales externos</a></li>
-  <li><a href="#la-columna-de-geometría-como-objeto-independiente" id="toc-la-columna-de-geometría-como-objeto-independiente" class="nav-link" data-scroll-target="#la-columna-de-geometría-como-objeto-independiente"><span class="header-section-number">14.17</span> La columna de geometría como objeto independiente</a>
+  <li><a href="#lectura-de-archivos-vectoriales-externos" id="toc-lectura-de-archivos-vectoriales-externos" class="nav-link" data-scroll-target="#lectura-de-archivos-vectoriales-externos"><span class="header-section-number">14.15</span> Lectura de archivos vectoriales externos</a></li>
+  <li><a href="#la-columna-de-geometría-como-objeto-independiente" id="toc-la-columna-de-geometría-como-objeto-independiente" class="nav-link" data-scroll-target="#la-columna-de-geometría-como-objeto-independiente"><span class="header-section-number">14.16</span> La columna de geometría como objeto independiente</a>
   <ul class="collapse">
   <li><a href="#resumen-sintáctico-lectura-y-estructura" id="toc-resumen-sintáctico-lectura-y-estructura" class="nav-link" data-scroll-target="#resumen-sintáctico-lectura-y-estructura">Resumen sintáctico: Lectura y Estructura</a></li>
   </ul></li>
-  <li><a href="#relación-atributo-geometría-agr" id="toc-relación-atributo-geometría-agr" class="nav-link" data-scroll-target="#relación-atributo-geometría-agr"><span class="header-section-number">14.18</span> Relación atributo-geometría (AGR)</a></li>
-  <li><a href="#geometrías-vacías-y-validación" id="toc-geometrías-vacías-y-validación" class="nav-link" data-scroll-target="#geometrías-vacías-y-validación"><span class="header-section-number">14.19</span> Geometrías vacías y validación</a></li>
-  <li><a href="#predicados-espaciales-y-relaciones-topológicas" id="toc-predicados-espaciales-y-relaciones-topológicas" class="nav-link" data-scroll-target="#predicados-espaciales-y-relaciones-topológicas"><span class="header-section-number">14.20</span> Predicados espaciales y relaciones topológicas</a>
+  <li><a href="#relación-atributo-geometría-agr" id="toc-relación-atributo-geometría-agr" class="nav-link" data-scroll-target="#relación-atributo-geometría-agr"><span class="header-section-number">14.17</span> Relación atributo-geometría (AGR)</a></li>
+  <li><a href="#geometrías-vacías-y-validación" id="toc-geometrías-vacías-y-validación" class="nav-link" data-scroll-target="#geometrías-vacías-y-validación"><span class="header-section-number">14.18</span> Geometrías vacías y validación</a></li>
+  <li><a href="#predicados-espaciales-y-relaciones-topológicas" id="toc-predicados-espaciales-y-relaciones-topológicas" class="nav-link" data-scroll-target="#predicados-espaciales-y-relaciones-topológicas"><span class="header-section-number">14.19</span> Predicados espaciales y relaciones topológicas</a>
   <ul class="collapse">
   <li><a href="#explicación-de-de-9im" id="toc-explicación-de-de-9im" class="nav-link" data-scroll-target="#explicación-de-de-9im">Explicación de DE-9IM</a></li>
   <li><a href="#matriz-de-intersección-y-predicados-espaciales" id="toc-matriz-de-intersección-y-predicados-espaciales" class="nav-link" data-scroll-target="#matriz-de-intersección-y-predicados-espaciales">Matriz de intersección y predicados espaciales</a></li>
   </ul></li>
-  <li><a href="#operaciones-de-geoprocesamiento-paramétricas" id="toc-operaciones-de-geoprocesamiento-paramétricas" class="nav-link" data-scroll-target="#operaciones-de-geoprocesamiento-paramétricas"><span class="header-section-number">14.21</span> Operaciones de geoprocesamiento paramétricas</a></li>
-  <li><a href="#manejo-y-conversión-de-unidades-espaciales" id="toc-manejo-y-conversión-de-unidades-espaciales" class="nav-link" data-scroll-target="#manejo-y-conversión-de-unidades-espaciales"><span class="header-section-number">14.22</span> Manejo y conversión de unidades espaciales</a></li>
-  <li><a href="#exploración-de-métodos-y-funciones-en-clases-espaciales" id="toc-exploración-de-métodos-y-funciones-en-clases-espaciales" class="nav-link" data-scroll-target="#exploración-de-métodos-y-funciones-en-clases-espaciales"><span class="header-section-number">14.23</span> Exploración de métodos y funciones en clases espaciales</a></li>
-  <li><a href="#resumen-sintáctico-métodos-alternativos-para-crear-puntos" id="toc-resumen-sintáctico-métodos-alternativos-para-crear-puntos" class="nav-link" data-scroll-target="#resumen-sintáctico-métodos-alternativos-para-crear-puntos"><span class="header-section-number">14.24</span> Resumen sintáctico: Métodos alternativos para crear puntos</a></li>
+  <li><a href="#operaciones-de-geoprocesamiento-paramétricas" id="toc-operaciones-de-geoprocesamiento-paramétricas" class="nav-link" data-scroll-target="#operaciones-de-geoprocesamiento-paramétricas"><span class="header-section-number">14.20</span> Operaciones de geoprocesamiento paramétricas</a></li>
+  <li><a href="#manejo-y-conversión-de-unidades-espaciales" id="toc-manejo-y-conversión-de-unidades-espaciales" class="nav-link" data-scroll-target="#manejo-y-conversión-de-unidades-espaciales"><span class="header-section-number">14.21</span> Manejo y conversión de unidades espaciales</a></li>
+  <li><a href="#exploración-de-métodos-y-funciones-en-clases-espaciales" id="toc-exploración-de-métodos-y-funciones-en-clases-espaciales" class="nav-link" data-scroll-target="#exploración-de-métodos-y-funciones-en-clases-espaciales"><span class="header-section-number">14.22</span> Exploración de métodos y funciones en clases espaciales</a></li>
+  <li><a href="#resumen-sintáctico-métodos-alternativos-para-crear-puntos" id="toc-resumen-sintáctico-métodos-alternativos-para-crear-puntos" class="nav-link" data-scroll-target="#resumen-sintáctico-métodos-alternativos-para-crear-puntos"><span class="header-section-number">14.23</span> Resumen sintáctico: Métodos alternativos para crear puntos</a></li>
   </ul>
 </nav>
     </div>
@@ -823,70 +802,13 @@ Tabla&nbsp;14.3: Equivalencia de las clases y tipos de datos en la arquitectura 
 </figure>
 </div>
 </section>
-<section id="relación-entre-librerías-geoespaciales" class="level2" data-number="14.5">
-<h2 data-number="14.5" class="anchored" data-anchor-id="relación-entre-librerías-geoespaciales"><span class="header-section-number">14.5</span> Relación entre librerías geoespaciales</h2>
-<p>Para entender el funcionamiento de las librerías espaciales vectoriales, es estrictamente necesario analizar su arquitectura de software. Como señalan <span class="citation" data-cites="pebesma2025spatial">(<a href="99-referencias.html#ref-pebesma2025spatial" role="doc-biblioref">Pebesma et&nbsp;al., 2025</a>)</span>, los lenguajes de programación para la ciencia de datos espaciales operan metodológicamente como interfaces de alto nivel (<em>wrappers</em>) que delegan el procesamiento algorítmico pesado a un núcleo de librerías estandarizadas escritas en C y C++.</p>
-<p>Las tres librerías fundamentales que sustentan este ecosistema geoespacial son:</p>
-<ul>
-<li><strong>GDAL/OGR (Geospatial Data Abstraction Library):</strong> Actúa como el <strong>traductor universal de lectura y escritura</strong>. Permite la importación y exportación estructurada de más de 100 formatos <strong>vectoriales y raster</strong> (ej. Shapefile de ESRI, GeoPackage, GeoJSON).</li>
-<li><strong>GEOS (Geometry Engine, Open Source):</strong> Motor topológico responsable de ejecutar las <strong>operaciones de geoprocesamiento paramétrico</strong> (intersecciones espaciales, extracciones de centroides, áreas de influencia o <em>buffers</em>) y evaluar rigurosamente las <strong>relaciones matemáticas entre geometrías</strong> mediante el modelo DE-9IM.</li>
-<li><strong>PROJ:</strong> Librería cartográfica dedicada exclusivamente a la <strong>transformación algorítmica</strong> de <strong>Sistemas de Referencia de Coordenadas (CRS)</strong>. Gestiona los modelos matemáticos para proyectar datos desde elipsoides globales (WGS84) hacia sistemas locales o proyectados (como el sistema MAGNA-SIRGAS Origen Nacional EPSG:9377).</li>
-</ul>
-<p>La dependencia técnica compartida de esta triada garantiza la <strong>interoperabilidad absoluta</strong> entre ecosistemas. Si un flujo de trabajo exige limpiar un archivo GeoPackage catastral utilizando Python (<code>geopandas</code>), calcular métricas de área en R (<code>sf</code>) y ejecutar un modelo iterativo de optimización de rutas en Julia (<code>ArchGDAL</code>), el dato espacial mantendrá su integridad geométrica y tabular en todo momento.</p>
-<p>Esta coherencia transversal ocurre porque la <strong>lectura binaria</strong> de los vértices siempre la ejecuta <strong>GDAL</strong>, el cálculo del <strong>área</strong> siempre lo resuelve la matemática subyacente de <strong>GEOS</strong> y la <strong>proyección espacial</strong> siempre la maneja <strong>PROJ</strong>, independientemente de la sintaxis del lenguaje que envió la instrucción inicial.</p>
-<p>A continuación, se visualizan las arquitecturas de dependencias y el enrutamiento hacia las librerías base en nuestros tres lenguajes:</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Python y R (General)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">R (<code>sf</code>)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Julia</a></li></ul>
-<div class="tab-content">
-<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<p>Esta gráfica detalla la relación de dependencias compartidas a nivel de sistema operativo entre los ecosistemas de R y Python.</p>
-<div id="fig-geopython" class="quarto-figure quarto-figure-center quarto-float anchored" data-out-width="80%" data-fig-align="center">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-geopython-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/dependencias/geopythonR.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-out-width="80%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-geopython-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;14.1: Dependencias subyacentes compartidas entre los ecosistemas de ciencia de datos espaciales de Python y R. Fuente: <span class="citation" data-cites="pebesma2025spatial">Pebesma et&nbsp;al. (<a href="99-referencias.html#ref-pebesma2025spatial" role="doc-biblioref">2025</a>)</span>.
-</figcaption>
-</figure>
-</div>
-</div>
-<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<p>Árbol de dependencias específico para el paquete <code>sf</code> (Simple Features) en R, el motor fundamental de la geomática moderna en este entorno analítico.</p>
-<div id="fig-sfdeps" class="quarto-figure quarto-figure-center quarto-float anchored" data-out-width="80%" data-fig-align="center">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-sfdeps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/dependencias/sf_deps.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-out-width="80%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sfdeps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;14.2: Árbol de dependencias detallado para el paquete Simple Features (sf) en R. Fuente: <span class="citation" data-cites="pebesma2025spatial">Pebesma et&nbsp;al. (<a href="99-referencias.html#ref-pebesma2025spatial" role="doc-biblioref">2025</a>)</span>.
-</figcaption>
-</figure>
-</div>
-</div>
-<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
-<p>Estructura de la pila de dependencias dentro del ecosistema de Julia (GeoStack), destacando las envolturas directas (GDAL.jl, GEOS.jl, Proj.jl) hacia las API en lenguaje C.</p>
-<div id="fig-geostack" class="quarto-figure quarto-figure-center quarto-float anchored" data-out-width="80%" data-fig-align="center">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-geostack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/dependencias/geostack.drawio.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-out-width="80%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-geostack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;14.3: Estructura de la pila de dependencias geoespaciales (GeoStack) en el ecosistema de Julia. Fuente: <span class="citation" data-cites="pebesma2025spatial">Pebesma et&nbsp;al. (<a href="99-referencias.html#ref-pebesma2025spatial" role="doc-biblioref">2025</a>)</span>.
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="creación-de-puntos-a-partir-de-primitivas-geométricas" class="level2" data-number="14.6">
-<h2 data-number="14.6" class="anchored" data-anchor-id="creación-de-puntos-a-partir-de-primitivas-geométricas"><span class="header-section-number">14.6</span> Creación de puntos a partir de primitivas geométricas</h2>
+<section id="creación-de-puntos-a-partir-de-primitivas-geométricas" class="level2" data-number="14.5">
+<h2 data-number="14.5" class="anchored" data-anchor-id="creación-de-puntos-a-partir-de-primitivas-geométricas"><span class="header-section-number">14.5</span> Creación de puntos a partir de primitivas geométricas</h2>
 <p>El enfoque alternativo consiste en instanciar directamente los objetos de la clase “Punto” proporcionando sus coordenadas numéricas al constructor de la librería correspondiente, para posteriormente apilarlos en una columna espacial.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1013,7 +935,7 @@ Name: geometry, dtype: geometry</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1145,7 +1067,7 @@ Geodetic CRS:  WGS 84
 </div>
 </div>
 </div>
-<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1462,8 +1384,8 @@ Tabla&nbsp;14.4: Sintaxis comparativa para la instanciación de objetos de geome
 </div>
 </section>
 </section>
-<section id="más-allá-del-punto-líneas-polígonos-y-multigeometrías" class="level2" data-number="14.7">
-<h2 data-number="14.7" class="anchored" data-anchor-id="más-allá-del-punto-líneas-polígonos-y-multigeometrías"><span class="header-section-number">14.7</span> Más allá del Punto: Líneas, Polígonos y Multigeometrías</h2>
+<section id="más-allá-del-punto-líneas-polígonos-y-multigeometrías" class="level2" data-number="14.6">
+<h2 data-number="14.6" class="anchored" data-anchor-id="más-allá-del-punto-líneas-polígonos-y-multigeometrías"><span class="header-section-number">14.6</span> Más allá del Punto: Líneas, Polígonos y Multigeometrías</h2>
 <p>Hasta ahora hemos trabajado con la primitiva espacial más elemental: el punto (una geometría de cero dimensiones). Sin embargo, para representar la geografía real necesitamos estructuras de mayor complejidad. Las carreteras, el cauce del Río Magdalena o las fronteras departamentales requieren geometrías de 1 y 2 dimensiones.</p>
 <div id="tbl-dimensiones-geometria" class="quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -1533,9 +1455,9 @@ Tabla&nbsp;14.5: Clasificación topológica de las geometrías espaciales según
 <p>Entender esta jerarquía (Punto <span class="math inline">\(\rightarrow\)</span> Matriz <span class="math inline">\(\rightarrow\)</span> Lista de Matrices <span class="math inline">\(\rightarrow\)</span> Lista de Listas) es crucial, ya que al crear, extraer o modificar estas geometrías mediante código, la profundidad de los corchetes o índices aumentará en función de la complejidad estructural de la entidad.</p>
 <p>A continuación, recreamos estas estructuras complejas simulando geometrías abstractas para visualizar el anidamiento.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <p>En Python, el manejo de geometrías vectoriales se realiza nativamente con <code>Shapely</code>, mientras que la visualización y estructuración de datos espaciales se apoya en <code>GeoPandas</code> y <code>Matplotlib</code>.</p>
 <p>La lógica en Shapely es directa: se construyen las geometrías a partir de <strong>listas de tuplas</strong> (coordenadas XY). Los polígonos complejos se definen pasando explícitamente un <strong>anillo exterior</strong> (<code>shell</code>) y una lista de <strong>anillos interiores</strong> (<code>holes</code>).</p>
 <p><strong>Detalles de visualización:</strong> Para garantizar consistencia gráfica a través de los diferentes lenguajes, se aplican argumentos específicos en la función <code>.plot()</code> de GeoPandas.</p>
@@ -1755,7 +1677,7 @@ Tabla&nbsp;14.5: Clasificación topológica de las geometrías espaciales según
 </div>
 </div>
 </div>
-<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
 <p>En R, el ecosistema estándar para operaciones espaciales se apoya en el paquete <code>sf</code> (Simple Features). A diferencia del enfoque de tuplas utilizado en Python, R construye las geometrías a partir de <strong>matrices numéricas</strong>, empleando funciones base como <code>rbind</code> para <strong>concatenar coordenadas por filas</strong>.</p>
 <p>La estructuración de <strong>polígonos con huecos</strong> exige el <strong>anidamiento de matrices</strong> dentro de <strong>listas</strong>: la primera matriz de la lista asume automáticamente el rol de anillo exterior, mientras que las matrices subsecuentes operan geométrica y topológicamente como perforaciones.</p>
 <p><strong>Detalles de visualización:</strong> La función genérica <code>plot()</code> en R interactúa con métodos específicos de clase. Para igualar el estilo visual, se manejan los siguientes parámetros parágraficos base.</p>
@@ -2014,7 +1936,7 @@ Tabla&nbsp;14.5: Clasificación topológica de las geometrías espaciales según
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
 <p>En el entorno algorítmico espacial de Julia se utiliza <code>ArchGDAL.jl</code> para asegurar una base C++ robusta en la validación topológica, y la librería <code>CairoMakie.jl</code> para orquestar la renderización del lienzo.</p>
 <p>Julia estructura sus primitivas mediante <strong>tuplas</strong> <code>()</code> y <strong>vectores</strong> <code>[]</code>.</p>
 <p><strong>Detalles de visualización:</strong> Para homologar el estilo estético con Python y R bajo la sintaxis específica del ecosistema <code>Makie</code>, se aplican descriptores semánticos durante las llamadas a funciones como <code>scatter!</code> y <code>poly!</code>.</p>
@@ -2929,14 +2851,14 @@ Tabla&nbsp;14.9: Equivalencia de parámetros para la composición de atlas carto
 </div>
 </section>
 </section>
-<section id="creación-de-puntos-a-partir-de-texto-wkt-well-known-text" class="level2" data-number="14.8">
-<h2 data-number="14.8" class="anchored" data-anchor-id="creación-de-puntos-a-partir-de-texto-wkt-well-known-text"><span class="header-section-number">14.8</span> Creación de puntos a partir de texto WKT (Well-Known Text)</h2>
+<section id="creación-de-puntos-a-partir-de-texto-wkt-well-known-text" class="level2" data-number="14.7">
+<h2 data-number="14.7" class="anchored" data-anchor-id="creación-de-puntos-a-partir-de-texto-wkt-well-known-text"><span class="header-section-number">14.7</span> Creación de puntos a partir de texto WKT (Well-Known Text)</h2>
 <p>El formato WKT (Well-Known Text) es un estándar de la OGC para representar geometrías en formato de texto.</p>
 <p>A continuación, se define un conjunto de tres lugares representativos de Colombia utilizando cadenas WKT. Se asigna un atributo de texto (<code>Lugar</code>), se ensambla la tabla espacial y se genera un mapa categorizado por dicho atributo, incluyendo su respectiva leyenda.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -3089,7 +3011,7 @@ Name: geometry, dtype: geometry</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -3236,7 +3158,7 @@ Geodetic CRS:  WGS 84
 </div>
 </div>
 </div>
-<div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
+<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -3530,14 +3452,14 @@ Tabla&nbsp;14.10: Sintaxis comparativa para la creación y visualización de pun
 </div>
 </section>
 </section>
-<section id="creación-de-otras-multigeometrías-a-partir-de-texto-wkt" class="level2" data-number="14.9">
-<h2 data-number="14.9" class="anchored" data-anchor-id="creación-de-otras-multigeometrías-a-partir-de-texto-wkt"><span class="header-section-number">14.9</span> Creación de otras multigeometrías a partir de texto WKT</h2>
+<section id="creación-de-otras-multigeometrías-a-partir-de-texto-wkt" class="level2" data-number="14.8">
+<h2 data-number="14.8" class="anchored" data-anchor-id="creación-de-otras-multigeometrías-a-partir-de-texto-wkt"><span class="header-section-number">14.8</span> Creación de otras multigeometrías a partir de texto WKT</h2>
 <p>El formato WKT no se limita exclusivamente a la definición de puntos individuales. Su versatilidad estructural permite codificar geometrías de mayor dimensionalidad y complejidad topológica, tales como líneas, polígonos, y colecciones de estas primitivas, utilizando una sintaxis anidada mediante paréntesis.</p>
 <p>A continuación, se estructuran tres representaciones geográficas en Colombia utilizando WKT: una sede universitaria particionada (Multipunto), el trazo de un río (Línea) y los límites simplificados de una reserva natural (Polígono). Estos objetos disímiles se consolidan en una única tabla espacial para su renderizado simultáneo.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-3" role="tab" aria-controls="tabset-5-3" aria-selected="false">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -3715,7 +3637,7 @@ dtype: object</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -3840,7 +3762,7 @@ Geodetic CRS:  WGS 84
 </div>
 </div>
 </div>
-<div id="tabset-5-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-3-tab">
+<div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -4203,8 +4125,8 @@ Tabla&nbsp;14.12: Equivalencia de parámetros para el control topológico de ret
 </div>
 </section>
 </section>
-<section id="dimensiones-adicionales-coordenadas-z-y-m" class="level2" data-number="14.10">
-<h2 data-number="14.10" class="anchored" data-anchor-id="dimensiones-adicionales-coordenadas-z-y-m"><span class="header-section-number">14.10</span> Dimensiones adicionales: Coordenadas Z y M</h2>
+<section id="dimensiones-adicionales-coordenadas-z-y-m" class="level2" data-number="14.9">
+<h2 data-number="14.9" class="anchored" data-anchor-id="dimensiones-adicionales-coordenadas-z-y-m"><span class="header-section-number">14.9</span> Dimensiones adicionales: Coordenadas Z y M</h2>
 <p>Aunque la mayoría de los análisis SIG se realizan en un plano bidimensional (<strong>XY</strong>), el estándar <em>Simple Features</em> permite integrar dimensiones adicionales para representar la complejidad del mundo real:</p>
 <ol type="1">
 <li><strong>Z (Altitud/Elevación):</strong> Representa la tercera dimensión física (altura o profundidad). Útil en modelos de terreno o hidrología.</li>
@@ -4227,9 +4149,9 @@ Tabla&nbsp;14.12: Equivalencia de parámetros para el control topológico de ret
 </div>
 <p>En este modelo, la información se almacena a través de <strong>eventos</strong>: los <strong>eventos puntuales</strong> marcan hitos en una medida específica (ej. un bache en el km 15.2), mientras que los <strong>eventos lineales</strong> describen tramos definidos por una medida de inicio y una de fin (ej. un cambio de pavimento entre el km 20 y el km 45). Para que este sistema funcione, la geometría debe soportar una cuarta dimensión denominada <strong>eje <span class="math inline">\(M\)</span> (Medida)</strong>, que almacena el kilometraje acumulado independientemente de la longitud euclidiana del dibujo.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-3" role="tab" aria-controls="tabset-6-3" aria-selected="false">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-3" role="tab" aria-controls="tabset-5-3" aria-selected="false">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
 <p>En el ecosistema de Python, la manipulación de dimensiones adicionales presenta una dualidad técnica. Por un lado, <strong>Shapely</strong> (la librería estándar) es sumamente eficiente para geometrías 2D y 3D (<span class="math inline">\(XYZ\)</span>), <strong>pero carece de un eje <span class="math inline">\(M\)</span> (Medida) nativo</strong>. Para suplir esto en análisis de Referenciación Lineal (LRS), es una práctica común “secuestrar” el eje <span class="math inline">\(Z\)</span> para almacenar valores de medida o kilometraje.</p>
 <p>Por otro lado, cuando se requiere un soporte estricto de cuatro dimensiones (<span class="math inline">\(XYZM\)</span>), debemos recurrir a <strong>OGR (GDAL)</strong>. OGR es un motor de bajo nivel que permite la persistencia de atributos escalares (Medida) vinculados directamente a la geometría, cumpliendo con el estándar ISO de <em>Simple Features</em>.</p>
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
@@ -4479,7 +4401,7 @@ Tabla&nbsp;14.12: Equivalencia de parámetros para el control topológico de ret
 <div class="sourceCode cell-code" id="cb147"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb147-1"><a href="#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ver la caja de memoria:</span></span>
 <span id="cb147-2"><a href="#cb147-2" aria-hidden="true" tabindex="-1"></a>punto_3d_ogr</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>&lt;osgeo.ogr.Geometry; proxy of &lt;Swig Object of type 'OGRGeometryShadow *' at 0x7c340e7c85d0&gt; &gt;</code></pre>
+<pre><code>&lt;osgeo.ogr.Geometry; proxy of &lt;Swig Object of type 'OGRGeometryShadow *' at 0x73c93e8b07e0&gt; &gt;</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb149"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb149-1"><a href="#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Para ver el contenido:</span></span>
 <span id="cb149-2"><a href="#cb149-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(punto_3d_ogr.ExportToWkt())</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -4665,7 +4587,7 @@ Nota
 </div>
 </div>
 </div>
-<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
 <p>En el ecosistema de R, la manipulación de dimensiones espaciales se centraliza de manera eficiente en el paquete <strong><code>sf</code></strong> (Simple Features). A diferencia de la dualidad en Python entre Shapely y OGR, <code>sf</code> integra nativamente las librerías base <strong>GDAL</strong> y <strong>GEOS</strong>. Esto significa que soporta de forma directa y unificada geometrías en 2D (<span class="math inline">\(XY\)</span>), 3D (<span class="math inline">\(XYZ\)</span> o <span class="math inline">\(XYM\)</span>) y 4D (<span class="math inline">\(XYZM\)</span>), alineándose estrictamente con el estándar ISO de <em>Simple Features</em> sin necesidad de recurrir a estructuras de bajo nivel externas.</p>
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
@@ -5125,7 +5047,7 @@ Projected CRS: MAGNA-SIRGAS 2018 / Origen-Nacional</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-6-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-3-tab">
+<div id="tabset-5-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-3-tab">
 <p>En el entorno de Julia, la manipulación de dimensiones espaciales y operaciones topológicas se fundamenta en envoltorios directos hacia las bibliotecas C/C++ subyacentes. El paquete <strong><code>ArchGDAL.jl</code></strong> centraliza el acceso al motor OGR, permitiendo la definición estricta de geometrías <span class="math inline">\(XYZM\)</span>.</p>
 <p>Sin embargo, las librerías de geometría computacional como <strong><code>LibGEOS.jl</code></strong> descartan por defecto las cotas altimétricas (<span class="math inline">\(Z\)</span>) y los atributos escalares (<span class="math inline">\(M\)</span>) durante operaciones topológicas de referenciación lineal.</p>
 <p>Para ejecutar una segmentación dinámica estricta sin pérdida de datos en el eje <span class="math inline">\(M\)</span>, es necesario implementar un algoritmo de álgebra vectorial directo sobre la matriz de vértices extraída de la geometría base, asegurando la retención de las cuatro dimensiones.</p>
@@ -6565,15 +6487,15 @@ Tabla&nbsp;14.15: Equivalencia de componentes visuales y parametrización gráfi
 </div>
 </section>
 </section>
-<section id="el-formato-binario-wkb-well-known-binary" class="level2" data-number="14.11">
-<h2 data-number="14.11" class="anchored" data-anchor-id="el-formato-binario-wkb-well-known-binary"><span class="header-section-number">14.11</span> El formato binario WKB (Well-Known Binary)</h2>
+<section id="el-formato-binario-wkb-well-known-binary" class="level2" data-number="14.10">
+<h2 data-number="14.10" class="anchored" data-anchor-id="el-formato-binario-wkb-well-known-binary"><span class="header-section-number">14.10</span> El formato binario WKB (Well-Known Binary)</h2>
 <p>Aunque el formato textual WKT resulta idóneo por su legibilidad semántica, transferir matrices masivas de datos espaciales como cadenas de texto es sumamente ineficiente a nivel de consumo de RAM, y propenso a pérdidas de precisión flotante.</p>
 <p>Por esta razón técnica, librerías cartográficas (GDAL, GEOS) y bases de datos espaciales (PostGIS) codifican la información geométrica en el estándar WKB (Well-Known Binary). Este empaquetamiento hexadecimal asegura transacciones compactas, ultra-rápidas y matemáticamente exactas, siendo el vehículo principal de operaciones I/O en la ciencia de datos espaciales.</p>
 <p>A continuación, se convierte el punto representativo evaluado en la sección anterior hacia su encriptación binaria, verificando posteriormente la restauración neta hacia un objeto vectorial operable.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-3" role="tab" aria-controls="tabset-7-3" aria-selected="false">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-3" role="tab" aria-controls="tabset-6-3" aria-selected="false">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -6638,7 +6560,7 @@ Tabla&nbsp;14.15: Equivalencia de componentes visuales y parametrización gráfi
 </div>
 </div>
 </div>
-<div id="tabset-7-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-2-tab">
+<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -6706,7 +6628,7 @@ Tabla&nbsp;14.15: Equivalencia de componentes visuales y parametrización gráfi
 </div>
 </div>
 </div>
-<div id="tabset-7-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-3-tab">
+<div id="tabset-6-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-3-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -6885,8 +6807,8 @@ Tabla&nbsp;14.16: Equivalencia analítica para la serialización topológica y l
 </div>
 </section>
 </section>
-<section id="precisión-espacial-y-redondeo-topológico" class="level2" data-number="14.12">
-<h2 data-number="14.12" class="anchored" data-anchor-id="precisión-espacial-y-redondeo-topológico"><span class="header-section-number">14.12</span> Precisión espacial y redondeo topológico</h2>
+<section id="precisión-espacial-y-redondeo-topológico" class="level2" data-number="14.11">
+<h2 data-number="14.11" class="anchored" data-anchor-id="precisión-espacial-y-redondeo-topológico"><span class="header-section-number">14.11</span> Precisión espacial y redondeo topológico</h2>
 <p>Los motores cartográficos operan internamente sobre representaciones numéricas de punto flotante (flotantes de 64 bits o <code>double</code>). Esta precisión absoluta puede generar fallos estructurales en cruces topológicos o uniones espaciales donde dos vértices conceptualmente idénticos difieren en el décimo lugar decimal debido al ruido de máquina.</p>
 <p>Para mitigar estos errores o reducir el peso de almacenamiento, los atributos geométricos pueden subordinarse a un <strong>modelo de precisión</strong>. La lógica, derivada del marco C++ GEOS, opera mediante factores de escala:</p>
 <ul>
@@ -6895,9 +6817,9 @@ Tabla&nbsp;14.16: Equivalencia analítica para la serialización topológica y l
 </ul>
 <p>A continuación, se demuestra la imposición de este control numérico sobre las coordenadas de la Plaza de Bolívar en Bogotá.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-2" role="tab" aria-controls="tabset-8-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-3" role="tab" aria-controls="tabset-8-3" aria-selected="false">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-3" role="tab" aria-controls="tabset-7-3" aria-selected="false">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-8-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-8-1-tab">
+<div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -6945,7 +6867,7 @@ Tabla&nbsp;14.16: Equivalencia analítica para la serialización topológica y l
 </div>
 </div>
 </div>
-<div id="tabset-8-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-2-tab">
+<div id="tabset-7-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-2-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -7015,7 +6937,7 @@ Tabla&nbsp;14.16: Equivalencia analítica para la serialización topológica y l
 </div>
 </div>
 </div>
-<div id="tabset-8-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-3-tab">
+<div id="tabset-7-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-3-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -7200,8 +7122,8 @@ Tabla&nbsp;14.17: Equivalencia analítica para el control aritmético topológic
 </div>
 </section>
 </section>
-<section id="extracción-estructurada-de-coordenadas-en-topologías-complejas-old-remover-luego" class="level2" data-number="14.13">
-<h2 data-number="14.13" class="anchored" data-anchor-id="extracción-estructurada-de-coordenadas-en-topologías-complejas-old-remover-luego"><span class="header-section-number">14.13</span> Extracción estructurada de coordenadas en topologías complejas (OLD: Remover Luego)</h2>
+<section id="extracción-estructurada-de-coordenadas-en-topologías-complejas-old-remover-luego" class="level2" data-number="14.12">
+<h2 data-number="14.12" class="anchored" data-anchor-id="extracción-estructurada-de-coordenadas-en-topologías-complejas-old-remover-luego"><span class="header-section-number">14.12</span> Extracción estructurada de coordenadas en topologías complejas (OLD: Remover Luego)</h2>
 <p>Comprender la jerarquía anidada de las multigeometrías es fundamental para el procesamiento analítico. A nivel algorítmico, un SIG no evalúa una figura como un dibujo, sino como un tensor multidimensional de vértices.</p>
 <p>Para ilustrar este principio, simularemos un polígono complejo inspirado en ecosistemas colombianos, como el Santuario de Flora Isla de La Corota en la Laguna de la Cocha (o una reserva análoga):</p>
 <ol type="1">
@@ -7210,9 +7132,9 @@ Tabla&nbsp;14.17: Equivalencia analítica para el control aritmético topológic
 </ol>
 <p>El resultado es un <code>MULTIPOLYGON</code>. El objetivo de esta sección es demostrar cómo “navegar” a través de los corchetes e índices de la estructura de datos para extraer una coordenada de interés (específicamente, el tercer vértice de cada anillo).</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-9-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-1" role="tab" aria-controls="tabset-9-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-2" role="tab" aria-controls="tabset-9-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-3" role="tab" aria-controls="tabset-9-3" aria-selected="false">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-2" role="tab" aria-controls="tabset-8-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-3" role="tab" aria-controls="tabset-8-3" aria-selected="false">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-9-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-9-1-tab">
+<div id="tabset-8-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-8-1-tab">
 <p>En Python, la librería <code>shapely</code> expone las multigeometrías iterando a través de la propiedad <code>.geoms</code>. Cada polígono extraído posee un atributo unívoco <code>.exterior</code> y una lista de atributos <code>.interiors</code> (huecos).</p>
 <p><em>Nota: Python utiliza indexación basada en cero (0), por lo que el primer elemento es el índice <code>[0]</code> y el tercer vértice corresponde al índice <code>[2]</code>.</em></p>
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
@@ -7363,7 +7285,7 @@ Tabla&nbsp;14.17: Equivalencia analítica para el control aritmético topológic
 </div>
 </div>
 </div>
-<div id="tabset-9-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-2-tab">
+<div id="tabset-8-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-2-tab">
 <p>En R, la estructuración anidada del paquete <code>sf</code> para un <code>MULTIPOLYGON</code> se compone de un nivel escalar profundo: <code>Objeto[[Polígono]][[Anillo]][Fila, Columna]</code>.</p>
 <p>El primer anillo de cualquier sublista de polígono representa la cota externa, mientras que el índice 2 en adelante mapea las perforaciones interiores. A diferencia de Python, R utiliza indexación basada en uno (1), por lo que el tercer vértice corresponde al índice de fila <code>[3, ]</code>.</p>
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
@@ -7521,7 +7443,7 @@ Tabla&nbsp;14.17: Equivalencia analítica para el control aritmético topológic
 </div>
 </div>
 </div>
-<div id="tabset-9-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-3-tab">
+<div id="tabset-8-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-3-tab">
 <p>Para diseccionar geometrías complejas en Julia utilizando <code>ArchGDAL.jl</code>, se debe recurrir a la función extractora base <code>getgeom()</code>. Esta función desciende progresivamente por los niveles de anidamiento de la topología WKB.</p>
 <p><em>Nota estricta sobre indexación:</em> A nivel global, el lenguaje Julia comienza sus vectores en 1. Sin embargo, la API de <code>ArchGDAL.jl</code> es una envoltura sobre C++, por lo cual <strong>todos sus accesos geométricos conservan índice base cero (0)</strong>. Extraer el tercer vértice exigirá solicitar el puntero número <code>2</code>.</p>
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
@@ -8035,8 +7957,8 @@ Tabla&nbsp;14.20: Equivalencia de métodos paramétricos para el control isomét
 </div>
 </section>
 </section>
-<section id="extracción-estructurada-de-coordenadas-y-topologías-complejas" class="level2" data-number="14.14">
-<h2 data-number="14.14" class="anchored" data-anchor-id="extracción-estructurada-de-coordenadas-y-topologías-complejas"><span class="header-section-number">14.14</span> Extracción estructurada de coordenadas y topologías complejas</h2>
+<section id="extracción-estructurada-de-coordenadas-y-topologías-complejas" class="level2" data-number="14.13">
+<h2 data-number="14.13" class="anchored" data-anchor-id="extracción-estructurada-de-coordenadas-y-topologías-complejas"><span class="header-section-number">14.13</span> Extracción estructurada de coordenadas y topologías complejas</h2>
 <p>Comprender la jerarquía anidada de las multigeometrías es fundamental para el procesamiento analítico. A nivel algorítmico, un SIG no evalúa una figura como un dibujo, sino como un tensor multidimensional de vértices.</p>
 <p>El ejemplo a continuación simulará un área protegida (tierra) con lagunas e inslas interiores. Todo lo que sea agua no hará pare del polígono (hueco). La tarea consiste en <strong>extraer el tercer vértice</strong> de los polígonos que conforman el área protegida.</p>
 <div class="cell" data-layout-align="center">
@@ -8062,9 +7984,9 @@ Tabla&nbsp;14.20: Equivalencia de métodos paramétricos para el control isomét
 <li><strong>Un polígono secundario (La Isla):</strong> Masa terrestre ubicada matemáticamente dentro del área de la laguna principal, pero registrada estructuralmente como un polígono sólido independiente.</li>
 </ol>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-10-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-1" role="tab" aria-controls="tabset-10-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-2" role="tab" aria-controls="tabset-10-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-3" role="tab" aria-controls="tabset-10-3" aria-selected="false">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-9-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-1" role="tab" aria-controls="tabset-9-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-2" role="tab" aria-controls="tabset-9-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-3" role="tab" aria-controls="tabset-9-3" aria-selected="false">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-10-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-10-1-tab">
+<div id="tabset-9-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-9-1-tab">
 <p>En Python, la librería <code>shapely</code> expone las multigeometrías iterando a través de la propiedad <code>.geoms</code>. Cada polígono posee un atributo <code>.exterior</code> y una lista de atributos <code>.interiors</code> (huecos).</p>
 <p><em>Nota: Python utiliza indexación basada en cero (0), por lo que el primer hueco es el índice <code>[0]</code> y el tercer vértice corresponde al índice <code>[2]</code>.</em></p>
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
@@ -8263,7 +8185,7 @@ Tabla&nbsp;14.20: Equivalencia de métodos paramétricos para el control isomét
 </div>
 </div>
 </div>
-<div id="tabset-10-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-2-tab">
+<div id="tabset-9-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-2-tab">
 <p>En R, el motor topológico es estricto con las intersecciones de límites. La estructura de un <code>MULTIPOLYGON</code> se compone de una lista profunda: <code>Objeto[[Polígono]][[Anillo]][Fila, Columna]</code>.</p>
 <p>A nivel estructural, el anillo en el índice <code>[[1]]</code> de cualquier polígono es obligatoriamente su cota externa sólida, mientras que cualquier índice posterior (<code>[[2]]</code>, <code>[[3]]</code>…) representa matemáticamente perforaciones vacías (huecos). R utiliza indexación basada en uno (1).</p>
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
@@ -8446,7 +8368,7 @@ Tabla&nbsp;14.20: Equivalencia de métodos paramétricos para el control isomét
 </div>
 </div>
 </div>
-<div id="tabset-10-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-3-tab">
+<div id="tabset-9-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-3-tab">
 <p>En Julia, la API subyacente de <code>ArchGDAL</code> garantiza que <code>getgeom(pol, 0)</code> extrae el anillo exterior primario. Todo índice mayor a 0 extrae iterativamente los huecos internos.</p>
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-30-contents" aria-controls="callout-30" aria-expanded="false" aria-label="Toggle callout">
@@ -8895,13 +8817,13 @@ Tabla&nbsp;14.21: Sintaxis analítica para el descenso iterativo y disección to
 </div>
 </section>
 </section>
-<section id="creación-de-puntos-a-partir-de-coordenadas-en-la-tabla" class="level2" data-number="14.15">
-<h2 data-number="14.15" class="anchored" data-anchor-id="creación-de-puntos-a-partir-de-coordenadas-en-la-tabla"><span class="header-section-number">14.15</span> Creación de puntos a partir de coordenadas en la tabla</h2>
+<section id="creación-de-puntos-a-partir-de-coordenadas-en-la-tabla" class="level2" data-number="14.14">
+<h2 data-number="14.14" class="anchored" data-anchor-id="creación-de-puntos-a-partir-de-coordenadas-en-la-tabla"><span class="header-section-number">14.14</span> Creación de puntos a partir de coordenadas en la tabla</h2>
 <p>El siguiente código define un conjunto de datos tabulares con las coordenadas de cuatro ciudades principales de Colombia y lo convierte a un formato espacial explícito asignando el sistema de referencia WGS84 (EPSG:4326), para luego generar un gráfico básico.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-11-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-1" role="tab" aria-controls="tabset-11-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-11-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-2" role="tab" aria-controls="tabset-11-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-11-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-3" role="tab" aria-controls="tabset-11-3" aria-selected="false">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-10-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-1" role="tab" aria-controls="tabset-10-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-2" role="tab" aria-controls="tabset-10-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-3" role="tab" aria-controls="tabset-10-3" aria-selected="false">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-11-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-11-1-tab">
+<div id="tabset-10-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-10-1-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-31-contents" aria-controls="callout-31" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -8999,7 +8921,7 @@ Tabla&nbsp;14.21: Sintaxis analítica para el descenso iterativo y disección to
 </div>
 </div>
 </div>
-<div id="tabset-11-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-2-tab">
+<div id="tabset-10-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-2-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-32-contents" aria-controls="callout-32" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -9084,7 +9006,7 @@ Geodetic CRS:  WGS 84
 </div>
 </div>
 </div>
-<div id="tabset-11-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-3-tab">
+<div id="tabset-10-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-3-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-33-contents" aria-controls="callout-33" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -9281,14 +9203,14 @@ Tabla&nbsp;14.22: Sintaxis comparativa para la creación de geometrías de punto
 </div>
 </section>
 </section>
-<section id="lectura-de-archivos-vectoriales-externos" class="level2" data-number="14.16">
-<h2 data-number="14.16" class="anchored" data-anchor-id="lectura-de-archivos-vectoriales-externos"><span class="header-section-number">14.16</span> Lectura de archivos vectoriales externos</h2>
+<section id="lectura-de-archivos-vectoriales-externos" class="level2" data-number="14.15">
+<h2 data-number="14.15" class="anchored" data-anchor-id="lectura-de-archivos-vectoriales-externos"><span class="header-section-number">14.15</span> Lectura de archivos vectoriales externos</h2>
 <p>En un flujo de trabajo SIG, la fuente principal de datos suelen ser archivos externos. El formato <em>Shapefile</em> (.shp) sigue siendo el estándar de la industria, aunque requiere que todos sus archivos asociados (.dbf, .shx, .prj) estén en la misma carpeta.</p>
 <p>A continuación, cargamos la capa de municipios utilizando la ruta local <code>data_heavy/MUNICIPIOS_ISLA_WGS84.shp</code>.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-12-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-1" role="tab" aria-controls="tabset-12-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-12-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-2" role="tab" aria-controls="tabset-12-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-12-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-3" role="tab" aria-controls="tabset-12-3" aria-selected="false">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-11-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-1" role="tab" aria-controls="tabset-11-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-11-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-2" role="tab" aria-controls="tabset-11-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-11-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-3" role="tab" aria-controls="tabset-11-3" aria-selected="false">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-12-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-12-1-tab">
+<div id="tabset-11-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-11-1-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-34-contents" aria-controls="callout-34" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -9349,7 +9271,7 @@ Tabla&nbsp;14.22: Sintaxis comparativa para la creación de geometrías de punto
 </div>
 </div>
 </div>
-<div id="tabset-12-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-12-2-tab">
+<div id="tabset-11-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-2-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-35-contents" aria-controls="callout-35" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -9414,7 +9336,7 @@ First 5 geometries:</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-12-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-12-3-tab">
+<div id="tabset-11-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-3-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-36-contents" aria-controls="callout-36" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -9500,13 +9422,13 @@ First 5 geometries:</code></pre>
 </div>
 </div>
 </section>
-<section id="la-columna-de-geometría-como-objeto-independiente" class="level2" data-number="14.17">
-<h2 data-number="14.17" class="anchored" data-anchor-id="la-columna-de-geometría-como-objeto-independiente"><span class="header-section-number">14.17</span> La columna de geometría como objeto independiente</h2>
+<section id="la-columna-de-geometría-como-objeto-independiente" class="level2" data-number="14.16">
+<h2 data-number="14.16" class="anchored" data-anchor-id="la-columna-de-geometría-como-objeto-independiente"><span class="header-section-number">14.16</span> La columna de geometría como objeto independiente</h2>
 <p>Una vez cargada la tabla, la columna que almacena los datos espaciales se comporta de forma distinta a una columna de texto normal. En Python es una <strong>GeoSeries</strong> y en R es una <strong>sfc</strong>. Estos objetos permiten realizar operaciones directas como el cálculo de áreas o perímetros.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-13-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-1" role="tab" aria-controls="tabset-13-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-13-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-2" role="tab" aria-controls="tabset-13-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-13-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-3" role="tab" aria-controls="tabset-13-3" aria-selected="false">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-12-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-1" role="tab" aria-controls="tabset-12-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-12-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-2" role="tab" aria-controls="tabset-12-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-12-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-3" role="tab" aria-controls="tabset-12-3" aria-selected="false">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-13-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-13-1-tab">
+<div id="tabset-12-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-12-1-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-37-contents" aria-controls="callout-37" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -9555,7 +9477,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-13-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-13-2-tab">
+<div id="tabset-12-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-12-2-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-38-contents" aria-controls="callout-38" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -9594,7 +9516,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-13-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-13-3-tab">
+<div id="tabset-12-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-12-3-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-39-contents" aria-controls="callout-39" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -9718,8 +9640,8 @@ Tabla&nbsp;14.23: Resumen de funciones para la importación y manipulación de c
 </div>
 </section>
 </section>
-<section id="relación-atributo-geometría-agr" class="level2" data-number="14.18">
-<h2 data-number="14.18" class="anchored" data-anchor-id="relación-atributo-geometría-agr"><span class="header-section-number">14.18</span> Relación atributo-geometría (AGR)</h2>
+<section id="relación-atributo-geometría-agr" class="level2" data-number="14.17">
+<h2 data-number="14.17" class="anchored" data-anchor-id="relación-atributo-geometría-agr"><span class="header-section-number">14.17</span> Relación atributo-geometría (AGR)</h2>
 <p>La Relación Atributo-Geometría (AGR por sus siglas en inglés) define cómo los valores de los atributos tabulares se asocian físicamente con la extensión espacial de la geometría a la que pertenecen. Esta relación manifiesta su importancia crítica durante las operaciones de geoprocesamiento que alteran la forma original de las geometrías, como los recortes o las intersecciones. Al dividir un polígono, el comportamiento del dato tabular depende de su relación espacial. Existen tres relaciones semánticas principales:</p>
 <ul>
 <li><strong>Constante</strong>: El valor del atributo es válido y homogéneo en cualquier ubicación interior de la geometría. Por ejemplo, el tipo de suelo geológico o la jurisdicción departamental (ej. Cundinamarca). Si la geometría se recorta, el fragmento conserva el mismo valor.</li>
@@ -9727,9 +9649,9 @@ Tabla&nbsp;14.23: Resumen de funciones para la importación y manipulación de c
 <li><strong>Identidad</strong>: El valor identifica unívocamente a esa geometría específica como unidad integral. Por ejemplo, el número de matrícula inmobiliaria catastral o el código identificador único del IGAC de un predio. Al alterar la geometría, el elemento pierde su identidad original.</li>
 </ul>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-14-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-1" role="tab" aria-controls="tabset-14-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-14-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-2" role="tab" aria-controls="tabset-14-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-14-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-3" role="tab" aria-controls="tabset-14-3" aria-selected="false">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-13-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-1" role="tab" aria-controls="tabset-13-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-13-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-2" role="tab" aria-controls="tabset-13-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-13-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-3" role="tab" aria-controls="tabset-13-3" aria-selected="false">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-14-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-14-1-tab">
+<div id="tabset-13-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-13-1-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-40-contents" aria-controls="callout-40" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -9921,7 +9843,7 @@ Tabla&nbsp;14.23: Resumen de funciones para la importación y manipulación de c
 </div>
 </div>
 </div>
-<div id="tabset-14-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-14-2-tab">
+<div id="tabset-13-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-13-2-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-41-contents" aria-controls="callout-41" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -10104,7 +10026,7 @@ all geometries</code></pre>
 <span id="cb381-2"><a href="#cb381-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<div id="tabset-14-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-14-3-tab">
+<div id="tabset-13-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-13-3-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-42-contents" aria-controls="callout-42" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -10356,13 +10278,13 @@ all geometries</code></pre>
 </div>
 </div>
 </section>
-<section id="geometrías-vacías-y-validación" class="level2" data-number="14.19">
-<h2 data-number="14.19" class="anchored" data-anchor-id="geometrías-vacías-y-validación"><span class="header-section-number">14.19</span> Geometrías vacías y validación</h2>
+<section id="geometrías-vacías-y-validación" class="level2" data-number="14.18">
+<h2 data-number="14.18" class="anchored" data-anchor-id="geometrías-vacías-y-validación"><span class="header-section-number">14.18</span> Geometrías vacías y validación</h2>
 <p>Una geometría vacía es aquella que carece de coordenadas (por ejemplo, <code>POINT EMPTY</code>). Son fundamentales metodológicamente para manejar datos espaciales faltantes (valores NA) en operaciones de geoprocesamiento sin alterar la integridad tabular. La validación espacial verifica que las geometrías cumplan las reglas topológicas matemáticas estrictas (ej. un polígono no debe tener auto-intersecciones).</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-15-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-15-1" role="tab" aria-controls="tabset-15-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-15-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-15-2" role="tab" aria-controls="tabset-15-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-15-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-15-3" role="tab" aria-controls="tabset-15-3" aria-selected="false">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-14-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-1" role="tab" aria-controls="tabset-14-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-14-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-2" role="tab" aria-controls="tabset-14-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-14-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-3" role="tab" aria-controls="tabset-14-3" aria-selected="false">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-15-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-15-1-tab">
+<div id="tabset-14-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-14-1-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-43-contents" aria-controls="callout-43" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -10416,7 +10338,7 @@ all geometries</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-15-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-15-2-tab">
+<div id="tabset-14-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-14-2-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-44-contents" aria-controls="callout-44" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -10478,7 +10400,7 @@ all geometries</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-15-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-15-3-tab">
+<div id="tabset-14-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-14-3-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-45-contents" aria-controls="callout-45" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -10568,23 +10490,20 @@ all geometries</code></pre>
 </div>
 </div>
 </section>
-<section id="predicados-espaciales-y-relaciones-topológicas" class="level2" data-number="14.20">
-<h2 data-number="14.20" class="anchored" data-anchor-id="predicados-espaciales-y-relaciones-topológicas"><span class="header-section-number">14.20</span> Predicados espaciales y relaciones topológicas</h2>
+<section id="predicados-espaciales-y-relaciones-topológicas" class="level2" data-number="14.19">
+<h2 data-number="14.19" class="anchored" data-anchor-id="predicados-espaciales-y-relaciones-topológicas"><span class="header-section-number">14.19</span> Predicados espaciales y relaciones topológicas</h2>
 <p>Los predicados espaciales evalúan y determinan las relaciones topológicas entre dos objetos espaciales utilizando el <strong>modelo de matriz de intersección de nueve elementos extendido dimensionalmente</strong> (DE-9IM). Puedes encontrar mayor información en:</p>
 <ol type="1">
-<li>Wikipedia (inglés): https://en.wikipedia.org/wiki/DE-9IM<br>
-</li>
-<li>Ayuda de PostGIS (español): https://postgis.net/workshops/es/postgis-intro/de9im.html<br>
-</li>
-<li>Ayuda de ArcGIS (español): https://pro.arcgis.com/es/pro-app/latest/help/data/validating-data/custom-spatial-relationships.htm</li>
+<li><a href="https://en.wikipedia.org/wiki/DE-9IM">Wikipedia (inglés)</a></li>
+<li><a href="https://postgis.net/workshops/es/postgis-intro/de9im.html">Ayuda de PostGIS (español)</a></li>
+<li><a href="https://pro.arcgis.com/es/pro-app/latest/help/data/validating-data/custom-spatial-relationships.htm">Ayuda de ArcGIS (español)</a></li>
 </ol>
 <p>Otro recurso valioso es la Suite de Topología de Java (JTS), la cual incluye la herramienta JTS TestBuilder, donde se puede interactuar mediante una interfaz gráfica para crear geometrías manualmente y calcular la matriz DE-9IM entre pares de geometrías creadas por el usuario. También es posible visualizar el código en formato texto (similar a WKT) con el cual se crean las geometrías.</p>
 <p>Para instalarla, es requisito contar con Java instalado en el equipo:</p>
 <ol type="1">
-<li>Descargue el binario (jts-1.14.zip).<br>
+<li><a href="https://sourceforge.net/projects/jts-topology-suite.mirror/">Descargue</a> el binario (jts-1.14.zip).<br>
 </li>
-<li>Descomprima el archivo.<br>
-</li>
+<li>Descomprima el archivo.</li>
 <li>En la carpeta <code>jts-1.14/bin/</code>, ejecute (doble clic) <code>testbuilder.bat</code>.</li>
 </ol>
 <p>Características principales:</p>
@@ -10683,9 +10602,9 @@ all geometries</code></pre>
 <p>A continuación, se demuestra la construcción matricial DE-9IM utilizando un caso simulado aplicado a un modelo de infraestructura en Bogotá. La geometría <span class="math inline">\(A\)</span> (polígono azul) representa un predio institucional con un patio central vacío (agujero geométrico), localizado en coordenadas locales. La geometría <span class="math inline">\(B\)</span> (polilínea roja) representa el trazado propuesto para una red de alcantarillado subterráneo de la Empresa de Acueducto de Bogotá.</p>
 <p>Al computar la matriz DE-9IM para este caso específico (<code>A</code> frente a <code>B</code>), los algoritmos de la librería base GEOS determinan que el trazado de tubería cruza el área sólida del predio en forma de línea (dimensión 1), los vértices de la red perforan los muros (intersección límite-interior en puntos, dimensión 0), y ambos extremos de la tubería inician y terminan en espacio público exterior. El resultado matricial para esta relación precisa es <code>1F20F1102</code>.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-16-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-16-1" role="tab" aria-controls="tabset-16-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-16-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-16-2" role="tab" aria-controls="tabset-16-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-16-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-16-3" role="tab" aria-controls="tabset-16-3" aria-selected="false">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-15-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-15-1" role="tab" aria-controls="tabset-15-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-15-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-15-2" role="tab" aria-controls="tabset-15-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-15-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-15-3" role="tab" aria-controls="tabset-15-3" aria-selected="false">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-16-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-16-1-tab">
+<div id="tabset-15-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-15-1-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-46-contents" aria-controls="callout-46" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -10837,7 +10756,7 @@ all geometries</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-16-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-16-2-tab">
+<div id="tabset-15-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-15-2-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-47-contents" aria-controls="callout-47" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -10961,7 +10880,7 @@ all geometries</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-16-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-16-3-tab">
+<div id="tabset-15-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-15-3-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-48-contents" aria-controls="callout-48" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -11187,9 +11106,9 @@ all geometries</code></pre>
 <p>Las consultas de predicados como <code>intersects</code>, <code>contains</code> o <code>within</code> siempre retornan un valor lógico (booleano) determinando la relación espacial de proximidad, inclusión o adyacencia.</p>
 <p>Falta introducir el nuevo ejercicio o borrar</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-17-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-17-1" role="tab" aria-controls="tabset-17-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-17-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-17-2" role="tab" aria-controls="tabset-17-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-17-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-17-3" role="tab" aria-controls="tabset-17-3" aria-selected="false">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-16-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-16-1" role="tab" aria-controls="tabset-16-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-16-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-16-2" role="tab" aria-controls="tabset-16-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-16-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-16-3" role="tab" aria-controls="tabset-16-3" aria-selected="false">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-17-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-17-1-tab">
+<div id="tabset-16-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-16-1-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-49-contents" aria-controls="callout-49" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -11260,7 +11179,7 @@ all geometries</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-17-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-17-2-tab">
+<div id="tabset-16-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-16-2-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-50-contents" aria-controls="callout-50" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -11320,7 +11239,7 @@ all geometries</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-17-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-17-3-tab">
+<div id="tabset-16-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-16-3-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-51-contents" aria-controls="callout-51" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -11406,8 +11325,8 @@ all geometries</code></pre>
 </div>
 </section>
 </section>
-<section id="operaciones-de-geoprocesamiento-paramétricas" class="level2" data-number="14.21">
-<h2 data-number="14.21" class="anchored" data-anchor-id="operaciones-de-geoprocesamiento-paramétricas"><span class="header-section-number">14.21</span> Operaciones de geoprocesamiento paramétricas</h2>
+<section id="operaciones-de-geoprocesamiento-paramétricas" class="level2" data-number="14.20">
+<h2 data-number="14.20" class="anchored" data-anchor-id="operaciones-de-geoprocesamiento-paramétricas"><span class="header-section-number">14.20</span> Operaciones de geoprocesamiento paramétricas</h2>
 <p>Las herramientas de geoprocesamiento alteran y calculan nuevas geometrías espaciales con base en datos vectoriales de entrada. Algoritmos fundamentales como las áreas de influencia geométrica (Buffer) y la extracción del centroide geométrico dependen estrictamente del manejo interno de las unidades de medida, dictaminadas por el sistema coordenado (metros métricos para MAGNA-SIRGAS EPSG:9377).</p>
 <p>A continuación, se listan las principales funciones de geoprocesamiento paramétrico y su implementación nativa según las librerías base de cada entorno espacial:</p>
 <ul>
@@ -11419,9 +11338,9 @@ all geometries</code></pre>
 <li><strong>Envolvente convexa:</strong> Propiedad <code>.convex_hull</code> en <code>shapely</code> (Python), <code>st_convex_hull()</code> en <code>sf</code> (R), <code>convexhull()</code> en <code>ArchGDAL</code> (Julia).</li>
 </ul>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-18-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-18-1" role="tab" aria-controls="tabset-18-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-18-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-18-2" role="tab" aria-controls="tabset-18-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-18-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-18-3" role="tab" aria-controls="tabset-18-3" aria-selected="false">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-17-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-17-1" role="tab" aria-controls="tabset-17-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-17-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-17-2" role="tab" aria-controls="tabset-17-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-17-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-17-3" role="tab" aria-controls="tabset-17-3" aria-selected="false">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-18-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-18-1-tab">
+<div id="tabset-17-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-17-1-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-52-contents" aria-controls="callout-52" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -11521,7 +11440,7 @@ all geometries</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-18-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-18-2-tab">
+<div id="tabset-17-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-17-2-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-53-contents" aria-controls="callout-53" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -11621,7 +11540,7 @@ all geometries</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-18-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-18-3-tab">
+<div id="tabset-17-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-17-3-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-54-contents" aria-controls="callout-54" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -11780,15 +11699,15 @@ all geometries</code></pre>
 </div>
 </div>
 </section>
-<section id="manejo-y-conversión-de-unidades-espaciales" class="level2" data-number="14.22">
-<h2 data-number="14.22" class="anchored" data-anchor-id="manejo-y-conversión-de-unidades-espaciales"><span class="header-section-number">14.22</span> Manejo y conversión de unidades espaciales</h2>
+<section id="manejo-y-conversión-de-unidades-espaciales" class="level2" data-number="14.21">
+<h2 data-number="14.21" class="anchored" data-anchor-id="manejo-y-conversión-de-unidades-espaciales"><span class="header-section-number">14.21</span> Manejo y conversión de unidades espaciales</h2>
 <p>El cálculo de métricas geométricas, como el área o la longitud, depende intrínsecamente del Sistema de Referencia de Coordenadas (CRS) asignado a los datos vectoriales. Para el caso de Colombia, al utilizar el sistema proyectado MAGNA-SIRGAS Origen Nacional (EPSG:9377), las mediciones planimétricas base se expresan matemáticamente en metros cuadrados (<span class="math inline">\(m^2\)</span>) o metros lineales (<span class="math inline">\(m\)</span>).</p>
 <p>La gestión de estas unidades varía drásticamente según la arquitectura de cada lenguaje: - En <strong>R</strong>, el ecosistema espacial implementa un control estricto mediante el paquete <code>units</code>. Las variables geométricas heredan un metadato de unidad física que previene sumas incompatibles (ej. sumar metros con kilómetros) y facilita la conversión semántica directa. - En <strong>Python</strong> (<code>geopandas</code>) y <strong>Julia</strong> (<code>ArchGDAL</code>), no existe un soporte nativo integrado para tipado de unidades físicas en las columnas espaciales. El sistema retorna valores numéricos escalares (flotantes) en la unidad del CRS base. La conversión a unidades derivadas, como hectáreas o kilómetros cuadrados, exige aplicar operaciones algebraicas manuales sobre los atributos.</p>
 <p>A continuación, se demuestra el cálculo de áreas en metros cuadrados y su posterior conversión a hectáreas (<span class="math inline">\(1 \text{ ha} = 10,000 \text{ m}^2\)</span>) utilizando polígonos representativos del Parque Metropolitano Simón Bolívar y el Parque de los Novios en Bogotá.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-19-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-19-1" role="tab" aria-controls="tabset-19-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-19-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-19-2" role="tab" aria-controls="tabset-19-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-19-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-19-3" role="tab" aria-controls="tabset-19-3" aria-selected="false">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-18-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-18-1" role="tab" aria-controls="tabset-18-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-18-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-18-2" role="tab" aria-controls="tabset-18-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-18-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-18-3" role="tab" aria-controls="tabset-18-3" aria-selected="false">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-19-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-19-1-tab">
+<div id="tabset-18-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-18-1-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-55-contents" aria-controls="callout-55" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -11910,7 +11829,7 @@ all geometries</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-19-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-19-2-tab">
+<div id="tabset-18-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-18-2-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-56-contents" aria-controls="callout-56" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -12030,7 +11949,7 @@ all geometries</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-19-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-19-3-tab">
+<div id="tabset-18-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-18-3-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-57-contents" aria-controls="callout-57" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -12265,13 +12184,13 @@ all geometries</code></pre>
 </div>
 </div>
 </section>
-<section id="exploración-de-métodos-y-funciones-en-clases-espaciales" class="level2" data-number="14.23">
-<h2 data-number="14.23" class="anchored" data-anchor-id="exploración-de-métodos-y-funciones-en-clases-espaciales"><span class="header-section-number">14.23</span> Exploración de métodos y funciones en clases espaciales</h2>
+<section id="exploración-de-métodos-y-funciones-en-clases-espaciales" class="level2" data-number="14.22">
+<h2 data-number="14.22" class="anchored" data-anchor-id="exploración-de-métodos-y-funciones-en-clases-espaciales"><span class="header-section-number">14.22</span> Exploración de métodos y funciones en clases espaciales</h2>
 <p>La exploración algorítmica de los objetos espaciales permite auditar e identificar las funciones de geoprocesamiento, constructores y atributos disponibles en las librerías base. Dado que cada ecosistema maneja un paradigma de programación distinto (orientado a objetos en Python, funcional S3 en R y despacho múltiple en Julia), los mecanismos de introspección para listar los métodos aplicables a las geometrías y estructuras tabulares varían significativamente.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-20-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-20-1" role="tab" aria-controls="tabset-20-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-20-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-20-2" role="tab" aria-controls="tabset-20-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-20-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-20-3" role="tab" aria-controls="tabset-20-3" aria-selected="false">Julia</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-19-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-19-1" role="tab" aria-controls="tabset-19-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-19-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-19-2" role="tab" aria-controls="tabset-19-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-19-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-19-3" role="tab" aria-controls="tabset-19-3" aria-selected="false">Julia</a></li></ul>
 <div class="tab-content">
-<div id="tabset-20-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-20-1-tab">
+<div id="tabset-19-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-19-1-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-58-contents" aria-controls="callout-58" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -12344,7 +12263,7 @@ Métodos espaciales y tabulares de GeoPandas (clase GeoDataFrame):</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-20-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-20-2-tab">
+<div id="tabset-19-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-19-2-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-59-contents" aria-controls="callout-59" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -12443,7 +12362,7 @@ Métodos espaciales y tabulares de GeoPandas (clase GeoDataFrame):</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-20-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-20-3-tab">
+<div id="tabset-19-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-19-3-tab">
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-60-contents" aria-controls="callout-60" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -12610,8 +12529,8 @@ Métodos espaciales y tabulares de GeoPandas (clase GeoDataFrame):</code></pre>
 </div>
 </div>
 </section>
-<section id="resumen-sintáctico-métodos-alternativos-para-crear-puntos" class="level2" data-number="14.24">
-<h2 data-number="14.24" class="anchored" data-anchor-id="resumen-sintáctico-métodos-alternativos-para-crear-puntos"><span class="header-section-number">14.24</span> Resumen sintáctico: Métodos alternativos para crear puntos</h2>
+<section id="resumen-sintáctico-métodos-alternativos-para-crear-puntos" class="level2" data-number="14.23">
+<h2 data-number="14.23" class="anchored" data-anchor-id="resumen-sintáctico-métodos-alternativos-para-crear-puntos"><span class="header-section-number">14.23</span> Resumen sintáctico: Métodos alternativos para crear puntos</h2>
 <div id="tbl-resumen_crear_puntos_avanzado" class="quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-resumen_crear_puntos_avanzado-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -12659,11 +12578,6 @@ Tabla&nbsp;14.24: Sintaxis comparativa para la instanciación de puntos espacial
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
-<div id="ref-pebesma2025spatial" class="csl-entry" role="listitem">
-Pebesma, E., Fleischmann, M., Parry, J., Nowosad, J., Graser, A., Dunnington, D., Pronk, M., Schouten, R., Lovelace, R., Appel, M., et&nbsp;al. (2025). Spatial data science languages: commonalities and needs. <em>arXiv preprint arXiv:2503.16686</em>.
-</div>
-</div>
 </section>
 
 </main> <!-- /main -->

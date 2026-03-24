@@ -132,44 +132,6 @@ El siguiente esquema detalla la nomenclatura general de los objetos y, en la seg
 : Equivalencia de las clases y tipos de datos en la arquitectura espacial de los tres lenguajes. {#tbl-arquitectura_objetos tbl-colwidths="[16,28,28,28]"}
 
 
-## Relación entre librerías geoespaciales
-
-Para entender el funcionamiento de las librerías espaciales vectoriales, es estrictamente necesario analizar su arquitectura de software. Como señalan [@pebesma2025spatial], los lenguajes de programación para la ciencia de datos espaciales operan metodológicamente como interfaces de alto nivel (*wrappers*) que delegan el procesamiento algorítmico pesado a un núcleo de librerías estandarizadas escritas en C y C++.
-
-Las tres librerías fundamentales que sustentan este ecosistema geoespacial son:
-
-* **GDAL/OGR (Geospatial Data Abstraction Library):** Actúa como el **traductor universal de lectura y escritura**. Permite la importación y exportación estructurada de más de 100 formatos **vectoriales y raster** (ej. Shapefile de ESRI, GeoPackage, GeoJSON).
-* **GEOS (Geometry Engine, Open Source):** Motor topológico responsable de ejecutar las **operaciones de geoprocesamiento paramétrico** (intersecciones espaciales, extracciones de centroides, áreas de influencia o *buffers*) y evaluar rigurosamente las **relaciones matemáticas entre geometrías** mediante el modelo DE-9IM.
-* **PROJ:** Librería cartográfica dedicada exclusivamente a la **transformación algorítmica** de **Sistemas de Referencia de Coordenadas (CRS)**. Gestiona los modelos matemáticos para proyectar datos desde elipsoides globales (WGS84) hacia sistemas locales o proyectados (como el sistema MAGNA-SIRGAS Origen Nacional EPSG:9377).
-
-La dependencia técnica compartida de esta triada garantiza la **interoperabilidad absoluta** entre ecosistemas. Si un flujo de trabajo exige limpiar un archivo GeoPackage catastral utilizando Python (`geopandas`), calcular métricas de área en R (`sf`) y ejecutar un modelo iterativo de optimización de rutas en Julia (`ArchGDAL`), el dato espacial mantendrá su integridad geométrica y tabular en todo momento. 
-
-Esta coherencia transversal ocurre porque la **lectura binaria** de los vértices siempre la ejecuta **GDAL**, el cálculo del **área** siempre lo resuelve la matemática subyacente de **GEOS** y la **proyección espacial** siempre la maneja **PROJ**, independientemente de la sintaxis del lenguaje que envió la instrucción inicial.
-
-A continuación, se visualizan las arquitecturas de dependencias y el enrutamiento hacia las librerías base en nuestros tres lenguajes:
-
-::: {.panel-tabset}
-
-### Python y R (General)
-
-Esta gráfica detalla la relación de dependencias compartidas a nivel de sistema operativo entre los ecosistemas de R y Python.
-
-![Dependencias subyacentes compartidas entre los ecosistemas de ciencia de datos espaciales de Python y R. Fuente: @pebesma2025spatial.](images/dependencias/geopythonR.png){#fig-geopython fig-align="center" out-width="80%"}
-
-### R (`sf`)
-
-Árbol de dependencias específico para el paquete `sf` (Simple Features) en R, el motor fundamental de la geomática moderna en este entorno analítico.
-
-![Árbol de dependencias detallado para el paquete Simple Features (sf) en R. Fuente: @pebesma2025spatial.](images/dependencias/sf_deps.png){#fig-sfdeps fig-align="center" out-width="80%"}
-
-### Julia
-
-Estructura de la pila de dependencias dentro del ecosistema de Julia (GeoStack), destacando las envolturas directas (GDAL.jl, GEOS.jl, Proj.jl) hacia las API en lenguaje C.
-
-![Estructura de la pila de dependencias geoespaciales (GeoStack) en el ecosistema de Julia. Fuente: @pebesma2025spatial.](images/dependencias/geostack.drawio.png){#fig-geostack fig-align="center" out-width="80%"}
-
-:::
-
 
 
 ## Creación de puntos a partir de primitivas geométricas
@@ -6276,16 +6238,16 @@ println("¿Es un polígono válido?: ", ArchGDAL.isvalid(poligono_invalido_julia
 
 Los predicados espaciales evalúan y determinan las relaciones topológicas entre dos objetos espaciales utilizando el **modelo de matriz de intersección de nueve elementos extendido dimensionalmente** (DE-9IM). Puedes encontrar mayor información en:
 
-1. Wikipedia (inglés): https://en.wikipedia.org/wiki/DE-9IM  
-2. Ayuda de PostGIS (español): https://postgis.net/workshops/es/postgis-intro/de9im.html  
-3. Ayuda de ArcGIS (español): https://pro.arcgis.com/es/pro-app/latest/help/data/validating-data/custom-spatial-relationships.htm  
+1. [Wikipedia (inglés)](https://en.wikipedia.org/wiki/DE-9IM)
+2. [Ayuda de PostGIS (español)](https://postgis.net/workshops/es/postgis-intro/de9im.html)
+3. [Ayuda de ArcGIS (español)](https://pro.arcgis.com/es/pro-app/latest/help/data/validating-data/custom-spatial-relationships.htm)
 
 Otro recurso valioso es la Suite de Topología de Java (JTS), la cual incluye la herramienta JTS TestBuilder, donde se puede interactuar mediante una interfaz gráfica para crear geometrías manualmente y calcular la matriz DE-9IM entre pares de geometrías creadas por el usuario. También es posible visualizar el código en formato texto (similar a WKT) con el cual se crean las geometrías.
 
 Para instalarla, es requisito contar con Java instalado en el equipo:
 
-1. Descargue el binario (jts-1.14.zip).  
-2. Descomprima el archivo.  
+1. [Descargue](https://sourceforge.net/projects/jts-topology-suite.mirror/) el binario (jts-1.14.zip).  
+2. Descomprima el archivo.
 3. En la carpeta `jts-1.14/bin/`, ejecute (doble clic) `testbuilder.bat`.  
 
 Características principales:

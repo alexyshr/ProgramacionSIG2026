@@ -33,7 +33,21 @@ https://meet.google.com/kgb-qzqx-phu
 
 https://drive.google.com/file/d/1jpWNYLLToUoxtH0MZ5rrnk37ncudA5ae/view?usp=sharing
 
+Encuesta:
+https://docs.google.com/forms/d/e/1FAIpQLSchbPRscx-0hdN4HrX8maWJiLxtvLSbdsFTOUHbb-bCGU8EtQ/viewform?usp=publish-editor
+
 3. Tareas
 
 4. Proyecto
 
+
+
+********************
+
+
+Pendiente:
+- Remover sección duplicada en la parte vectorial
+- Subir la introducción a librerías a capítulo anterior
+- Revisar la tabla en el tema de tighlayour en Julia
+- Revisar como conectar axis a figura en Julia
+- Revisar como funciona el TRUE + FALSE en la matriz 9M

@@ -309,6 +309,44 @@ println("✓ Drivers de GDAL disponibles: ", length(ArchGDAL.listdrivers()))
 
 :::
 
+## Relación entre librerías geoespaciales
+
+Para entender el funcionamiento de las librerías espaciales vectoriales, es estrictamente necesario analizar su arquitectura de software. Como señalan [@pebesma2025spatial], los lenguajes de programación para la ciencia de datos espaciales operan metodológicamente como interfaces de alto nivel (*wrappers*) que delegan el procesamiento algorítmico pesado a un núcleo de librerías estandarizadas escritas en C y C++.
+
+Las tres librerías fundamentales que sustentan este ecosistema geoespacial son:
+
+* **GDAL/OGR (Geospatial Data Abstraction Library):** Actúa como el **traductor universal de lectura y escritura**. Permite la importación y exportación estructurada de más de 100 formatos **vectoriales y raster** (ej. Shapefile de ESRI, GeoPackage, GeoJSON).
+* **GEOS (Geometry Engine, Open Source):** Motor topológico responsable de ejecutar las **operaciones de geoprocesamiento paramétrico** (intersecciones espaciales, extracciones de centroides, áreas de influencia o *buffers*) y evaluar rigurosamente las **relaciones matemáticas entre geometrías** mediante el modelo DE-9IM.
+* **PROJ:** Librería cartográfica dedicada exclusivamente a la **transformación algorítmica** de **Sistemas de Referencia de Coordenadas (CRS)**. Gestiona los modelos matemáticos para proyectar datos desde elipsoides globales (WGS84) hacia sistemas locales o proyectados (como el sistema MAGNA-SIRGAS Origen Nacional EPSG:9377).
+
+La dependencia técnica compartida de esta triada garantiza la **interoperabilidad absoluta** entre ecosistemas. Si un flujo de trabajo exige limpiar un archivo GeoPackage catastral utilizando Python (`geopandas`), calcular métricas de área en R (`sf`) y ejecutar un modelo iterativo de optimización de rutas en Julia (`ArchGDAL`), el dato espacial mantendrá su integridad geométrica y tabular en todo momento. 
+
+Esta coherencia transversal ocurre porque la **lectura binaria** de los vértices siempre la ejecuta **GDAL**, el cálculo del **área** siempre lo resuelve la matemática subyacente de **GEOS** y la **proyección espacial** siempre la maneja **PROJ**, independientemente de la sintaxis del lenguaje que envió la instrucción inicial.
+
+A continuación, se visualizan las arquitecturas de dependencias y el enrutamiento hacia las librerías base en nuestros tres lenguajes:
+
+::: {.panel-tabset}
+
+### Python y R (General)
+
+Esta gráfica detalla la relación de dependencias compartidas a nivel de sistema operativo entre los ecosistemas de R y Python.
+
+![Dependencias subyacentes compartidas entre los ecosistemas de ciencia de datos espaciales de Python y R. Fuente: @pebesma2025spatial.](images/dependencias/geopythonR.png){#fig-geopython fig-align="center" out-width="80%"}
+
+### R (`sf`)
+
+Árbol de dependencias específico para el paquete `sf` (Simple Features) en R, el motor fundamental de la geomática moderna en este entorno analítico.
+
+![Árbol de dependencias detallado para el paquete Simple Features (sf) en R. Fuente: @pebesma2025spatial.](images/dependencias/sf_deps.png){#fig-sfdeps fig-align="center" out-width="80%"}
+
+### Julia
+
+Estructura de la pila de dependencias dentro del ecosistema de Julia (GeoStack), destacando las envolturas directas (GDAL.jl, GEOS.jl, Proj.jl) hacia las API en lenguaje C.
+
+![Estructura de la pila de dependencias geoespaciales (GeoStack) en el ecosistema de Julia. Fuente: @pebesma2025spatial.](images/dependencias/geostack.drawio.png){#fig-geostack fig-align="center" out-width="80%"}
+
+:::
+
 
 ## Mapa interactivo en Colombia
 
