@@ -164,7 +164,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./18-fundamentos_raster.html">Análisis y Procesamiento Raster</a></li><li class="breadcrumb-item"><a href="./19-operaciones_raster.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Funciones j_eval y j_plot en R</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./18-fundamentos_raster.html">Análisis y Procesamiento Raster</a></li><li class="breadcrumb-item"><a href="./19-operaciones_raster.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Operaciones raster</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -354,7 +354,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./19-operaciones_raster.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Funciones j_eval y j_plot en R</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Operaciones raster</span></span></a>
   </div>
 </li>
       </ul>
@@ -574,7 +574,10 @@ window.Quarto = {
    
   <ul>
   <li><a href="#funciones-j_eval-y-j_plot-en-r" id="toc-funciones-j_eval-y-j_plot-en-r" class="nav-link active" data-scroll-target="#funciones-j_eval-y-j_plot-en-r"><span class="header-section-number">19.1</span> Funciones j_eval y j_plot en R</a></li>
-  <li><a href="#introducción" id="toc-introducción" class="nav-link" data-scroll-target="#introducción"><span class="header-section-number">19.2</span> Introducción</a></li>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link" data-scroll-target="#introducción"><span class="header-section-number">19.2</span> Introducción</a>
+  <ul class="collapse">
+  <li><a href="#comparación-de-librerías-raster" id="toc-comparación-de-librerías-raster" class="nav-link" data-scroll-target="#comparación-de-librerías-raster">Comparación de librerías raster</a></li>
+  </ul></li>
   <li><a href="#reproyección-de-sistemas-de-coordenadas" id="toc-reproyección-de-sistemas-de-coordenadas" class="nav-link" data-scroll-target="#reproyección-de-sistemas-de-coordenadas"><span class="header-section-number">19.3</span> Reproyección de sistemas de coordenadas</a>
   <ul class="collapse">
   <li><a href="#espacio-de-imagen-vs.-espacio-de-coordenadas" id="toc-espacio-de-imagen-vs.-espacio-de-coordenadas" class="nav-link" data-scroll-target="#espacio-de-imagen-vs.-espacio-de-coordenadas">Espacio de imagen vs.&nbsp;espacio de coordenadas</a></li>
@@ -612,7 +615,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./18-fundamentos_raster.html">Análisis y Procesamiento Raster</a></li><li class="breadcrumb-item"><a href="./19-operaciones_raster.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Funciones j_eval y j_plot en R</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./18-fundamentos_raster.html">Análisis y Procesamiento Raster</a></li><li class="breadcrumb-item"><a href="./19-operaciones_raster.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Operaciones raster</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Operaciones raster</span></h1>
 </div>
@@ -645,6 +648,51 @@ window.Quarto = {
 <h2 data-number="19.2" class="anchored" data-anchor-id="introducción"><span class="header-section-number">19.2</span> Introducción</h2>
 <p>Las operaciones raster consisten en la manipulación analítica y geométrica de las matrices espaciales. Mientras que en el formato vectorial las transformaciones alteran vértices explícitos, en el modelo raster las operaciones modifican los valores de los píxeles (álgebra de mapas) o reestructuran la cuadrícula subyacente (reproyección y remuestreo).</p>
 <p>Para garantizar la interoperabilidad de datos en Colombia, es un procedimiento estándar transformar insumos globales (como imágenes satelitales Sentinel o modelos de precipitación WGS84) al Sistema de Referencia de Coordenadas oficial MAGNA-SIRGAS Origen Nacional (EPSG:9377). Una vez unificada la base espacial, es viable ejecutar operaciones aritméticas entre bandas, aislar regiones de interés mediante recortes espaciales (clipping) y derivar nuevos índices temáticos.</p>
+<section id="comparación-de-librerías-raster" class="level3">
+<h3 class="anchored" data-anchor-id="comparación-de-librerías-raster">Comparación de librerías raster</h3>
+<table class="table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Enfoque técnico</th>
+<th style="text-align: left;">Python 🐍</th>
+<th style="text-align: left;">R 🔵</th>
+<th style="text-align: left;">Julia 🟣</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Bajo nivel (I/O y matrices crudas)</strong></td>
+<td style="text-align: left;"><strong><code>rasterio</code></strong>: Interfaz directa a GDAL. Retorna matrices puras de NumPy. Ideal para operaciones de entrada/salida y control granular de memoria (lectura por ventanas).</td>
+<td style="text-align: left;"><strong><code>terra</code></strong>: Sustituto moderno de <code>raster</code>. Escrito en C++, es rápido para operaciones estándar 2D/3D y gestiona la memoria de forma automática.</td>
+<td style="text-align: left;"><strong><code>ArchGDAL.jl</code></strong>: <em>Bindings</em> nativos a la API de GDAL en C. Ofrece control absoluto sobre punteros de memoria, datasets y subdatasets virtuales.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Alto nivel (Cubos espaciales)</strong></td>
+<td style="text-align: left;"><strong><code>rioxarray</code></strong>: Basado en <code>xarray</code>. Trata los rasters como tensores etiquetados (X, Y, Tiempo). Mantiene el CRS y la georreferenciación en cada operación matemática.</td>
+<td style="text-align: left;"><strong><code>stars</code></strong>: Diseñada para cubos hiperdimensionales (espacio-tiempo). Su fortaleza radica en la integración nativa con <code>sf</code> y el ecosistema <code>tidyverse</code> (ggplot2).</td>
+<td style="text-align: left;"><strong><code>Rasters.jl</code></strong>: Provee abstracción espacial. Envuelve los arreglos crudos leídos por ArchGDAL para asignarles dimensiones explícitas (<code>X</code>, <code>Y</code>, <code>Band</code>).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Ventajas</strong></td>
+<td style="text-align: left;"><strong><code>rasterio</code></strong>: Máxima eficiencia computacional en I/O.<br><strong><code>rioxarray</code></strong>: Facilita el álgebra vectorial y el remuestreo automático sin perder metadatos espaciales.</td>
+<td style="text-align: left;"><strong><code>terra</code></strong>: Sintaxis concisa y rendimiento excepcional en geoprocesamiento focal/local.<br><strong><code>stars</code></strong>: Manejo superior de series de tiempo multiespectrales.</td>
+<td style="text-align: left;">Operan en sinergia: <code>ArchGDAL</code> garantiza lectura asíncrona a prueba de fallos, mientras <code>Rasters.jl</code> aporta sintaxis declarativa con rendimiento equivalente a C.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Desventajas</strong></td>
+<td style="text-align: left;"><strong><code>rasterio</code></strong>: Exige manejo manual de matrices de transformación afín.<br><strong><code>rioxarray</code></strong>: Alto consumo de memoria RAM si no se fragmenta la lectura mediante <em>chunks</em> (Dask).</td>
+<td style="text-align: left;"><strong><code>terra</code></strong>: Los objetos <code>SpatRaster</code> requieren conversión explícita para renderizado en librerías estándar.<br><strong><code>stars</code></strong>: Ligeramente inferior a <code>terra</code> en velocidad pura de álgebra de mapas.</td>
+<td style="text-align: left;">Documentación técnica fragmentada. Exige manejo riguroso de cierres de sesión de archivos (<code>close</code>) y supresión de volcados de memoria (<code>nothing</code>).</td>
+</tr>
+</tbody>
+</table>
+</section>
 </section>
 <section id="reproyección-de-sistemas-de-coordenadas" class="level2" data-number="19.3">
 <h2 data-number="19.3" class="anchored" data-anchor-id="reproyección-de-sistemas-de-coordenadas"><span class="header-section-number">19.3</span> Reproyección de sistemas de coordenadas</h2>
@@ -993,7 +1041,7 @@ CRS Destino: EPSG{1}((9377,))
 <li><strong>Eje X (Este / Real X):</strong> Los valores aumentan hacia la <strong>derecha</strong>.</li>
 <li><strong>Eje Y (Norte / Real Y):</strong> Los valores aumentan hacia <strong>arriba</strong>.</li>
 </ol>
-<div id="fig-pixel_coord_space" class="quarto-figure quarto-figure-center quarto-float anchored" data-layout-align="center" data-fig-align="center">
+<div id="fig-pixel_coord_space" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" data-layout-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-pixel_coord_space-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/raster/espacio_imagen_espacio_coordenadas.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%">
@@ -2069,7 +2117,7 @@ Valores de Y (Norte):
 Rango de X: desde 0 hasta 999
 Rango de Y: desde 0 hasta 2499
 Cantidad de píxeles: 1000 en X, 2500 en Y
-&lt;matplotlib.collections.QuadMesh object at 0x7333ee87b350&gt;
+&lt;matplotlib.collections.QuadMesh object at 0x7bb0e89231a0&gt;
 Text(0.5, 1.0, 'NDWI SIN Georreferenciar')
 Text(0.5, 0, 'Columnas  (1000)')
 Text(0, 0.5, 'Filas (2500)')
@@ -2356,7 +2404,7 @@ rows: [0 1 2 3 4]
 cols: [0 1 2 3 4]
 Esquina superior izquierda (X, Y): 399800.0, 5960000.0
 Resolución del eje X: 10.0 metros
-&lt;matplotlib.collections.QuadMesh object at 0x7333ee89e570&gt;
+&lt;matplotlib.collections.QuadMesh object at 0x7bb0e87d1b20&gt;
 Text(0.5, 1.0, 'NDWI Georreferenciado')
 Text(0.5, 0, 'Este (Metros)')
 Text(0, 0.5, 'Norte (Metros)')

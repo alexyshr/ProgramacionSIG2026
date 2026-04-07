@@ -1,7 +1,4 @@
 ﻿
-
-
-
 # Fundamentos raster
 
 ## Funciones j_eval y j_plot en R

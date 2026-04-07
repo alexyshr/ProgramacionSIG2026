@@ -1,4 +1,6 @@
-﻿# Operaciones raster
+﻿
+# Operaciones raster
+
 
 ## Funciones j_eval y j_plot en R
 
@@ -14,6 +16,15 @@ source("./docs/j_eval_j_plot.r")
 Las operaciones raster consisten en la manipulación analítica y geométrica de las matrices espaciales. Mientras que en el formato vectorial las transformaciones alteran vértices explícitos, en el modelo raster las operaciones modifican los valores de los píxeles (álgebra de mapas) o reestructuran la cuadrícula subyacente (reproyección y remuestreo).
 
 Para garantizar la interoperabilidad de datos en Colombia, es un procedimiento estándar transformar insumos globales (como imágenes satelitales Sentinel o modelos de precipitación WGS84) al Sistema de Referencia de Coordenadas oficial MAGNA-SIRGAS Origen Nacional (EPSG:9377). Una vez unificada la base espacial, es viable ejecutar operaciones aritméticas entre bandas, aislar regiones de interés mediante recortes espaciales (clipping) y derivar nuevos índices temáticos.
+
+### Comparación de librerías raster
+
+| Enfoque técnico | Python 🐍 | R 🔵 | Julia 🟣 |
+| :--- | :--- | :--- | :--- |
+| **Bajo nivel (I/O y matrices crudas)** | **`rasterio`**: Interfaz directa a GDAL. Retorna matrices puras de NumPy. Ideal para operaciones de entrada/salida y control granular de memoria (lectura por ventanas). | **`terra`**: Sustituto moderno de `raster`. Escrito en C++, es rápido para operaciones estándar 2D/3D y gestiona la memoria de forma automática. | **`ArchGDAL.jl`**: *Bindings* nativos a la API de GDAL en C. Ofrece control absoluto sobre punteros de memoria, datasets y subdatasets virtuales. |
+| **Alto nivel (Cubos espaciales)** | **`rioxarray`**: Basado en `xarray`. Trata los rasters como tensores etiquetados (X, Y, Tiempo). Mantiene el CRS y la georreferenciación en cada operación matemática. | **`stars`**: Diseñada para cubos hiperdimensionales (espacio-tiempo). Su fortaleza radica en la integración nativa con `sf` y el ecosistema `tidyverse` (ggplot2). | **`Rasters.jl`**: Provee abstracción espacial. Envuelve los arreglos crudos leídos por ArchGDAL para asignarles dimensiones explícitas (`X`, `Y`, `Band`). |
+| **Ventajas** | **`rasterio`**: Máxima eficiencia computacional en I/O.<br>**`rioxarray`**: Facilita el álgebra vectorial y el remuestreo automático sin perder metadatos espaciales. | **`terra`**: Sintaxis concisa y rendimiento excepcional en geoprocesamiento focal/local.<br>**`stars`**: Manejo superior de series de tiempo multiespectrales. | Operan en sinergia: `ArchGDAL` garantiza lectura asíncrona a prueba de fallos, mientras `Rasters.jl` aporta sintaxis declarativa con rendimiento equivalente a C. |
+| **Desventajas** | **`rasterio`**: Exige manejo manual de matrices de transformación afín.<br>**`rioxarray`**: Alto consumo de memoria RAM si no se fragmenta la lectura mediante *chunks* (Dask). | **`terra`**: Los objetos `SpatRaster` requieren conversión explícita para renderizado en librerías estándar.<br>**`stars`**: Ligeramente inferior a `terra` en velocidad pura de álgebra de mapas. | Documentación técnica fragmentada. Exige manejo riguroso de cierres de sesión de archivos (`close`) y supresión de volcados de memoria (`nothing`). |
 
 ## Reproyección de sistemas de coordenadas
 
