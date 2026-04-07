@@ -133,3 +133,10 @@ En el diseño de este entorno, se tomó la decisión técnica de descartar el pa
 1.  **Julia y R**: Se operan de manera totalmente **interactiva** en VSCode (envío de líneas con `Ctrl+Enter`).
 2.  **Python vía reticulate**: Se utiliza primordialmente para el **renderizado (vía knitr)** de informes finales. Para una programación interactiva pura en Python, se recomienda el uso de los **Jupyter kernels**.
 :::
+
+
+## Paquetes faltantes
+
+- tidyterra (no instalado)
+- pak (no instalado)
+- rgee (no instalado)

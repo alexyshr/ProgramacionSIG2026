@@ -1198,7 +1198,7 @@ j_eval('
                    aspect_ratio=:equal, 
                    legend=false)
         
-        savefig(plt, "verificacion_geos.png")
+        savefig(plt, "./images/verificacion_geos.png")
     catch e
         println("❌ Error en LibGEOS o Visualización: ", e)
     end
@@ -1215,8 +1215,8 @@ j_eval('
 ')
 
 # 2. Insertamos el gráfico generado de forma segura
-if (file.exists("verificacion_geos.png")) {
-  knitr::include_graphics("verificacion_geos.png")
+if (file.exists("./images/verificacion_geos.png")) {
+  knitr::include_graphics("./images/verificacion_geos.png")
 }
 ```
 
@@ -1297,15 +1297,15 @@ j_eval('
                    aspect_ratio=:equal,
                    legend=false)
         
-        savefig(plt, "verificacion_sig_final.png")
+        savefig(plt, "./images/verificacion_sig_final.png")
     catch e
         println("❌ Error en motores geométricos o gráficos: ", e)
     end
 ')
 
 # 2. Si se generó el gráfico, lo incluimos de forma segura para R y Quarto
-if (file.exists("verificacion_sig_final.png")) {
-  knitr::include_graphics("verificacion_sig_final.png")
+if (file.exists("./images/verificacion_sig_final.png")) {
+  knitr::include_graphics("./images/verificacion_sig_final.png")
 }
 ```
 

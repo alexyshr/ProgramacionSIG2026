@@ -1,0 +1,207 @@
+Muy bien que detectaste ese problema — esto es exactamente donde muchos análisis raster fallan 👇
+Te explico esto como se lo explicarías a estudiantes, paso a paso y con intuición.
+
+---
+
+# 🧭 ¿Qué problema estás resolviendo?
+
+Antes:
+
+```python
+ndwi_xr = xr.DataArray(ndwi_np, dims=("y", "x"))
+```
+
+👉 Esto **NO tiene coordenadas reales**
+👉 Solo usa índices: (0,1,2,3…)
+
+Resultado:
+
+* La imagen puede verse **rotada, invertida o deformada**
+* No respeta el espacio geográfico real
+
+---
+
+# ✅ ¿Qué hiciste ahora?
+
+Convertiste **índices de píxel → coordenadas reales (metros)**
+
+---
+
+# 🔍 Paso a paso
+
+## 1. Crear los índices de la ventana
+
+```python
+rows = np.arange(ventana.height)
+cols = np.arange(ventana.width)
+```
+
+Esto genera:
+
+* `rows`: [0, 1, 2, ..., 2499]
+* `cols`: [0, 1, 2, ..., 2499]
+
+👉 Son **posiciones internas del raster (píxeles)**
+👉 Aún **NO son coordenadas geográficas**
+
+---
+
+## 2. Usar la transformada affine
+
+```python
+eastings, northings = nueva_transformada * (cols, rows)
+```
+
+Aquí está la magia 🔥
+
+### 🧠 ¿Qué es `nueva_transformada`?
+
+Es una **transformación afín** que convierte:
+
+```
+(col, row)  →  (x, y)
+```
+
+O sea:
+
+👉 píxel → coordenada real (UTM, metros, etc.)
+
+---
+
+## 📐 Conceptualmente
+
+Cada píxel tiene:
+
+* tamaño (ej: 10 m en Sentinel-2)
+* posición en el espacio
+
+La transformada hace algo así:
+
+```
+x = a * col + b * row + c
+y = d * col + e * row + f
+```
+
+Pero tú no necesitas calcularlo manualmente porque:
+
+```python
+transform * (col, row)
+```
+
+ya lo hace por ti ✅
+
+---
+
+## 🎯 Resultado
+
+* `eastings` → coordenadas X reales (Este)
+* `northings` → coordenadas Y reales (Norte)
+
+---
+
+## ⚠️ Detalle importante (muy docente 👇)
+
+Esto funciona porque:
+
+* `cols` varía en X
+* `rows` varía en Y
+* rasterio aplica la transformación correctamente en vector
+
+---
+
+# 3. Crear el DataArray con coordenadas reales
+
+```python
+ndwi_xr = xr.DataArray(
+    ndwi_np, 
+    dims=("y", "x"),
+    coords={
+        "x": eastings,
+        "y": northings
+    }
+)
+```
+
+---
+
+## 🧠 ¿Qué cambia aquí?
+
+ANTES:
+
+| índice | valor |
+| ------ | ----- |
+| x=0    | pixel |
+| x=1    | pixel |
+
+AHORA:
+
+| coordenada real | valor |
+| --------------- | ----- |
+| x=500000 m      | pixel |
+| x=500010 m      | pixel |
+
+👉 Pasas de **imagen** → **mapa**
+
+---
+
+# 🎯 ¿Por qué esto corrige la rotación?
+
+Porque ahora:
+
+* X ya no es "columna"
+* X es "Este"
+* Y es "Norte"
+
+Entonces `matplotlib`:
+
+* respeta orientación geográfica
+* no invierte ejes
+* no rota la imagen
+
+---
+
+# 📊 Analogía para estudiantes
+
+💡 Imagina una foto:
+
+* Sin coordenadas → es solo una imagen
+* Con coordenadas → es un mapa con ubicación real
+
+---
+
+# ⚠️ Sutileza importante (nivel pro)
+
+En muchos raster:
+
+* el eje Y va **de arriba hacia abajo** (imagen)
+* pero en geografía:
+
+  * el Norte va **de abajo hacia arriba**
+
+👉 La transformada corrige esto automáticamente
+
+---
+
+# 🧩 Resumen claro
+
+| Paso                | Qué haces           | Resultado               |
+| ------------------- | ------------------- | ----------------------- |
+| `np.arange`         | índices de píxel    | posiciones internas     |
+| `transform * (...)` | conversión espacial | coordenadas reales      |
+| `coords=`           | asignación a xarray | raster georreferenciado |
+
+---
+
+# 🚀 Frase clave para clase
+
+Puedes explicarlo así:
+
+> “Un raster sin transformada es solo una imagen.
+> Cuando aplicamos la transformada, cada píxel sabe dónde está en el mundo.”
+
+---
+
+Si quieres, el siguiente nivel sería mostrarles:
+
+* cómo hacer esto correctamente con `rasterio.transform.xy()` (más robusto)
+* o cómo evitar errores sutiles cuando hay rotación real del raster (no solo traslación)

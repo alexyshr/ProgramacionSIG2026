@@ -80,5 +80,5 @@ julia -e 'using Pkg; Pkg.precompile()'
 * AlgebraOfGraphics.jl (instalada)
 * GeoMakie.jl (instalada)
 * StatsPlots
-
-
+* Measures
+* PyCall

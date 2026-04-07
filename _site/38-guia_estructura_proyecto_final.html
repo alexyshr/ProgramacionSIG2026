@@ -8,7 +8,7 @@
 
 <meta name="author" content="Alexys H. Rodríguez-Avellaneda Ph.D.">
 
-<title>Programación SIG: Python, R y Julia - 16&nbsp; Guía y Estructura del Proyecto Final</title>
+<title>Programación SIG: Python, R y Julia - 22&nbsp; Guía y Estructura del Proyecto Final</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -32,7 +32,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./41-practica_1_benchmark_raster.html" rel="next">
-<link href="./25-estructuras_datos_geo.html" rel="prev">
+<link href="./98-errata.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -82,7 +82,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./38-guia_estructura_proyecto_final.html">Proyecto Final</a></li><li class="breadcrumb-item"><a href="./38-guia_estructura_proyecto_final.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Guía y Estructura del Proyecto Final</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./38-guia_estructura_proyecto_final.html">Proyecto Final</a></li><li class="breadcrumb-item"><a href="./38-guia_estructura_proyecto_final.html"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Guía y Estructura del Proyecto Final</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -216,7 +216,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
- <span class="menu-text">Programación Geoespacial</span></a>
+ <span class="menu-text">Análisis y Procesamiento Vectorial</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -224,20 +224,32 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./13-introduccion_geo.html" class="sidebar-item-text sidebar-link">
+  <a href="./13-introduccion_vector.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Introducción a Programación Geoespacial</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./14-vector.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Introducción a Python, R y Julia</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Trabajando con Vectores: Estándar Simple Features</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./25-estructuras_datos_geo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Estructuras de Datos Geoespaciales</span></span></a>
+  <a href="./15-referenciacion_lineal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Dimensiones Espaciales Avanzadas y Referenciación Lineal (Z, M)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16-matriz_de_9im.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Análisis Vectorial: Topología y Geoprocesamiento Espacial</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17-vector_opcional_julia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">El Ecosistema Julia: Más allá de ArchGDAL</span></span></a>
   </div>
 </li>
       </ul>
@@ -245,7 +257,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
- <span class="menu-text">Proyecto Final</span></a>
+ <span class="menu-text">Análisis y Procesamiento Raster</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -253,8 +265,14 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./38-guia_estructura_proyecto_final.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Guía y Estructura del Proyecto Final</span></span></a>
+  <a href="./18-fundamentos_raster.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Fundamentos raster</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19-operaciones_raster.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Funciones j_eval y j_plot en R</span></span></a>
   </div>
 </li>
       </ul>
@@ -262,7 +280,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
- <span class="menu-text">Prácticas</span></a>
+ <span class="menu-text">Datos Multidimensionales e Hiperespectrales</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -270,8 +288,8 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./41-practica_1_benchmark_raster.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Evaluación Comparativa de Procesamiento Geoespacial</span></span></a>
+  <a href="./98-errata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Errata</span></span></a>
   </div>
 </li>
       </ul>
@@ -279,7 +297,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
- <span class="menu-text">Presentaciones</span></a>
+ <span class="menu-text">Tópicos Avanzados y Visualización</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -287,14 +305,8 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./61-presentacion_1_clase1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Temas por Charlar</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./62-presentacion_2_benchmark.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Benchmark geoespacial: cómo leer los resultados</span></span></a>
+  <a href="./98-errata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Errata</span></span></a>
   </div>
 </li>
       </ul>
@@ -302,12 +314,75 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
- <span class="menu-text">Apéndices</span></a>
+ <span class="menu-text">Proyecto Final</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./38-guia_estructura_proyecto_final.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Guía y Estructura del Proyecto Final</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
+ <span class="menu-text">Prácticas</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./41-practica_1_benchmark_raster.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Evaluación Comparativa de Procesamiento Geoespacial</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./42-practica_2_vectores.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Fundamentos de Análisis Vectorial</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true">
+ <span class="menu-text">Presentaciones</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./61-presentacion_1_clase1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Temas por Charlar</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./62-presentacion_2_benchmark.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Benchmark geoespacial: cómo leer los resultados</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" aria-expanded="true">
+ <span class="menu-text">Apéndices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./80-instalacion_herramientas.html" class="sidebar-item-text sidebar-link">
@@ -395,7 +470,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./98-errata.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">O</span>&nbsp; <span class="chapter-title">Errata</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Errata</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -416,32 +491,32 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Tabla de Contenidos</h2>
    
   <ul>
-  <li><a href="#introducción-al-proyecto-final" id="toc-introducción-al-proyecto-final" class="nav-link active" data-scroll-target="#introducción-al-proyecto-final"><span class="header-section-number">16.1</span> Introducción al proyecto final</a>
+  <li><a href="#introducción-al-proyecto-final" id="toc-introducción-al-proyecto-final" class="nav-link active" data-scroll-target="#introducción-al-proyecto-final"><span class="header-section-number">22.1</span> Introducción al proyecto final</a>
   <ul class="collapse">
   <li><a href="#propósitos-estratégicos" id="toc-propósitos-estratégicos" class="nav-link" data-scroll-target="#propósitos-estratégicos">Propósitos estratégicos</a></li>
   </ul></li>
-  <li><a href="#estructura-del-documento-final" id="toc-estructura-del-documento-final" class="nav-link" data-scroll-target="#estructura-del-documento-final"><span class="header-section-number">16.2</span> Estructura del documento final</a>
+  <li><a href="#estructura-del-documento-final" id="toc-estructura-del-documento-final" class="nav-link" data-scroll-target="#estructura-del-documento-final"><span class="header-section-number">22.2</span> Estructura del documento final</a>
   <ul class="collapse">
   <li><a href="#secciones-del-informe" id="toc-secciones-del-informe" class="nav-link" data-scroll-target="#secciones-del-informe">Secciones del informe:</a></li>
   </ul></li>
-  <li><a href="#temas-y-retos-de-implementación" id="toc-temas-y-retos-de-implementación" class="nav-link" data-scroll-target="#temas-y-retos-de-implementación"><span class="header-section-number">16.3</span> Temas y retos de implementación</a>
+  <li><a href="#temas-y-retos-de-implementación" id="toc-temas-y-retos-de-implementación" class="nav-link" data-scroll-target="#temas-y-retos-de-implementación"><span class="header-section-number">22.3</span> Temas y retos de implementación</a>
   <ul class="collapse">
   <li><a href="#a.-geocomputación-avanzada" id="toc-a.-geocomputación-avanzada" class="nav-link" data-scroll-target="#a.-geocomputación-avanzada">A. Geocomputación Avanzada</a></li>
   <li><a href="#b.-geoai-y-machine-learning" id="toc-b.-geoai-y-machine-learning" class="nav-link" data-scroll-target="#b.-geoai-y-machine-learning">B. GeoAI y Machine Learning</a></li>
   <li><a href="#c.-desarrollo-de-software" id="toc-c.-desarrollo-de-software" class="nav-link" data-scroll-target="#c.-desarrollo-de-software">C. Desarrollo de Software</a></li>
   </ul></li>
-  <li><a href="#recursos-plataformas-y-datos" id="toc-recursos-plataformas-y-datos" class="nav-link" data-scroll-target="#recursos-plataformas-y-datos"><span class="header-section-number">16.4</span> Recursos, plataformas y datos</a></li>
-  <li><a href="#bibliografía-de-consulta-por-lenguaje" id="toc-bibliografía-de-consulta-por-lenguaje" class="nav-link" data-scroll-target="#bibliografía-de-consulta-por-lenguaje"><span class="header-section-number">16.5</span> Bibliografía de consulta por lenguaje</a></li>
-  <li><a href="#recomendaciones-clave" id="toc-recomendaciones-clave" class="nav-link" data-scroll-target="#recomendaciones-clave"><span class="header-section-number">16.6</span> Recomendaciones clave</a></li>
+  <li><a href="#recursos-plataformas-y-datos" id="toc-recursos-plataformas-y-datos" class="nav-link" data-scroll-target="#recursos-plataformas-y-datos"><span class="header-section-number">22.4</span> Recursos, plataformas y datos</a></li>
+  <li><a href="#bibliografía-de-consulta-por-lenguaje" id="toc-bibliografía-de-consulta-por-lenguaje" class="nav-link" data-scroll-target="#bibliografía-de-consulta-por-lenguaje"><span class="header-section-number">22.5</span> Bibliografía de consulta por lenguaje</a></li>
+  <li><a href="#recomendaciones-clave" id="toc-recomendaciones-clave" class="nav-link" data-scroll-target="#recomendaciones-clave"><span class="header-section-number">22.6</span> Recomendaciones clave</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./38-guia_estructura_proyecto_final.html">Proyecto Final</a></li><li class="breadcrumb-item"><a href="./38-guia_estructura_proyecto_final.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Guía y Estructura del Proyecto Final</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./38-guia_estructura_proyecto_final.html">Proyecto Final</a></li><li class="breadcrumb-item"><a href="./38-guia_estructura_proyecto_final.html"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Guía y Estructura del Proyecto Final</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Guía y Estructura del Proyecto Final</span></h1>
+<h1 class="title"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Guía y Estructura del Proyecto Final</span></h1>
 <p class="subtitle lead">Asignatura: Programación en SIG - Maestría en Geomática</p>
 </div>
 
@@ -465,8 +540,8 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="introducción-al-proyecto-final" class="level2" data-number="16.1">
-<h2 data-number="16.1" class="anchored" data-anchor-id="introducción-al-proyecto-final"><span class="header-section-number">16.1</span> Introducción al proyecto final</h2>
+<section id="introducción-al-proyecto-final" class="level2" data-number="22.1">
+<h2 data-number="22.1" class="anchored" data-anchor-id="introducción-al-proyecto-final"><span class="header-section-number">22.1</span> Introducción al proyecto final</h2>
 <p>El proyecto final es la culminación práctica del curso, donde integraremos la <strong>Ciencia de Datos Espaciales</strong> con un enfoque multilingüe (<strong>Python, R, Julia</strong>). El objetivo es representar y analizar un fenómeno natural, social o económico utilizando herramientas de programación avanzada y datos espaciales, bajo los principios de <strong>Open Science</strong>.</p>
 <p>La idea es construir un documento fácil de entender, con una narrativa clara, que sirva de guía para otros investigadores o profesionales que deseen replicar su metodología.</p>
 <section id="propósitos-estratégicos" class="level3">
@@ -478,8 +553,8 @@ ul.task-list li input[type="checkbox"] {
 <hr>
 </section>
 </section>
-<section id="estructura-del-documento-final" class="level2" data-number="16.2">
-<h2 data-number="16.2" class="anchored" data-anchor-id="estructura-del-documento-final"><span class="header-section-number">16.2</span> Estructura del documento final</h2>
+<section id="estructura-del-documento-final" class="level2" data-number="22.2">
+<h2 data-number="22.2" class="anchored" data-anchor-id="estructura-del-documento-final"><span class="header-section-number">22.2</span> Estructura del documento final</h2>
 <p>Siguiendo el enfoque de ciencia abierta, deben entregar un repositorio público en <strong>GitHub</strong> con el archivo fuente (<code>.qmd</code>), el renderizado (<strong>HTML</strong> y <strong>PDF</strong>) y los scripts necesarios.</p>
 <section id="secciones-del-informe" class="level3">
 <h3 class="anchored" data-anchor-id="secciones-del-informe">Secciones del informe:</h3>
@@ -512,8 +587,8 @@ ul.task-list li input[type="checkbox"] {
 <hr>
 </section>
 </section>
-<section id="temas-y-retos-de-implementación" class="level2" data-number="16.3">
-<h2 data-number="16.3" class="anchored" data-anchor-id="temas-y-retos-de-implementación"><span class="header-section-number">16.3</span> Temas y retos de implementación</h2>
+<section id="temas-y-retos-de-implementación" class="level2" data-number="22.3">
+<h2 data-number="22.3" class="anchored" data-anchor-id="temas-y-retos-de-implementación"><span class="header-section-number">22.3</span> Temas y retos de implementación</h2>
 <p>Pueden orientar su proyecto hacia uno de estos ejes tecnológicos:</p>
 <section id="a.-geocomputación-avanzada" class="level3">
 <h3 class="anchored" data-anchor-id="a.-geocomputación-avanzada">A. Geocomputación Avanzada</h3>
@@ -543,8 +618,8 @@ ul.task-list li input[type="checkbox"] {
 <hr>
 </section>
 </section>
-<section id="recursos-plataformas-y-datos" class="level2" data-number="16.4">
-<h2 data-number="16.4" class="anchored" data-anchor-id="recursos-plataformas-y-datos"><span class="header-section-number">16.4</span> Recursos, plataformas y datos</h2>
+<section id="recursos-plataformas-y-datos" class="level2" data-number="22.4">
+<h2 data-number="22.4" class="anchored" data-anchor-id="recursos-plataformas-y-datos"><span class="header-section-number">22.4</span> Recursos, plataformas y datos</h2>
 <p>Para no empezar desde cero, exploren estas plataformas con casos de uso y datos abiertos:</p>
 <ul>
 <li><strong>NASA Lifelines Data Studios:</strong> Paquetes enfocados en casos humanitarios:
@@ -586,8 +661,8 @@ Caso de Estudio Recomendado: Inundaciones en el Sinú
 </div>
 <hr>
 </section>
-<section id="bibliografía-de-consulta-por-lenguaje" class="level2" data-number="16.5">
-<h2 data-number="16.5" class="anchored" data-anchor-id="bibliografía-de-consulta-por-lenguaje"><span class="header-section-number">16.5</span> Bibliografía de consulta por lenguaje</h2>
+<section id="bibliografía-de-consulta-por-lenguaje" class="level2" data-number="22.5">
+<h2 data-number="22.5" class="anchored" data-anchor-id="bibliografía-de-consulta-por-lenguaje"><span class="header-section-number">22.5</span> Bibliografía de consulta por lenguaje</h2>
 <p>Utilicen este esquema de pestañas para guiar su implementación técnica:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Julia</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false">General</a></li></ul>
@@ -624,8 +699,8 @@ Caso de Estudio Recomendado: Inundaciones en el Sinú
 </div>
 <hr>
 </section>
-<section id="recomendaciones-clave" class="level2" data-number="16.6">
-<h2 data-number="16.6" class="anchored" data-anchor-id="recomendaciones-clave"><span class="header-section-number">16.6</span> Recomendaciones clave</h2>
+<section id="recomendaciones-clave" class="level2" data-number="22.6">
+<h2 data-number="22.6" class="anchored" data-anchor-id="recomendaciones-clave"><span class="header-section-number">22.6</span> Recomendaciones clave</h2>
 <ul>
 <li><strong>Datos Primero:</strong> Verifiquen la disponibilidad de datos en Colombia (IGAC, IDEAM, Geoportal del DANE) antes de finalizar su tema.</li>
 <li><strong>Open Science y Reproducibilidad:</strong> El repositorio debe ser reproducible. Si el código no corre en nuestros contenedores o no está bien documentado en el anexo de virtualización, no cumple el estándar.</li>
@@ -1039,13 +1114,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./25-estructuras_datos_geo.html" class="pagination-link" aria-label="Estructuras de Datos Geoespaciales">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Estructuras de Datos Geoespaciales</span></span>
+      <a href="./98-errata.html" class="pagination-link" aria-label="Errata">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Errata</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./41-practica_1_benchmark_raster.html" class="pagination-link" aria-label="Evaluación Comparativa de Procesamiento Geoespacial">
-        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Evaluación Comparativa de Procesamiento Geoespacial</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Evaluación Comparativa de Procesamiento Geoespacial</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

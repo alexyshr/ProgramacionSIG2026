@@ -73,3 +73,8 @@ Collection of Resources for Data Science
 https://github.com/javedali99/r-resources-for-data-science
 
 
+GEE (fork republica-dominicana en mi GitHub)
+
+https://servir-amazonia.github.io/republica-dominicana-taller/intro-gee/introduccion.html
+https://code.earthengine.google.com/?accept_repo=users/an-sig/republica-dominicana
+	

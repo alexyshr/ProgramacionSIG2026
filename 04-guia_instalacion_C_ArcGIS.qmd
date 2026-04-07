@@ -204,9 +204,18 @@ Si todo es correcto, recibirás una confirmación similar a:
 
 ---
 
-## Inicializar GEE en ArcGIS Pro
+## Inicializar GEE en ArcGIS Pro {#sec-arcgis-pro-initialize-gee}
 
-Una vez configurado el entorno y descargada la caja de herramientas, procede a inicializar Earth Engine dentro de la interfaz de ArcGIS Pro.  Para ver el paso a paso, consulta la sección @sec-arcgis-pro-initialize-gee.
+Una vez configurado el entorno y descargada la caja de herramientas, procede a inicializar Earth Engine dentro de la interfaz de ArcGIS Pro. Antes de usar cualquier función, debemos autenticar nuestra cuenta. En la caja de herramientas de GEE dentro de ArcGIS Pro, abra la sección `Authentication Tools`:
+
+![Herramientas de Autenticación de GEE en ArcGIS Pro.](images/arcgispro/gee/opciones_inicializacion_gee.png){#fig-arcgis-auth-tools fig-align="center" width="30%"}
+
+**Paso A:** Abra la herramienta `Authenticate Earth Engine` y escriba su *Project ID* (ej. `ee-giswqg`). Al ejecutar (`Run`) la herramienta y ver los detalles de la ejecución (`View Details`), deberá observar un mensaje de éxito como: *Earth Engine is ready to use. Authentication successful*.
+
+![Herramienta de autenticación en GEE (Recuerda cambiar el Project ID por el tuyo).](images/arcgispro/gee/gee_authenticate_pro.png){#fig-arcgis-auth-success fig-align="center" width="40%"}
+
+**Paso B:** A continuación, abra la herramienta `Initialize Earth Engine` y escriba nuevamente su *Project ID*. Ejecute la herramienta; en los detalles observará el mensaje confirmando: *Earth Engine is ready to use.*
+
 
 ---
 
@@ -238,4 +247,4 @@ Aunque Earth Engine es muy potente, existen otras fuentes masivas de datos espac
 
 * 🌍 **Google Earth Engine Data Catalog**
 
-    * Operado mediante la caja de herramientas integrada. Ver @sec-arcgis-pro-gee y @sec-arcgis-pro-gee-start.
+    * Operado mediante la caja de herramientas integrada.

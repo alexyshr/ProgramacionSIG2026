@@ -60,4 +60,5 @@ Para verificar las versiones inSstaladas, puede ejecutar `pip3 list` en la termi
 ## Librerías adicionales
 
 * colorama (instalado)
-
+* geedim
+* xrspatial 

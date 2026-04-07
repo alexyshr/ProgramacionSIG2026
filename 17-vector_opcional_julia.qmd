@@ -1,0 +1,154 @@
+﻿# Librerías Alternativas y Ecosistemas Secundarios (Opcional) {#estructuras-geo-alternativas}
+
+A lo largo del módulo vectorial principal, establecimos una ruta de aprendizaje basada en los estándares "de facto" de la industria: `geopandas` y `shapely` en Python, `sf` en R, y `ArchGDAL` en Julia. 
+
+Sin embargo, el ecosistema de la ciencia de datos espaciales no es cerrado. Especialmente en lenguajes modernos como Julia, existen múltiples aproximaciones al mismo problema topológico. Este capítulo es de carácter **opcional** y está diseñado para aquellos estudiantes o desarrolladores que deseen explorar librerías alternativas que, bajo ciertos contextos (como el rendimiento computacional puro o la integración con motores estadísticos específicos), pueden resultar más convenientes que las herramientas tradicionales.
+
+## El Ecosistema Julia: Más allá de ArchGDAL
+
+Mientras que R y Python tienen paquetes espaciales hegemónicos, la comunidad de **Julia** mantiene un ecosistema más modular agrupado bajo el entorno *JuliaGeo*. Además de `ArchGDAL` (que es una envoltura de la librería C/C++ GDAL), existen herramientas nativas y otras envolturas que manejan la geometría y las tablas espaciales desde una óptica distinta.
+
+A continuación, recrearemos las tareas fundamentales de creación de primitivas y tablas espaciales utilizando **`LibGEOS.jl`** (para geometría pura) y **`GeoTables.jl`** (para integración tabular).
+
+### Creación de Geometrías Básicas con LibGEOS
+
+`LibGEOS.jl` es una envoltura directa del motor GEOS (Geometry Engine, Open Source). A diferencia de `ArchGDAL`, que es un "todo en uno" (maneja archivos, CRS y geometrías), `LibGEOS` se especializa **exclusivamente en topología y relaciones espaciales**. Es ideal cuando se necesita realizar cálculos geométricos pesados en memoria RAM sin interactuar con discos duros ni proyecciones cartográficas.
+
+::: {.panel-tabset}
+
+### Julia (LibGEOS)
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+
+```{julia}
+#| label: julia_geoms_basicas_codigo
+#| eval: false
+using LibGEOS
+
+# 1. Crear punto desde formato WKT (Plaza de Bolívar)
+plaza_bolivar = LibGEOS.readgeom("POINT (-74.076 4.598)")
+
+# 2. Imprimir propiedades
+println("Tipo de geometría: ", typeof(plaza_bolivar))
+
+# 3. Operación topológica directa (Buffer 2D matemático puro)
+# Note que LibGEOS no sabe si son metros o grados, opera matemáticamente.
+buffer_plaza = LibGEOS.buffer(plaza_bolivar, 0.005)
+println("Área euclidiana calculada por GEOS: ", LibGEOS.area(buffer_plaza))
+```
+
+:::
+:::
+
+```{r}
+#| label: julia_geoms_basicas
+#| results: asis
+#| code-fold: true
+j_eval(r"-(
+using LibGEOS
+
+# 1. Crear punto desde formato WKT (Plaza de Bolívar)
+plaza_bolivar = LibGEOS.readgeom("POINT (-74.076 4.598)")
+
+# 2. Imprimir propiedades
+println("Tipo de geometría: ", typeof(plaza_bolivar))
+
+# 3. Operación topológica directa (Buffer 2D matemático puro)
+# Note que LibGEOS no sabe si son metros o grados, opera matemáticamente.
+buffer_plaza = LibGEOS.buffer(plaza_bolivar, 0.005)
+println("Área euclidiana calculada por GEOS: ", LibGEOS.area(buffer_plaza))
+)-")
+```
+
+:::
+
+## Atributos y Tablas Espaciales con GeoTables
+
+En capítulos anteriores ensamblamos DataFrames estándar en Julia inyectando una columna de geometrías `ArchGDAL`. Un enfoque alternativo impulsado por la comunidad *JuliaEarth* (orientada fuertemente a la geoestadística y el modelado de recursos naturales) es **`GeoTables.jl`**.
+
+Esta librería introduce un tipo de objeto formal llamado `GeoTable`, estructurado en torno al paquete fundacional `Meshes.jl`. Es conceptualmente lo más cercano que tiene Julia al diseño de un `GeoDataFrame` de Python, separando claramente el "dominio espacial" de los "valores" (atributos).
+
+| Concepto | Ecosistema Estándar (Recomendado) | Ecosistema Alternativo |
+| :--- | :--- | :--- |
+| **Geometría** | `ArchGDAL.jl` | `Meshes.jl` / `LibGEOS.jl` |
+| **Estructura Tabular** | `DataFrames.jl` | `GeoTables.jl` |
+
+### Ejemplo: Ciudades Principales de Colombia
+
+A continuación, replicamos la creación de una tabla espacial evitando por completo ArchGDAL.
+
+::: {.panel-tabset}
+
+### Julia (GeoTables)
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip collapse="true" icon="false"}
+#### ▷ CÓDIGO PURO (Copiar y Pegar)
+
+```{julia}
+#| label: julia_tablas_espaciales_codigo
+#| eval: false
+import Pkg
+Pkg.add(["GeoTables", "Meshes"])
+
+using GeoTables, Meshes, DataFrames
+
+# 1. Datos alfanuméricos tradicionales
+df = DataFrame(Ciudad = ["Bogotá", "Medellín", "Cali"], Pob_Millones = [7.9, 2.5, 2.2])
+
+# 2. Geometrías instanciadas a través del framework Meshes
+# Llamamos a Meshes.Point explícitamente para evitar conflictos de namespace
+puntos = [Meshes.Point(-74.08, 4.60), Meshes.Point(-75.56, 6.25), Meshes.Point(-76.52, 3.42)]
+
+# 3. Unión en GeoTable usando georef (el constructor estándar geoestadístico)
+gt = georef(df, puntos)
+
+println("--- Tabla Espacial (GeoTable) ---")
+println(gt)
+
+println("\n--- Extracción de Atributos ---")
+# En GeoTables, se puede acceder a la tabla base con la función values()
+println(values(gt))
+```
+
+:::
+:::
+
+```{r}
+#| label: julia_tablas_espaciales
+#| results: asis
+#| code-fold: true
+j_eval(r"-(
+import Pkg
+Pkg.add(["GeoTables", "Meshes"])
+
+using GeoTables, Meshes, DataFrames
+
+# 1. Datos alfanuméricos tradicionales
+df = DataFrame(Ciudad = ["Bogotá", "Medellín", "Cali"], Pob_Millones = [7.9, 2.5, 2.2])
+
+# 2. Geometrías instanciadas a través del framework Meshes
+# Llamamos a Meshes.Point explícitamente para evitar conflictos de namespace
+puntos = [Meshes.Point(-74.08, 4.60), Meshes.Point(-75.56, 6.25), Meshes.Point(-76.52, 3.42)]
+
+# 3. Unión en GeoTable usando georef (el constructor estándar geoestadístico)
+gt = georef(df, puntos)
+
+println("--- Tabla Espacial (GeoTable) ---")
+println(gt)
+
+println("\n--- Extracción de Atributos ---")
+# En GeoTables, se puede acceder a la tabla base con la función values()
+println(values(gt))
+)-")
+```
+
+:::
+
+### Consideraciones Finales sobre el Uso de Ecosistemas Alternativos
+
+El uso de `LibGEOS` y `GeoTables` es sumamente potente para flujos de trabajo orientados a la geoestadística pura, como el modelado de yacimientos mineros (Kriging) o la interpolación de mallas complejas (Meshing).
+
+Sin embargo, para tareas fundamentales de SIG como las abordadas en la Maestría en Geomática (lectura de Shapefiles masivos, reproyecciones cartográficas, o cruces con PostGIS), la vía troncal explicada en el cuerpo principal del curso (`ArchGDAL` + `DataFrames`) sigue siendo la opción más estable, documentada e interoperable, ya que hereda directamente la robustez probada en la industria por la Open Source Geospatial Foundation (OSGeo).

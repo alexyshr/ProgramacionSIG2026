@@ -2383,11 +2383,11 @@ resultado_metros = distancia_hacia(punto_origen, punto_destino, radio=6371000.0)
 
 # [4 🗺️📐] MÉTODO GRÁFICO: Generamos el mapa y lo guardamos directamente en el disco
 mapa_final = graficar_ruta(punto_origen, punto_destino)
-savefig(mapa_final, "mapa_julia_poo.png")
+savefig(mapa_final, "./images/09-mapa_julia_poo.png")
 )-")
 
 # Le decimos a R/Quarto que lea la imagen generada por Julia
-knitr::include_graphics("mapa_julia_poo.png")
+knitr::include_graphics("./images/09-mapa_julia_poo.png")
 ```
 
 :::

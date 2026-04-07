@@ -299,7 +299,7 @@ knitr::include_graphics("images/plots/mapa_colombia_julia.png")
 
 ## Creando un archivo de muestra
 
-En este ejercicio, vamos a crear un archivo de texto plano (`coordenadas_colombia_p.txt`) que contendrá las coordenadas (Latitud, Longitud) de cinco de las principales ciudades de Colombia: Bogotá, Medellín, Cali, Barranquilla y Cartagena. Esto nos servirá como base para leer datos tabulares más adelante.
+En este ejercicio, vamos a crear un archivo de texto plano (`./data/coordenadas_colombia_p.txt`) que contendrá las coordenadas (Latitud, Longitud) de cinco de las principales ciudades de Colombia: Bogotá, Medellín, Cali, Barranquilla y Cartagena. Esto nos servirá como base para leer datos tabulares más adelante.
 
 ::: {.panel-tabset}
 
@@ -321,7 +321,7 @@ datos_muestra = """4.7110,-74.0721
 10.3910,-75.4794"""
 
 # 2. Definimos la variable 'f_txt' que almacena la ruta y nombre del archivo
-f_txt = "coordenadas_colombia_p.txt"
+f_txt = "./data/coordenadas_colombia_p.txt"
 
 # 3. Manejo de excepciones completo para la creación del archivo
 try:
@@ -363,7 +363,7 @@ datos_muestra = """4.7110,-74.0721
 10.3910,-75.4794"""
 
 # 2. Definimos la variable 'f_txt' que almacena la ruta y nombre del archivo
-f_txt = "coordenadas_colombia_p.txt"
+f_txt = "./data/coordenadas_colombia_p.txt"
 
 # 3. Manejo de excepciones completo para la creación del archivo
 try:
@@ -414,7 +414,7 @@ Las alternativas a `except Exception as e:` son específicas al tipo de error es
 datos_muestra <- "4.7110,-74.0721\n6.2442,-75.5812\n3.4516,-76.5320\n10.9685,-74.7813\n10.3910,-75.4794"
 
 # 2. Definimos la variable 'f_txt' para la ruta del archivo
-f_txt <- "coordenadas_colombia_r.txt"
+f_txt <- "./data/coordenadas_colombia_r.txt"
 
 # 3. tryCatch nos permite manejar errores e incluir un bloque 'finally'
 tryCatch({
@@ -455,7 +455,7 @@ tryCatch({
 datos_muestra <- "4.7110,-74.0721\n6.2442,-75.5812\n3.4516,-76.5320\n10.9685,-74.7813\n10.3910,-75.4794"
 
 # 2. Definimos la variable 'f_txt' para la ruta del archivo
-f_txt <- "coordenadas_colombia_r.txt"
+f_txt <- "./data/coordenadas_colombia_r.txt"
 
 # 3. tryCatch nos permite manejar errores e incluir un bloque 'finally'
 tryCatch({
@@ -504,7 +504,7 @@ datos_muestra = """
 10.3910,-75.4794"""
 
 # 2. Definimos la variable 'f_txt' que contiene la ruta al archivo
-f_txt = "coordenadas_colombia_j.txt"
+f_txt = "./data/coordenadas_colombia_j.txt"
 
 # 3. Bloque try-catch-finally para manejar la escritura
 try
@@ -545,7 +545,7 @@ datos_muestra = """
 10.3910,-75.4794"""
 
 # 2. Definimos la variable 'f_txt' que contiene la ruta al archivo
-f_txt = "coordenadas_colombia_j.txt"
+f_txt = "./data/coordenadas_colombia_j.txt"
 
 # 3. Bloque try-catch-finally para manejar la escritura
 try
@@ -620,8 +620,8 @@ En este paso, vamos a leer el archivo de coordenadas que creamos en la sección 
 #| eval: false
 
 # 1. Definimos las variables para los archivos de entrada y salida
-f_in = "coordenadas_colombia_p.txt"
-f_out = "coordenadas_formato_p.txt"
+f_in = "./data/coordenadas_colombia_p.txt"
+f_out = "./data/coordenadas_formato_p.txt"
 
 try:
     # 2. Abrimos el archivo de entrada en modo lectura ('r' de read)
@@ -660,8 +660,8 @@ except Exception as e:
 # #| eval: false
 
 # 1. Definimos las variables para los archivos de entrada y salida
-f_in = "coordenadas_colombia_p.txt"
-f_out = "coordenadas_formato_p.txt"
+f_in = "./data/coordenadas_colombia_p.txt"
+f_out = "./data/coordenadas_formato_p.txt"
 
 try:
     # 2. Abrimos el archivo de entrada en modo lectura ('r' de read)
@@ -703,8 +703,8 @@ except Exception as e:
 #| eval: false
 
 # 1. Definimos las variables para los archivos de entrada y salida (usamos los de R)
-f_in <- "coordenadas_colombia_r.txt"
-f_out <- "coordenadas_formato_r.txt"
+f_in <- "./data/coordenadas_colombia_r.txt"
+f_out <- "./data/coordenadas_formato_r.txt"
 
 tryCatch({
     # 2. Abrimos conexión de lectura y leemos las líneas
@@ -745,8 +745,8 @@ tryCatch({
 # #| eval: false
 
 # 1. Definimos las variables para los archivos de entrada y salida (usamos los de R)
-f_in <- "coordenadas_colombia_r.txt"
-f_out <- "coordenadas_formato_r.txt"
+f_in <- "./data/coordenadas_colombia_r.txt"
+f_out <- "./data/coordenadas_formato_r.txt"
 
 tryCatch({
     # 2. Abrimos conexión de lectura y leemos las líneas
@@ -790,8 +790,8 @@ tryCatch({
 #| eval: false
 
 # 1. Definimos los nombres de archivo (usando los de Julia)
-f_in = "coordenadas_colombia_j.txt"
-f_out = "coordenadas_formato_j.txt"
+f_in = "./data/coordenadas_colombia_j.txt"
+f_out = "./data/coordenadas_formato_j.txt"
 
 try
     # 2. Leer los datos. open con 'do' cierra automáticamente la conexión
@@ -829,8 +829,8 @@ end
 
 j_eval(r"-(
 # 1. Definimos los nombres de archivo (usando los de Julia)
-f_in = "coordenadas_colombia_j.txt"
-f_out = "coordenadas_formato_j.txt"
+f_in = "./data/coordenadas_colombia_j.txt"
+f_out = "./data/coordenadas_formato_j.txt"
 
 try
     # 2. Leer los datos. open con 'do' cierra automáticamente la conexión
@@ -1357,7 +1357,7 @@ def procesar_archivo_espacial(f_in):
         print(f"Finalizó el procesamiento de '{f_in}'")
 
 # Llamada de ejemplo usando nuestro archivo (tipo str)
-procesar_archivo_espacial("coordenadas_colombia_p.txt")
+procesar_archivo_espacial("./data/coordenadas_colombia_p.txt")
 ```
 :::
 :::
@@ -1428,7 +1428,7 @@ def procesar_archivo_espacial(f_in):
         print(f"Finalizó el procesamiento de '{f_in}'")
 
 # Llamada de ejemplo usando nuestro archivo (tipo str)
-procesar_archivo_espacial("coordenadas_colombia_p.txt")
+procesar_archivo_espacial("./data/coordenadas_colombia_p.txt")
 ```
 
 ### R
@@ -1512,7 +1512,7 @@ procesar_archivo_espacial <- function(f_in) {
 }
 
 # Llamada de ejemplo (pasamos un string)
-procesar_archivo_espacial("coordenadas_colombia_r.txt")
+procesar_archivo_espacial("./data/coordenadas_colombia_r.txt")
 ```
 :::
 :::
@@ -1589,7 +1589,7 @@ procesar_archivo_espacial <- function(f_in) {
 }
 
 # Llamada de ejemplo (pasamos un string)
-procesar_archivo_espacial("coordenadas_colombia_r.txt")
+procesar_archivo_espacial("./data/coordenadas_colombia_r.txt")
 ```
 
 ### Julia
@@ -1657,7 +1657,7 @@ function procesar_archivo_espacial(f_in)
 end
 
 # Llamada de ejemplo (String)
-procesar_archivo_espacial("coordenadas_colombia_j.txt")
+procesar_archivo_espacial("./data/coordenadas_colombia_j.txt")
 ```
 :::
 :::
@@ -1725,7 +1725,7 @@ function procesar_archivo_espacial(f_in)
 end
 
 # Llamada de ejemplo (String)
-procesar_archivo_espacial("coordenadas_colombia_j.txt")
+procesar_archivo_espacial("./data/coordenadas_colombia_j.txt")
 )-")
 ```
 
@@ -1769,7 +1769,7 @@ Barranquilla,10.9685,-74.7813
 Cartagena,10.3910,-75.4794"""
 
 # Guardamos el nombre del archivo en una variable de texto (str)
-f_csv = "ciudades_colombia_p.csv"
+f_csv = "./data/ciudades_colombia_p.csv"
 
 # Bloque try-except para crear el archivo CSV
 try:
@@ -1855,7 +1855,7 @@ Barranquilla,10.9685,-74.7813
 Cartagena,10.3910,-75.4794"""
 
 # Guardamos el nombre del archivo en una variable de texto (str)
-f_csv = "ciudades_colombia_p.csv"
+f_csv = "./data/ciudades_colombia_p.csv"
 
 # Bloque try-except para crear el archivo CSV
 try:
@@ -1939,7 +1939,7 @@ for ciudad in lista_ciudades:
 datos_csv <- "Ciudad,Latitud,Longitud\nBogotá,4.7110,-74.0721\nMedellín,6.2442,-75.5812\nCali,3.4516,-76.5320\nBarranquilla,10.9685,-74.7813\nCartagena,10.3910,-75.4794"
 
 # Nombre del archivo (character)
-f_csv <- "ciudades_colombia_r.csv"
+f_csv <- "./data/ciudades_colombia_r.csv"
 
 tryCatch({
     writeLines(datos_csv, f_csv)
@@ -2021,7 +2021,7 @@ for (ciudad in lista_ciudades) {
 datos_csv <- "Ciudad,Latitud,Longitud\nBogotá,4.7110,-74.0721\nMedellín,6.2442,-75.5812\nCali,3.4516,-76.5320\nBarranquilla,10.9685,-74.7813\nCartagena,10.3910,-75.4794"
 
 # Nombre del archivo (character)
-f_csv <- "ciudades_colombia_r.csv"
+f_csv <- "./data/ciudades_colombia_r.csv"
 
 tryCatch({
     writeLines(datos_csv, f_csv)
@@ -2110,7 +2110,7 @@ Cali,3.4516,-76.5320
 Barranquilla,10.9685,-74.7813
 Cartagena,10.3910,-75.4794"""
 
-f_csv = "ciudades_colombia_j.csv"
+f_csv = "./data/ciudades_colombia_j.csv"
 
 try
     open(f_csv, "w") do con_csv
@@ -2186,7 +2186,7 @@ Cali,3.4516,-76.5320
 Barranquilla,10.9685,-74.7813
 Cartagena,10.3910,-75.4794"""
 
-f_csv = "ciudades_colombia_j.csv"
+f_csv = "./data/ciudades_colombia_j.csv"
 
 try
     open(f_csv, "w") do con_csv

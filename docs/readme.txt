@@ -27,7 +27,7 @@
 
 1. URL
 
-https://meet.google.com/kgb-qzqx-phu
+https://meet.google.com/mox-vsqr-rby
 
 2. Nueva version del contenedor docker
 
@@ -51,3 +51,10 @@ Pendiente:
 - Revisar la tabla en el tema de tighlayour en Julia
 - Revisar como conectar axis a figura en Julia
 - Revisar como funciona el TRUE + FALSE en la matriz 9M
+
+
+
+1. URL (Abril 7 de 2026)
+
+https://meet.google.com/mox-vsqr-rby
+

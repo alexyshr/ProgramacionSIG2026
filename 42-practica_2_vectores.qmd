@@ -1,0 +1,83 @@
+# Fundamentos de Análisis Vectorial {#taller-vectorial}
+
+Este taller tiene como objetivo consolidar los conocimientos adquiridos en los capítulos anteriores sobre la creación de geometrías, la evaluación de predicados espaciales, el geoprocesamiento paramétrico y la referenciación lineal.
+
+Podrás desarrollar los algoritmos en el ecosistema de tu preferencia (**Python, R o Julia**), respetando las librerías base enseñadas en el curso (`geopandas`/`shapely`, `sf` o `ArchGDAL`/`DataFrames`).
+
+---
+
+## Funciones j_eval y j_plot en R
+
+```{r}
+#| label: j_eval_j_plot
+#| code-fold: true
+#| results: asis
+#| include: false
+source("./docs/j_eval_j_plot.r")
+```
+
+---
+
+## Ejercicio 1: Instanciación y Tablas Espaciales (Río Cauca)
+
+**Contexto:** El equipo de Gestión del Riesgo te ha entregado un reporte tabular con las estaciones de monitoreo de calidad del agua sobre un tramo del Río Cauca y los barrios aledaños en riesgo de inundación. Tu misión es convertir estos datos planos en objetos espaciales oficiales.
+
+**Instrucciones algorítmicas:**
+
+1. Crea un **DataFrame** clásico (no espacial) con la siguiente información de zonas de riesgo:
+   * Columna `Barrio`: "La Virginia", "Puerto Mallarino"
+   * Columna `Riesgo`: "Alto", "Medio"
+   * Columna `Lon`: -75.88, -76.21
+   * Columna `Lat`: 4.90, 3.95
+
+2. Utiliza la función apropiada de tu ecosistema para convertir ese DataFrame en una **Tabla Espacial**. Asegúrate de mapear las columnas `Lon` y `Lat` como geometrías de tipo `Point`.
+
+3. Al realizar la conversión, asigna explícitamente el Sistema de Referencia de Coordenadas geográficas estándar (**EPSG:4326**).
+
+4. Imprime en consola la tabla espacial resultante y verifica que la columna de geometría se haya creado correctamente.
+
+---
+
+## Ejercicio 2: Geoprocesamiento y Topología
+
+**Contexto:** Se planea construir una planta de tratamiento de aguas entre las dos estaciones del ejercicio anterior. Necesitas modelar la conexión y evaluar si el área de impacto de la vía proyectada afecta a las zonas de riesgo.
+
+**Instrucciones algorítmicas:**
+
+1. Extrae las geometrías de los dos puntos creados en el Ejercicio 1 (La Virginia y Puerto Mallarino).
+2. Proyecta ambos puntos al sistema métrico oficial de Colombia (**MAGNA-SIRGAS Origen Nacional, EPSG:9377**) para poder realizar cálculos en metros. *(Nota: Deberás investigar cómo hacer la transformación de CRS `st_transform` / `to_crs` en tu lenguaje).*
+3. Construye una geometría tipo **Línea (`LineString`)** que conecte ambos puntos proyectados. Esta línea representa el acueducto proyectado.
+4. Genera un **Área de influencia (`Buffer`)** de 5,000 metros (5 km) alrededor de la línea del acueducto.
+5. Utiliza un **predicado espacial** (ej. `intersects` o `contains`) para evaluar mediante código si el punto de "Puerto Mallarino" se encuentra dentro del área del buffer generado. Imprime el resultado booleano (`True`/`False`).
+
+---
+
+## Ejercicio 3: Referenciación Lineal (Segmentación Dinámica)
+
+**Contexto:** Durante la construcción del acueducto (la línea creada en el ejercicio anterior), se reporta un fallo geológico exactamente al **35% del recorrido** desde el punto inicial. 
+
+**Instrucciones algorítmicas:**
+
+1. Tomando la línea del acueducto proyectada en EPSG:9377, utiliza la función de **interpolación normalizada** de tu lenguaje para encontrar la coordenada exacta (Punto) donde ocurre el fallo (al 0.35 de la longitud total).
+2. Extrae e imprime en consola las coordenadas $X$ e $Y$ (Este y Norte) de este nuevo punto interpolado.
+
+---
+
+## Entregables y Criterios de Evaluación
+
+**1. Archivos de Código:**
+Debes desarrollar los algoritmos en al menos uno de los siguientes formatos:
+* Script tradicional (`.py`, `.R`, `.jl`)
+* Notebook interactivo (`.ipynb`)
+* Documento computacional (`.qmd` con *chunks* de código)
+
+**2. Documento Analítico (Quarto):**
+Independientemente del formato de tu código fuente, **debes redactar un documento en Quarto (`.qmd`) y renderizarlo en HTML o PDF**. En este documento debes incluir tus bloques de código, los resultados de la consola y responder argumentativamente a las siguientes preguntas teóricas:
+
+* **Sobre la Topología:** Basado en las lecturas, ¿por qué es crítico respetar el orden matemático $(X, Y)$ al momento de construir geometrías en lugar del orden verbal cotidiano "Latitud, Longitud"?
+* **Sobre la Proyección y el Geoprocesamiento:** Explica con tus palabras por qué el *Buffer* del Ejercicio 2 debía hacerse después de transformar los datos al EPSG:9377. ¿Qué hubiera ocurrido topológica y matemáticamente si le aplicabas un buffer de "5000" a los puntos cuando aún estaban en EPSG:4326?
+* **Sobre la Referenciación Lineal:** Si el acueducto del Ejercicio 3 tuviera un eje $M$ (Medida) que almacenara el kilometraje real de la tubería, ¿qué ventaja operativa traería esto frente a la interpolación por porcentaje (0.35) que acabas de realizar?
+
+**3. Repositorio en GitHub:**
+La gestión de versiones es fundamental en la Maestría. Sube tu carpeta del proyecto (datos, scripts y el HTML/PDF renderizado) a un repositorio público en tu cuenta personal de **GitHub**.
+* **Entrega:** Deberás enviar al campus virtual únicamente el enlace (URL) a tu repositorio.

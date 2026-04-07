@@ -1,0 +1,8 @@
+
+DEM with raster in R Bogotá data
+
+
+https://github.com/Ponsoda/geoprogramming-youtube/blob/main/FirstScript/R/First%20Script%20With...Raster.R
+
+
+http://dl.maptools.org/dl/geotiff/samples/made_up/bogota.tif
