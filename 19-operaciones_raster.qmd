@@ -2608,7 +2608,7 @@ else
 
         p_manual = heatmap(ndwi_mat_transpuesta, 
                            c=:GnBu, 
-                           yflip=true, # Invesrimos el eje Y
+                           yflip=true, # Invertimos el eje Y
                            title="2. Solución Manual (Matriz Transpuesta e Invertida)",
                            xlabel="Columnas (X)", 
                            ylabel="Filas (Y)",
@@ -3284,6 +3284,7 @@ ee.Initialize(project="ee-giswqg")
 
 print("Google Earth Engine se ha inicializado con éxito!")
 ```
+
 :::
 :::
 

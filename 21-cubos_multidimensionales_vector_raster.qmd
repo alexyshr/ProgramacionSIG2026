@@ -1,0 +1,1689 @@
+﻿---
+title: "Cubos Multidimensionales Vector y Raster"
+author: "Alexys H. Rodríguez-Avellaneda, PhD"
+date: last-modified
+format:
+  html:
+    toc: true
+    code-fold: true
+    embed-resources: true
+    theme: cosmo
+  pdf:
+    keep-tex: true       # Esta es la etiqueta que buscas
+    toc: true
+    number-sections: true
+    colorlinks: true
+    papersize: letter
+    #mermaid-format: png
+    # Forzamos a Quarto a usar nuestro wrapper
+    #chrome: /usr/local/bin/quarto-browser
+execute-dir: project # Asegura contexto limpio
+execute:
+  cache: true        # Guarda los resultados en disco, si el código no cambia, no lo recalcula.
+  freeze: auto       # Evita recompilar el código de capítulos anteriores si solo cambiaste texto.
+  echo: true
+  warning: false
+  message: false
+  daemon: false      # Evita que procesos en segundo plano interfieran
+  enabled: true      # Asegura la ejecución
+engine: knitr
+---
+
+execute:
+  cache: true      
+  freeze: auto     
+
+## Funciones j_eval y j_plot en R
+
+```{r}
+#| label: j_eval_j_plot
+#| code-fold: true
+# #| include: false
+source("./docs/j_eval_j_plot.r")
+```
+
+
+## Introducción
+
+
+
+## Crear un cubo desde TIF images
+
+
+```{r}
+#| label: r_crear_cubo_desde_tif
+# #| eval: false
+
+# Obtener datos vector y raster
+# myurl <- "http://geocorp.co/wind/wind_result.zip"
+# filename <- "wind_result.zip"
+# download.file(myurl, filename, mode = "wb")
+# unzip(filename)
+# Nota: Los rasters van a ./data_heavy/wind_tif/
+#       El shapefile de municipios va en ./data_heavy/
+
+library(stringr)
+library(stars)
+
+# Ruta base
+the_path = "./data_heavy/"
+
+# Listar los archivos en la carpeta ./data_heavy/wind_tif/
+# y ordenarlos por el numero que hay en su nombre: st1  hasta st_43
+rasterfiles <- list.files(path = paste0(the_path, "wind_tif/"), pattern = "*.*.tif$")
+rasterfiles <- paste0(the_path, "wind_tif/", rasterfiles)
+rasterfiles <- str_sort(rasterfiles, numeric = TRUE)
+#'./data_heavy/wind_tif/st1_cellindexlr.tif'
+head(rasterfiles)
+#'./data_heavy/wind_tif/st43_c_7000.tif'
+tail(rasterfiles)
+
+
+# Leo los archivos TIF del vector tipo string con nombres
+h_nh_c.st <- read_stars(rasterfiles, quiet = TRUE)
+mynames <- names(h_nh_c.st)
+
+# Nota: stars elimina el LCP (Longest Common Prefix)
+#       para asignar los nombres
+#'1_cellindexlr.tif'
+head(mynames)
+tail(mynames)
+h_nh_c.st
+
+# Eliminaremos "1_" y ".tif" en los nombres
+# Localizo la posición de "_" en el nombre
+start <- str_locate(mynames, "_")
+# Localizo la posición de "." en el nombre
+stop <- str_locate(mynames, "\\.")
+# Extraigo el nuevo nombre de los atributos del objeto stars
+# usando la posición inicial de "_" (sin incluirlo: +1) 
+# y la posición final de  "." (sin incluirlo: -1)
+mynames <- str_sub(mynames, start = start[, 1] + 1, end = stop[, 1] - 1)
+# 'cellindexlr'
+head(mynames)
+# 'c_7000'
+tail(mynames)
+
+# Cambio de nombres del objeto stars
+h_nh_c.st <- setNames(h_nh_c.st, mynames)
+# Objeto stars con dimensiones X, Y
+h_nh_c.st
+
+# Cambiar las dimensiones X, Y del objeto stars a geometrías (polígonos)
+# Nota: Nuestro primer cubo multidimensional vectorial (stars + sf)
+#       Las celdas raster se convierten en polígonos!
+h_nh_c.stnoxy <- st_xy2sfc(h_nh_c.st, as_points = FALSE, na.rm = TRUE)
+head(h_nh_c.stnoxy)
+# Consulta de la estructura de dimensiones
+st_dimensions(h_nh_c.stnoxy)
+
+# Crear sf del Shapefile de Municipios de Colombia
+mun <- st_read(paste0(the_path, "MUNICIPIOS_WGS84.shp"))
+
+# Plotear un atributo ("c_700") del cubo multidimensional vectorial
+# y agregarle los municipios (sf)
+plot(h_nh_c.stnoxy["c_700"], reset = FALSE, border = NA)
+plot(st_geometry(mun), add = TRUE)
+
+```
+
+## Combinar información de viento huracanado y no huracanado
+
+### Funcionamiento de las funciones apply en 
+
+
+```{r}
+#| label: r_explicacion_apply_en_r
+#| eval: false
+
+# Inicialización del contador en el entorno global
+mycuenta <- 0
+
+# Suponga una matriz de 3381 filas (geometrías) y 34 columnas (atributos)
+mi_matriz <- matrix(1:114954, nrow = 3381, ncol = 34)
+
+# Al aplicar sobre las filas (MARGIN = 1)
+mi_resultado <- apply(mi_matriz, 1, function(st) {
+  # Lógica de conteo solicitada
+  mycuenta <<- mycuenta + 1
+  contar = mycuenta
+  
+  # Asignación al entorno padre para persistencia
+  assign("mycuenta", contar, envir = parent.frame())
+  
+  # Impresión condicional para verificar ejecución
+  # Nota: En este ejemplo, contar llegará a 3381. 
+  # Se ajusta la condición para observar el inicio y el fin esperado.
+  if (contar == 1 | contar == 3381) {
+    print(paste("Ejecución número:", contar))
+  }
+  
+  # 'st' es la fila actual (un vector de 34 elementos)
+  return(length(st)) 
+})
+
+# Verificación de resultados finales
+length(mi_resultado)
+head(mi_resultado)
+tail(mi_resultado)
+```
+
+### Modelo conceptual de la combinación de vientos huracanados con vientos no huracanados
+
+![Representación conceptual del modelo de amenaza](./images/concept.png){#fig-concept width=80% alt="Diagrama conceptual"}
+
+- La información de viento no huracanado está en una hoja de excel y a partir de ella se creará un objeto stars
+
+
+### Función a usar con st_apply para la combinación
+
+```{r}
+#| label: r_funcion_para_extrapolar
+# #| eval: false
+
+# Definimos una función para interpolar/extrapolar
+# Entradas:
+#  x: valores del eje Y de la curva de amenaza 
+#     Ej: Velocidad del viento --> 30 km/h
+#  y: Valores del eje X de la curva de amenaza (probabilidad):
+#     Ej: 0.1 --> Correspondiente a 10 años (1 / 0.1)
+#  xout: el valor específico de x que queremos consultar. 
+#     ej: 30 Km/h
+# Salida:
+#  yout: el valor interpolado (probabilidad)
+#        correspondiente a xout.
+#        ej: 0.165 --> Correspondiente a 16.5 años
+#  Nota: N = 1 / yout
+# Importante: Hmisc no está instalado en el contenedor
+#extrapola <- function(x, y, xout){
+#  yout=Hmisc::approxExtrap(x=x, y=y, xout=xout)$y
+#}
+
+# Función para extrapolar
+extrapola_old <- function(x, y, xout) {
+  # Consolidación de duplicados (ties) para evitar advertencias de approx()
+  if (any(duplicated(x))) {
+    datos_unicos <- aggregate(y ~ x, data = data.frame(x = x, y = y), FUN = mean)
+    x <- datos_unicos$x
+    y <- datos_unicos$y
+  }
+
+  # Ordenamiento de los vectores de entrada
+  ord <- order(x)
+  x <- x[ord]
+  y <- y[ord]
+  n <- length(x)
+  
+  # Inicialización del vector de salida
+  yout <- numeric(length(xout))
+  
+  # Interpolación sobre valores únicos
+  # Interpolación lineal para valores dentro del rango [min(x), max(x)]
+  # La siguiente línea envía warnings por duplicados
+  # yout <- approx(x, y, xout)$y
+  # Use la siguiente línea (aceptando que duplicación en datos está bien)
+  # Sustituir la línea de interpolación original por:
+  yout <- suppressWarnings(approx(x, y, xout)$y)
+  
+  # Identificación de índices fuera de rango
+  idx_inf <- which(xout < x[1])
+  idx_sup <- which(xout > x[n])
+  
+  # Extrapolación lineal inferior (usando la pendiente de los dos primeros puntos)
+  if (length(idx_inf) > 0) {
+    slope_low <- (y[2] - y[1]) / (x[2] - x[1])
+    yout[idx_inf] <- y[1] + slope_low * (xout[idx_inf] - x[1])
+  }
+  
+  # Extrapolación lineal superior (usando la pendiente de los dos últimos puntos)
+  if (length(idx_sup) > 0) {
+    slope_high <- (y[n] - y[n-1]) / (x[n] - x[n-1])
+    yout[idx_sup] <- y[n] + slope_high * (xout[idx_sup] - x[n])
+  }
+  
+  return(yout)
+}
+
+# Función para extrapolar con controles de calidad ráster
+extrapola <- function(x, y, xout) {
+  
+  # 1. Limpieza estricta de valores ausentes (NAs)
+  idx_validos <- which(!is.na(x) & !is.na(y))
+  x <- x[idx_validos]
+  y <- y[idx_validos]
+  
+  # 2. Control de longitud mínima
+  n <- length(x)
+  if (n == 0) {
+    # Si no hay datos, retorna vector de NAs de la misma longitud que xout
+    return(rep(NA, length(xout)))
+  }
+  if (n == 1) {
+    # Si solo hay un punto, es imposible extrapolar una pendiente.
+    # Se asume un comportamiento constante (flat-line).
+    return(rep(y[1], length(xout)))
+  }
+
+  # 3. Consolidación de duplicados (ties) para habilitar cálculo de pendientes
+  if (any(duplicated(x))) {
+    datos_unicos <- aggregate(y ~ x, data = data.frame(x = x, y = y), FUN = mean)
+    x <- datos_unicos$x
+    y <- datos_unicos$y
+  }
+
+  # 4. Ordenamiento de los vectores de entrada
+  ord <- order(x)
+  x <- x[ord]
+  y <- y[ord]
+  # Actualización de la longitud n tras la eliminación de duplicados
+  n <- length(x) 
+  
+  # Si tras eliminar duplicados queda solo 1 punto válido
+  if (n == 1) {
+    return(rep(y[1], length(xout)))
+  }
+  
+  # Inicialización del vector de salida
+  yout <- numeric(length(xout))
+  
+  # 5. Interpolación central
+  # approx() maneja valores dentro de [min(x), max(x)] y retorna NA por fuera
+  yout <- suppressWarnings(approx(x, y, xout)$y)
+  
+  # 6. Identificación de índices fuera de rango (para extrapolación)
+  idx_inf <- which(xout < x[1])
+  idx_sup <- which(xout > x[n])
+  
+  # 7. Extrapolación lineal inferior (pendiente de los dos primeros puntos)
+  if (length(idx_inf) > 0) {
+    slope_low <- (y[2] - y[1]) / (x[2] - x[1])
+    yout[idx_inf] <- y[1] + slope_low * (xout[idx_inf] - x[1])
+  }
+  
+  # 8. Extrapolación lineal superior (pendiente de los dos últimos puntos)
+  if (length(idx_sup) > 0) {
+    slope_high <- (y[n] - y[n-1]) / (x[n] - x[n-1])
+    yout[idx_sup] <- y[n] + slope_high * (xout[idx_sup] - x[n])
+  }
+  
+  return(yout)
+}
+
+```
+
+```{r}
+#| label: r_funcion_combinacion_huracane_no_huracane
+# #| eval: false
+
+
+# Función para combinar información de viento de
+# huracanes con información no huracanada usando
+# la formula típica de combinación de curvas de amenaza
+# p_c = (1 - ((1-p_h)*(1-p_nh)))
+# dónde: 
+#       p_c: probabilidad combinada del viento extremo
+#       p_h: probabilidad de viento de huracanes
+#       p_nh: probabilidad de viento no huracanado
+# Entrada: 
+#  - st: objeto stars
+#  - bands_rl_h: atributos correspondientes a las velocidades de huracanes
+#  - mri_h: periodos de retorno correspondientes a los atributos de 
+#    las velocidades de huracanes
+#  - bands_rl_nh: atributos correspondientes a las velocidades de no huracanes
+#  - mri_nh: periodos de retorno correspondientes a los atributos de 
+#    las velocidades de huracanes
+#  - mri_c: periodos de retorno a consultar de la curva de amenaza combinada
+# Forma de aplicarse: st_apply
+# Salida: niveles de retorno para los periodos
+#         de retorno consultados
+combined_columns_st_apply_old <- function(
+    st, # Importante: El argumento recibe dinámicamente un vector de 34 posiciones
+    # 
+    # Atributos del objeto stars 
+    # correspondiente a vientos huracanados
+    bands_rl_h = c(13:23),
+    # Periodos de retorno (en años)
+    # correspondiente a atributos de vientos huracanados
+    mri_h = c(10,20,50,100,250,500,700,1000,1700,3000,7000),
+    # Atributos del objeto stars 
+    # correspondiente a vientos no huracanados    
+    bands_rl_nh = c(2:12), # atributos no-huracanes
+    # Periodos de retorno (en años)
+    # correspondiente a atributos de vientos no huracanados
+    mri_nh = c(10,20,50,100,250,500,700,1000,1700,3000,7000),
+    # Periodos de retorno (en años)
+    # a ser consultados en la curva combinada con la formula
+    mri_c = c(10,20,50,100,250,500,700,1000,1700,3000,7000)
+    ) {
+  mycuenta <<- mycuenta + 1
+  contar = mycuenta
+  assign("mycuenta", contar, envir = parent.frame() )
+  if (contar == 1 | contar == 3381) {
+    print(paste("contar:", contar))
+    print(paste("mycuenta:", mycuenta))
+  }
+  
+  # Hago una secuencia de 1 Km/h a 600 km/h
+  # para obtener los valores de probabilidad
+  # generando una curva detallada de amenaza
+  # a partir de interpolación
+  rl600 = seq(from=1, to=600, by=1)
+  
+  #Hurricanes
+  # Para cada celda leo las velocidades 
+  # y las almaceno en rl_h
+  rl_h = NULL
+  for (band in bands_rl_h) {
+    # Leo el valor de un atributo de huracanes
+    # en una celda y lo voy agregando a rl_h
+    # st[numero de atributo]: el valor de cada celda
+    # para el atributo "numero de atributo"
+    rl_h = c(rl_h, st[band])  
+    # Recuerde que esta función será usada en st_apply
+  }
+  
+  # Chequear si hay problemas de datos en los valores de
+  # velocidades almacados en rl_h
+  # Si es así: convierta todo a NA
+  if (any(!is.na(rl_h))){
+    if (sum(rl_h) == 0 | sum(rl_h) < 0) {
+      rl_h = rep(NA, length(bands_rl_h))
+    }
+  }
+
+  # Dataframe con curva de amenaza para huracanes: 
+  # Solo los puntos iniciales:
+  #   (mri_h = 10,25,50,100,250,500,700,1000,1700,2500,5000,10000)
+  # rl = Velocidad
+  # prob = 1/mri_h
+  h = data.frame(rl=rl_h, prob = 1/mri_h)
+  
+  # Calcular las probabilidades 
+  # correspondiente a las 600 velocidades (rl600 = 1:600)
+  # y almacenarla en hc_h_prob
+  # Si alguno de los datos de h es NA no utilice extrapola
+  # y almacene NA
+  if (any(is.na(h$rl)) | any(is.na(h$prob))){
+    hc_h_prob = rep(NA, length(rl600))
+  } else{
+    # Ingreso velocidades en xout
+    # Me devuelve probabilidades en hc_h_prob
+    hc_h_prob = extrapola(x=h$rl, y=h$prob, xout=rl600)  
+  }
+  
+  # Crear el dataframe con la curva de amenaza detallada
+  # rl = 1 a 600 km/h (velocidades)
+  # prob = probabilidades de extrapola
+  hc_h = data.frame(rl=rl600, prob=hc_h_prob)
+  # Chequeamos que las probabilidades no sean extremas
+  # Valor máximo es 1 y mínimo es 0
+  hc_h$prob[hc_h$prob < 0] = 0
+  hc_h$prob[hc_h$prob > 1] = 1
+  
+  
+  # No Huracanes
+  # Leemos las velocidades no huracanadas de cada celda
+  # y las almacenamos en rl_nh
+  rl_nh = NULL
+  for (band in bands_rl_nh) {
+    rl_nh = c(rl_nh, st[band])
+  }
+  
+  # Si hay problemas en rl_nh con NAs:
+  # convierte todo a NAs
+  if (any(!is.na(rl_nh))){
+    if (sum(rl_nh) == 0 | sum(rl_nh) < 0) {
+      rl_nh = rep(NA, length(bands_rl_nh))
+    }
+  }
+  
+  # Dataframe con curva de amenaza para no-huracanes: 
+  # Solo los puntos iniciales:
+  #   (mri_nh = 10,20,50,100,250,500,700,1000,1700,3000,7000)
+  # rl = Velocidad
+  # prob = 1/mri_nh  
+  nh = data.frame(rl=rl_nh, prob = 1/mri_nh)
+  
+  # Crear la curva de amenaza detallada
+  # usando interpola.
+  # Se ingresa 1 a 600 velocidades en Km/h
+  # y retorna las probabilidades (1/N)
+  # Si hay NAs, retorne todo con NAs
+  if (any(is.na(nh$rl)) | any(is.na(nh$prob))){
+    # Evitar extrapola
+    hc_nh_prob = rep(NA, length(rl600))
+  } else{
+    # Ninguno con NAs
+    # Ingreso las velocidades leídas de las celdas: nh$rl
+    # Ingreso las probabilidades (1/N, dónde N está en el 
+    #  nombre de los campos iniciales)
+    # Consolto 1 a 600 velocidades
+    # Retorno 600 correspondientes probabilidades
+    hc_nh_prob = extrapola(x=nh$rl, y=nh$prob, xout=rl600)
+  }
+  
+  # Dataframe con la curva detallada
+  hc_nh = data.frame(rl=rl600, prob=hc_nh_prob)
+  
+  # Le hago control de calidad a valores máximos y mínimos
+  # de probabilidades
+  hc_nh$prob[hc_nh$prob < 0] = 0
+  hc_nh$prob[hc_nh$prob > 1] = 1
+  
+  
+  # Combinar las dos curvas detalladas a partir de la formula
+  # Antes de combinar tenga en cuenta: 
+  #1) no huracan (nh): no puede ser nulo en ningúna celda
+  #2) huracane (h): puede ser nulo en muchas celdas
+  
+  # Crear la curva detallada con velocidades 1 a 600 Km/h
+  if (any(is.na(hc_h$prob)) | any(is.na(hc_h$rl))){
+    # Si alguno an no huracan es nulo, entonces 
+    # toda la combinación es nula
+    hc_c_prob = hc_nh$prob
+  } else {
+    #p_c = (1 - ((1-p_h)*(1-p_nh)))
+    hc_c_prob = (1 - ((1-hc_h$prob)*(1-hc_nh$prob)))     
+  }
+
+  # Creo el dataframe de la curva combinada detallada
+  hc_c = data.frame(rl=rl600, prob=hc_c_prob)
+  
+  # Chequear valores extremos en probabilidades
+  # en este caso valores por debajo de cero
+  hc_c$prob[hc_c$prob<0] = 0
+  
+  # Interpolar de esa curva combinada detallada
+  # ingresando las probabilidades de interés (1/mri_c)
+  # para obtener las velocidades
+  prob_c = 1/mri_c
+  if (any(is.na(hc_c$prob)) | any(is.na(hc_h$rl))){
+    # Si alguno es nulo, no interpole, devuelva NAs
+    rl_c_output = rep(NA, length(prob_c))
+  } else {
+    # Interpole ingresando probabildades y devolviendo
+    # velocidades (niveles de retorno)
+    rl_c_output = extrapola(x=hc_c$prob, y=hc_c$rl, xout=prob_c)  
+  }
+  # Devuelva las velocidade correspondientes
+  # a la curva combinada
+  # y los periodos de retorno combinados mri_c
+  return (rl_c_output)
+}
+
+
+# Función diseñada para ser ejecutada iterativamente sobre un cubo de datos (stars)
+# mediante st_apply. Calcula la probabilidad combinada de vientos extremos
+# integrando regímenes huracanados y no huracanados.
+combined_columns_st_apply <- function(
+    st, 
+    bands_rl_h = c(13:23),
+    mri_h = c(10,20,50,100,250,500,700,1000,1700,3000,7000),
+    bands_rl_nh = c(2:12),
+    mri_nh = c(10,20,50,100,250,500,700,1000,1700,3000,7000),
+    mri_c = c(10,20,50,100,250,500,700,1000,1700,3000,7000)
+    ) {
+  
+  # ==============================================================================
+  # 1. Control de iteración y trazabilidad
+  # ==============================================================================
+  # Utiliza asignación global (<<-) para mantener el conteo a través de las 
+  # llamadas internas de st_apply.
+  mycuenta <<- mycuenta + 1
+  contar = mycuenta
+  assign("mycuenta", contar, envir = parent.frame() )
+  if (contar == 1 | contar == 3381) {
+    print(paste("contar:", contar))
+    print(paste("mycuenta:", mycuenta))
+  }
+  
+  # Definición del dominio de velocidades a evaluar (resolución de 1 km/h)
+  rl600 = seq(from=1, to=600, by=1)
+  
+  # ==============================================================================
+  # 2. Procesamiento del régimen de vientos huracanados (H)
+  # ==============================================================================
+  # Extracción vectorial de las velocidades correspondientes a huracanes
+  rl_h = NULL
+  for (band in bands_rl_h) {
+    rl_h = c(rl_h, st[band])  
+  }
+  
+  # Control de calidad: detección de celdas anómalas (suma cero o negativa)
+  if (any(!is.na(rl_h))){
+    if (sum(rl_h) == 0 | sum(rl_h) < 0) {
+      rl_h = rep(NA, length(bands_rl_h))
+    }
+  }
+
+  # Construcción de la curva base y cálculo de interpolación directa
+  h = data.frame(rl=rl_h, prob = 1/mri_h)
+  if (any(is.na(h$rl)) | any(is.na(h$prob))){
+    hc_h_prob = rep(NA, length(rl600))
+  } else{
+    hc_h_prob = extrapola(x=h$rl, y=h$prob, xout=rl600)  
+  }
+  
+  # Acotamiento estricto de las probabilidades al dominio [0, 1]
+  hc_h = data.frame(rl=rl600, prob=hc_h_prob)
+  hc_h$prob[hc_h$prob < 0] = 0
+  hc_h$prob[hc_h$prob > 1] = 1
+  
+  # ==============================================================================
+  # 3. Procesamiento del régimen de vientos no huracanados (NH)
+  # ==============================================================================
+  # Extracción vectorial de las velocidades correspondientes a no huracanes
+  rl_nh = NULL
+  for (band in bands_rl_nh) {
+    rl_nh = c(rl_nh, st[band])
+  }
+  
+  # Control de calidad de la extracción
+  if (any(!is.na(rl_nh))){
+    if (sum(rl_nh) == 0 | sum(rl_nh) < 0) {
+      rl_nh = rep(NA, length(bands_rl_nh))
+    }
+  }
+  
+  # Construcción de la curva base y cálculo de interpolación directa
+  nh = data.frame(rl=rl_nh, prob = 1/mri_nh)
+  if (any(is.na(nh$rl)) | any(is.na(nh$prob))){
+    hc_nh_prob = rep(NA, length(rl600))
+  } else{
+    hc_nh_prob = extrapola(x=nh$rl, y=nh$prob, xout=rl600)
+  }
+  
+  # Acotamiento estricto de las probabilidades al dominio [0, 1]
+  hc_nh = data.frame(rl=rl600, prob=hc_nh_prob)
+  hc_nh$prob[hc_nh$prob < 0] = 0
+  hc_nh$prob[hc_nh$prob > 1] = 1
+  
+  # ==============================================================================
+  # 4. Integración probabilística y resolución inversa
+  # ==============================================================================
+  # Aplicación del modelo conceptual de combinación probabilística.
+  # Si el régimen de huracanes es nulo (zonas interiores), la combinación asume
+  # íntegramente la forma de la curva no huracanada.
+  if (any(is.na(hc_h$prob))) {
+    hc_c_prob = hc_nh$prob
+  } else {
+    # Fórmula: Pc = 1 - ((1 - Ph) * (1 - Pnh))
+    hc_c_prob = (1 - ((1-hc_h$prob)*(1-hc_nh$prob)))     
+  }
+
+  hc_c = data.frame(rl=rl600, prob=hc_c_prob)
+  
+  # Control paramétrico crítico para evitar singularidades en la interpolación inversa.
+  # Al acotar previamente los valores a 0 y 1, se generan "colas planas" en la curva.
+  # Si se envían estas secuencias estáticas a la función de extrapolación inversa (prob -> velocidad),
+  # el agregador estadístico colapsa múltiples velocidades extremas en un único valor,
+  # destruyendo la trayectoria de la curva y forzando la superposición con el régimen de huracanes.
+  # La solución consiste en extraer exclusivamente la franja estrictamente monótona.
+  idx_validos = which(hc_c$prob > 0 & hc_c$prob < 1)
+  hc_c_clean = hc_c[idx_validos, ]
+  
+  # Supresión de posibles duplicidades residuales para garantizar inyectividad
+  hc_c_clean = hc_c_clean[!duplicated(hc_c_clean$prob), ]
+
+  # Probabilidades objetivo derivadas de los periodos de retorno combinados solicitados
+  prob_c = 1/mri_c
+  
+  # Validación matemática: Se requieren al menos dos nodos válidos para establecer una pendiente
+  # que permita ejecutar la interpolación espacial.
+  if (nrow(hc_c_clean) < 2) {
+    rl_c_output = rep(NA, length(prob_c))
+  } else {
+    # Interpolación inversa: se ingresa la probabilidad objetivo y se recupera la velocidad
+    rl_c_output = extrapola(x=hc_c_clean$prob, y=hc_c_clean$rl, xout=prob_c)  
+  }
+  
+  # Retorno del vector de 11 posiciones consolidado al motor de st_apply
+  return(rl_c_output)
+}
+```
+
+### Leer información huracanada desde Excel
+
+```{r}
+#| label: r_complementar_sf_con_excel_exportar_st
+# #| eval: false
+
+
+# Obtener datos vector y raster
+# myurl = "http://geocorp.co/wind/hazard_curves.zip"
+# filename = "hazard_curves.zip"
+# download.file(myurl, filename, mode = "wb")
+# unzip(filename)
+# Nota: Carpeta de descarga:
+#       ./data_heavy/hazard_curves/
+
+library(stars)
+library(sf)
+# library(xlsx) # depende de Java
+library(readxl) # Estándar dentro de Tidiverse
+library(stringr)
+library(dplyr)
+library(ggplot2)
+
+# Ruta base
+path = "./data_heavy/hazard_curves/"
+
+# Nombre y ruta al archivo 10fg_jan1_2017.nc
+# 10fg_jan1_2017.nc: variable 10fg de ERA5
+# 10fg: 10 metre wind gust since previous post-processing
+# https://ecmwf-models.readthedocs.io/en/latest/variables_era5.html 
+ncname <- "10fg_jan1_2017"
+ncfile = paste0(path, ncname, ".nc", sep = "")
+
+# Leemos el archivo 10fg_jan1_2017.nc
+# Tiene un abtributo 10fg_jan1_2017.nc [m/s]
+# y 3 dimensiones: x, y, time
+st1 = read_stars(ncfile)
+# Note que en time solo hay un valor
+st1
+
+# Leemos los valores de X (longitud)
+# y los valores de Y (latitud)
+# Extracción de los vectores de valores de las dimensiones
+lon <- st_get_dimension_values(st1, "x")
+lat <- st_get_dimension_values(st1, "y")
+head(lon)
+head(lat)
+# Conteo de la cantidad de coordenadas
+nlon <- length(lon)
+nlon
+nlat <- length(lat)
+nlat
+
+# Agregamos un atributo al objeto stars
+# con el id (cellindexlr) de las celdas:
+# Iniciando en la esquina superior izquierda,
+# avanzando a la derecha, luego bajando en zig-zag
+# Opción 1: Coerción explícita
+# st1$cellindexlr <- as.integer(1:(nlon * nlat))
+# Opción 2: Definición nativa como entero (más eficiente)
+# Nota: Si time tuviese mas de un valor, la asignación del id
+#       requeriría nlon * nlat * ntime.
+# Al asignar un vector de tamaño nlon * nlat, stars asume 
+# correctamente que el atributo se distribuye sobre las 
+# dimensiones espaciales x, y  
+st1$cellindexlr <- seq(1L, as.integer(nlon * nlat))
+st1
+# A pesar que se previsualiza con id decimal
+# los números están guardados como enteros:
+head(st1$cellindexlr, 2)
+tail(st1$cellindexlr, 2)
+
+# Crear sf a partir de stars
+sf1 = st_as_sf(st1)
+# Cambiamos los nombres de los atributos)
+names(sf1) = c("fg10_2017-01-01", "cellindexlr", "geometry")
+sf1
+head(sf1, 1)
+tail(sf1, 1)
+
+# Viento no huracanado proveniente de Excel
+# Archivo: rlera5_original.xlsx
+# Hoja: pp_pintar
+# Lectura del archivo especificando la hoja
+# Note que en la hoja, la primera columna es el id (cellindexlr)
+# Número total de columnas 12
+nhrl <- read_excel(paste0(path, "rlera5_original.xlsx"), sheet = "pp_pintar")
+nhrl
+class(nhrl)
+head(nhrl, 1)
+tail(nhrl, 1)
+
+# Conversión del índice de celda a tipo entero
+nhrl$cellindexlr <- as.integer(nhrl$cellindexlr)
+
+
+# Unir el sf (sf1) con el tibble (tbl) data-frame (data.frame)
+# El resultado es un objeto sf (sf_nh)
+# En el siguiente comando 
+# 1) convierto sf1 a data-frame quitándole la columna espacial
+#    sf1[,1:2, drop=TRUE]
+# 2) filtro el tibble data-frame para no incluir la columna cellindexlr
+# 3) creo un nuevo sf al unir los dos dataframes y definir la geometría
+# sf_nh = st_sf(sf1[,1:2, drop=TRUE], nhrl[,2:12], geometry=sf1$geometry)
+
+# La mejor forma de unirlos con dplyr
+# Unión relacional utilizando cellindexlr como clave
+sf_nh <- sf1 %>%
+  left_join(nhrl, by = "cellindexlr")
+sf_nh
+# 13 columnas + geometry
+names(sf_nh)
+head(sf_nh, 1)
+tail(sf_nh, 1)
+
+# Ver el periodo de retorno 7000 años: nh_700
+plot(sf_nh[,"nh_700"], key.pos = 1, reset=FALSE)
+
+# Convertir sf a stars
+# Vientos no huracanados: 
+#    Cubo vectorial + raster (sf + stars)
+st_nh = st_as_stars(sf_nh)
+st_nh
+# Consulta de la estructura de dimensiones
+st_dimensions(st_nh)
+# Consulta de los atributos disponibles
+names(st_nh)
+```
+
+### Ejecutar la combinación
+
+```{r}
+#| label: r_combinar_huracane_no_huracane
+#| out-width: "80%"
+#| out-height: "400px"
+#| fig-align: "center"
+# #| eval: false
+
+#VIENTOS HURACANADOS DE ARCHIVOS TIF
+# Listar los archivos en la carpeta ./data_heavy/hazard_curves/
+# y ordenarlos por el numero que hay en su nombre: st1  hasta st_32
+rasterfiles <- list.files(path = path, pattern = "*.*.tif$")
+rasterfiles <- paste0(path, rasterfiles)
+rasterfiles <- str_sort(rasterfiles, numeric = TRUE)
+#"./data_heavy/hazard_curves/st1_cellindexlr.tif"
+head(rasterfiles)
+#"./data_heavy/hazard_curves/st32_h_7000.tif"
+tail(rasterfiles)
+
+# Leo los archivos TIF del vector tipo string con nombres
+st_h <- read_stars(rasterfiles, quiet = TRUE)
+mynames <- names(st_h)
+
+# Nota: stars elimina el LCP (Longest Common Prefix)
+#       para asignar los nombres
+#'1_cellindexlr.tif'
+head(mynames)
+#"32_h_7000.tif"
+tail(mynames)
+st_h
+
+# Eliminaremos "1_" y ".tif" en los nombres
+# Localizo la posición de "_" en el nombre
+start <- str_locate(mynames, "_")
+# Localizo la posición de "." en el nombre
+stop <- str_locate(mynames, "\\.")
+# Extraigo el nuevo nombre de los atributos del objeto stars
+# usando la posición inicial de "_" (sin incluirlo: +1) 
+# y la posición final de  "." (sin incluirlo: -1)
+mynames <- str_sub(mynames, start = start[, 1] + 1, end = stop[, 1] - 1)
+# 'cellindexlr'
+head(mynames)
+# 'h_7000'
+tail(mynames)
+
+# Cambio de nombres del objeto stars
+st_h <- setNames(st_h, mynames)
+# Objeto stars con dimensiones X, Y
+st_h
+names(st_h)
+
+# Cambiar las dimensiones X, Y del objeto stars a geometrías (polígonos)
+# Nota: Nuestro primer cubo multidimensional vectorial (stars + sf)
+#       Las celdas raster se convierten en polígonos!
+st_h.stnoxy <- st_xy2sfc(st_h, as_points = FALSE, na.rm = TRUE)
+st_h.stnoxy
+names(st_h.stnoxy)
+
+# Convertir stars a sf de polígonos
+# Vientos huracanados
+sf_h = st_as_sf(st_h, as_points=FALSE, merge =FALSE)
+sf_h
+# 12 columnas + geometry
+names(sf_h)
+
+# Plotear (sf) el período de retorno igual a 700 años (h_700)
+plot(sf_h[,"h_700"], key.pos = 1, reset=FALSE)
+
+# Integrar información de vientos huracanados y no huracanados
+# en un data-frame. Del primer sf removemos la primera columna
+# "fg10_2017-01-01" y del segundo removemos "cellindexlr" porque 
+# ya se incluye en el primero. Se elimina la columna geometry.
+# Importante: Basado en el orden de filas de ambos objetos
+# df_nh_h = cbind(sf_nh[ ,2:13, drop=TRUE], sf_h[, 2:12, drop=TRUE])
+
+
+# Alternativa de integración de vientos huracanados 
+# y no huracanados.
+# Importante: Basado en el orden de filas de ambos objetos
+#df_nh_h <- sf_nh %>%
+#  st_drop_geometry() %>%
+#  select(-"fg10_2017-01-01") %>% # Remoción de la primera variable meteorológica
+#  bind_cols(
+#    sf_h %>%
+#      st_drop_geometry() %>%
+#      select(-cellindexlr) # Remoción de clave redundante
+#  )
+
+# Unión relacional basada en cellindexlr con manejo seguro de columnas
+df_nh_h <- sf_nh %>%
+  st_drop_geometry() %>%
+  select(-any_of("fg10_2017-01-01")) %>%
+  left_join(
+    sf_h %>%
+      st_drop_geometry(),
+    by = "cellindexlr"
+  )
+colnames(df_nh_h)
+head(df_nh_h)
+
+
+# Combinaremos la información de huracanes y no huracanes
+# usando la formula proveída en la siguiente grárica
+
+# Carga del recurso gráfico
+knitr::include_graphics(paste0(path, "concept.png"))
+
+
+# Al data-frame con toda la información (h, nh)
+# agregaremos columnas vacías para la combinación "c_"
+df_nh_h$c_10 = NA
+df_nh_h$c_20 = NA
+df_nh_h$c_50 = NA
+df_nh_h$c_100 = NA
+df_nh_h$c_250 = NA
+df_nh_h$c_500 = NA
+df_nh_h$c_700 = NA
+df_nh_h$c_1000 = NA
+df_nh_h$c_1700 = NA
+df_nh_h$c_3000 = NA
+df_nh_h$c_7000 = NA
+
+# Creamos el sf para 
+# - viento no huracanado (nh), 
+# - viento huracanado (h) 
+# - la combinación (vacío por el momento) (c) 
+sf_nh_h_c = st_sf(df_nh_h, geometry=sf_nh$geometry)
+colnames(sf_nh_h_c)
+head(sf_nh_h_c)
+
+# Conversión del objeto sf a formato stars
+st_nh_h_c <- st_as_stars(sf_nh_h_c)
+head(st_nh_h_c)
+st_nh_h_c
+# Consulta de los atributos disponibles
+names(st_nh_h_c)
+# Consulta de la estructura de dimensiones
+st_dimensions(st_nh_h_c)
+
+# Nombre de atributos con información de huracanes
+names(st_nh_h_c[13:23])
+# Nombre de atributos con información no huracanes
+names(st_nh_h_c[2:12])
+
+
+# Estos son los periodos de retorno que vamos a consultar!
+mri_c = c(10,20,50,100,250,500,700,1000,1700,3000,7000)
+
+# Importante: consolidar los 34 atributos:
+#  1 índice + 
+#  11 períodos de retorno no huracanados + 
+#  11 períodos huracanados + 
+#  11 combinados vacíos
+# en una dimensión temporal/banda
+st_nh_h_c_merged <- merge(st_nh_h_c)
+st_nh_h_c_merged
+head(st_nh_h_c_merged, 1)
+# Consulta de la estructura de dimensiones
+st_dimensions(st_nh_h_c_merged)
+
+# Consulta de los atributos disponibles
+names(st_nh_h_c_merged)
+
+# La función combined_columns_st_apply usa la variable mycuenta
+# que debe estar definida en el entorno padre dónde se ejecuta
+# la función
+mycuenta = 0
+
+# Ejecutamos el análisis celda a celda con st_apply
+# Nota: Aunque el primer argumento de st_apply() es el objeto stars completo (X = st_nh_h_c_merged), lo que recibe la función interna en su primer parámetro (denominado st) no es el objeto completo, sino un fragmento (slice) de los datos.
+
+# Mecánica de iteración de st_apply:
+# Cuando se ejecuta st_apply(X, MARGIN = "geometry", FUN), el motor de stars realiza las siguientes acciones:
+# 1. Identifica la dimensión especificada en MARGIN (en este caso, geometry).
+# 2. Para cada elemento $i$ de esa dimensión (desde 1 hasta 3381), extrae todos los valores que se encuentran en las demás dimensiones (en este caso, la dimensión attributes que se creó al usar merge).
+# 3. Pasa esos valores a la función FUN como un vector numérico simple.
+# 
+# Por lo tanto, si el objeto st_nh_h_c_merged tiene 34 atributos ahora consolidados como una dimensión, en cada una de las 3381 iteraciones la función recibirá un vector de longitud 34.
+
+combined_st = st_apply(
+    # objeto stars de entrada
+    X = st_nh_h_c_merged, #  No usar st_nh_h_c,
+    MARGIN = "geometry", # c("x", "y") # La dimensión a iterar para el st_apply
+    FUN = combined_columns_st_apply, # La función a ejecutar
+    # Parámetros adicionales de combined_columns_st_apply
+    # Atributos del objeto stars 
+    # correspondiente a vientos huracanados
+    bands_rl_h = c(13:23),
+    # Periodos de retorno (en años)
+    # correspondiente a atributos de vientos huracanados
+    mri_h = c(10,20,50,100,250,500,700,1000,1700,3000,7000),
+    # Atributos del objeto stars 
+    # correspondiente a vientos no huracanados    
+    bands_rl_nh = c(2:12), # atributos no-huracanes
+    # Periodos de retorno (en años)
+    # correspondiente a atributos de vientos no huracanados
+    mri_nh = c(10,20,50,100,250,500,700,1000,1700,3000,7000),
+    # Periodos de retorno (en años)
+    # a ser consultados en la curva combinada con la formula
+    mri_c = mri_c
+  )
+
+# Usando valores por defecto de la función, se puede usar:
+#combined_st = st_apply(
+#  X = st_nh_h_c_merged, # El objeto X se pasa de forma posicional
+#  MARGIN = "geometry", # c("x", "y") # MARGIN: Dimensión sobre la cual aplicar la función
+#  FUN = combined_columns_st_apply, # FUN: La función de usuario
+#  # Parámetros adicionales de combined_columns_st_apply
+#  mri_c = mri_c # Argumentos adicionales para FUN
+#  )
+
+combined_st
+# Consulta de la estructura de dimensiones
+st_dimensions(combined_st)
+# Consulta de los atributos disponibles
+names(combined_st)
+
+# Renombrar la dimensión generada
+combined_st <- st_set_dimensions(combined_st, "combined_columns_st_apply", names = "c_mri")
+
+# Asignar los valores correctos (los 11 periodos de retorno consultados) a dicha dimensión
+combined_st <- st_set_dimensions(combined_st, "c_mri", 
+                                values = paste0("c_", mri_c))
+
+# 3. Renombrar el atributo de datos numéricos
+names(combined_st) <- "rafaga_viento"
+
+# Verificación de la estructura corregida
+print(combined_st)
+
+# Transponer las dimensiones: colocar 'geometry' (2) 
+# en la posición 1, y 'c_mri' (1) en la posición 2
+combined_st <- aperm(combined_st, c(2, 1))
+
+# Verificación de la estructura corregida
+print(combined_st)
+```
+
+
+### Opciones de ploteo (cubos: stars + sf)
+
+```{r}
+#| label: r_opciones_ploteo_stars_sf
+#| out-width: "80%"
+#| out-height: "400px"
+#| fig-align: "center"
+# #| eval: false
+
+# Generación directa de los 11 mapas sin conversión adicional
+# Hace facets por cada nivel de la dimensión extra
+plot(combined_st, key.pos = 4, 
+     main = "Nivel de retorno combinado (Km/h)",
+     max.plot = 11)
+
+# Ploteo de todos los atributos combinados
+# usando stars
+ggplot()+
+  geom_stars(data=combined_st) + 
+  facet_wrap("c_mri")
+
+# Filtrado dinámico dentro del flujo de ggplot
+# Nota: Usar "c_700" (valores almacenados en la dimensión)
+# Nota: filter requiere librería cubelyr 
+#       (no instalada en el contenedor)
+# ggplot() +
+#   geom_stars(data = combined_st %>% filter(c_mri == "c_700")) + 
+#   scale_fill_viridis_c(name = "Velocidad\n(Km/h)", option = "magma") +
+#   theme_minimal() +
+#   labs(
+#     title = "Amenaza Combinada (huracane + no-huracane)",
+#     subtitle = "Periodo de retorno 700 años"
+#   )
+
+# Uso de slice indicando el nombre de la dimensión y el índice numérico
+# Si 700 es el séptimo valor en mri_c = c(10, 20, 50, 100, 250, 500, 700...)
+combined_st_700 <- slice(combined_st, along = "c_mri", index = 7)
+
+ggplot() +
+ geom_stars(data = combined_st_700) + 
+ scale_fill_viridis_c(option = "magma") +
+ theme_minimal()
+
+# Conversión del cubo vectorial a formato largo sf
+sf_combined <- st_as_sf(
+  combined_st, 
+  as_points = FALSE, 
+  merge = FALSE, 
+  long = TRUE
+)
+
+head(sf_combined)
+tail(sf_combined)
+colnames(sf_combined)
+
+# Visualización usando geom_sf para un renderizado riguroso de polígonos
+ggplot(data = sf_combined) +
+  geom_sf(aes(fill = rafaga_viento), color = NA) +
+  facet_wrap(~ c_mri, ncol = 3) +
+  scale_fill_viridis_c(name = "Velocidad\n(Km/h)", option = "magma") +
+  theme_minimal() +
+  # Ocultar coordenadas para mayor limpieza visual
+  theme(axis.text = element_blank()) + 
+  labs(title = "Vientos extremos (huracane + no-huracane)")
+
+
+# # Conversión de la dimensión 'c_mri' en stars 
+# a múltiples atributos
+# Not working: a bug?
+# combined_st_attrs <- split(combined_st, "c_mri")
+
+# Conversión del cubo a formato ancho 
+# (una columna por cada periodo de retorno)
+sf_combined_wide <- st_as_sf(
+  combined_st, 
+  as_points = FALSE, 
+  merge = FALSE, 
+  long = FALSE
+)
+
+# Verificación de la estructura tabular resultante
+# Debería mostrar las 11 columnas de periodos de retorno 
+# más la columna geometry
+names(sf_combined_wide)
+
+# Convertir sf ancho a stars 
+# Reconversión a cubo de datos (ahora estructurado por atributos)
+combined_st_attrs <- st_as_stars(sf_combined_wide)
+
+# # Verificación de la nueva estructura
+print(combined_st_attrs)
+names(combined_st_attrs)
+
+# # 1. Extracción del atributo y conversión a objeto sf
+sf_c_700 <- st_as_sf(combined_st_attrs["c_700"])
+
+# 2. Generación del mapa topológico
+ggplot(data = sf_c_700) +
+  geom_sf(aes(fill = c_700), color = NA) +
+  scale_fill_viridis_c(name = "Velocidad\n(Km/h)", option = "magma") +
+  theme_minimal() +
+  labs(
+    title = "Amenaza combinada (huracán + no huracán)",
+    subtitle = "Periodo de retorno 700 años"
+  ) +
+  theme(axis.text = element_blank()) # Limpieza de ejes coordenados
+```
+
+### Graficación de curvas de amenaza
+
+
+```{r}
+#| label: r_funcion_graficacion_amenaza_leerstars
+# #| eval: false
+
+# Carga de librerías requeridas
+# library(sf)
+# library(stars)
+# library(ggplot2)
+# library(dplyr)
+
+graficar_curva_amenaza_celda <- function(data_base, data_combinada = NULL, cell_index = NULL, long = NULL, lat = NULL, tipo_curva = "completa") {
+  
+  # Validación de parámetros de entrada funcionales
+  if (!(tipo_curva %in% c("original", "completa"))) {
+    stop("Error: El parámetro tipo_curva debe definirse como 'original' o 'completa'.")
+  }
+
+  # ==============================================================================
+  # 1. Resolución espacial y determinación del índice de la celda (idx)
+  # ==============================================================================
+  # La función admite consulta por coordenadas geográficas o por índice directo.
+  if (!is.null(long) && !is.null(lat)) {
+    # Transformación del par de coordenadas a una geometría sf puntual, 
+    # heredando el Sistema de Referencia de Coordenadas (CRS) del objeto stars.
+    punto_consulta <- st_sfc(st_point(c(long, lat)), crs = st_crs(data_base))
+    
+    # Extracción del arreglo de geometrías del cubo espacial.
+    geometrias <- st_get_dimension_values(data_base, "geometry")
+    
+    # Búsqueda topológica del polígono/celda más cercano al punto de consulta.
+    idx <- as.integer(st_nearest_feature(punto_consulta, geometrias))
+  } else if (!is.null(cell_index)) {
+    # Asignación directa si se provee el identificador posicional.
+    idx <- cell_index
+  } else {
+    stop("Error: Se requiere especificar un cell_index o un par de coordenadas (long, lat).")
+  }
+
+  # ==============================================================================
+  # 2. Extracción indexada de datos de entrada (Objeto data_base)
+  # ==============================================================================
+  # Control de dimensionalidad: los objetos stars pueden transponer sus dimensiones 
+  # (atributos vs. geometría) dependiendo de manipulaciones previas como merge() o st_apply().
+  dimensiones_base <- dim(data_base)
+  
+  # Verificación: Si las geometrías están en las filas (posición 1), se extrae por fila.
+  # De lo contrario, se extrae por columna. Evita el error "subscript out of bounds".
+  if (names(dimensiones_base)[1] == "geometry") {
+    v_base <- as.numeric(data_base[[1]][idx, ])
+  } else {
+    v_base <- as.numeric(data_base[[1]][, idx])
+  }
+  
+  # Descomposición del vector base (34 posiciones teóricas provenientes de st_nh_h_c_merged)
+  id_celda <- v_base[1]            # Posición 1: Identificador de la celda (cellindexlr)
+  v_nh <- v_base[2:12]             # Posiciones 2-12: Velocidades viento no huracanado
+  v_h  <- v_base[13:23]            # Posiciones 13-23: Velocidades viento huracanado
+  
+  # Vector constante con los periodos de retorno estandarizados para el análisis
+  mris <- c(10, 20, 50, 100, 250, 500, 700, 1000, 1700, 3000, 7000)
+
+  # Determinación del centroide de la celda para etiquetado en el gráfico y nomenclatura
+  coords <- st_coordinates(st_centroid(st_geometry(st_as_sf(data_base))[idx]))
+  lon_val <- round(coords[1], 4)
+  lat_val <- round(coords[2], 4)
+
+  # ==============================================================================
+  # 3. Configuración topológica del sistema de coordenadas cartesianas
+  # ==============================================================================
+  # Se implementa un eje dual utilizando la transformación matemática P = 1 / T.
+  # dup_axis() obliga al eje superior a alinear sus marcas (ticks) con el eje inferior,
+  # modificando únicamente el texto a renderizar mediante la función anónima en 'labels'.
+  escala_x_dual <- scale_x_continuous(
+    limits = c(0, 10000),
+    sec.axis = dup_axis(
+      name = "Probabilidad anual de excedencia",
+      labels = function(x) {
+        # Prevención de división por cero en el límite inferior del eje (T=0)
+        res <- ifelse(x <= 0, NA, 1 / x)
+        format(res, scientific = FALSE, digits = 3, drop0trailing = TRUE)
+      }
+    )
+  )
+
+  # ==============================================================================
+  # 4. Estructuración relacional de datos para renderizado geométrico (ggplot2)
+  # ==============================================================================
+  # La disociación entre df_lineas y df_puntos permite aplicar estéticas (aes)
+  # diferenciadas por capa. Específicamente: no plotear puntos para la curva combinada.
+
+  if (tipo_curva == "original") {
+    
+    # Preparación de dataframes excluyendo resultados procesados.
+    df_lineas <- data.frame(
+      velocidad = c(v_nh, v_h),
+      periodo_retorno = rep(mris, 2),
+      tipo = factor(rep(c("No huracanes", "Huracanes"), each = 11),
+                    levels = c("No huracanes", "Huracanes", "Combinada"))
+    ) |> filter(!is.na(velocidad))
+    
+    # En modo original, los puntos coinciden exactamente con las líneas.
+    df_puntos <- df_lineas
+    
+    titulo_grafico <- paste("Curvas de amenaza originales - Celda", id_celda)
+    prefijo_archivo <- "amenaza_original"
+
+  } else if (tipo_curva == "completa") {
+    
+    # Restricción de ejecución: el objeto resultante de st_apply es obligatorio aquí.
+    if (is.null(data_combinada)) {
+      stop("Error: Para graficar la curva completa se requiere proveer el objeto data_combinada.")
+    }
+
+    # Lectura estricta de resultados combinados generados por st_apply (combined_st).
+    # Se aplica el mismo control de dimensionalidad que al objeto base.
+    dimensiones_c <- dim(data_combinada)
+    if (names(dimensiones_c)[1] == "geometry") {
+      v_c <- as.numeric(data_combinada[[1]][idx, ])
+    } else {
+      v_c <- as.numeric(data_combinada[[1]][, idx])
+    }
+
+    # Consolidación de los tres regímenes en el dataframe para trazar geometrías de línea
+    df_lineas <- data.frame(
+      velocidad = c(v_nh, v_h, v_c),
+      periodo_retorno = rep(mris, 3),
+      tipo = factor(rep(c("No huracanes", "Huracanes", "Combinada"), each = 11),
+                    levels = c("No huracanes", "Huracanes", "Combinada"))
+    ) |> filter(!is.na(velocidad))
+    
+    # Filtrado lógico: Se excluyen los registros etiquetados como "Combinada" 
+    # del dataframe que alimentará geom_point(), suprimiendo así los nodos en la gráfica.
+    df_puntos <- df_lineas |> filter(tipo != "Combinada")
+    
+    titulo_grafico <- paste("Curvas de amenaza completas - Celda", id_celda)
+    prefijo_archivo <- "amenaza_completa"
+  }
+
+  # ==============================================================================
+  # 5. Trazado del lienzo y exportación a memoria no volátil
+  # ==============================================================================
+  p <- ggplot() +
+    # Capa 1: Trazado de trayectorias (df_lineas contiene las 3 componentes si tipo = "completa")
+    geom_line(data = df_lineas, aes(x = periodo_retorno, y = velocidad, color = tipo), linewidth = 1, na.rm = TRUE) +
+    # Capa 2: Trazado de nodos de referencia (df_puntos NO contiene la componente combinada)
+    geom_point(data = df_puntos, aes(x = periodo_retorno, y = velocidad, color = tipo), size = 2.5, na.rm = TRUE) +
+    # Configuración de ejes y atributos visuales
+    escala_x_dual +
+    labs(
+      title = titulo_grafico,
+      subtitle = paste("Coordenadas:", lon_val, ",", lat_val),
+      x = "Periodos de retorno (Años)",
+      y = "Velocidad de ráfaga (Km/h)",
+      color = "Componente"
+    ) +
+    theme_minimal()
+
+  # Control de directorio y almacenamiento del binario gráfico (.png)
+  if(!dir.exists("imagenes")) dir.create("imagenes")
+  nombre_archivo <- paste0("imagenes/", prefijo_archivo, "_lon", lon_val, "_lat", lat_val, "_idx", id_celda, ".png")
+  
+  # Exportación con parámetros de alta resolución para reportes técnicos (dpi = 300)
+  ggsave(nombre_archivo, plot = p, width = 8, height = 6, dpi = 300)
+  
+  # Se retorna el objeto 'p' por si se requiere manipulación posterior en el entorno.
+  return(p)
+}
+
+# graficar_curva_amenaza_celda <- function(data_base, data_combinada = NULL, cell_index = NULL, long = NULL, lat = NULL, tipo_curva = "completa") {
+  
+#   if (!(tipo_curva %in% c("original", "completa"))) {
+#     stop("El parámetro tipo_curva debe ser 'original' o 'completa'.")
+#   }
+
+#   # 1. Localización espacial
+#   if (!is.null(long) && !is.null(lat)) {
+#     punto_consulta <- st_sfc(st_point(c(long, lat)), crs = st_crs(data_base))
+#     geometrias <- st_get_dimension_values(data_base, "geometry")
+#     idx <- as.integer(st_nearest_feature(punto_consulta, geometrias))
+#   } else if (!is.null(cell_index)) {
+#     idx <- cell_index
+#   } else {
+#     stop("Se requiere especificar un cell_index o coordenadas (long, lat).")
+#   }
+
+#   # 2. Lectura estricta de datos base (st_nh_h_c_merged)
+#   dimensiones_base <- dim(data_base)
+#   if (names(dimensiones_base)[1] == "geometry") {
+#     v_base <- as.numeric(data_base[[1]][idx, ])
+#   } else {
+#     v_base <- as.numeric(data_base[[1]][, idx])
+#   }
+  
+#   id_celda <- v_base[1]
+#   v_nh <- v_base[2:12]
+#   v_h  <- v_base[13:23]
+#   mris <- c(10, 20, 50, 100, 250, 500, 700, 1000, 1700, 3000, 7000)
+
+#   coords <- st_coordinates(st_centroid(st_geometry(st_as_sf(data_base))[idx]))
+#   lon_val <- round(coords[1], 4)
+#   lat_val <- round(coords[2], 4)
+
+#   # 3. Configuración del eje dual
+#   escala_x_dual <- scale_x_continuous(
+#     limits = c(0, 10000),
+#     sec.axis = dup_axis(
+#       name = "Probabilidad anual de excedencia",
+#       labels = function(x) {
+#         res <- ifelse(x <= 0, NA, 1 / x)
+#         format(res, scientific = FALSE, digits = 3, drop0trailing = TRUE)
+#       }
+#     )
+#   )
+
+#   # 4. Construcción de conjuntos de datos disociados para capas geométricas
+#   if (tipo_curva == "original") {
+    
+#     df_lineas <- data.frame(
+#       velocidad = c(v_nh, v_h),
+#       periodo_retorno = rep(mris, 2),
+#       tipo = factor(rep(c("No huracanes", "Huracanes"), each = 11),
+#                     levels = c("No huracanes", "Huracanes", "Combinada"))
+#     ) |> filter(!is.na(velocidad))
+    
+#     df_puntos <- df_lineas
+#     titulo_grafico <- paste("Curvas de amenaza originales - Celda", id_celda)
+#     prefijo_archivo <- "amenaza_original"
+
+#   } else if (tipo_curva == "completa") {
+    
+#     if (is.null(data_combinada)) {
+#       stop("Para graficar la curva completa se requiere proveer el objeto data_combinada.")
+#     }
+
+#     # Lectura estricta de resultados combinados (combined_st)
+#     dimensiones_c <- dim(data_combinada)
+#     if (names(dimensiones_c)[1] == "geometry") {
+#       v_c <- as.numeric(data_combinada[[1]][idx, ])
+#     } else {
+#       v_c <- as.numeric(data_combinada[[1]][, idx])
+#     }
+
+#     df_lineas <- data.frame(
+#       velocidad = c(v_nh, v_h, v_c),
+#       periodo_retorno = rep(mris, 3),
+#       tipo = factor(rep(c("No huracanes", "Huracanes", "Combinada"), each = 11),
+#                     levels = c("No huracanes", "Huracanes", "Combinada"))
+#     ) |> filter(!is.na(velocidad))
+    
+#     # Exclusión de la capa combinada en el mapeo de puntos
+#     df_puntos <- df_lineas |> filter(tipo != "Combinada")
+    
+#     titulo_grafico <- paste("Curvas de amenaza completas - Celda", id_celda)
+#     prefijo_archivo <- "amenaza_completa"
+#   }
+
+#   # 5. Generación de gráfico directo mediante inyección en geoms específicos
+#   p <- ggplot() +
+#     geom_line(data = df_lineas, aes(x = periodo_retorno, y = velocidad, color = tipo), linewidth = 1, na.rm = TRUE) +
+#     geom_point(data = df_puntos, aes(x = periodo_retorno, y = velocidad, color = tipo), size = 2.5, na.rm = TRUE) +
+#     escala_x_dual +
+#     labs(
+#       title = titulo_grafico,
+#       subtitle = paste("Coordenadas:", lon_val, ",", lat_val),
+#       x = "Periodos de retorno (Años)",
+#       y = "Velocidad de ráfaga (Km/h)",
+#       color = "Componente"
+#     ) +
+#     theme_minimal()
+
+#   if(!dir.exists("imagenes")) dir.create("imagenes")
+#   nombre_archivo <- paste0("imagenes/", prefijo_archivo, "_lon", lon_val, "_lat", lat_val, "_idx", id_celda, ".png")
+#   ggsave(nombre_archivo, plot = p, width = 8, height = 6, dpi = 300)
+  
+#   return(p)
+# }
+```
+
+
+
+```{r}
+#| label: r_funcion_mapeo_celda
+# #| eval: false
+
+graficar_ubicacion_celda <- function(data_base, cell_index = NULL, long = NULL, lat = NULL, path_raster = "./data_heavy/col2.tif", sf_poligono = NULL) {
+  
+  # 1. Identificación de la celda objetivo
+  if (!is.null(long) && !is.null(lat)) {
+    punto_consulta <- st_sfc(st_point(c(long, lat)), crs = st_crs(data_base))
+    geometrias <- st_get_dimension_values(data_base, "geometry")
+    idx <- as.integer(st_nearest_feature(punto_consulta, geometrias))
+  } else if (!is.null(cell_index)) {
+    idx <- cell_index
+  } else {
+    stop("Error: Se requiere especificar un cell_index o coordenadas (long, lat).")
+  }
+
+  # 2. Preparación de geometrías vectoriales
+  # Se extrae la geometría de la malla completa y se aísla la celda de interés
+  grid_sf <- st_as_sf(st_geometry(data_base))
+  celda_sf <- grid_sf[idx, ]
+  
+  # 3. Procesamiento del relieve de fondo con stars
+  # Lectura del archivo TIF y recorte basado en la extensión de la malla (data_base)
+  relieve <- read_stars(path_raster)
+  
+  # Enmascaramiento opcional: si se provee un sf de polígono (ej. Colombia), 
+  # el relieve se recorta y enmascara a esa forma específica.
+  if (!is.null(sf_poligono)) {
+    relieve_plot <- relieve[sf_poligono]
+  } else {
+    relieve_plot <- st_crop(relieve, st_bbox(data_base))
+  }
+
+  # 4. Construcción del mapa topológico
+  # Definición de paleta institucional consistente con el código previo
+  myPalette <- colorRampPalette(rev(RColorBrewer::brewer.pal(11, "YlGn")))
+
+  p <- ggplot() +
+    # Capa de fondo: Relieve (reemplaza la función ggRGB)
+    geom_stars(data = relieve_plot, alpha = 0.8) +
+    scale_fill_gradientn(
+      colours = myPalette(100), 
+      limits = c(0, 255), 
+      guide = "none" # Se oculta la leyenda del relieve
+    ) +
+    # Capa de malla ERA5 completa
+    geom_sf(data = grid_sf, colour = "grey", fill = NA, linewidth = 0.1) +
+    # Resaltado de la celda de análisis en amarillo
+    geom_sf(data = celda_sf, fill = "yellow", colour = "black", linewidth = 0.3) +
+    # Configuración de límites espaciales y sistema de coordenadas
+    coord_sf(xlim = c(-81.25, -64.75), ylim = c(-5, 13), expand = FALSE) +
+    labs(
+      title = paste("Reporte de ubicación espacial - Celda", idx),
+      subtitle = "Visualización de la celda seleccionada sobre relieve y grilla ERA5",
+      x = "Longitud",
+      y = "Latitud"
+    ) +
+    theme_bw() +
+    theme(
+      plot.title = element_text(size = 9, face = "bold"),
+      plot.subtitle = element_text(size = 8),
+      panel.grid.major = element_line(color = gray(.5), linetype = "dashed", linewidth = 0.1),
+      panel.background = element_rect(fill = "aliceblue"),
+      axis.text = element_text(size = 7)
+    )
+
+  # 5. Exportación del archivo binario
+  if(!dir.exists("imagenes")) dir.create("imagenes")
+  
+  coords <- st_coordinates(st_centroid(celda_sf))
+  nombre_archivo <- paste0("imagenes/ubicacion_idx", idx, "_lon", round(coords[1], 2), ".png")
+  ggsave(nombre_archivo, plot = p, width = 7, height = 7, dpi = 300)
+  
+  return(p)
+}
+
+#| label: r_funcion_mapeo_celda_rgb
+#| eval: false
+
+graficar_ubicacion_celda_rgb <- function(data_base, cell_index = NULL, long = NULL, lat = NULL, path_raster = "./data_heavy/col2.tif", sf_poligono = NULL) {
+  
+  # 1. Identificación topológica de la celda objetivo
+  if (!is.null(long) && !is.null(lat)) {
+    punto_consulta <- st_sfc(st_point(c(long, lat)), crs = st_crs(data_base))
+    geometrias <- st_get_dimension_values(data_base, "geometry")
+    idx <- as.integer(st_nearest_feature(punto_consulta, geometrias))
+  } else if (!is.null(cell_index)) {
+    idx <- cell_index
+  } else {
+    stop("Error: Se requiere especificar un cell_index o coordenadas (long, lat).")
+  }
+
+  # 2. Preparación de geometrías vectoriales (grilla ERA5)
+  grid_sf <- st_as_sf(st_geometry(data_base))
+  celda_sf <- grid_sf[idx, ]
+  
+  # 3. Procesamiento del relieve topográfico multibanda
+  relieve <- read_stars(path_raster)
+  
+  # Operación de recorte espacial
+  if (!is.null(sf_poligono)) {
+    relieve_plot <- relieve[sf_poligono]
+  } else {
+    relieve_plot <- st_crop(relieve, st_bbox(data_base))
+  }
+
+  # Transformación analítica de la matriz tridimensional a valores RGB hexadecimales.
+  # La constante maxColorValue = 255 mapea rásteres estándar de 8-bits.
+  relieve_rgb <- st_rgb(relieve_plot, maxColorValue = 255)
+
+  # 4. Construcción gráfica
+  p <- ggplot() +
+    # Capa 1: Renderizado estricto de colores RGB sin aplicar paletas adicionales
+    geom_stars(data = relieve_rgb) +
+    scale_fill_identity() +
+    
+    # Capa 2: Malla vectorial completa
+    geom_sf(data = grid_sf, colour = "grey", fill = NA, linewidth = 0.1) +
+    
+    # Capa 3: Resaltado posicional de la celda analizada
+    geom_sf(data = celda_sf, fill = "yellow", colour = "black", linewidth = 0.3) +
+    
+    # Encuadre espacial
+    coord_sf(xlim = c(-81.25, -64.75), ylim = c(-5, 13), expand = FALSE) +
+    labs(
+      title = paste("Reporte de ubicación espacial - Celda", idx),
+      subtitle = "Visualización de la celda seleccionada sobre relieve topográfico RGB",
+      x = "",
+      y = ""
+    ) +
+    theme_bw() +
+    theme(
+      plot.title = element_text(size = 9, face = "bold"),
+      plot.subtitle = element_text(size = 8),
+      panel.grid.major = element_line(color = gray(.5), linetype = "dashed", linewidth = 0.1),
+      panel.background = element_rect(fill = "aliceblue"),
+      axis.text.x = element_text(size = 7, margin = margin(t = 2, b = -10)),
+      axis.text.y = element_text(size = 7, margin = margin(r = 2, l = -10)),
+      plot.margin = unit(c(0, 0, 0, 0), "cm")
+    )
+
+  # 5. Volcado a memoria no volátil
+  if(!dir.exists("imagenes")) dir.create("imagenes")
+  
+  coords <- st_coordinates(st_centroid(celda_sf))
+  nombre_archivo <- paste0("imagenes/mapa_ubicacion_idx", idx, "_lon", round(coords[1], 2), ".png")
+  ggsave(nombre_archivo, plot = p, width = 7, height = 7, dpi = 300)
+  
+  return(p)
+}
+
+```
+
+
+```{r}
+#| label: r_ejecucion_graficos_celda
+# #| eval: false
+
+# Ejemplo 1: Graficar utilizando el índice de la celda (cellindexlr)
+# data_base: Entradas originales (NH, H)
+# data_combinada: Salidas del procesamiento (C)
+
+celda_objetivo <- 1000
+
+p1 <- graficar_curva_amenaza_celda(
+  data_base = st_nh_h_c_merged, 
+  data_combinada = combined_st, 
+  cell_index = celda_objetivo,
+  tipo_curva = "completa"
+)
+
+print(p1)
+
+#tipo_curva = "original"
+p2 <- graficar_curva_amenaza_celda(
+  data_base = st_nh_h_c_merged, 
+  data_combinada = combined_st, 
+  cell_index = celda_objetivo,
+  tipo_curva = "original"
+)
+
+print(p2)
+
+file_col_sf_pol = "./data_heavy/COLOMBIA.shp"
+col_4326_sf_pol = st_read(file_col_sf_pol)
+
+# Generación del mapa de ubicación
+p_mapa <- graficar_ubicacion_celda(
+  data_base = st_nh_h_c_merged,
+  cell_index = celda_objetivo,
+  path_raster = "./data_heavy/col2.tif",
+  sf_poligono = col_4326_sf_pol 
+)
+
+print(p_mapa)
+
+p_mapa2 <- graficar_ubicacion_celda_rgb(
+  data_base = st_nh_h_c_merged,
+  cell_index = celda_objetivo,
+  path_raster = "./data_heavy/col2.tif",
+  sf_poligono = col_4326_sf_pol 
+)
+
+print(p_mapa2)
+
+
+# Ejemplo 2: Graficar utilizando coordenadas específicas (Longitud, Latitud)
+# La función encontrará la celda más cercana a ese punto
+p3 <- graficar_curva_amenaza_celda(
+  data_base = st_nh_h_c_merged, 
+  data_combinada = combined_st,
+  tipo_curva = "completa",
+  long = -74.08, 
+  lat = 4.60
+)
+print(p3)
+
+# tipo_curva = "original"
+p4 <- graficar_curva_amenaza_celda(
+  data_base = st_nh_h_c_merged, 
+  data_combinada = combined_st,
+  tipo_curva = "original",
+  long = -74.08, 
+  lat = 4.60
+)
+print(p4)
+
+
+
+```
+
+## Ejercicios
+
+Para poner en práctica los conceptos introductorios abordados en este capítulo, deberás resolver los siguientes dos ejercicios. Puedes elegir resolverlos en **Python, R o Julia** (o implementar la solución en varios lenguajes si deseas retarte).
+
+### Ejercicio 1: Hidrología del Río Magdalena (Vectores y Matemáticas)
+
+**Contexto:** Estás analizando el comportamiento de las estaciones hidrológicas del IDEAM a lo largo del Río Magdalena. Has recibido el reporte del caudal medio mensual (en metros cúbicos por segundo, $m^3/s$) de cinco estaciones clave y necesitas extraer estadísticos básicos y transformar las unidades para un informe ambiental.
+
+**Instrucciones de código:**
+
+1. Define una colección ordenada (Vector/Lista/Array) llamada `estaciones` con los siguientes nombres: `"Honda", "Puerto Berrío", "Barrancabermeja", "Puerto Wilches", "Calamar"`.
+2. Define otra colección paralela llamada `caudales_m3s` con los siguientes valores numéricos: `1500, 2100, 2800, 3200, 4500`.
+3. Utilizando las funciones estadísticas nativas de tu lenguaje elegido, calcula e imprime:
+   * El **caudal máximo** registrado en el río.
+   * El **caudal promedio** de las cinco estaciones.
+4. Para un estudio local, necesitas el caudal en **litros por segundo (l/s)**. Utilizando el concepto de *vectorización* (o *broadcasting*), multiplica la colección `caudales_m3s` por `1000` y guarda el resultado en una nueva variable llamada `caudales_ls`. (Asegúrate de no usar bucles `for`).
+5. Imprime la colección resultante `caudales_ls`.
+
+### Ejercicio 2: Calidad del Aire en Bogotá (DataFrames y Filtrado)
+
+**Contexto:** La Red de Monitoreo de Calidad del Aire de Bogotá ha publicado los datos promedio diarios de Material Particulado 2.5 ($PM_{2.5}$). Debes organizar estos datos en una estructura tabular, filtrar las estaciones que presentan riesgos para la salud (según la OMS) y visualizar los resultados.
+
+**Instrucciones de código:**
+
+1. Crea un **DataFrame** llamado `df_aire` (utilizando la librería adecuada según tu lenguaje: `pandas`, `data.frame` o `DataFrames.jl`) que contenga dos columnas:
+   * `estacion`: `"Carvajal", "Kennedy", "Fontibón", "Suba", "Usaquén"`
+   * `pm25`: `55, 42, 38, 15, 12`
+2. Imprime un **resumen descriptivo/técnico** de tu DataFrame (usando la función equivalente a `info()`, `str()` o `describe()`).
+3. El límite diario recomendado por la OMS para $PM_{2.5}$ es de 15 $\mu g/m^3$. Crea un nuevo DataFrame llamado `df_alerta` que **filtre** y contenga únicamente las estaciones donde el nivel de `pm25` sea **estrictamente mayor a 15**.
+4. Crea una **nueva columna** en `df_alerta` llamada `estado` y asígnale a todas sus filas el valor de texto `"Crítico"`.
+5. Utiliza la librería gráfica nativa de tu entorno para generar un **gráfico de barras** simple usando el DataFrame original (`df_aire`), donde el eje X sean las estaciones y el eje Y sean los niveles de $PM_{2.5}$.
+
+### Entregables y Criterios de Evaluación
+
+El objetivo de esta evaluación no es solo que el código funcione, sino que seas capaz de documentar y explicar las diferencias fundamentales entre lenguajes.
+
+**1. Archivos de Código:**
+Debes desarrollar los algoritmos en al menos uno de los siguientes formatos de archivo:
+
+* Script tradicional (`.py`, `.R`, `.jl`)
+* Notebook interactivo (`.ipynb`)
+* Documento computacional (`.qmd` con *chunks* de código)
+
+**2. Documento Analítico (Quarto):**
+Independientemente del formato de tu código fuente, **debes redactar un documento en Quarto (`.qmd`) y renderizarlo tanto en HTML como en PDF**. En este documento debes incluir tus bloques de código y responder argumentativamente a las siguientes preguntas:
+
+* **Sobre el Ejercicio 1 (Vectorización):** Intenta explicar qué sucedería si decides hacer este ejercicio en **Python** y creas `caudales_m3s` como una Lista nativa (`[1500, 2100...]`) y la multiplicas directamente por 1000 (`caudales_m3s * 1000`). ¿Realizaría la operación matemática deseada? ¿Qué librería de Python soluciona este problema y cómo se diferencia este comportamiento del de R o Julia?
+* **Pregunta General (Indexación):** Escribe la línea de código exacta que usarías en tu lenguaje elegido para extraer **las tres primeras estaciones** del DataFrame del Ejercicio 2 usando indexación por rangos (*slicing*). Explica brevemente si el límite superior del rango que escribiste se incluye o se excluye en el resultado final, justificando esto según el tipo de indexación (Base-0 vs Base-1) de tu lenguaje.
+
+**3. Repositorio en GitHub:**
+Sube tu carpeta del proyecto (que debe contener tus scripts, el archivo `.qmd` y los renders finales en HTML y PDF) a un repositorio público en tu cuenta personal de **GitHub**.
+
+* **Entrega:** Deberás enviar únicamente el enlace (URL) a tu repositorio de GitHub para la calificación.

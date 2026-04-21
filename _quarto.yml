@@ -60,7 +60,8 @@ book:
       chapters:
         - 18-fundamentos_raster.qmd
         - 19-operaciones_raster.qmd
-        # - 20-interaccion_vector_raster.qmd
+        - 20-cubos_multidimensionales.qmd
+        - 21-cubos_multidimensionales_vector_raster.qmd
     - part: "Datos Multidimensionales e Hiperespectrales"
       chapters:
         - 98-errata.qmd

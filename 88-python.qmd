@@ -61,4 +61,6 @@ Para verificar las versiones inSstaladas, puede ejecutar `pip3 list` en la termi
 
 * colorama (instalado)
 * geedim
-* xrspatial 
+* xrspatial
+* netcdf4
+* toolz

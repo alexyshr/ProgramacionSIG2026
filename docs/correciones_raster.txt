@@ -1,0 +1,89 @@
+1) table de comparación de librerías va en el 18
+2) el gráfico de espacio de coordenadas e imagen va en el 18
+
+chequear: rasterio  tipo de transformación geométrica es lineal y preserva el paraleç
+
+
+grafica de las firmas espectrales para entender ndwi
+ción en el espectro del Infrarrojo Cercano (NI
+
+
+
+a reducir uso de memoria (vs float64)
+Data type	UInt16 - Sixteen bit unsigned integer
+
+
+paleta de NDWI, PORQUÉ DE 0 A 35?
+
+el Código reverse transpose en terra?
+
+
+porqué primero las filas (norte), columnas (este): ext()!
+# Importante: Usamos t() porque stars espera [x, y] y nuestra matriz es [y, x]
+
+ventana_row_cols <- ext(r_start, r_end, c_start, c_end)
+
+el indice de terra inicia con las filas (x)
+
+
+dim(ndwi_mat)
+
+2500, 1000
+
+dim(t(ndwi_mat))
+1000,2500
+
+
+
+No esán los plots
+
+    # Con stars y ggplot2 (usando geom_stars)
+    library(ggplot2)
+    # Conclusión: Gráfico correcto (no usamos la matriz cruda)
+    ggplot() +
+        geom_stars(data = ndwi_stars) +
+        scale_fill_gradientn(colors = hcl.colors(100, "GnBu")) +
+        coord_equal() +
+        labs(title = "Plot con ggplot2 + stars")
+
+    #Con ggplot2 básico (convirtiendo el raster a un data.frame de puntos XY)
+    ndwi_df <- as.data.frame(ndwi_rast, xy = TRUE)
+    # Conclusión: Gráfico correcto (no usamos la matriz cruda)
+    ggplot(ndwi_df, aes(x = x, y = y, fill = lyr.1)) +
+        geom_raster() +
+        scale_fill_gradientn(colors = hcl.colors(100, "GnBu")) +
+        coord_equal() +
+        labs(title = "Plot correcto ggplot2 (data.frame XY)")
+
+
+
+Valores negativos del NDWI????
+stars object with 2 dimensions and 1 attribute
+attribute(s), summary of first 1e+05 cells:
+         Min.   1st Qu.    Median      Mean   3rd Qu.      Max.
+A1  0.3051225 0.4301075 0.4435352 0.4399964 0.4537396 0.5126437
+
+
+
+
+coordenadas de la imagen sentinel: EPSG:32632 - WGS 84 / UTM zone 32N
+
+
+
+pendiente el Código en Julia
+Predicados Between(min, max)
+
+
+
+hilshade
+compilación en quaeto, verificar este warning:
+/usr/lib/python3/dist-packages/osgeo/gdal.py:606: FutureWarning: Neither gdal.UseExceptions() nor gdal.DontUseExceptions() has been explicitly called. In GDAL 4.0, exceptions will be enabled by default.
+  warnings.warn(
+
+
+
+
+
+codigo
+# 2. reverse(..., dims=1): Invierte el eje Y (filas) para que el Norte quede arriba.
+no visible

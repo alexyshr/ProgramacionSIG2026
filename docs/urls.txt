@@ -72,9 +72,121 @@ ____________
 Collection of Resources for Data Science
 https://github.com/javedali99/r-resources-for-data-science
 
+*******
+- Introducción a los SIG (qgis)
+	- Visualización Landsat
+	- Visualización Sentinel-2
+	- Elaboración de mapas (kml, gpx, DEM, derivados, plot)
+	- Soluciones: Generar NDVI en QGIS (Landsat)
+	- Soluciones: Derivar NDWI en QGIS (Landsat y Sentinel)
+- Intro to GEE
+- Intermedio de GEE: Mapeo de Manglares
+- Intermedio de GEE: Mapeo de cuerpos de Agua
+- Avanzado de GEE: Detección de cambios 
+	- NDWI
+	- LandTrendr
+- Collect Earth Online - Evaluación de Mapas
+- ArcGIS Pro Introducción
+- ArcGIS Pro Análisis Espaciales
+- ArcGIS Pro Análisis Temporales
+- ArcGIS Pro - Introducción a Python y ArcPy
 
 GEE (fork republica-dominicana en mi GitHub)
 
 https://servir-amazonia.github.io/republica-dominicana-taller/intro-gee/introduccion.html
 https://code.earthengine.google.com/?accept_repo=users/an-sig/republica-dominicana
 	
+
+************
+Muy básica introducción a QGIS y Remote Sensing con GEE:
+https://servir-amazonia.github.io/caribbean-trainings/
+
+********
+
+Tiene 
+Intro QGIS
+Intro Remote Sensors
+Intro SAR
+Flood Mapping with SAR
+Land Cover Mapping with SAR
+Time Series Change Detection
+https://servir-amazonia.github.io/barbados-training
+
+*******
+
+
+https://servir-amazonia.github.io/colombia-training/
+
+- Introduction to SAR
+- Introducción a GEE
+- Introducción a GEE 2
+	Filtrado y Máscaras
+	Máscara de nubes y funcioes avanzadas
+	Productos ambientales
+- Introducción GEE intermedio
+	Indices
+	Clasificaciones Supervisadas
+- Introducción GEE intermedio 2
+	Mapeo de inundaciones
+	Series de Tiempo
+- Collect Earth Online - Evaluación de Mapas
+- Recursos
+
+
+****
+
+- Intro  to Remote Sensing
+- Intro to SAR
+- Flood mapping using SAR in QGIS
+	- Mapping surface water using SAR data with QGIS
+	- Review of HYDRAfloods
+- Introduction to Collect Earth Online
+- Introduction to GEE 1
+- Introduction to GEE 2
+	Exporting hydrologyc datasets
+	Creating a NDVI and Export to NDWI
+- Flood Mapping using Multiple Sensors
+- Mangrove Mapping Using Multiple Sensors
+- Two date change detection (water)
+- Time series change detection 1
+	LandTrendr
+- Time series change detection 2
+	HYDRAFloods
+
+https://servir-amazonia.github.io/trinidad-and-tobago-training/
+
+
+
+*********
+
+- Intro to Remote Sensing
+- Intro to GEE
+- Exporting Hydrologic Datasets
+- Remote Sensing with High Resolution Imagery
+	Introduction
+	Fundamentals
+	Working with QGIS (Planet)
+	Working on GEE with Planet
+- Intro SAR
+- SAR for Flood Monitoring in QGIS (with DEM)
+	...
+	Mapping surface water using SAR with QGIS
+	Mapping flood prone areas using SRTM in QGIS
+	Review of HYDRAfloods
+- Intermediate GEE: Mangrove
+	- RF
+- Intermediate GEE: Flooding Use Case
+	Mapping Surface using Optical
+	Mapping Flooded Areas using SAR
+	Modify and improve your SAR Classification
+- Drone Flight & Image Processing
+	Pix4D
+	Part 1: Drone Flight
+	Part 2: Drone Image Processing
+- Advanced GEE: Change Detection
+	Part 1: Two Dates
+	Part 2: Time series change detection with LandTrendr
+- Map Validation and Area Estimation 	
+	
+https://servir-amazonia.github.io/guyana-training/intro-to-remote-sensing/solutions.html
+

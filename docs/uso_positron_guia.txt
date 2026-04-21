@@ -1,0 +1,187 @@
+1) crear la carpeta y el archiv ".devcontainer/devcontainer.json" en la carpeta final
+
+{
+    "name": "Entorno SIG UNAL",
+    "image": "image_sig_unal:v1.11_produccion_final",
+    "containerName": "contenedor_sig_unal",
+    "workspaceFolder": "/home/rstudio/work",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/home/rstudio/work,type=bind",
+    "runArgs": [
+        "--network=final_default"
+    ],
+    "forwardPorts": [8888, 8787],
+    "remoteEnv": {
+        "RETICULATE_PYTHON": "/usr/bin/python3",
+        "QUARTO_PYTHON": "/usr/bin/python3",
+        "JULIA_HOME": "/opt/julia/bin",
+        "LD_PRELOAD": "/usr/lib/x86_64-linux-gnu/libcurl.so.4:/usr/lib/x86_64-linux-gnu/libstdc++.so.6",
+        "GKSwstype": "100"
+    },
+    "customizations": {
+        "positron": {
+            "extensions": [
+                "posit-dev.positron-r",
+                "posit-dev.positron-python",
+                "julialang.language-julia",
+                "quarto.quarto"
+            ]
+        }
+    },
+    "remoteUser": "root"
+}
+
+2) cargar solo postgis y la red desde PowerShell
+
+docker compose up -d db-postgis
+
+
+3) Abrir positron en la carpeta final
+el Sistema pedirá "Reopen in container")
+o Ctrl + Shift + P: Dev Containers: Reopen in Container
+
+
+5) chequear que contenedores están corriendo
+
+
+a) 
+docker ps
+
+Muestra únicamente los contenedores que están activos actualmente. Permite verificar que contenedor_postgis_unal y el contenedor instanciado por Positron estén operando.
+
+b)
+docker ps -a
+
+Lista todos los contenedores en el sistema, incluyendo aquellos que se han detenido por errores de configuración o salida del proceso principal. Es fundamental para identificar si el contenedor de análisis falló durante el arranque.
+
+c)
+docker compose ps
+
+
+Este comando debe ejecutarse desde la raíz del directorio final/. Proporciona una visión orientada a servicios, mostrando el estado de los contenedores definidos en el archivo docker-compose.yml y su mapeo de puertos.
+
+d) 
+docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+
+
+Genera una salida tabulada y simplificada, facilitando la lectura de los nombres asignados y la persistencia de los puertos mapeados (e.g., 5434 para PostGIS).
+
+e)
+
+docker network inspect final_default
+
+Al utilizar la configuración de runArgs definida anteriormente, es prioritario verificar que ambos contenedores compartan la misma red (final_default). Esto se puede confirmar mediante la inspección de red:
+
+6)  El crea la ruta de trabajo en /workspaces/final (limitación)
+
+Para solucionar esto y que todos los scripts usando la ruta original (/home/rstudio/work) funcionen, use:
+
+ln -s /workspaces/final /home/rstudio/work
+
+
+7) chequear postgis
+
+entrar a R y probar!
+
+#| label: r_verificacion
+library(DBI)
+library(RPostgres)
+library(sf)
+library(terra)
+
+cat("--- Inicio de Verificación de R-Spatial ---\n")
+
+# 1. Prueba de conexión a la base de datos PostGIS
+tryCatch({
+  con <- dbConnect(
+    RPostgres::Postgres(), 
+    host = "db-postgis", 
+    dbname = "sig_db_unal", 
+    user = "profe_unal", 
+    password = "geomatica2025"
+  )
+  cat("✅ Conexión a PostGIS: Exitosa\n")
+  dbDisconnect(con)
+}, error = function(e) {
+  cat("❌ Error de conexión a PostGIS:", conditionMessage(e), "\n")
+})
+
+
+(no está instalado el psql, instalarlo en el siguiente docker)
+psql -h db-postgis -U profe_unal -d sig_db_unal
+
+(apt-get update && apt-get install -y postgresql-client)
+
+8) Mensaje de error en el intérprete de python
+
+Análisis del error del intérprete de Python
+El error registrado en el log (/bin/sh: 1: C:Program: not found) se origina porque la extensión de Python en Positron intenta validar rutas del sistema host (Windows) dentro del entorno Linux del contenedor. Esto es un remanente de la configuración de QGIS en la máquina local que la extensión intenta "descubrir" automáticamente.
+
+Para corregir esto y evitar que Positron intente usar el ejecutable de Windows:
+
+Abrir los ajustes de Positron (Ctrl + ,).
+
+Seleccionar la pestaña Remote [Dev Container].
+
+Buscar la opción Python: Default Interpreter Path.
+
+Establecer explícitamente la ruta /usr/bin/python3.
+
+
+7) Eliminar contenedores con nombres raros y Volver a empezar
+
+docker stop nifty_murdock contenedor_postgis_unal
+docker rm nifty_murdock contenedor_postgis_unal
+docker network rm final_default
+docker volume prune
+
+
+8) Cambiar active device en r
+
+options("device")
+options(device = "PositronGD")
+Restart R: "Ctrl + Shift + F10"
+
+
+ 
+ 
+ 9) Corregir problema de circulo rojo en todas las extensiones
+
+ Le compartí el log de "Output --- Extension Host (Remote)" a Geminy y me dijo que hiciera esto
+
+a)
+
+# Eliminar carpetas de almacenamiento de sesiones previas
+rm -rf /root/.positron-server/data/User/workspaceStorage/*
+# Eliminar archivos de bloqueo persistentes
+find /root/.positron-server -name "vscode.lock" -delete
+
+
+b)
+
+docker stop contenedor_sig_unal
+
+docker start contenedor_sig_unal
+
+10) Busqué las siguientes extensiones instaladas por defecto en positron: @builtin, y de la lista:
+
+desactivé "GitHub Copilot Chat" y "Positron Assistant"
+
+
+nada
+
+11)
+
+
+# Eliminar extensiones instaladas para forzar una descarga limpia
+rm -rf /root/.positron-server/extensions/*
+# Limpiar datos de configuración de usuario temporales
+rm -rf /root/.positron-server/data/User/*
+
+
+
+nada
+
+
+13) tartar de cargar una imagen limpia 
+
+docker compose down --volumes --remove-orphans

@@ -82,3 +82,8 @@ julia -e 'using Pkg; Pkg.precompile()'
 * StatsPlots
 * Measures
 * PyCall
+* ZipFile
+* GeoData
+* SpatialDependence
+* NearestNeighbors
+* LibSpatialIndex

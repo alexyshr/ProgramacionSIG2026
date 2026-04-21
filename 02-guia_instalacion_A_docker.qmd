@@ -39,15 +39,15 @@ Ubique los archivos en una carpeta local que cumpla con los siguientes requisito
 
 Dentro de la carpeta deben existir los archivos descargados en el paso anterior:
 
-   - `sig_unal_completo.tar` (El archivo de la imagen).
+   - `sig_unal_v1.11_completo_final.tar` (El archivo de la imagen).
    - `docker-compose.yml` (El archivo de orquestación contenido en la descarga).
 
 Este procedimiento instalará dos imágenes (una con la base de datos espacial y otra con Python, R y Julia) y configurará una red interna para comunicar su máquina anfitriona (Windows) con las dos máquinas virtuales Linux.
 
-Estando Docker Desktop abierto, desde una terminal situada en la carpeta que contiene `sig_unal_completo.tar` y `docker-compose.yml`, ejecute:
+Estando Docker Desktop abierto, desde una terminal situada en la carpeta que contiene `sig_unal_v1.11_completo_final.tar` y `docker-compose.yml`, ejecute:
 
 ```bash
-docker load -i sig_unal_completo.tar
+docker load -i sig_unal_v1.11_completo_final.tar
 ```
 
 > **Nota**: El terminal quedará en modo de espera sin enviar mensajes hasta que termine. El proceso suele tardar unos 20 minutos, pero puede extenderse a más de una hora según su hardware. **No interrumpa el proceso**.

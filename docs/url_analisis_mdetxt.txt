@@ -1,0 +1,87 @@
+https://servir-amazonia.github.io/republica-dominicana-taller/intro-to-remote-sensing/map-making.html
+
+******
+
+Vista general del conjunto de herramientas de Hidrología
+
+https://pro.arcgis.com/es/pro-app/latest/tool-reference/spatial-analyst/an-overview-of-the-hydrology-tools.htm
+
+
+********
+
+
+Descripción general del conjunto de herramientas Superficie
+
+https://pro.arcgis.com/es/pro-app/latest/tool-reference/spatial-analyst/an-overview-of-the-surface-tools.htm
+
+**********
+
+Caja de herramientas de QGIS
+
+
+https://docs.qgis.org/3.44/es/docs/user_manual/processing/toolbox.html
+
+***********
+
+Análisis raster en QGIS
+
+https://docs.qgis.org/3.44/es/docs/user_manual/working_with_raster/raster_analysis.html
+
+****
+
+
+https://github.com/opengeos/WhiteboxTools-ArcGIS
+
+******
+
+
+Terrain Analysis Using Digital Elevation Models (TauDEM) software for hydrologic terrain analysis and channel network extraction.
+
+
+https://github.com/dtarb/TauDEM
+
+
+************
+
+
+Terrain analysis en qgis
+
+https://github.com/qgis/QGIS-Documentation/blob/master/docs/training_manual/rasters/terrain_analysis.rst
+
+
+https://qgis-tutorials-2025.readthedocs.io/en/latest/terrain_mapping.html?utm_source=chatgpt.com
+
+
+
+Esta es en Español
+
+https://docs.qgis.org/3.44/es/docs/training_manual/rasters/terrain_analysis.html?utm_source=chatgpt.com
+
+
+*************
+
+
+Curso de análisis de terreno en MD
+
+https://sdgis-edu-tud.github.io/pages/learn-qgis/landscape-analysis/dem-derivatives.html?utm_source=chatgpt.com
+
+************
+
+Otra guía relacionada con DEM
+
+https://gist.github.com/ClemRz/5a538fc878edba80b08829e3115e8ff1
+
+*********
+
+Crear cuencas hidrográficas con QGIS- GRASS
+
+https://mappinggis.com/2014/09/como-disenar-cuencas-hidrograficas-con-qgis/?utm_source=chatgpt.com
+
+*********
+
+Análisis del Terreno en ArcGIS Pro
+
+https://github.com/opengeos/WhiteboxTools-ArcGIS
+
+
+

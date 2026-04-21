@@ -140,3 +140,7 @@ En el diseño de este entorno, se tomó la decisión técnica de descartar el pa
 - tidyterra (no instalado)
 - pak (no instalado)
 - rgee (no instalado)
+- xlsx
+- ncmeta
+- Hmisc
+- cubelyr
