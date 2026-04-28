@@ -936,16 +936,20 @@ Attaching package: 'terra'</code></pre>
 <pre><code>Starting Julia ...</code></pre>
 <pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;"># Carga de librerías de lectura y manipulación de datos espaciales</span>
 </pre>
-<pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;"></pre>
+<pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;">
+</pre>
 <pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;">using ArchGDAL</span>
 </pre>
-<pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;"></pre>
+<pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;">
+</pre>
 <pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;">using GeoDataFrames</span>
 </pre>
-<pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;"></pre>
+<pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;">
+</pre>
 <pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;"># Verificamos la carga de drivers geoespaciales (necesario para leer Shapefiles del IGAC)</span>
 </pre>
-<pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;"></pre>
+<pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;">
+</pre>
 <pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;">println("✓ Drivers de GDAL disponibles: ", length(ArchGDAL.listdrivers()))</span>
 </pre>
 <pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;">✓ Drivers de GDAL disponibles: 197
@@ -957,7 +961,7 @@ Attaching package: 'terra'</code></pre>
 </section>
 <section id="relación-entre-librerías-geoespaciales" class="level2" data-number="13.5">
 <h2 data-number="13.5" class="anchored" data-anchor-id="relación-entre-librerías-geoespaciales"><span class="header-section-number">13.5</span> Relación entre librerías geoespaciales</h2>
-<p>Para entender el funcionamiento de las librerías espaciales vectoriales, es estrictamente necesario analizar su arquitectura de software. Como señalan <span class="citation" data-cites="pebesma2025spatial">(<a href="99-referencias.html#ref-pebesma2025spatial" role="doc-biblioref">Pebesma et&nbsp;al., 2025</a>)</span>, los lenguajes de programación para la ciencia de datos espaciales operan metodológicamente como interfaces de alto nivel (<em>wrappers</em>) que delegan el procesamiento algorítmico pesado a un núcleo de librerías estandarizadas escritas en C y C++.</p>
+<p>Para entender el funcionamiento de las librerías espaciales vectoriales, es estrictamente necesario analizar su arquitectura de software. Como señalan <span class="citation" data-cites="pebesma2025spatial">(<a href="#ref-pebesma2025spatial" role="doc-biblioref">Pebesma et&nbsp;al., 2025</a>)</span>, los lenguajes de programación para la ciencia de datos espaciales operan metodológicamente como interfaces de alto nivel (<em>wrappers</em>) que delegan el procesamiento algorítmico pesado a un núcleo de librerías estandarizadas escritas en C y C++.</p>
 <p>Las tres librerías fundamentales que sustentan este ecosistema geoespacial son:</p>
 <ul>
 <li><strong>GDAL/OGR (Geospatial Data Abstraction Library):</strong> Actúa como el <strong>traductor universal de lectura y escritura</strong>. Permite la importación y exportación estructurada de más de 100 formatos <strong>vectoriales y raster</strong> (ej. Shapefile de ESRI, GeoPackage, GeoJSON).</li>
@@ -978,7 +982,7 @@ Attaching package: 'terra'</code></pre>
 <img src="images/dependencias/geopythonR.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-out-width="80%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-geopython-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;13.1: Dependencias subyacentes compartidas entre los ecosistemas de ciencia de datos espaciales de Python y R. Fuente: <span class="citation" data-cites="pebesma2025spatial">Pebesma et&nbsp;al. (<a href="99-referencias.html#ref-pebesma2025spatial" role="doc-biblioref">2025</a>)</span>.
+Figura&nbsp;13.1: Dependencias subyacentes compartidas entre los ecosistemas de ciencia de datos espaciales de Python y R. Fuente: <span class="citation" data-cites="pebesma2025spatial">Pebesma et&nbsp;al. (<a href="#ref-pebesma2025spatial" role="doc-biblioref">2025</a>)</span>.
 </figcaption>
 </figure>
 </div>
@@ -991,7 +995,7 @@ Figura&nbsp;13.1: Dependencias subyacentes compartidas entre los ecosistemas de 
 <img src="images/dependencias/sf_deps.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-out-width="80%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sfdeps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;13.2: Árbol de dependencias detallado para el paquete Simple Features (sf) en R. Fuente: <span class="citation" data-cites="pebesma2025spatial">Pebesma et&nbsp;al. (<a href="99-referencias.html#ref-pebesma2025spatial" role="doc-biblioref">2025</a>)</span>.
+Figura&nbsp;13.2: Árbol de dependencias detallado para el paquete Simple Features (sf) en R. Fuente: <span class="citation" data-cites="pebesma2025spatial">Pebesma et&nbsp;al. (<a href="#ref-pebesma2025spatial" role="doc-biblioref">2025</a>)</span>.
 </figcaption>
 </figure>
 </div>
@@ -1004,7 +1008,7 @@ Figura&nbsp;13.2: Árbol de dependencias detallado para el paquete Simple Featur
 <img src="images/dependencias/geostack.drawio.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-out-width="80%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-geostack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;13.3: Estructura de la pila de dependencias geoespaciales (GeoStack) en el ecosistema de Julia. Fuente: <span class="citation" data-cites="pebesma2025spatial">Pebesma et&nbsp;al. (<a href="99-referencias.html#ref-pebesma2025spatial" role="doc-biblioref">2025</a>)</span>.
+Figura&nbsp;13.3: Estructura de la pila de dependencias geoespaciales (GeoStack) en el ecosistema de Julia. Fuente: <span class="citation" data-cites="pebesma2025spatial">Pebesma et&nbsp;al. (<a href="#ref-pebesma2025spatial" role="doc-biblioref">2025</a>)</span>.
 </figcaption>
 </figure>
 </div>
@@ -4836,7 +4840,7 @@ Tabla&nbsp;13.3: Sintaxis para la creación de mapas interactivos con tecnologí
 <p><strong>Siguiente paso:</strong> Con nuestro entorno de trabajo configurado, las dependencias base de GDAL/PROJ/GEOS verificadas y nuestro primer mapa interactivo renderizado, estamos listos para adentrarnos en la manipulación directa de los datos espaciales. En el siguiente capítulo, exploraremos a fondo la estructura y creación del modelo vectorial mediante el estándar <em>Simple Features</em>.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
 <div id="ref-pebesma2025spatial" class="csl-entry" role="listitem">
 Pebesma, E., Fleischmann, M., Parry, J., Nowosad, J., Graser, A., Dunnington, D., Pronk, M., Schouten, R., Lovelace, R., Appel, M., et&nbsp;al. (2025). Spatial data science languages: commonalities and needs. <em>arXiv preprint arXiv:2503.16686</em>.
 </div>

@@ -144,3 +144,5 @@ En el diseño de este entorno, se tomó la decisión técnica de descartar el pa
 - ncmeta
 - Hmisc
 - cubelyr
+- geojsonio
+- cowplot

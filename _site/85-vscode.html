@@ -600,7 +600,7 @@ div.csl-indent {
 </header>
 
 
-<p>VScode es un editor de código para programadores gratuito, de código abierto y multiplataforma <span class="citation" data-cites="vscode2026">(<a href="99-referencias.html#ref-vscode2026" role="doc-biblioref">Microsoft Corporation, 2026</a>)</span>. Lo usaremos para editar archivos <code>.qmd</code> y para tener acceso a los contenedores Docker instalados para el curso.</p>
+<p>VScode es un editor de código para programadores gratuito, de código abierto y multiplataforma <span class="citation" data-cites="vscode2026">(<a href="#ref-vscode2026" role="doc-biblioref">Microsoft Corporation, 2026</a>)</span>. Lo usaremos para editar archivos <code>.qmd</code> y para tener acceso a los contenedores Docker instalados para el curso.</p>
 <section id="instalación" class="level2" data-number="F.1">
 <h2 data-number="F.1" class="anchored" data-anchor-id="instalación"><span class="header-section-number">F.1</span> Instalación</h2>
 <p>Descargue e instale las versión oficial de <strong>VSCode IDE</strong> correspondiente al sistema operativo de su máquina local desde el siguiente enlace:</p>
@@ -611,11 +611,11 @@ div.csl-indent {
 </section>
 <section id="acceso-y-configuración-en-vscode" class="level2" data-number="F.2">
 <h2 data-number="F.2" class="anchored" data-anchor-id="acceso-y-configuración-en-vscode"><span class="header-section-number">F.2</span> Acceso y configuración en VSCode</h2>
-<p>Ver <a href="81-uso_infraestructura_instalada.html#sec-cargar_contenedores_vscode" class="quarto-xref"><span>Sección B.8</span></a>.</p>
+<p>Ver <a href="#sec-cargar_contenedores_vscode" class="quarto-xref"><span class="quarto-unresolved-ref">sec-cargar_contenedores_vscode</span></a>.</p>
 </section>
 <section id="inicialización-del-visor-gráfico" class="level2" data-number="F.3">
 <h2 data-number="F.3" class="anchored" data-anchor-id="inicialización-del-visor-gráfico"><span class="header-section-number">F.3</span> Inicialización del visor gráfico</h2>
-<p>Ver <a href="81-uso_infraestructura_instalada.html#sec-httpgd" class="quarto-xref"><span>Sección B.9</span></a>.</p>
+<p>Ver <a href="#sec-httpgd" class="quarto-xref"><span class="quarto-unresolved-ref">sec-httpgd</span></a>.</p>
 </section>
 <section id="atajos" class="level2" data-number="F.4">
 <h2 data-number="F.4" class="anchored" data-anchor-id="atajos"><span class="header-section-number">F.4</span> Atajos</h2>
@@ -732,7 +732,7 @@ El comando de “Primer Auxilio”
 </section>
 <section id="sec-tinytex" class="level2" data-number="F.5">
 <h2 data-number="F.5" class="anchored" data-anchor-id="sec-tinytex"><span class="header-section-number">F.5</span> Instalación Tinytex</h2>
-<p><strong>TinyTeX</strong> es un motor ligero de LaTeX necesario para compilar reportes profesionales (ej. en Quarto) en formato PDF <span class="citation" data-cites="xie2019tinytex">(<a href="99-referencias.html#ref-xie2019tinytex" role="doc-biblioref">Xie, 2019</a>)</span>. Si desea instalar TinyTeX para generar PDF por fuera del entorno Docker, desde la terminal de VSCode use el comando:</p>
+<p><strong>TinyTeX</strong> es un motor ligero de LaTeX necesario para compilar reportes profesionales (ej. en Quarto) en formato PDF <span class="citation" data-cites="xie2019tinytex">(<a href="#ref-xie2019tinytex" role="doc-biblioref">Xie, 2019</a>)</span>. Si desea instalar TinyTeX para generar PDF por fuera del entorno Docker, desde la terminal de VSCode use el comando:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>  <span class="ex">quarto</span> install tinytex</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <blockquote class="blockquote">
 <p>La herramienta <code>Tinytex</code> viene instalada dentro del contenedor <code>contenedor_sig_unal</code>, así que no necesita instalarla.</p>
@@ -870,7 +870,7 @@ Tabla&nbsp;F.1: Extensiones de VSCode para el entorno de Geomática y Programaci
 <ul>
 <li><strong>PostgreSQL (Chris Kolkman)</strong>: Esta extensión le permitirá conectarse a la base de datos espacial del contenedor sin salir de VSCode. Podrá ejecutar queries SQL y visualizar tablas directamente.</li>
 <li><strong>Jupyter Ecosystem</strong>: Incluimos el <em>Jupyter Keymap</em> para aquellos acostumbrados a los atajos de teclado de Jupyter Notebooks. Esto facilita la transición al trabajar con kernels de Python dentro de Quarto.</li>
-<li><strong>Sobre <code>psql</code></strong>: La herramienta de línea de comandos <code>psql</code> ya viene preinstalada <strong>dentro del sistema operativo del contenedor</strong> (PostgreSQL Client). No requiere instalación adicional para funcionar en la terminal del contenedor. Sin embargo, la instalación de <code>psql</code> y dentro de VSCode garantiza soporte adicional, ver <a href="#sec-sinergia-psql" class="quarto-xref"><span>Sección F.7</span></a> líneas abajo.</li>
+<li><strong>Sobre <code>psql</code></strong>: La herramienta de línea de comandos <code>psql</code> ya viene preinstalada <strong>dentro del sistema operativo del contenedor</strong> (PostgreSQL Client). No requiere instalación adicional para funcionar en la terminal del contenedor. Sin embargo, la instalación de <code>psql</code> y dentro de VSCode garantiza soporte adicional, ver <a href="#sec-sinergia-psql" class="quarto-xref"><span class="quarto-unresolved-ref">sec-sinergia-psql</span></a> líneas abajo.</li>
 <li><strong>Live Server (Ritwick Dey)</strong>: Esta extensión le permite lanzar un servidor de desarrollo local con un solo clic. Es extremadamente útil para previsualizar exportaciones de mapas interactivos (<strong>Leaflet</strong> u <strong>OpenLayers</strong>) o sitios web estáticos generados por <strong>Quarto</strong>. La ventaja principal es la “recarga en vivo” (<em>live reload</em>): cada vez que guarde un cambio en su archivo HTML o CSS, el navegador se actualizará automáticamente sin necesidad de recargar la página manualmente.</li>
 <li><strong>Code Spell Checker</strong>: Esta extensión es esencial para evitar errores tipográficos en el código y, sobre todo, en la documentación de archivos <code>.qmd</code>. Para que reconozca términos en nuestro idioma, se recomienda instalar también el paquete <strong>Spanish - Code Spell Checker</strong> (<code>streetsidesoftware.code-spell-checker-spanish</code>).</li>
 </ul>
@@ -1032,7 +1032,7 @@ Sincronización Automática
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
 <div id="ref-vscode2026" class="csl-entry" role="listitem">
 Microsoft Corporation. (2026). <em>Visual Studio Code</em>. <a href="https://code.visualstudio.com/">https://code.visualstudio.com/</a>
 </div>

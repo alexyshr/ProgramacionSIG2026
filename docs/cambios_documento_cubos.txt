@@ -1,0 +1,53 @@
+# Mata todos los procesos relacionados con Quarto y sus motores
+pkill -f quarto
+pkill -f knitr
+pkill -f jupyter
+pkill -9 R
+pkill -9 python
+pkill -9 Julia
+
+
+
+20. Cubos Multidimsni
+
+execute: cache: true
+freeze: auto
+
+
+_FillValue
+
+
+units: hours since 1970-01-01 00:00:00.
+
+
+url = "http://geocorp.co/wind/goodland_10u_1.zip"
+zip_file = os.path.join(data_dir, "10fg_2017_2018.zip")
+Bien: goodland_10u_1.nc
+
+
+https://meet.google.com/sef-zoar-vny
+
+
+
+level -1?
+
+capa_2d = t_bogota.isel(
+    level=-1,
+    number=0,
+    time=0
+)
+
+
+sel y isel??? python
+
+
+cubo[,,,1]
+
+
+Depende de DimensionalData
+
+
+
+Explicar que X para Julia se refiera a factor_.... numero de tiempos por el cual debo hacer el promedio
+
+aggregate(mean, obj, Ti(X)

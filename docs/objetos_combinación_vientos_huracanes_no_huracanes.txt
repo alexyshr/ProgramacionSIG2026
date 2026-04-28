@@ -1,0 +1,51 @@
+Lista de archivos creados
+
+- Stars iniciales
+	- st1: creado apartir de archive nc
+		- Dimensión especial: x, y
+		- Atributo cellindexlr creado a partir de valores de x, y
+	- sf1: creato a partir de st1
+- Stars/sf/Dataframe: no-huracanes:
+	- nhrl: Data-frame creado desde excel
+	- sf_nh: Objeto sf (polígonos) creado de la union de sf1 con nhrl
+	- st_nh: Objeto stars creado a partir de sf_nh
+		- Dimensión especial: geometry
+- Stars/sf/Dataframa: Huracanes
+	- st_h: Objeto stars creado de archivos tif
+		- Dimensión espacial: x, y
+	- sf_h: Objeto sf (polígonos) creado a partir de st_h
+	- 
+	- st_h.stnoxy: Objeto stars creado de st_h
+		- Dimensión espacial: geometry
+- Stars/sf/Dataframe: Combinado
+	- df_nh_h: Dataframe creado de sf_nh y sf_h
+		- Tiene las columnas combinadas pero vacías
+	- sf_nh_h_c: Objeto sf (polígonos) creado a partir de df_nh_h
+		- Tiene las columnas combinadas pero vacías
+	- st_nh_h_c: Objeto stars creado a partir de sf_nh_h_c
+		- Con este se calcula las dimensiones combinadas en combined_columns_st_apply
+		- Atributos de huracanes: names(st_nh_h_c[13:23])
+		- Atributos de no-huracanes: names(st_nh_h_c[2:12])
+		- Tiene las columnas combinadas pero vacías (inicialmente)
+	- st_nh_h_c_merged
+		- Todos los atributos de st_nh_h_c, enviados a una dimension: "attributes" (después de geometry)
+		- Los valores de la dimensión "attributes" son los nombres iniciales de los atributos del objeto st_nh_h_c
+		- En la Nueva dimension, los valores de niveles de retorno relacionados con la combinación sigue vacío
+	- combined_st
+		- Usa st_nh_h_c_merged y la función combined_columns_st_apply para combinar huracanes y no huracanes usando la función interpola
+		- El nombre inicial del atributo es un texto todo largo "cellindexlr.nh_10. ... .c_7000" cambiado a "rafaga_viento"
+		- En todos los casos los períodos de retorno son: 10,20,50,100,250,500,700,1000,1700,3000,7000
+		- El nombre inicial de la dimension generada es "combined_columns_st_apply" y se cambia a "c_mri"
+		- Los valores de la dimension generada son: "c_" + período de retorno
+		- El orden de las dimensiones se cambia a: geometry, c_mri usando aperm
+	- sf_combined
+		- Objeto "LARGO" sf creado de combined_st
+		- Tiene las columnas "c_mri", "rafaga_viento", "geometry"
+	- sf_combined_wide
+		- Objeto "ANCHO" sf creado de "combined_st"
+		- Tiene las columnas "c_10", ... "c_7000" and "geometry"
+	- combined_st_attrs
+		- Objeto stars creado de sf_combined_wide
+		- Tiene los atributos "c_10", ... "c_7000"
+		- Tiene la dimension geometry
+	- sf_c_700: Objeto sf resultante de la extracción desde el stars combined_st_attrs (usando st_as_sf) de los niveles de retorno combinados del período de retorno 700 años 

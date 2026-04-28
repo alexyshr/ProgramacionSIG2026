@@ -1,0 +1,38 @@
+¡Cambio de planes! Esto le da un giro total al enfoque. Si es un **libro de programación en SIG**, el objetivo no es solo que el mapa se vea bien, sino que el lector entienda la **arquitectura de los datos** (cómo se pasa de un archivo `.tiff` plano a un cubo multidimensional `stars` o `xarray`).
+
+Aquí tienes la lista de correcciones y mejoras priorizadas para convertir tu investigación en un material didáctico de alto nivel.
+
+---
+
+### Lista de Mejoras para el Libro (SIG Programación)
+
+1.  **Ingesta de Datos y Estructura de Cubos:**
+    * Transformar la carga de archivos `.tiff` en una lección sobre "Mosaicos y Pilas" (Stacks). 
+    * Explicar la diferencia entre cargar 11 archivos individuales vs. un cubo con una dimensión lógica de "Periodo de Retorno".
+
+2.  **Nomenclatura Orientada a Procesos (Títulos):**
+    * Cambiar los títulos actuales por **Títulos de Acción o Concepto SIG**. 
+    * Ejemplo: De "Carga de datos" a "Construcción de cubos espaciotemporales a partir de archivos GeoTIFF".
+
+3.  **Puentes Narrativos (El hilo conductor):**
+    * Redactar introducciones que expliquen el **"Por qué" programático**. Antes de graficar, explicar por qué elegimos `stars` sobre `raster` (por ejemplo, por la gestión de atributos no espaciales).
+
+4.  **Resúmenes Sintácticos (Syntax Breakdowns):**
+    * Crear cuadros de "Anatomía de la Función". Si usas `st_as_stars()`, desglosar qué hace cada parámetro clave para que el lector lo aplique a sus propios datos.
+
+5.  **Optimización Visual como Lección de Cartografía Digital:**
+    * En lugar de solo corregir el "mapa negro", explicarle al lector el concepto de **Aliasing** y cómo la programación permite controlar la renderización de mallas densas.
+
+6.  **Validación de Metadatos (Checklist del Programador):**
+    * Incluir un bloque de código que compare el CRS, la extensión y la resolución de las capas antes de combinarlas. Es un hábito fundamental que todo lector de SIG debe aprender.
+
+7.  **Exportación y Reproducibilidad:**
+    * Mejorar la sección de `ggsave` para explicar cómo gestionar rutas relativas y resoluciones para publicaciones digitales vs. impresas.
+
+---
+
+### ¿Cómo procedemos?
+
+Tú tienes el control. Esta es la hoja de ruta. **Dime cuál de estos puntos quieres que desarrollemos primero.** (Sugerencia: El **punto 2** sobre los nombres de las secciones o el **punto 4** sobre los resúmenes sintácticos suelen ayudar a estructurar todo lo demás).
+
+¿Por cuál empezamos?

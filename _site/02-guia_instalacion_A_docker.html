@@ -593,28 +593,28 @@ div.csl-indent {
 
 <section id="introducción" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="introducción"><span class="header-section-number">2.1</span> Introducción</h2>
-<p>Para garantizar un entorno de análisis SIG reproducible y políglota, utilizaremos la orquestación de contenedores con Docker <span class="citation" data-cites="docker2025">(<a href="99-referencias.html#ref-docker2025" role="doc-biblioref">Inc., 2025</a>)</span>. Este enfoque permite ejecutar, de forma aislada y coordinada, tanto el motor de procesamiento como el servidor de datos.</p>
-<p>Esta guía establece un entorno de <strong>reproducibilidad científica</strong>. Utilizaremos una arquitectura híbrida: <strong>VSCode</strong> como editor local <span class="citation" data-cites="vscode2026">(<a href="99-referencias.html#ref-vscode2026" role="doc-biblioref">Microsoft Corporation, 2026</a>)</span> y <strong>Docker</strong> como laboratorio de ejecución <span class="citation" data-cites="docker2025">(<a href="99-referencias.html#ref-docker2025" role="doc-biblioref">Inc., 2025</a>)</span>. Esta aproximación garantiza que todos los estudiantes operen bajo las mismas versiones de motores geoespaciales (GDAL, GEOS, PROJ), eliminando el problema de “en mi computador no funciona”.</p>
+<p>Para garantizar un entorno de análisis SIG reproducible y políglota, utilizaremos la orquestación de contenedores con Docker <span class="citation" data-cites="docker2025">(<a href="#ref-docker2025" role="doc-biblioref">Inc., 2025</a>)</span>. Este enfoque permite ejecutar, de forma aislada y coordinada, tanto el motor de procesamiento como el servidor de datos.</p>
+<p>Esta guía establece un entorno de <strong>reproducibilidad científica</strong>. Utilizaremos una arquitectura híbrida: <strong>VSCode</strong> como editor local <span class="citation" data-cites="vscode2026">(<a href="#ref-vscode2026" role="doc-biblioref">Microsoft Corporation, 2026</a>)</span> y <strong>Docker</strong> como laboratorio de ejecución <span class="citation" data-cites="docker2025">(<a href="#ref-docker2025" role="doc-biblioref">Inc., 2025</a>)</span>. Esta aproximación garantiza que todos los estudiantes operen bajo las mismas versiones de motores geoespaciales (GDAL, GEOS, PROJ), eliminando el problema de “en mi computador no funciona”.</p>
 <p>Este documento detalla el procedimiento actualizado para la instalación de las herramientas Docker del curso utilizando un método <strong>offline</strong>. Este método es ideal para entornos con conexión limitada y garantiza la homogeneidad del software.</p>
 </section>
 <section id="preparación-de-herramientas-en-equipo-local" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="preparación-de-herramientas-en-equipo-local"><span class="header-section-number">2.2</span> Preparación de herramientas en equipo local</h2>
 <p>Para preparar su equipo de trabajo, instale las siguientes herramientas básicas:</p>
 <ol type="1">
-<li><strong>VSCode IDE</strong>: En <a href="85-vscode.html" class="quarto-xref"><span>Apéndice F</span></a> encontrará el proceso de instalación y las principales extensiones (<a href="85-vscode.html#sec-extensiones-vscode" class="quarto-xref"><span>Sección F.6</span></a>) necesarias a instalar en VSCode.</li>
-<li><strong>Docker Desktop</strong>: En <a href="83-docker_desktop.html" class="quarto-xref"><span>Apéndice D</span></a> encontrará la guía de instalación y el proceso de configuración previo (<a href="83-docker_desktop.html#sec-preparacion_docker" class="quarto-xref"><span>Sección D.2</span></a>) para garantizar un funcionamiento óptimo.</li>
+<li><strong>VSCode IDE</strong>: En <a href="#sec-anexo_vscode" class="quarto-xref"><span class="quarto-unresolved-ref">sec-anexo_vscode</span></a> encontrará el proceso de instalación y las principales extensiones (<a href="#sec-extensiones-vscode" class="quarto-xref"><span class="quarto-unresolved-ref">sec-extensiones-vscode</span></a>) necesarias a instalar en VSCode.</li>
+<li><strong>Docker Desktop</strong>: En <a href="#sec-anexo_docker" class="quarto-xref"><span class="quarto-unresolved-ref">sec-anexo_docker</span></a> encontrará la guía de instalación y el proceso de configuración previo (<a href="#sec-preparacion_docker" class="quarto-xref"><span class="quarto-unresolved-ref">sec-preparacion_docker</span></a>) para garantizar un funcionamiento óptimo.</li>
 </ol>
 <blockquote class="blockquote">
-<p>Importante: Antes de la instalación, siga el procedimiento descrito en <a href="83-docker_desktop.html#sec-preparacion_docker" class="quarto-xref"><span>Sección D.2</span></a>.</p>
+<p>Importante: Antes de la instalación, siga el procedimiento descrito en <a href="#sec-preparacion_docker" class="quarto-xref"><span class="quarto-unresolved-ref">sec-preparacion_docker</span></a>.</p>
 </blockquote>
 </section>
 <section id="limpieza-del-entorno-opcional-pero-recomendado" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="limpieza-del-entorno-opcional-pero-recomendado"><span class="header-section-number">2.3</span> Limpieza del entorno (opcional pero recomendado)</h2>
-<p>Ver <a href="83-docker_desktop.html#sec-limpieza_entorno" class="quarto-xref"><span>Sección D.3</span></a>.</p>
+<p>Ver <a href="#sec-limpieza_entorno" class="quarto-xref"><span class="quarto-unresolved-ref">sec-limpieza_entorno</span></a>.</p>
 </section>
 <section id="descarga-y-preparación-de-archivos" class="level2" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="descarga-y-preparación-de-archivos"><span class="header-section-number">2.4</span> Descarga y preparación de archivos</h2>
-<p>Ver <a href="83-docker_desktop.html#sec-descarga_tar_yml" class="quarto-xref"><span>Sección D.4</span></a>.</p>
+<p>Ver <a href="#sec-descarga_tar_yml" class="quarto-xref"><span class="quarto-unresolved-ref">sec-descarga_tar_yml</span></a>.</p>
 </section>
 <section id="instalación-de-las-imágenes-maquinas-virtuales" class="level2" data-number="2.5">
 <h2 data-number="2.5" class="anchored" data-anchor-id="instalación-de-las-imágenes-maquinas-virtuales"><span class="header-section-number">2.5</span> Instalación de las imágenes (maquinas virtuales)</h2>
@@ -653,22 +653,22 @@ div.csl-indent {
 </section>
 <section id="iniciar-contenedores" class="level2" data-number="2.7">
 <h2 data-number="2.7" class="anchored" data-anchor-id="iniciar-contenedores"><span class="header-section-number">2.7</span> Iniciar contenedores</h2>
-<p>Ver <a href="83-docker_desktop.html#sec-arrancar_detener_contenedores" class="quarto-xref"><span>Sección D.7</span></a></p>
+<p>Ver <a href="#sec-arrancar_detener_contenedores" class="quarto-xref"><span class="quarto-unresolved-ref">sec-arrancar_detener_contenedores</span></a></p>
 </section>
 <section id="cargar-contenedores-en-vscode" class="level2" data-number="2.8">
 <h2 data-number="2.8" class="anchored" data-anchor-id="cargar-contenedores-en-vscode"><span class="header-section-number">2.8</span> Cargar contenedores en VSCode</h2>
-<p>Ver <a href="81-uso_infraestructura_instalada.html#sec-cargar_contenedores_vscode" class="quarto-xref"><span>Sección B.8</span></a>.</p>
+<p>Ver <a href="#sec-cargar_contenedores_vscode" class="quarto-xref"><span class="quarto-unresolved-ref">sec-cargar_contenedores_vscode</span></a>.</p>
 </section>
 <section id="apagar-los-contenedores" class="level2" data-number="2.9">
 <h2 data-number="2.9" class="anchored" data-anchor-id="apagar-los-contenedores"><span class="header-section-number">2.9</span> Apagar los contenedores</h2>
-<p>Ver <a href="83-docker_desktop.html#sec-arrancar_detener_contenedores" class="quarto-xref"><span>Sección D.7</span></a>.</p>
+<p>Ver <a href="#sec-arrancar_detener_contenedores" class="quarto-xref"><span class="quarto-unresolved-ref">sec-arrancar_detener_contenedores</span></a>.</p>
 </section>
 <section id="contenido-de-los-contenedores" class="level2" data-number="2.10">
 <h2 data-number="2.10" class="anchored" data-anchor-id="contenido-de-los-contenedores"><span class="header-section-number">2.10</span> Contenido de los contenedores</h2>
-<p>Ver <a href="81-uso_infraestructura_instalada.html#sec-contenedores_instalados" class="quarto-xref"><span>Sección B.6.1</span></a>.</p>
+<p>Ver <a href="#sec-contenedores_instalados" class="quarto-xref"><span class="quarto-unresolved-ref">sec-contenedores_instalados</span></a>.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
 <div id="ref-docker2025" class="csl-entry" role="listitem">
 Inc., D. (2025). <em>Docker Desktop Documentation</em>. <a href="https://docs.docker.com">https://docs.docker.com</a>
 </div>

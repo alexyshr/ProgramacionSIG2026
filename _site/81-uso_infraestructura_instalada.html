@@ -1004,7 +1004,7 @@ Tabla&nbsp;B.1: Comandos de configuración global del contenedor
 <div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="ex">google-chrome</span> <span class="at">--version</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span> google-chrome</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb35"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> check</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>La imagen cargada del archivo tar ya incluye los programas descritos a continuación en <a href="#tbl-preflight_old_2" class="quarto-xref">Tabla&nbsp;<span>B.2</span></a>. Esta tabla se deja como referencia para facilitar una futura compilación. La tabla descrita líneas abajo servirá para complementar el archivo Dockerfile.</p>
+<p>La imagen cargada del archivo tar ya incluye los programas descritos a continuación en <a href="#tbl-preflight_old_2" class="quarto-xref">Tabla&nbsp;<span class="quarto-unresolved-ref">tbl-preflight_old_2</span></a>. Esta tabla se deja como referencia para facilitar una futura compilación. La tabla descrita líneas abajo servirá para complementar el archivo Dockerfile.</p>
 <div id="tbl-preflight_old_2" class="quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-preflight_old_2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1129,7 +1129,7 @@ Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Como se ilustra en la <a href="#fig-flujo-jeval" class="quarto-xref">Figura&nbsp;<span>B.1</span></a>, la función no solo “pasa” el texto, sino que actúa como un supervisor que espera a que los bloques de programación estén completos antes de despertar al motor de Julia. Esto garantiza la estabilidad del sistema.</p>
+<p>Como se ilustra en la <a href="#fig-flujo-jeval" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-flujo-jeval</span></a>, la función no solo “pasa” el texto, sino que actúa como un supervisor que espera a que los bloques de programación estén completos antes de despertar al motor de Julia. Esto garantiza la estabilidad del sistema.</p>
 </div>
 </div>
 </section>
@@ -1156,7 +1156,7 @@ El rol del disco duro
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Como muestra la <a href="#fig-flujo-jplot" class="quarto-xref">Figura&nbsp;<span>B.2</span></a>, el secreto de <code>j_plot</code> es que utiliza un archivo temporal como “puente” visual. Por eso, si usted tiene el archivo <code>tmp_plot.png</code> abierto en otro programa, j_plot podría fallar al intentar sobrescribirlo.</p>
+<p>Como muestra la <a href="#fig-flujo-jplot" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-flujo-jplot</span></a>, el secreto de <code>j_plot</code> es que utiliza un archivo temporal como “puente” visual. Por eso, si usted tiene el archivo <code>tmp_plot.png</code> abierto en otro programa, j_plot podría fallar al intentar sobrescribirlo.</p>
 </div>
 </div>
 </section>
@@ -1184,20 +1184,20 @@ El rol del disco duro
 <p>Este anexo constituye la guía técnica para la gestión del entorno de desarrollo instalado. Es decir, información que describe y detalla los contenedores instalados (instalación opción A), su estructura y funcionamiento, así mismo como la descripción y detalles adicionales de las dos instalaciones de QGIS (Instalación Opción B)</p>
 <section id="sec-contenedores_instalados" class="level3">
 <h3 class="anchored" data-anchor-id="sec-contenedores_instalados">Contenedores instalados (Instalación Opción A)</h3>
-<p>Siguiendo los pasos detallados en <a href="02-guia_instalacion_A_docker.html" class="quarto-xref"><span>Capítulo 2</span></a> para instalar los contenedores Docker, en resumen, ellos contendrán:</p>
+<p>Siguiendo los pasos detallados en <a href="#sec-guia_A" class="quarto-xref"><span class="quarto-unresolved-ref">sec-guia_A</span></a> para instalar los contenedores Docker, en resumen, ellos contendrán:</p>
 <ol type="1">
 <li>Un contenedor <code>contenedor_sig_unal</code> correspondiente a la imagen <code>image_sig_unal:final</code> el cual contendrá las siguientes herramientas:</li>
 </ol>
 <ul>
-<li><strong>Python</strong> (<a href="88-python.html" class="quarto-xref"><span>Apéndice I</span></a>), <strong>R</strong> (<a href="89-r.html" class="quarto-xref"><span>Apéndice J</span></a>) y <strong>Julia</strong> (<a href="90-julia.html" class="quarto-xref"><span>Apéndice K</span></a>) con los principales paquetes/librerías para geoprocesamiento.</li>
-<li><strong>Quarto</strong> (Ver <a href="82-quarto.html" class="quarto-xref"><span>Apéndice C</span></a>).</li>
-<li><strong>TinyTeX</strong> (Ver <a href="85-vscode.html#sec-tinytex" class="quarto-xref"><span>Sección F.5</span></a>).</li>
+<li><strong>Python</strong> (<a href="#sec-anexo_python" class="quarto-xref"><span class="quarto-unresolved-ref">sec-anexo_python</span></a>), <strong>R</strong> (<a href="#sec-anexo_r" class="quarto-xref"><span class="quarto-unresolved-ref">sec-anexo_r</span></a>) y <strong>Julia</strong> (<a href="#sec-anexo_julia" class="quarto-xref"><span class="quarto-unresolved-ref">sec-anexo_julia</span></a>) con los principales paquetes/librerías para geoprocesamiento.</li>
+<li><strong>Quarto</strong> (Ver <a href="#sec-anexo_quarto" class="quarto-xref"><span class="quarto-unresolved-ref">sec-anexo_quarto</span></a>).</li>
+<li><strong>TinyTeX</strong> (Ver <a href="#sec-tinytex" class="quarto-xref"><span class="quarto-unresolved-ref">sec-tinytex</span></a>).</li>
 </ul>
 <ol start="2" type="1">
 <li>Una contenedor <code>contenedor_postgis_unal</code> correspondiente a la imagen <code>postgis_unal:final</code> el cual contendrá las siguientes herramientas:</li>
 </ol>
 <ul>
-<li><strong>PostgreSQL</strong> + <strong>PostGIS</strong> (Ver <a href="93-postgresql.html" class="quarto-xref"><span>Apéndice N</span></a>).</li>
+<li><strong>PostgreSQL</strong> + <strong>PostGIS</strong> (Ver <a href="#sec-anexo_postgresql" class="quarto-xref"><span class="quarto-unresolved-ref">sec-anexo_postgresql</span></a>).</li>
 </ul>
 <section id="batería-de-pruebas-de-integridad-del-docker" class="level4">
 <h4 class="anchored" data-anchor-id="batería-de-pruebas-de-integridad-del-docker">🧪 Batería de pruebas de integridad del docker</h4>
@@ -1441,13 +1441,13 @@ Persistencia de Datos
 <p>Para una experiencia de desarrollo profesional, conecte VSCode directamente al contenedor:</p>
 <ul>
 <li>Inicie Docker Desktop</li>
-<li>En el “PowerShell” de windows ubíquese en la carpeta donde instaló los contenedores (ver <a href="83-docker_desktop.html#sec-cargar_docker_tar" class="quarto-xref"><span>Sección D.5</span></a>)</li>
+<li>En el “PowerShell” de windows ubíquese en la carpeta donde instaló los contenedores (ver <a href="#sec-cargar_docker_tar" class="quarto-xref"><span class="quarto-unresolved-ref">sec-cargar_docker_tar</span></a>)</li>
 <li>Ejecute el comando: <code>docker compose up -d</code></li>
 <li>Abra VSCode</li>
 <li>Instale (local) la extensión <code>Dev Containers</code></li>
 <li>Acceda a la paleta de comandos con <code>Ctrl + Shift + P</code>, escriba (o seleccione) <strong>Dev Containers: Attach to Running Container…</strong>, y seleccione el contenedor <strong><code>contenedor_sig_unal</code></strong> (imagen <code>image_sig_unal</code>).</li>
 <li>Abra la carpeta <code>/home/rstudio/work</code> (esa carpeta corresponde a la carpeta local en dónde instaló los contenedores)</li>
-<li>Una vez conectado “dentro” del contenedor, debe habilitar/instalar las extensiones (<em>‘Install in Container’</em>). Vea el listado completo en <a href="85-vscode.html#sec-extensiones-vscode" class="quarto-xref"><span>Sección F.6</span></a>.</li>
+<li>Una vez conectado “dentro” del contenedor, debe habilitar/instalar las extensiones (<em>‘Install in Container’</em>). Vea el listado completo en <a href="#sec-extensiones-vscode" class="quarto-xref"><span class="quarto-unresolved-ref">sec-extensiones-vscode</span></a>.</li>
 </ul>
 </section>
 <section id="sec-httpgd" class="level2" data-number="B.9">
@@ -1485,7 +1485,7 @@ Figura&nbsp;B.3: Interfaz de JupyterLab configurada para el laboratorio.
 </div>
 <section id="la-carpeta-work-y-el-espejo-de-datos" class="level3">
 <h3 class="anchored" data-anchor-id="la-carpeta-work-y-el-espejo-de-datos">La Carpeta ‘work’ y el Espejo de Datos</h3>
-<p>En el panel izquierdo de la <a href="#fig-jupyterlab" class="quarto-xref">Figura&nbsp;<span>B.3</span></a>, la carpeta <strong><code>/home/rstudio/work/</code></strong> es el espejo de su directorio local en Windows. Gracias a la configuración de volúmenes en el archivo <code>docker-compose.yml</code>, existe un puente directo: todo cambio realizado en Jupyter se refleja en su disco duro y viceversa, garantizando que su trabajo no se pierda al apagar el contenedor.</p>
+<p>En el panel izquierdo de la <a href="#fig-jupyterlab" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-jupyterlab</span></a>, la carpeta <strong><code>/home/rstudio/work/</code></strong> es el espejo de su directorio local en Windows. Gracias a la configuración de volúmenes en el archivo <code>docker-compose.yml</code>, existe un puente directo: todo cambio realizado en Jupyter se refleja en su disco duro y viceversa, garantizando que su trabajo no se pierda al apagar el contenedor.</p>
 </section>
 </section>
 <section id="sec-compilacion" class="level2" data-number="B.12">
@@ -2067,7 +2067,8 @@ Attaching package: 'terra'</code></pre>
 <pre><code>Starting Julia ...</code></pre>
 <pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;"># Configuramos el entorno para que no pida monitor (Headless)</span>
 </pre>
-<pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;"></pre>
+<pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;">
+</pre>
 <pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;">ENV["GKSwstype"] = "100"</span>
 </pre>
 <pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;">"100"
@@ -2075,16 +2076,20 @@ Attaching package: 'terra'</code></pre>
 </pre>
 <pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;">using LibPQ</span>
 </pre>
-<pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;"></pre>
+<pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;">
+</pre>
 <pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;">using LibGEOS</span>
 </pre>
-<pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;"></pre>
+<pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;">
+</pre>
 <pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;">using ArchGDAL</span>
 </pre>
-<pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;"></pre>
+<pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;">
+</pre>
 <pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;">using Plots</span>
 </pre>
-<pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;"></pre>
+<pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;">
+</pre>
 <pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;">gr()</span>
 </pre>
 <pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;">Plots.GRBackend()
@@ -2097,7 +2102,8 @@ Attaching package: 'terra'</code></pre>
 </pre>
 <pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;"># 1. Prueba de conexión a PostGIS</span>
 </pre>
-<pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;"></pre>
+<pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;">
+</pre>
 <pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;">try</span>
        <span style="color:#008b8b;">        conn = LibPQ.Connection("host=db-postgis dbname=sig_db_unal user=profe_unal password=geomatica2025")</span>
        <span style="color:#008b8b;">        println("✅ Conexión a PostGIS: Exitosa")</span>
@@ -2111,7 +2117,8 @@ Attaching package: 'terra'</code></pre>
 </pre>
 <pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;"># 2. Verificación de LibGEOS y Geometría</span>
 </pre>
-<pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;"></pre>
+<pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;">
+</pre>
 <pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;">try</span>
        <span style="color:#008b8b;">        punto = LibGEOS.readgeom("POINT (0 0)")</span>
        <span style="color:#008b8b;">        buffer_geom = LibGEOS.buffer(punto, 1.0)</span>
@@ -2136,7 +2143,8 @@ Attaching package: 'terra'</code></pre>
 </pre>
 <pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;"># 3. Verificación de ArchGDAL</span>
 </pre>
-<pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;"></pre>
+<pre class="julia-output" style="display:block; background:#ffffff; border:none; padding:10px 10px 10px 20px; margin-top:0; margin-bottom:15px; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#000;">
+</pre>
 <pre class="julia-code" style="display:block; background:#f4f6f8; border:1px solid #c0c8d0; border-radius:4px; padding:10px; margin-top:10px; margin-bottom:0; font-family:&quot;Lucida Console&quot;, Consolas, monospace; font-size:0.9em; white-space:pre-wrap; color:#333;"><span style="color:#28a745; font-weight:bold;">julia&gt; </span><span style="color:#008b8b;">try</span>
        <span style="color:#008b8b;">        gdal_ver = ArchGDAL.GDAL.gdalversioninfo("--version")</span>
        <span style="color:#008b8b;">        println("✅ ArchGDAL operativo (Versión GDAL: ", gdal_ver, ")")</span>

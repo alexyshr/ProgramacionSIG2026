@@ -72,11 +72,11 @@ El cumplimiento de las normas CF permite que el software interprete automáticam
 * **standard_name:** Atributo que utiliza una nomenclatura estandarizada (ej. `eastward_wind`) para describir la cantidad física, eliminando la ambigüedad de nombres de variables arbitrarios.
 * **units:** Definición de las unidades de medida siguiendo el sistema UDUNITS (ej. `m s-1`).
 * **coordinates:** Identificación de las variables de coordenadas (latitud, longitud, tiempo, nivel vertical) asociadas a una matriz de datos.
-* **_FillValue:** Valor utilizado para representar datos faltantes o nulos.
+* **\_FillValue:** Valor utilizado para representar datos faltantes o nulos.
 
 ### Decodificación de la dimensión temporal
 
-En el código analizado, la mención a la decodificación automática de tiempo es fundamental. Según las convenciones CF, el tiempo no suele almacenarse como fechas legibles (ej. "2026-04-20"), sino como valores numéricos relativos a un origen o época (epoch). Un atributo típico de tiempo en un archivo NetCDF sigue el formato: `units: hours since 2010-01-01 00:00:00`.
+En el código analizado, la mención a la decodificación automática de tiempo es fundamental. Según las convenciones CF, el tiempo no suele almacenarse como fechas legibles (ej. "2026-04-20"), sino como valores numéricos relativos a un origen o época (epoch). Un atributo típico de tiempo en un archivo NetCDF sigue el formato: `units: hours since 1900-01-01 00:00:00.0`.
 
 Cuando **xarray** lee el archivo siguiendo estas normas, realiza las siguientes operaciones:
 
@@ -89,6 +89,10 @@ Este proceso transforma un eje puramente matemático en un eje temporal indexabl
 ### Integración con sistemas de referencia de coordenadas (CRS)
 
 Aunque las convenciones CF definen cómo describir proyecciones cartográficas mediante el atributo `grid_mapping`, herramientas como **rioxarray** extienden esta funcionalidad para traducir dichos metadatos al estándar internacional EPSG. Esto asegura que, al visualizar o exportar los datos a otros sistemas de información geográfica (SIG), la posición geoespacial sea interpretada correctamente por el software receptor.
+
+XXX Falta: explicar el contenido del archivo (u10) de goodland_10u_1.nc
+U es la componente este-oeste (zonal)
+
 
 
 ::: {.panel-tabset}
@@ -206,6 +210,9 @@ plt.show()
 
 :::
 :::
+
+
+XXX: No lee el CRS por defecto
 
 ```{python}
 #| label: python_leer_netcdf_multiplebands
@@ -459,6 +466,8 @@ brks <- seq(min(valores, na.rm = TRUE),
 # Graficación mejorada
 # -------------------------------
 # Se aumenta key.width para legibilidad y se ajustan márgenes
+# Nota: estos comandos de configuración del plot no tienen efecto
+#       al plotear objetos stars
 par(mar = c(
   4,  # Margen inferior: suficiente espacio para etiquetas del eje X
   4,  # Margen izquierdo: espacio para etiquetas del eje Y
@@ -549,7 +558,14 @@ title(ylab = "Latitude [degrees_north]", line = 2.5)
 :::
 
 
+XXX: no leee la metadata
 
+* Nombre del atributo
+* CRS
+* Tiempo
+
+
+Podemos usar sf::st_crs para asignar coordenadas el cubo sin cargar `sf`. Es decir solo con `library(stars)` se habilitan las funciones de `sf` las cuales muchas sirven para aplicarlas a cubos raster.
 
 ```{r}
 #| label: r_leer_netcdf_multiplebands
@@ -693,6 +709,8 @@ brks <- seq(min(valores, na.rm = TRUE),
 # Graficación mejorada
 # -------------------------------
 # Se aumenta key.width para legibilidad y se ajustan márgenes
+# Nota: estos comandos de configuración del plot no tienen efecto
+#       al plotear objetos stars
 par(mar = c(
   4,  # Margen inferior: suficiente espacio para etiquetas del eje X
   4,  # Margen izquierdo: espacio para etiquetas del eje Y
@@ -1001,6 +1019,7 @@ Esta tabla compara las funciones clave utilizadas para la gestión de cubos NetC
 | **Media temporal** | `da.mean(dim="time")` | `st_apply(y, c("x", "y"), mean)` | `mean(cube, dims=Ti)` |
 
 **Notas:**
+
 * **Python 🐍:** Es el más automatizado para estándares CF.
 * **R 🔵:** Requiere mayor intervención manual en el eje temporal para garantizar rigor cronológico.
 * **Julia 🟣:** Es *lazy* por diseño, lo que lo hace sumamente eficiente para archivos que superan la capacidad de la RAM.
@@ -1057,7 +1076,7 @@ El dataset que estamos usando es el **ERA5 EDA (Ensemble Data Assimilation)**. A
 
 Descargar el archivo [download5Dcolombia.zip](https://drive.google.com/file/d/1UgEsmJx2XM2Iuxr7L5s4IQ83rRS2Ngh1/view?usp=sharing) de 262 MB.
 
-URL de descarga: "https://drive.google.com/file/d/1UgEsmJx2XM2Iuxr7L5s4IQ83rRS2Ngh1/view?usp=sharing"
+URL de descarga: `https://drive.google.com/file/d/1UgEsmJx2XM2Iuxr7L5s4IQ83rRS2Ngh1/view?usp=sharing`
 
 
 ### Verificación de los niveles de presión y su correspondencia
@@ -1407,7 +1426,7 @@ print(names(st_col5d))
 # Metadatos
 # -------------------------------------------------------------------------
 
-cat("\n=== METADATOS ===\n")
+cat("\n=== VALORES ===\n")
 print(st_get_dimension_values(st_col5d, names(st_dimensions(st_col5d))[1]))
 
 # (Nota: stars no expone attrs globales tan directo como xarray/Julia)
@@ -1525,7 +1544,7 @@ print(names(st_col5d))
 # Metadatos
 # -------------------------------------------------------------------------
 
-cat("\n=== METADATOS ===\n")
+cat("\n=== VALORES ===\n")
 print(st_get_dimension_values(st_col5d, names(st_dimensions(st_col5d))[1]))
 
 # (Nota: stars no expone attrs globales tan directo como xarray/Julia)
@@ -2441,7 +2460,7 @@ println(parent(capa_2d))
 
 # Verificación de las dimensiones restantes
 # Nota: escribir f.(x) es equivalente a invocar broadcast
-println(name.(dims(capa_2d)))
+println(Rasters.name.(dims(capa_2d)))
 
 # Verificación de los valores de las coordenadas
 # Nota: escribir f.(x) es equivalente a invocar broadcast
@@ -2457,7 +2476,7 @@ println(eje_y)
 
 # Verificación y extracción robusta
 for d in dims(capa_2d)
-    nom = name(d)
+    nom = Rasters.name(d)
     vals = lookup(d)
     println("Valores en la dimensión $nom: $vals")
 end
@@ -2549,7 +2568,7 @@ println(parent(capa_2d))
 
 # Verificación de las dimensiones restantes
 # Nota: escribir f.(x) es equivalente a invocar broadcast(f, x)
-println(name.(dims(capa_2d)))
+println(Rasters.name.(dims(capa_2d)))
 
 # Verificación de los valores de las coordenadas
 # Nota: escribir f.(x) es equivalente a invocar broadcast
@@ -2565,7 +2584,7 @@ println(eje_y)
 
 # Verificación y extracción robusta
 for d in dims(capa_2d)
-    nom = name(d)
+    nom = Rasters.name(d)
     vals = lookup(d)
     println("Valores en la dimensión $nom: $vals")
 end
@@ -4134,6 +4153,7 @@ Deben renderizar su archivo `.qmd` tanto en formato **HTML** como en **PDF**. Ad
 
 **3. Repositorio en GitHub:**
 Suban la carpeta del proyecto a un repositorio privado en GitHub (puede ser en la cuenta de uno de los miembros del grupo).
+
 * **Nota de exclusión:** ¡NO suban los archivos `.nc` al repositorio! (GitHub bloquea archivos muy pesados). Asegúrense de agregar la carpeta `data_heavy/` a su archivo `.gitignore`. 
 * **Qué debe contener el repositorio:** * El script de Python (`.py`) usando la librería `cdsapi` con la que descargaron los datos.
     * El documento computacional fuente (`.qmd`).

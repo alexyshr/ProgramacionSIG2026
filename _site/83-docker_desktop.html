@@ -613,7 +613,7 @@ div.csl-indent {
 </header>
 
 
-<p>Docker es un motor de virtualización <span class="citation" data-cites="docker2025">(<a href="99-referencias.html#ref-docker2025" role="doc-biblioref">Inc., 2025</a>)</span> en el que instalaremos las dos máquinas virtuales Linux que permitirán la ejecución de código Python, R y Julia y el acceso a PostGIS + PostgreSQL.</p>
+<p>Docker es un motor de virtualización <span class="citation" data-cites="docker2025">(<a href="#ref-docker2025" role="doc-biblioref">Inc., 2025</a>)</span> en el que instalaremos las dos máquinas virtuales Linux que permitirán la ejecución de código Python, R y Julia y el acceso a PostGIS + PostgreSQL.</p>
 <section id="instalación-del-software" class="level2" data-number="D.1">
 <h2 data-number="D.1" class="anchored" data-anchor-id="instalación-del-software"><span class="header-section-number">D.1</span> Instalación del software</h2>
 <p>Descargue e instale la versión oficial de <strong>Docker Desktop</strong> desde el siguiente enlace:</p>
@@ -639,7 +639,7 @@ div.csl-indent {
 <li>Haga clic en <code>Browse</code> y seleccione una carpeta en un disco con mayor capacidad.</li>
 <li>Haga clic en <strong>Apply &amp; restart</strong>.</li>
 </ol></li>
-<li><p><strong>Optimización de Memoria Swap</strong>: Para procesar datos raster de gran tamaño sin interrupciones en R o Julia, es fundamental ampliar la memoria Swap (espacio de intercambio). Puede consultar más detalles en la <a href="#sec-limpieza_entorno" class="quarto-xref"><span>Sección D.3</span></a> sobre cómo esto impacta el rendimiento.</p></li>
+<li><p><strong>Optimización de Memoria Swap</strong>: Para procesar datos raster de gran tamaño sin interrupciones en R o Julia, es fundamental ampliar la memoria Swap (espacio de intercambio). Puede consultar más detalles en la <a href="#sec-limpieza_entorno" class="quarto-xref"><span class="quarto-unresolved-ref">sec-limpieza_entorno</span></a> sobre cómo esto impacta el rendimiento.</p></li>
 <li><p><strong>Procedimiento para aumentar Swap en Windows (Host)</strong>: Ajuste la memoria virtual del sistema operativo para evitar cierres por falta de RAM:</p>
 <ol type="a">
 <li>En el buscador de Windows, escriba y seleccione <strong>“Ver la configuración avanzada del sistema”</strong>.</li>
@@ -751,7 +751,7 @@ Seguridad de sus Datos
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> load <span class="at">-i</span> sig_unal_completo.tar</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><em>Este proceso puede tardar varios minutos o inclusive horas dependiendo de su procesador y disco duro. Verifique que al finalizar aparezca el mensaje “Loaded image” para <code>image_sig_unal:final</code> y <code>postgis_unal:final</code>.</em></p>
 <blockquote class="blockquote">
-<p>Nota: Existen dos versiones <strong>diferentes</strong> del archivo <code>docker-compose.html</code>. El primero es el que se describe en <a href="#sec-build_docker" class="quarto-xref"><span>Sección D.6</span></a> y el segundo, que aplica para este procedimiento, es el que se descarga en <a href="#sec-descarga_tar_yml" class="quarto-xref"><span>Sección D.4</span></a>.</p>
+<p>Nota: Existen dos versiones <strong>diferentes</strong> del archivo <code>docker-compose.html</code>. El primero es el que se describe en <a href="#sec-build_docker" class="quarto-xref"><span class="quarto-unresolved-ref">sec-build_docker</span></a> y el segundo, que aplica para este procedimiento, es el que se descarga en <a href="#sec-descarga_tar_yml" class="quarto-xref"><span class="quarto-unresolved-ref">sec-descarga_tar_yml</span></a>.</p>
 </blockquote>
 <section id="sec-docker_compose_load" class="level3">
 <h3 class="anchored" data-anchor-id="sec-docker_compose_load">Archivo <code>docker-compose.yml</code> (orquestación)</h3>
@@ -811,7 +811,7 @@ Seguridad de sus Datos
 </section>
 <section id="sec-build_docker" class="level2" data-number="D.6">
 <h2 data-number="D.6" class="anchored" data-anchor-id="sec-build_docker"><span class="header-section-number">D.6</span> Compilar imagen/contenedor a partir de <code>Dockerfile</code> y <code>docker-compose.html</code></h2>
-<p>El procedimiento que garantiza una instalación (carga) exitosa de las imágenes y contenedores fue documentado en <a href="#sec-cargar_docker_tar" class="quarto-xref"><span>Sección D.5</span></a>. Use este procedimiento <strong>solo si</strong> necesita <strong>compilar</strong> una nueva imagen con contenedores que satisfagan necesidades particulares definidas a partir de un archivo <code>Dockerfile</code>. Sin embargo, el <code>Dockerfile</code> que se presenta en esta sección fue el que se utilizó para compilar la imagen empaquetada cuyo proceso de carga se define en <a href="#sec-cargar_docker_tar" class="quarto-xref"><span>Sección D.5</span></a>.</p>
+<p>El procedimiento que garantiza una instalación (carga) exitosa de las imágenes y contenedores fue documentado en <a href="#sec-cargar_docker_tar" class="quarto-xref"><span class="quarto-unresolved-ref">sec-cargar_docker_tar</span></a>. Use este procedimiento <strong>solo si</strong> necesita <strong>compilar</strong> una nueva imagen con contenedores que satisfagan necesidades particulares definidas a partir de un archivo <code>Dockerfile</code>. Sin embargo, el <code>Dockerfile</code> que se presenta en esta sección fue el que se utilizó para compilar la imagen empaquetada cuyo proceso de carga se define en <a href="#sec-cargar_docker_tar" class="quarto-xref"><span class="quarto-unresolved-ref">sec-cargar_docker_tar</span></a>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -960,7 +960,7 @@ Organización del Proyecto
 </section>
 <section id="archivo-dockerfile-construcción-del-entorno" class="level3">
 <h3 class="anchored" data-anchor-id="archivo-dockerfile-construcción-del-entorno">Archivo <code>Dockerfile</code> (Construcción del Entorno)</h3>
-<p>Este archivo constituye la <strong>receta de construcción</strong> del entorno de análisis. Su función es “congelar” un sistema operativo Ubuntu Noble optimizado, garantizando que todos los estudiantes trabajen exactamente con las mismas versiones de librerías, compiladores y paquetes. Con este archivo <code>Dockerfile</code> y con el anterior archivo <code>docker-compose.yml</code> (<a href="#sec-docker_compose_compile" class="quarto-xref"><span>Sección D.6.1</span></a>) fue que se <strong>compiló</strong> la imagen que después se empaquetó en el archivo <code>sig_unal_completo.tar</code> para la carga de contenedores sin conexión a Internet. Note que el archivo <code>docker-compose.yml</code> (<a href="#sec-docker_compose_load" class="quarto-xref"><span>Sección D.5.1</span></a>) que acompaña a <code>sig_unal_completo.tar</code> es diferente al archivo <code>docker-compose.yml</code> detallado en esta sección.</p>
+<p>Este archivo constituye la <strong>receta de construcción</strong> del entorno de análisis. Su función es “congelar” un sistema operativo Ubuntu Noble optimizado, garantizando que todos los estudiantes trabajen exactamente con las mismas versiones de librerías, compiladores y paquetes. Con este archivo <code>Dockerfile</code> y con el anterior archivo <code>docker-compose.yml</code> (<a href="#sec-docker_compose_compile" class="quarto-xref"><span class="quarto-unresolved-ref">sec-docker_compose_compile</span></a>) fue que se <strong>compiló</strong> la imagen que después se empaquetó en el archivo <code>sig_unal_completo.tar</code> para la carga de contenedores sin conexión a Internet. Note que el archivo <code>docker-compose.yml</code> (<a href="#sec-docker_compose_load" class="quarto-xref"><span class="quarto-unresolved-ref">sec-docker_compose_load</span></a>) que acompaña a <code>sig_unal_completo.tar</code> es diferente al archivo <code>docker-compose.yml</code> detallado en esta sección.</p>
 <p>Los pilares técnicos del archivo <code>Dockerfile</code> son:</p>
 <ul>
 <li><strong>Imagen Base Profesional</strong>: Utiliza la distribución oficial de <strong>OSGeo/GDAL</strong>, que provee el stack más estable de librerías geoespaciales (<code>PROJ</code>, <code>GEOS</code>, <code>GDAL</code>) a nivel de sistema.</li>
@@ -1407,7 +1407,7 @@ Organización del Proyecto
 </section>
 <section id="verificar-logs-de-instalación" class="level2" data-number="D.8">
 <h2 data-number="D.8" class="anchored" data-anchor-id="verificar-logs-de-instalación"><span class="header-section-number">D.8</span> Verificar logs de instalación</h2>
-<p><strong>Verificación de Logs</strong>: Si desea ver el log de instalación de una imagen compilada, ejecute el siguiente comando, sin embargo la url de acceso a <strong>Jupyter Lab</strong> mostrada después de ejecutar este comando puede estar errónea. Para acceder a <strong>Jupyter Lab</strong> vea (<a href="81-uso_infraestructura_instalada.html#sec-acceder_jupyterlab" class="quarto-xref"><span>Sección B.10</span></a>)</p>
+<p><strong>Verificación de Logs</strong>: Si desea ver el log de instalación de una imagen compilada, ejecute el siguiente comando, sin embargo la url de acceso a <strong>Jupyter Lab</strong> mostrada después de ejecutar este comando puede estar errónea. Para acceder a <strong>Jupyter Lab</strong> vea (<a href="#sec-acceder_jupyterlab" class="quarto-xref"><span class="quarto-unresolved-ref">sec-acceder_jupyterlab</span></a>)</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> logs contenedor_sig_unal</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="comandos-docker" class="level2" data-number="D.9">
@@ -1543,7 +1543,7 @@ Importante para Visualización
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
 <div id="ref-docker2025" class="csl-entry" role="listitem">
 Inc., D. (2025). <em>Docker Desktop Documentation</em>. <a href="https://docs.docker.com">https://docs.docker.com</a>
 </div>

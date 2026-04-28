@@ -1,0 +1,16 @@
+updating tlmgr
+
+updating existing packages
+ERROR: 
+compilation failed- error
+Package luatex.def Error: File `julia_plot.png' not found: using draft setting.
+
+See the luatex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.42596 ...width,height=\textheight]{julia_plot.png}
+                                                  
+
+
+see /home/rstudio/work/01_prog_sig/index.log for more information.
