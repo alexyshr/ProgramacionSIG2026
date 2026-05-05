@@ -380,24 +380,39 @@ Utilice este método si ya configuró sus llaves siguiendo los pasos de la @sec-
 :::
 
 
-* **Vincular el repositorio remoto**:
-    Si ya inicializó su carpeta local (no la de sus contenedores Docker) con `git init`, ejecute el siguiente comando para establecer el origen:
+* **Vincular el repositorio remoto**: Si ya inicializó su carpeta local (no la de sus contenedores Docker) con `git init`, ejecute el siguiente comando para establecer el origen:
+
 ```powershell
 git remote add origin git@github.com:alexyshr/ProgramacionSIG2026.git
 ```
 
-* **Descargar el contenido (Pull)**:
-    Para traer los archivos del servidor a su computadora por primera vez:
+> Nota: El siguiente comando funciona si el nombre de la rama en el servidor es `main`. 
+> * Para chequear el nombre de las ramas en el servidor use `git ls-remote --heads origin`.
+ 
+
+
+* **Descargar el contenido (Pull)**: Para traer los archivos del servidor a su computadora por primera vez de una rama llamada `main`:
+
 ```powershell
 git pull origin main
 ```
 
-* **Verificación de estado**:
-    Confirme que la carpeta local está sincronizada correctamente:
+Para descargar los archivos a su computadora de una rama llamada `master`. Debido a que el repositorio local fue inicializado de forma independiente `git init`, es necesario permitir la fusión de historiales que no comparten un ancestro común mediante la bandera `--allow-unrelated-histories`
+
+```powershell
+git pull origin master --allow-unrelated-histories
+```
+
+* **Verificación de estado**: Confirme que la carpeta local está sincronizada correctamente:
+
 ```powershell
 git status
 ```
-    *Resultado esperado: `On branch main. Your branch is up to date. working tree clean.`*
+
+Resultado esperado (uno de los siguientes):
+
+* `On branch main. Your branch is up to date. working tree clean.`
+* 
 
 ### Opción B: sincronizar mediante HTTPS
 

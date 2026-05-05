@@ -1,0 +1,2070 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.550">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Alexys H. Rodríguez-Avellaneda, PhD">
+
+<title>Programación SIG: Python, R y Julia - 23&nbsp; Personalizar QGIS con Python - Segunda Parte</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./98-errata.html" rel="next">
+<link href="./22-pyQGIS_part1.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Sin resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./22-pyQGIS_part1.html">pyQGIS</a></li><li class="breadcrumb-item"><a href="./23-pyQGIS_part2.html"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Personalizar QGIS con Python - Segunda Parte</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Programación SIG: Python, R y Julia</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bienvenida</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-prefacio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prefacio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Instalación y Entornos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-introduccion-entornos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción a Entornos de Desarrollo SIG</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-guia_instalacion_A_docker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción A: Docker (Python, R, Julia)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-guia_instalacion_B_qgis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción B: QGIS y PyQGIS</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-guia_instalacion_C_ArcGIS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Guía de Instalación. Opción C: ArcGIS Pro y ArcPy</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Fundamentos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-variables_tipos_de_datos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Variables y tipos de datos</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-estructuras_datos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Estructuras de datos</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-operaciones_cadenas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Operaciones con Cadenas de Texto (Strings)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-ciclos_condicionales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Bucles y Declaraciones Condicionales</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-funciones_clases.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Funciones y Clases: El camino a la Modularización</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-trabajando_con_archivos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Trabajando con Archivos</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-matrices_dataframes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Analítica Espacial: Arreglos y Tablas</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-introduccion_python_r_julia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Introducción a Python, R y Julia</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Análisis y Procesamiento Vectorial</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-introduccion_vector.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Introducción a Programación Geoespacial</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-vector.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Trabajando con Vectores: Estándar Simple Features</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-referenciacion_lineal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Dimensiones Espaciales Avanzadas y Referenciación Lineal (Z, M)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16-matriz_de_9im.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Análisis Vectorial: Topología y Geoprocesamiento Espacial</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17-vector_opcional_julia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">El Ecosistema Julia: Más allá de ArchGDAL</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">Análisis y Procesamiento Raster</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18-fundamentos_raster.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Fundamentos raster</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19-operaciones_raster.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Operaciones raster</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Datos Multidimensionales</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20-cubos_multidimensionales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Cubos Multidimensionales</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21-cubos_multidimensionales_vector_raster.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Cubos Multidimensionales Vector y Raster</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+ <span class="menu-text">pyQGIS</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./22-pyQGIS_part1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Personalizar QGIS con Python: Primera Parte</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./23-pyQGIS_part2.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Personalizar QGIS con Python - Segunda Parte</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
+ <span class="menu-text">Tópicos Avanzados y Visualización</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./98-errata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Errata</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
+ <span class="menu-text">Proyecto Final</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./38-guia_estructura_proyecto_final.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Guía y Estructura del Proyecto Final</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true">
+ <span class="menu-text">Prácticas</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./41-practica_1_benchmark_raster.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Evaluación Comparativa de Procesamiento Geoespacial</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./42-practica_2_vectores.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Fundamentos de Análisis Vectorial</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" aria-expanded="true">
+ <span class="menu-text">Presentaciones</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./61-presentacion_1_clase1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Temas por Charlar</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./62-presentacion_2_benchmark.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Benchmark geoespacial: cómo leer los resultados</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" aria-expanded="true">
+ <span class="menu-text">Apéndices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./80-instalacion_herramientas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Resumen instalación de herramientas</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./81-uso_infraestructura_instalada.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Uso de la Infraestructura Instalada</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./82-quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Quarto: Orquestación y Configuración</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./83-docker_desktop.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Docker: Gestión de Contenedores e Imágenes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./84-git_github.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Git y GitHub: Sincronización Local-Remota</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./85-vscode.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Visual Studio Code (VScode): Extensiones e Interfaz</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./86-windows.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">Temas técnicos sobre Windows</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./87-linux_ubuntu.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">H</span>&nbsp; <span class="chapter-title">Temas Técnicos sobre Linux</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./88-python.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">I</span>&nbsp; <span class="chapter-title">Adicionales Sobre Python</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./89-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">J</span>&nbsp; <span class="chapter-title">Adicionales Sobre R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./90-julia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">K</span>&nbsp; <span class="chapter-title">Adicionales Sobre Julia</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./91-qgis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">L</span>&nbsp; <span class="chapter-title">Adicionales Sobre QGIS</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./92-arcgispro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">M</span>&nbsp; <span class="chapter-title">Adicionales sobre ArcGIS Pro</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./93-postgresql.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">N</span>&nbsp; <span class="chapter-title">Adicionales sobre ArcGIS Pro</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./98-errata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Errata</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./99-referencias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referencias Bibliográficas</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de Contenidos</h2>
+   
+  <ul>
+  <li><a href="#acciones-en-qgis" id="toc-acciones-en-qgis" class="nav-link active" data-scroll-target="#acciones-en-qgis"><span class="header-section-number">24</span> 12. Acciones en QGIS</a>
+  <ul class="collapse">
+  <li><a href="#hola-mundo" id="toc-hola-mundo" class="nav-link" data-scroll-target="#hola-mundo"><span class="header-section-number">24.1</span> 12.1 Hola mundo</a></li>
+  </ul></li>
+  <li><a href="#ejercicio-10" id="toc-ejercicio-10" class="nav-link" data-scroll-target="#ejercicio-10"><span class="header-section-number">25</span> Ejercicio 10</a>
+  <ul class="collapse">
+  <li><a href="#selección-de-vecinos" id="toc-selección-de-vecinos" class="nav-link" data-scroll-target="#selección-de-vecinos"><span class="header-section-number">25.1</span> 12.2 Selección de vecinos</a></li>
+  <li><a href="#ejercicio-11" id="toc-ejercicio-11" class="nav-link" data-scroll-target="#ejercicio-11"><span class="header-section-number">25.2</span> Ejercicio 11</a></li>
+  <li><a href="#más-información" id="toc-más-información" class="nav-link" data-scroll-target="#más-información"><span class="header-section-number">25.3</span> 12.3 Más información</a></li>
+  </ul></li>
+  <li><a href="#escritura-de-scripts-de-python-independientes" id="toc-escritura-de-scripts-de-python-independientes" class="nav-link" data-scroll-target="#escritura-de-scripts-de-python-independientes"><span class="header-section-number">26</span> 13. Escritura de Scripts de Python Independientes</a>
+  <ul class="collapse">
+  <li><a href="#configuración-en-windows" id="toc-configuración-en-windows" class="nav-link" data-scroll-target="#configuración-en-windows"><span class="header-section-number">26.1</span> Configuración en Windows</a></li>
+  <li><a href="#configuración-en-macos" id="toc-configuración-en-macos" class="nav-link" data-scroll-target="#configuración-en-macos"><span class="header-section-number">26.2</span> Configuración en MacOS</a></li>
+  <li><a href="#configuración-en-linuxconda" id="toc-configuración-en-linuxconda" class="nav-link" data-scroll-target="#configuración-en-linuxconda"><span class="header-section-number">26.3</span> Configuración en Linux/Conda</a></li>
+  </ul></li>
+  <li><a href="#integración-con-entornos-de-desarrollo-de-python" id="toc-integración-con-entornos-de-desarrollo-de-python" class="nav-link" data-scroll-target="#integración-con-entornos-de-desarrollo-de-python"><span class="header-section-number">27</span> 14. Integración con Entornos de Desarrollo de Python</a>
+  <ul class="collapse">
+  <li><a href="#uso-de-la-api-de-pyqgis-en-jupyter-notebook" id="toc-uso-de-la-api-de-pyqgis-en-jupyter-notebook" class="nav-link" data-scroll-target="#uso-de-la-api-de-pyqgis-en-jupyter-notebook"><span class="header-section-number">27.1</span> Uso de la API de PyQGIS en Jupyter Notebook</a>
+  <ul class="collapse">
+  <li><a href="#inicialización-de-qgis" id="toc-inicialización-de-qgis" class="nav-link" data-scroll-target="#inicialización-de-qgis">Inicialización de QGIS</a></li>
+  <li><a href="#uso-de-la-api-de-pyqgis" id="toc-uso-de-la-api-de-pyqgis" class="nav-link" data-scroll-target="#uso-de-la-api-de-pyqgis">Uso de la API de PyQGIS</a></li>
+  <li><a href="#finalización-de-la-sesión-de-qgis" id="toc-finalización-de-la-sesión-de-qgis" class="nav-link" data-scroll-target="#finalización-de-la-sesión-de-qgis">Finalización de la sesión de QGIS</a></li>
+  </ul></li>
+  <li><a href="#uso-de-la-api-de-pyqgis-en-vs-code" id="toc-uso-de-la-api-de-pyqgis-en-vs-code" class="nav-link" data-scroll-target="#uso-de-la-api-de-pyqgis-en-vs-code"><span class="header-section-number">27.2</span> Uso de la API de PyQGIS en VS Code</a></li>
+  </ul></li>
+  <li><a href="#suplemento" id="toc-suplemento" class="nav-link" data-scroll-target="#suplemento"><span class="header-section-number">28</span> Suplemento</a>
+  <ul class="collapse">
+  <li><a href="#guardado-del-renderizado-del-mapa-como-una-imagen" id="toc-guardado-del-renderizado-del-mapa-como-una-imagen" class="nav-link" data-scroll-target="#guardado-del-renderizado-del-mapa-como-una-imagen"><span class="header-section-number">28.1</span> Guardado del renderizado del mapa como una imagen</a></li>
+  <li><a href="#búsqueda-de-una-capa" id="toc-búsqueda-de-una-capa" class="nav-link" data-scroll-target="#búsqueda-de-una-capa"><span class="header-section-number">28.2</span> Búsqueda de una capa</a></li>
+  <li><a href="#activación-y-desactivación-de-una-capa" id="toc-activación-y-desactivación-de-una-capa" class="nav-link" data-scroll-target="#activación-y-desactivación-de-una-capa"><span class="header-section-number">28.3</span> Activación y desactivación de una capa</a></li>
+  <li><a href="#obtención-de-todas-las-capas" id="toc-obtención-de-todas-las-capas" class="nav-link" data-scroll-target="#obtención-de-todas-las-capas"><span class="header-section-number">28.4</span> Obtención de todas las capas</a></li>
+  <li><a href="#obtención-de-capas-visibles-marcadas" id="toc-obtención-de-capas-visibles-marcadas" class="nav-link" data-scroll-target="#obtención-de-capas-visibles-marcadas"><span class="header-section-number">28.5</span> Obtención de capas visibles (marcadas)</a></li>
+  <li><a href="#obtención-de-capas-seleccionadas" id="toc-obtención-de-capas-seleccionadas" class="nav-link" data-scroll-target="#obtención-de-capas-seleccionadas"><span class="header-section-number">28.6</span> Obtención de capas seleccionadas</a></li>
+  <li><a href="#ajuste-de-la-extensión-del-lienzo-a-la-extensión-de-la-capa" id="toc-ajuste-de-la-extensión-del-lienzo-a-la-extensión-de-la-capa" class="nav-link" data-scroll-target="#ajuste-de-la-extensión-del-lienzo-a-la-extensión-de-la-capa"><span class="header-section-number">28.7</span> Ajuste de la extensión del lienzo a la extensión de la capa</a></li>
+  <li><a href="#obtención-de-capas-con-jerarquía" id="toc-obtención-de-capas-con-jerarquía" class="nav-link" data-scroll-target="#obtención-de-capas-con-jerarquía"><span class="header-section-number">28.8</span> Obtención de capas con jerarquía</a></li>
+  <li><a href="#cambio-del-ícono-de-la-ventana-principal-de-qgis" id="toc-cambio-del-ícono-de-la-ventana-principal-de-qgis" class="nav-link" data-scroll-target="#cambio-del-ícono-de-la-ventana-principal-de-qgis"><span class="header-section-number">28.9</span> Cambio del ícono de la ventana principal de QGIS</a></li>
+  <li><a href="#eliminación-de-un-botón-específico-de-una-barra-de-herramientas" id="toc-eliminación-de-un-botón-específico-de-una-barra-de-herramientas" class="nav-link" data-scroll-target="#eliminación-de-un-botón-específico-de-una-barra-de-herramientas"><span class="header-section-number">28.10</span> Eliminación de un botón específico de una barra de herramientas</a></li>
+  <li><a href="#adición-de-un-menú-desplegable-a-la-barra-de-herramientas" id="toc-adición-de-un-menú-desplegable-a-la-barra-de-herramientas" class="nav-link" data-scroll-target="#adición-de-un-menú-desplegable-a-la-barra-de-herramientas"><span class="header-section-number">28.11</span> Adición de un menú desplegable a la barra de herramientas</a></li>
+  <li><a href="#adición-de-capas-csv" id="toc-adición-de-capas-csv" class="nav-link" data-scroll-target="#adición-de-capas-csv"><span class="header-section-number">28.12</span> Adición de capas CSV</a></li>
+  <li><a href="#inserción-de-capas-en-el-árbol-de-capas" id="toc-inserción-de-capas-en-el-árbol-de-capas" class="nav-link" data-scroll-target="#inserción-de-capas-en-el-árbol-de-capas"><span class="header-section-number">28.13</span> Inserción de capas en el árbol de capas</a></li>
+  <li><a href="#guardado-de-capas-en-el-disco" id="toc-guardado-de-capas-en-el-disco" class="nav-link" data-scroll-target="#guardado-de-capas-en-el-disco"><span class="header-section-number">28.14</span> Guardado de capas en el disco</a></li>
+  <li><a href="#visualización-de-una-etiqueta-con-color-de-fondo" id="toc-visualización-de-una-etiqueta-con-color-de-fondo" class="nav-link" data-scroll-target="#visualización-de-una-etiqueta-con-color-de-fondo"><span class="header-section-number">28.15</span> Visualización de una etiqueta con color de fondo</a></li>
+  <li><a href="#edición-de-la-tabla-de-atributos-de-una-capa-vectorial" id="toc-edición-de-la-tabla-de-atributos-de-una-capa-vectorial" class="nav-link" data-scroll-target="#edición-de-la-tabla-de-atributos-de-una-capa-vectorial"><span class="header-section-number">28.16</span> Edición de la tabla de atributos de una capa vectorial</a></li>
+  <li><a href="#creación-de-un-pdf-con-título" id="toc-creación-de-un-pdf-con-título" class="nav-link" data-scroll-target="#creación-de-un-pdf-con-título"><span class="header-section-number">28.17</span> Creación de un PDF con título</a></li>
+  <li><a href="#creación-de-una-línea-geodésica" id="toc-creación-de-una-línea-geodésica" class="nav-link" data-scroll-target="#creación-de-una-línea-geodésica"><span class="header-section-number">28.18</span> Creación de una línea geodésica</a></li>
+  <li><a href="#simplificación-de-scripts-de-procesamiento" id="toc-simplificación-de-scripts-de-procesamiento" class="nav-link" data-scroll-target="#simplificación-de-scripts-de-procesamiento"><span class="header-section-number">28.19</span> Simplificación de scripts de procesamiento</a></li>
+  <li><a href="#renombrado-de-capas-de-salida-temporales" id="toc-renombrado-de-capas-de-salida-temporales" class="nav-link" data-scroll-target="#renombrado-de-capas-de-salida-temporales"><span class="header-section-number">28.20</span> Renombrado de capas de salida temporales</a></li>
+  <li><a href="#selección-de-objetos-conectados-mediante-acciones" id="toc-selección-de-objetos-conectados-mediante-acciones" class="nav-link" data-scroll-target="#selección-de-objetos-conectados-mediante-acciones"><span class="header-section-number">28.21</span> Selección de objetos conectados mediante acciones</a></li>
+  </ul></li>
+  <li><a href="#uso-de-código-de-otros-complementos-using-code-from-plugins" id="toc-uso-de-código-de-otros-complementos-using-code-from-plugins" class="nav-link" data-scroll-target="#uso-de-código-de-otros-complementos-using-code-from-plugins"><span class="header-section-number">29</span> Uso de código de otros complementos (Using code from plugins)</a></li>
+  <li><a href="#especificación-de-dependencias-de-complementos-specifying-plugin-dependencies" id="toc-especificación-de-dependencias-de-complementos-specifying-plugin-dependencies" class="nav-link" data-scroll-target="#especificación-de-dependencias-de-complementos-specifying-plugin-dependencies"><span class="header-section-number">30</span> Especificación de dependencias de complementos (Specifying plugin dependencies)</a></li>
+  <li><a href="#uso-de-enlaces-simbólicos-para-el-desarrollo-de-complementos-using-symbolic-links-for-plugin-development" id="toc-uso-de-enlaces-simbólicos-para-el-desarrollo-de-complementos-using-symbolic-links-for-plugin-development" class="nav-link" data-scroll-target="#uso-de-enlaces-simbólicos-para-el-desarrollo-de-complementos-using-symbolic-links-for-plugin-development"><span class="header-section-number">31</span> Uso de enlaces simbólicos para el desarrollo de complementos (Using symbolic links for plugin development)</a>
+  <ul class="collapse">
+  <li><a href="#windows" id="toc-windows" class="nav-link" data-scroll-target="#windows">Windows</a></li>
+  <li><a href="#linux-y-mac" id="toc-linux-y-mac" class="nav-link" data-scroll-target="#linux-y-mac">Linux y Mac</a></li>
+  </ul></li>
+  <li><a href="#siguientes-pasos-what-next" id="toc-siguientes-pasos-what-next" class="nav-link" data-scroll-target="#siguientes-pasos-what-next"><span class="header-section-number">32</span> Siguientes pasos (What next?)</a></li>
+  <li><a href="#recursos-resources" id="toc-recursos-resources" class="nav-link" data-scroll-target="#recursos-resources"><span class="header-section-number">33</span> Recursos (Resources)</a></li>
+  <li><a href="#créditos-de-los-datos-data-credits" id="toc-créditos-de-los-datos-data-credits" class="nav-link" data-scroll-target="#créditos-de-los-datos-data-credits"><span class="header-section-number">34</span> Créditos de los datos (Data credits)</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./22-pyQGIS_part1.html">pyQGIS</a></li><li class="breadcrumb-item"><a href="./23-pyQGIS_part2.html"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Personalizar QGIS con Python - Segunda Parte</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Personalizar QGIS con Python - Segunda Parte</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Alexys H. Rodríguez-Avellaneda, PhD </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">5 de mayo de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p>Este contenido fue creado a partir del curso <em>Customizing QGIS with Python Course</em> by Ujaval Gandhi <a href="https://spatialthoughts.com">www.spatialthoughts.com</a> <a href="https://courses.spatialthoughts.com/pyqgis-masterclass.html">pyQGIS Master Class</a></p>
+</blockquote>
+<section id="acciones-en-qgis" class="level1" data-number="24">
+<h1 data-number="24"><span class="header-section-number">24</span> 12. Acciones en QGIS</h1>
+<p>Las <a href="https://docs.qgis.org/testing/en/docs/user_manual/working_with_vector/vector_properties.html#actions-properties">Acciones (Actions)</a> en QGIS proporcionan un método ágil para activar comportamientos personalizados en respuesta a una interacción del usuario, como hacer clic en un objeto espacial en el Map canvas (Lienzo del mapa) o en un valor de atributo en la Attribute table (Tabla de atributos). Las acciones se definen para una capa específica y se almacenan en los proyectos de QGIS. Esto convierte a las acciones en la forma más sencilla de añadir y distribuir personalizaciones de QGIS sin necesidad de desarrollar complementos.</p>
+<section id="hola-mundo" class="level2" data-number="24.1">
+<h2 data-number="24.1" class="anchored" data-anchor-id="hola-mundo"><span class="header-section-number">24.1</span> 12.1 Hola mundo</h2>
+<p>Se inicia con el aprendizaje de los fundamentos de las Acciones (Actions) en QGIS. Se creará una acción que utilice una capa de todos los países del mundo y permita extraer el polígono de cualquier país al hacer clic sobre este.</p>
+<ol type="1">
+<li>Abra QGIS. El software incluye algunos <em>Easter Eggs</em> (Huevos de pascua) ocultos que se activan al escribir una palabra clave en la Coordinate box (Caja de coordenadas) en la parte inferior de la ventana principal. Aunque muchos son decorativos, algunos ofrecen funcionalidades útiles. Una de estas características es la capacidad de cargar un mapa mundial. Ingrese la palabra clave <strong>world</strong> en la caja de coordenadas y presione <em>Enter</em>.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/helloworld1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+<ol start="2" type="1">
+<li>Se añadirá una nueva capa denominada <code>World Map</code> al Layers panel (Panel de capas). Esta capa corresponde al conjunto de datos de límites <a href="https://www.naturalearthdata.com/downloads/10m-cultural-vectors/">Admin0 - Countries</a> de Natural Earth. Proceda a definir una acción en esta capa. Haga clic derecho en la capa y seleccione Properties (Propiedades).</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/helloworld2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+<ol start="3" type="1">
+<li>Diríjase a la Actions tab (Pestaña de acciones) y haga clic en el botón Add a new action (Añadir una nueva acción) (+).</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/helloworld3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+<ol start="4" type="1">
+<li>Seleccione <strong>Python</strong> como el Type (Tipo). Ingrese <strong>Hello World</strong> como la Description (Descripción); este será el nombre de la acción tal como aparecerá en los menús. Mantenga los Action Scopes (Ámbitos de la acción) en los valores predeterminados: <strong>Feature (Objeto espacial)</strong> y <strong>Canvas (Lienzo)</strong>. En el campo Action Text (Texto de la acción), ingrese el siguiente código Python y haga clic en OK (Aceptar).</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Hello World'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/helloworld4.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%"></p>
+</figure>
+</div>
+<ol start="5" type="1">
+<li>Haga clic en OK (Aceptar) nuevamente para regresar al Map canvas (Lienzo del mapa). Se ha configurado una acción que imprimirá <code>Hello World</code> al hacer clic en un objeto. Para visualizar el resultado, abra la Python Console (Consola de Python) desde <strong>Plugins (Complementos) → Python Console (Consola de Python)</strong>. Localice el botón de Actions (Acciones) en la Attributes Toolbar (Barra de herramientas de atributos). Haga clic en el menú desplegable junto al botón y seleccione <em>Hello World</em>.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/helloworld5.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+<ol start="6" type="1">
+<li>Una vez seleccionada la acción, haga clic en cualquier objeto espacial de la capa. Se observará el texto <em>Hello World</em> impreso en la consola.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/helloworld6.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+<ol start="7" type="1">
+<li>Con el conocimiento sobre cómo definir y activar una acción de Python, se procederá a dotarla de mayor utilidad. En lugar de imprimir un texto estático, se modificará la acción para que imprima el nombre del país seleccionado. Abra la Attribute table (Tabla de atributos) de la capa <code>World Map</code>. Se observará que el atributo <strong>NAME</strong> contiene los nombres de los países.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/helloworld7.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+<ol start="8" type="1">
+<li>Haga clic derecho en la capa <code>World Map</code> y seleccione Properties (Propiedades). En la Actions tab (Pestaña de acciones), haga doble clic en la acción <em>Hello World</em> definida previamente.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/helloworld8.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+<ol start="9" type="1">
+<li>La acción se activa al hacer clic en un objeto espacial y permite acceder a sus atributos. Seleccione el atributo <strong>NAME</strong> y haga clic en Insert (Insertar).</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/helloworld9.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%"></p>
+</figure>
+</div>
+<ol start="10" type="1">
+<li>Se visualizará el valor <code>[%NAME%]</code> en el cuadro de texto Action Text (Texto de la acción). Esta es una sintaxis de expresión especial que indica que el valor delimitado por <code>[%</code> y <code>%]</code> será reemplazado por el valor del atributo del objeto espacial al activar la acción.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/helloworld10.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%"></p>
+</figure>
+</div>
+<ol start="11" type="1">
+<li>Actualice el código para imprimir el valor del atributo como se muestra a continuación.</li>
+</ol>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'[%NAME%]'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/helloworld11.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%"></p>
+</figure>
+</div>
+<ol start="12" type="1">
+<li>Haga clic en OK (Aceptar) y regrese a la ventana principal. Seleccione la acción y haga clic en cualquier objeto. El nombre del país se imprimirá en la consola.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/helloworld12.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+<ol start="13" type="1">
+<li>Además de los atributos del objeto espacial seleccionado, se tiene acceso a otras variables del proyecto y de la capa. Actualice el código para imprimir los valores de ID del objeto y de la capa junto con el atributo <code>NAME</code>. Se utilizan las f-strings de Python para el formato de salida.</li>
+</ol>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>feature_name <span class="op">=</span> <span class="st">'[%NAME%]'</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>feature_id <span class="op">=</span> [<span class="op">%</span>$id<span class="op">%</span>]</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>layer_id <span class="op">=</span> <span class="st">'[%@layer_id%]'</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'feature name: </span><span class="sc">{</span>feature_name<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'feature id: </span><span class="sc">{</span>feature_id<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'layer id: </span><span class="sc">{</span>layer_id<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/helloworld13.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%"></p>
+</figure>
+</div>
+<ol start="14" type="1">
+<li>Haga clic en OK (Aceptar) y pruebe la acción nuevamente. Se visualizarán los identificadores correspondientes junto al nombre del objeto espacial.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/helloworld14.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+<ol start="15" type="1">
+<li>Con el acceso a los valores de <code>@layer_id</code> y <code>$id</code>, es posible extraer el objeto espacial actual y generar una nueva capa. Reemplace el Action Text (Texto de la acción) con el siguiente código, el cual emplea el método <a href="https://qgis.org/pyqgis/3.44/core/QgsFeatureSource.html#qgis.core.QgsFeatureSource.materialize"><code>QgsFeatureSource.materialize()</code></a> para crear una nueva capa vectorial en memoria con el objeto filtrado por su ID.</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>feature_name <span class="op">=</span> <span class="st">'[%NAME%]'</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>feature_id <span class="op">=</span> [<span class="op">%</span>$id<span class="op">%</span>]</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>layer_id <span class="op">=</span> <span class="st">'[%@layer_id%]'</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>layer <span class="op">=</span> QgsProject.instance().mapLayer(layer_id)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>new_layer <span class="op">=</span> layer.materialize(</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    QgsFeatureRequest().setFilterFids([feature_id]))</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>new_layer.setName(feature_name)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>QgsProject.instance().addMapLayer(new_layer)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/helloworld15.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%"></p>
+</figure>
+</div>
+<ol start="16" type="1">
+<li>Regrese al Map canvas (Lienzo del mapa) y cierre la Python Console (Consola de Python). Seleccione la acción <em>Hello World</em> y haga clic en cualquier objeto. Se añadirá una nueva capa al Layers panel (Panel de capas) que contiene únicamente el objeto seleccionado.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/helloworld16.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+<ol start="17" type="1">
+<li>Existe una limitación: al crearse y añadirse la nueva capa, esta se convierte en la Active layer (Capa activa). Para activar la acción nuevamente, se debe seleccionar de nuevo la capa <code>World Map</code>. Para evitar este paso manual, se puede utilizar el método <a href="https://qgis.org/pyqgis/3.44/gui/QgisInterface.html#qgis.gui.QgisInterface.setActiveLayer"><code>QgisInterface.setActiveLayer()</code></a>. Se importa <code>iface</code> en el código para acceder a la instancia actual de la clase <code>QgisInterface</code>.</li>
+</ol>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> qgis.utils <span class="im">import</span> iface</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>feature_name <span class="op">=</span> <span class="st">'[%NAME%]'</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>feature_id <span class="op">=</span> [<span class="op">%</span>$id<span class="op">%</span>]</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>layer_id <span class="op">=</span> <span class="st">'[%@layer_id%]'</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>layer <span class="op">=</span> QgsProject.instance().mapLayer(layer_id)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>new_layer <span class="op">=</span> layer.materialize(</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    QgsFeatureRequest().setFilterFids([feature_id]))</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>new_layer.setName(feature_name)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>QgsProject.instance().addMapLayer(new_layer)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>iface.setActiveLayer(layer)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/helloworld17.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%"></p>
+</figure>
+</div>
+<ol start="18" type="1">
+<li>Ahora es posible extraer múltiples países de forma consecutiva sin necesidad de cambiar manualmente de capa.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/helloworld18.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="ejercicio-10" class="level1" data-number="25">
+<h1 data-number="25"><span class="header-section-number">25</span> Ejercicio 10</h1>
+<p>Actualice la acción para mostrar un mensaje de <em>Info</em> (Información) en la Message bar (Barra de mensajes) de QGIS, como se ilustra a continuación.</p>
+<p>Sugerencia: Se puede utilizar el método <a href="https://qgis.org/pyqgis/3.0/gui/Message/QgsMessageBar.html#qgis.gui.QgsMessageBar.pushInfo">iface.messageBar().pushInfo()</a> para desplegar un mensaje.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/helloworld_exercise.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+<section id="selección-de-vecinos" class="level2" data-number="25.1">
+<h2 data-number="25.1" class="anchored" data-anchor-id="selección-de-vecinos"><span class="header-section-number">25.1</span> 12.2 Selección de vecinos</h2>
+<p>En esta sección, se trabajará con un conjunto de datos de los estados de EE. UU. y se implementarán Acciones de QGIS para seleccionar fácilmente los vecinos de cualquier estado.</p>
+<ol type="1">
+<li>Localice el archivo <code>neighbors.gpkg</code> del paquete de datos en el Browser panel (Panel de explorador). Expándalo y haga clic en el proyecto <code>neighbors.qgz</code> para abrirlo.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/neighbors1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+<ol start="2" type="1">
+<li>Haga clic derecho en la capa <code>states</code> y seleccione Properties (Propiedades).</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/neighbors2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+<ol start="3" type="1">
+<li>Diríjase a la Actions tab (Pestaña de acciones) y haga clic en el botón Add a new action (Añadir una nueva acción) (+). Seleccione <strong>Python</strong> como Type (Tipo). Ingrese <strong>Select First-degree Neighbors</strong> como Description (Descripción). Mantenga los Action Scopes (Ámbitos de acción) en los valores predeterminados de <strong>Feature</strong> (Objeto espacial) y <strong>Canvas</strong> (Lienzo). En el campo Action Text (Texto de la acción), ingrese el siguiente código Python y haga clic en OK (Aceptar). Presione OK nuevamente para regresar al lienzo principal.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/neighbors3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%"></p>
+</figure>
+</div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>layer_id <span class="op">=</span> <span class="st">'[%@layer_id%]'</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>fid <span class="op">=</span> [<span class="op">%</span> $id <span class="op">%</span>]</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>layer <span class="op">=</span> QgsProject.instance().mapLayer(layer_id)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_neighbors(fid):</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    f <span class="op">=</span> layer.getFeature(fid)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Uso de comprensión de listas para obtener objetos espaciales intersectados</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Se puede usar touches() si los datos poseen corrección topográfica</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Se provee el bounding box a getFeatures() para emplear el índice espacial</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    neighbors <span class="op">=</span> [</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        c.<span class="bu">id</span>()</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> c <span class="kw">in</span> layer.getFeatures(f.geometry().boundingBox())</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> c.geometry().intersects(f.geometry()) <span class="kw">and</span> c.<span class="bu">id</span>() <span class="op">!=</span> f.<span class="bu">id</span>()</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> neighbors</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>first_degree_neighbors <span class="op">=</span> get_neighbors(fid)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Aplicación de la selección</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>layer.selectByIds(first_degree_neighbors)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li>Localice el botón de Actions (Acciones) en la Attributes Toolbar (Barra de herramientas de atributos). Active la acción <em>Select First-degree Neighbors</em> y haga clic en cualquier estado. Se observará la selección de todos los estados vecinos.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/neighbors4.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+<ol start="5" type="1">
+<li>Es posible añadir una acción adicional para seleccionar vecinos de segundo grado (vecinos de los vecinos). Repita el procedimiento de clic derecho en la capa <code>states</code> y seleccione Properties (Propiedades). En la pestaña Actions (Acciones), añada una nueva acción de tipo <strong>Python</strong>. Ingrese <strong>Select Second-degree Neighbors</strong> como Description (Descripción). En el campo Action Text (Texto de la acción), ingrese el código siguiente y confirme con OK.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/neighbors5.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%"></p>
+</figure>
+</div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>layer_id <span class="op">=</span> <span class="st">'[%@layer_id%]'</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>fid <span class="op">=</span> [<span class="op">%</span> $id <span class="op">%</span>]</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>layer <span class="op">=</span> QgsProject.instance().mapLayer(layer_id)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_neighbors(fid):</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    f <span class="op">=</span> layer.getFeature(fid)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    neighbors <span class="op">=</span> [</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        c.<span class="bu">id</span>()</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> c <span class="kw">in</span> layer.getFeatures(f.geometry().boundingBox())</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> c.geometry().intersects(f.geometry()) <span class="kw">and</span> c.<span class="bu">id</span>() <span class="op">!=</span> f.<span class="bu">id</span>()</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> neighbors</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>first_degree_neighbors <span class="op">=</span> get_neighbors(fid)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>second_degree_neighbors <span class="op">=</span> <span class="bu">set</span>()</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n <span class="kw">in</span> first_degree_neighbors:</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    neighbors <span class="op">=</span> get_neighbors(n)</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    second_degree_neighbors.update(neighbors)</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Eliminación de vecinos de primer grado del conjunto</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>second_degree_neighbors <span class="op">=</span> second_degree_neighbors.difference(</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>    <span class="bu">set</span>(first_degree_neighbors))</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Eliminación del objeto espacial inicial del conjunto en caso de existir</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>second_degree_neighbors.discard(fid)</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Aplicación de la selección</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>layer.selectByIds(<span class="bu">list</span>(second_degree_neighbors))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="6" type="1">
+<li>Active la acción <em>Select Second-degree Neighbors</em> desde la barra de herramientas y haga clic en un estado. Se observará la selección de los vecinos de segundo grado.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/neighbors6.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+</section>
+<section id="ejercicio-11" class="level2" data-number="25.2">
+<h2 data-number="25.2" class="anchored" data-anchor-id="ejercicio-11"><span class="header-section-number">25.2</span> Ejercicio 11</h2>
+<p>Al ejecutar la acción nuevamente, la selección actual se descarta para generar una nueva. Se requiere modificar este comportamiento para añadir elementos a la selección existente. Actualice el código de la acción <em>Select Second-degree Neighbors</em> para que, al ejecutarse, los vecinos de segundo grado se sumen a los objetos ya seleccionados.</p>
+<p>Sugerencia: Provea una opción de comportamiento adicional para el método <a href="https://qgis.org/pyqgis/3.44/core/QgsVectorLayer.html#qgis.core.QgsVectorLayer.selectByIds"><code>QgsVectorLayer.selectByIds()</code></a>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/neighbors_exercise.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+</section>
+<section id="más-información" class="level2" data-number="25.3">
+<h2 data-number="25.3" class="anchored" data-anchor-id="más-información"><span class="header-section-number">25.3</span> 12.3 Más información</h2>
+<p>En caso de requerir profundizar en el potencial de las acciones de QGIS, se recomienda consultar el <a href="https://courses.spatialthoughts.com/qgis-actions.html">taller completo de Acciones de QGIS</a>, el cual aborda múltiples ejemplos prácticos sobre automatización de tareas mediante el uso de Acciones.</p>
+</section>
+</section>
+<section id="escritura-de-scripts-de-python-independientes" class="level1" data-number="26">
+<h1 data-number="26"><span class="header-section-number">26</span> 13. Escritura de Scripts de Python Independientes</h1>
+<p>La ejecución de scripts de Python dentro de QGIS es de gran utilidad en la mayoría de los escenarios. No obstante, existe la posibilidad de desarrollar scripts que funcionen en el sistema sin necesidad de mantener la interfaz de QGIS abierta. La capacidad de ejecutar scripts de PyQGIS en modo headless (sin interfaz gráfica) permite automatizar flujos de trabajo en servidores sin intervención humana. En esta sección se utilizarán algoritmos de procesamiento de QGIS para realizar estadísticas de zona mediante un script de Python independiente.</p>
+<p>Se debe crear un archivo nuevo con el código siguiente y guardarlo como <code>zonal_stats.py</code>.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| file: code/pyqgis/zonal_stats.py</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Se observará que el script posee componentes notables.</p>
+<ul>
+<li>En primer lugar, se encuentra la sentencia de importación en la parte superior para cargar explícitamente los módulos requeridos.</li>
+<li>A continuación, se crea una instancia de la clase <code>QgsApplication</code> y se ejecuta el método <code>initQgis()</code> para cargar los proveedores de datos y el registro de capas de QGIS.</li>
+<li>También se importa el módulo <code>Processing</code> y se procede a su inicialización.</li>
+<li>Finalmente, se llama a <code>exitQgis()</code> para liberar los recursos de la memoria.</li>
+</ul>
+<p>Se han codificado de forma fija las rutas de las capas de entrada, aunque estas pueden capturarse como banderas de línea de comandos utilizando el módulo <a href="https://docs.python.org/3/library/argparse.html">argparse</a> de Python. Asimismo, al no contar con la GUI (Interfaz gráfica de usuario) de QGIS, no es posible mostrar mensajes, por lo que dichas sentencias se han omitido.</p>
+<p>Al ejecutar el script dentro de QGIS, todas las rutas a las librerías y las variables de entorno ya están configuradas, lo que permite que Python las localice. Sin embargo, al ejecutar el script de forma externa, es necesario configurarlas manualmente. Si se utilizan algoritmos de procesamiento, se debe asegurar que la ruta a la carpeta del complemento core (núcleo) esté incluida en la variable de entorno PYTHONPATH.</p>
+<p>La configuración del entorno recomendada gestiona todos los requerimientos y permite ejecutar scripts de PyQGIS con facilidad. Las siguientes secciones describen esta configuración para diversas plataformas.</p>
+<blockquote class="blockquote">
+<p>Es posible que se deban ajustar estas rutas ligeramente según la ubicación de instalación de QGIS. Los siguientes scripts asumen el uso de QGIS-LTR instalado en la ruta predeterminada.</p>
+</blockquote>
+<section id="configuración-en-windows" class="level2" data-number="26.1">
+<h2 data-number="26.1" class="anchored" data-anchor-id="configuración-en-windows"><span class="header-section-number">26.1</span> Configuración en Windows</h2>
+<p>En Windows, este proceso puede realizarse mediante un archivo por lotes (batch file). Se debe crear un archivo nuevo llamado <code>run_script.bat</code> con el código siguiente, asegurando su almacenamiento en el mismo directorio.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| file: code/pyqgis/run_script.bat</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Abra el Command prompt (Símbolo del sistema), navegue hasta el directorio que contiene los archivos mencionados, escriba <code>run_script.bat</code> y presione Enter.</p>
+<blockquote class="blockquote">
+<p>También es posible ejecutar el archivo mediante doble clic, pero no se visualizarán mensajes de error o de éxito. Por lo tanto, se recomienda ejecutar el script desde el Shell (Intérprete de comandos).</p>
+</blockquote>
+<p>El script se ejecutará y generará la salida en la ruta especificada.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/cmd-zonal-stats.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+<p>La capa vectorial resultante poseerá una columna adicional con las estadísticas del ráster.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/qgis-zonal-stats.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+</section>
+<section id="configuración-en-macos" class="level2" data-number="26.2">
+<h2 data-number="26.2" class="anchored" data-anchor-id="configuración-en-macos"><span class="header-section-number">26.2</span> Configuración en MacOS</h2>
+<p>En MacOS, es posible configurar las variables de entorno requeridas y ejecutar el proceso mediante un script de shell. Cree un archivo llamado <code>run_script.sh</code> y guárdelo en el mismo directorio que el script principal.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| file: code/pyqgis/run_script.sh</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Abra una Terminal y navegue hasta el directorio del script. Escriba <code>bash run_script.sh</code> y presione Enter. El script procesará los datos y generará el resultado en la ruta definida.</p>
+</section>
+<section id="configuración-en-linuxconda" class="level2" data-number="26.3">
+<h2 data-number="26.3" class="anchored" data-anchor-id="configuración-en-linuxconda"><span class="header-section-number">26.3</span> Configuración en Linux/Conda</h2>
+<p>La forma más sencilla y recomendada de ejecutar un script de PyQGIS independiente es desde un entorno de Conda. Este método requiere una configuración mínima. Se puede seguir la guía de <a href="install-qgis-ltr.html#install-qgis-via-conda">Instalación de QGIS vía Conda</a>.</p>
+<blockquote class="blockquote">
+<p>Los paquetes de Conda están disponibles para todas las plataformas, por lo que este método también es aplicable en MacOS o Windows.</p>
+</blockquote>
+<p>Una vez instalado, active el entorno y ejecute el script de la siguiente manera:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> zonal_stats.py</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="integración-con-entornos-de-desarrollo-de-python" class="level1" data-number="27">
+<h1 data-number="27"><span class="header-section-number">27</span> 14. Integración con Entornos de Desarrollo de Python</h1>
+<section id="uso-de-la-api-de-pyqgis-en-jupyter-notebook" class="level2" data-number="27.1">
+<h2 data-number="27.1" class="anchored" data-anchor-id="uso-de-la-api-de-pyqgis-en-jupyter-notebook"><span class="header-section-number">27.1</span> Uso de la API de PyQGIS en Jupyter Notebook</h2>
+<p>El código a continuación muestra cómo utilizar la API de PyQGIS desde un Jupyter Notebook.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/notebook.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+<p>Para obtener el mejor rendimiento, se recomienda ejecutar este cuaderno desde un Conda environment (Entorno de conda) con QGIS instalado. Es posible iniciar Jupyter Lab desde dicho entorno y utilizar la API de PyQGIS tras realizar los pasos de inicialización que se detallan a continuación.</p>
+<p>Si se desea ejecutar este proceso en otro entorno de Python, es necesario asegurar que las variables de entorno estén configuradas correctamente antes de iniciar el Jupyter Notebook. Consulte las instrucciones de configuración para</p>
+<ul>
+<li><a href="https://courses.spatialthoughts.com/pyqgis-masterclass.html#windows-configuration">Windows</a>,</li>
+<li><a href="https://courses.spatialthoughts.com/pyqgis-masterclass.html#macos-configuration">MacOS</a> y</li>
+<li><a href="https://courses.spatialthoughts.com/pyqgis-masterclass.html#linuxconda-configuration">Linux</a>.</li>
+</ul>
+<section id="inicialización-de-qgis" class="level3">
+<h3 class="anchored" data-anchor-id="inicialización-de-qgis">Inicialización de QGIS</h3>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> qgis.core <span class="im">import</span> QgsApplication</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>qgs <span class="op">=</span> QgsApplication([], <span class="va">False</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>qgs.initQgis()</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> processing</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> processing.core.Processing <span class="im">import</span> Processing</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>Processing.initialize()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="uso-de-la-api-de-pyqgis" class="level3">
+<h3 class="anchored" data-anchor-id="uso-de-la-api-de-pyqgis">Uso de la API de PyQGIS</h3>
+<p>Una vez finalizada la inicialización, es posible utilizar todas las clases y métodos de PyQGIS.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> qgis.core <span class="im">import</span> QgsDistanceArea, QgsPointXY</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>san_francisco <span class="op">=</span> (<span class="fl">37.7749</span>, <span class="op">-</span><span class="fl">122.4194</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>new_york <span class="op">=</span> (<span class="fl">40.661</span>, <span class="op">-</span><span class="fl">73.944</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> QgsDistanceArea()</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>d.setEllipsoid(<span class="st">'WGS84'</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>lat1, lon1 <span class="op">=</span> san_francisco</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>lat2, lon2 <span class="op">=</span> new_york</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>point1 <span class="op">=</span> QgsPointXY(lon1, lat1)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>point2 <span class="op">=</span> QgsPointXY(lon2, lat2)</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>distance <span class="op">=</span> d.measureLine([point1, point2])</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Ellipsoid Distance'</span>, distance<span class="op">/</span><span class="dv">1000</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Ellipsoid Distance 4145.446977549562</strong></p>
+</section>
+<section id="finalización-de-la-sesión-de-qgis" class="level3">
+<h3 class="anchored" data-anchor-id="finalización-de-la-sesión-de-qgis">Finalización de la sesión de QGIS</h3>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>qgs.exitQgis()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="uso-de-la-api-de-pyqgis-en-vs-code" class="level2" data-number="27.2">
+<h2 data-number="27.2" class="anchored" data-anchor-id="uso-de-la-api-de-pyqgis-en-vs-code"><span class="header-section-number">27.2</span> Uso de la API de PyQGIS en VS Code</h2>
+<p>La forma más sencilla de configurar Visual Studio Code para el desarrollo con PyQGIS consiste en iniciar el editor de código desde un entorno de conda con los paquetes requeridos instalados. Se sugiere consultar la guía para <a href="https://courses.spatialthoughts.com/install-qgis-ltr.html#install-qgis-via-conda">Instalación de QGIS vía Conda</a>. Una vez completada la instalación, es posible iniciar VS Code desde dicho entorno y comenzar a utilizar la API de PyQGIS. El completado de código funciona de manera inmediata sin necesidad de configuración adicional. Alexandre Neto, co-mantenedor de los paquetes de QGIS en conda, dispone también de una guía detallada para <a href="https://aneto.pt/posts/tutorials/2024-05-11-create-easy-pyqgis-developement-environment-using-conda-and-vscode/">Crear un entorno de desarrollo de PyQGIS usando Conda y VS Code</a>.</p>
+<ol type="1">
+<li>Activar el entorno de conda donde se instaló QGIS e iniciar Visual Studio Code mediante el comando <code>code</code>. Es posible que se deba <a href="https://code.visualstudio.com/docs/setup/mac#_launch-vs-code-from-the-command-line">configurar el comando code</a> para la terminal correspondiente.</li>
+</ol>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate qgis_ltr</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">code</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/vscode1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+<ol start="2" type="1">
+<li>En Visual Studio Code, ya es posible importar y utilizar todas las clases de PyQGIS. Debido a que se emplean las clases fuera de una instancia de QGIS en ejecución, es imperativo añadir líneas de inicialización en los scripts y finalizar la sesión de QGIS al concluir. El siguiente fragmento de código demuestra la configuración requerida.</li>
+</ol>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| file: code/pyqgis/code.py</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/vscode2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+<hr>
+</section>
+</section>
+<section id="suplemento" class="level1" data-number="28">
+<h1 data-number="28"><span class="header-section-number">28</span> Suplemento</h1>
+<p>Esta sección contiene fragmentos de código para operaciones comunes en PyQGIS.</p>
+<p>Todos los fragmentos de código asumen la carga previa del proyecto <code>sf.qgz</code>. El proyecto puede cargarse mediante el siguiente código:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>data_dir <span class="op">=</span> os.path.join(os.path.expanduser(<span class="st">'~'</span>), <span class="st">'Downloads'</span>, <span class="st">'pyqgis_masterclass'</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>project <span class="op">=</span> QgsProject.instance()</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>project_name <span class="op">=</span> <span class="st">'sf.qgz'</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>project_path <span class="op">=</span> os.path.join(data_dir, project_name)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>project.read(project_path)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="guardado-del-renderizado-del-mapa-como-una-imagen" class="level2" data-number="28.1">
+<h2 data-number="28.1" class="anchored" data-anchor-id="guardado-del-renderizado-del-mapa-como-una-imagen"><span class="header-section-number">28.1</span> Guardado del renderizado del mapa como una imagen</h2>
+<p>El método <code>saveAsImage()</code> es directo y sencillo; no obstante, ofrece un control limitado sobre el resultado final. No permite ajustar la resolución, el tamaño o la forma en que se renderiza cada capa. Existe un método alternativo que emplea las clases <code>QgsMapRendererParallelJob</code> y <code>QgsMapRendererSequentialJob</code> para obtener resultados superiores. El siguiente fragmento exporta una imagen de alta resolución del proyecto.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>data_dir <span class="op">=</span> os.path.join(os.path.expanduser(<span class="st">'~'</span>), <span class="st">'Downloads'</span>, <span class="st">'pyqgis_masterclass'</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>image_name <span class="op">=</span> <span class="st">'sf_hires.png'</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>image_path <span class="op">=</span> os.path.join(data_dir, image_name)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>settings <span class="op">=</span> iface.mapCanvas().mapSettings()</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>settings.setOutputSize(QSize(<span class="dv">1000</span>,<span class="dv">1000</span>))</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>settings.setFlag(QgsMapSettings.DrawLabeling, <span class="va">False</span>)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>settings.setFlag(QgsMapSettings.Antialiasing, <span class="va">True</span>)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>job <span class="op">=</span> QgsMapRendererSequentialJob(settings)</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>job.start()</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>job.waitForFinished()</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>image <span class="op">=</span> job.renderedImage()</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>image.save(image_path)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/sf_hires.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+</section>
+<section id="búsqueda-de-una-capa" class="level2" data-number="28.2">
+<h2 data-number="28.2" class="anchored" data-anchor-id="búsqueda-de-una-capa"><span class="header-section-number">28.2</span> Búsqueda de una capa</h2>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>blocks <span class="op">=</span> QgsProject.instance().mapLayersByName(<span class="st">'blocks'</span>)[<span class="dv">0</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="activación-y-desactivación-de-una-capa" class="level2" data-number="28.3">
+<h2 data-number="28.3" class="anchored" data-anchor-id="activación-y-desactivación-de-una-capa"><span class="header-section-number">28.3</span> Activación y desactivación de una capa</h2>
+<div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>blocks <span class="op">=</span> QgsProject.instance().mapLayersByName(<span class="st">'blocks'</span>)[<span class="dv">0</span>]</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>QgsProject.instance().layerTreeRoot().findLayer(blocks.<span class="bu">id</span>()).setItemVisibilityChecked(<span class="va">True</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="obtención-de-todas-las-capas" class="level2" data-number="28.4">
+<h2 data-number="28.4" class="anchored" data-anchor-id="obtención-de-todas-las-capas"><span class="header-section-number">28.4</span> Obtención de todas las capas</h2>
+<div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> layer <span class="kw">in</span> QgsProject.instance().mapLayers().values():</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(layer.name())</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="obtención-de-capas-visibles-marcadas" class="level2" data-number="28.5">
+<h2 data-number="28.5" class="anchored" data-anchor-id="obtención-de-capas-visibles-marcadas"><span class="header-section-number">28.5</span> Obtención de capas visibles (marcadas)</h2>
+<div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> layer <span class="kw">in</span> iface.mapCanvas().layers():</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(layer.name())</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="obtención-de-capas-seleccionadas" class="level2" data-number="28.6">
+<h2 data-number="28.6" class="anchored" data-anchor-id="obtención-de-capas-seleccionadas"><span class="header-section-number">28.6</span> Obtención de capas seleccionadas</h2>
+<div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> layer <span class="kw">in</span> iface.layerTreeView().selectedLayers():</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(layer.name())</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="ajuste-de-la-extensión-del-lienzo-a-la-extensión-de-la-capa" class="level2" data-number="28.7">
+<h2 data-number="28.7" class="anchored" data-anchor-id="ajuste-de-la-extensión-del-lienzo-a-la-extensión-de-la-capa"><span class="header-section-number">28.7</span> Ajuste de la extensión del lienzo a la extensión de la capa</h2>
+<p>Seleccione una de las capas en el panel de capas y ejecute el siguiente código:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>layer <span class="op">=</span> iface.activeLayer()</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>mc <span class="op">=</span> iface.mapCanvas()</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>mc.setExtent(layer.extent())</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>mc.refresh()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="obtención-de-capas-con-jerarquía" class="level2" data-number="28.8">
+<h2 data-number="28.8" class="anchored" data-anchor-id="obtención-de-capas-con-jerarquía"><span class="header-section-number">28.8</span> Obtención de capas con jerarquía</h2>
+<p>Este fragmento de código, adaptado de la guía de referencia de PyQGIS, incluye una modificación relevante: la función <code>getGroupLayers</code> se invoca de forma recursiva. Esto permite acceder incluso a las capas contenidas en subgrupos dentro de los grupos de capas.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> getGroupLayers(group):</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'- grupo:'</span> <span class="op">+</span> group.name())</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> child <span class="kw">in</span> group.children():</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">isinstance</span>(child, QgsLayerTreeGroup):</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>            getGroupLayers(child)</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">'  - capa:'</span> <span class="op">+</span> child.name())</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>root <span class="op">=</span> QgsProject.instance().layerTreeRoot()</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> child <span class="kw">in</span> root.children():</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(child, QgsLayerTreeGroup):</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>        getGroupLayers(child)</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> <span class="bu">isinstance</span>(child, QgsLayerTreeLayer):</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span> (<span class="st">"- capa: "</span> <span class="op">+</span> child.name())</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/layergroup.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</section>
+<section id="cambio-del-ícono-de-la-ventana-principal-de-qgis" class="level2" data-number="28.9">
+<h2 data-number="28.9" class="anchored" data-anchor-id="cambio-del-ícono-de-la-ventana-principal-de-qgis"><span class="header-section-number">28.9</span> Cambio del ícono de la ventana principal de QGIS</h2>
+<div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>icon_image <span class="op">=</span> <span class="st">'qgis-black.png'</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>data_dir <span class="op">=</span> os.path.join(os.path.expanduser(<span class="st">'~'</span>), <span class="st">'Downloads'</span>, <span class="st">'pyqgis_masterclass'</span>)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>icon_path <span class="op">=</span> os.path.join(data_dir, icon_image)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>icon <span class="op">=</span> QIcon(icon_path)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>iface.mainWindow().setWindowIcon(icon)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/mainwindow2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</section>
+<section id="eliminación-de-un-botón-específico-de-una-barra-de-herramientas" class="level2" data-number="28.10">
+<h2 data-number="28.10" class="anchored" data-anchor-id="eliminación-de-un-botón-específico-de-una-barra-de-herramientas"><span class="header-section-number">28.10</span> Eliminación de un botón específico de una barra de herramientas</h2>
+<p>El siguiente fragmento de código ilustra el procedimiento para identificar los nombres de los diversos widgets en la aplicación QGIS y localizar barras de herramientas y botones específicos. El código desactivará el botón Deselect All Features from Layers (Despejar selección de todas las capas) de la Selection Toolbar (Barra de herramientas de selección).</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Localizar todos los objetos hijos de mainWindow que sean del tipo QToolBar</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x <span class="kw">in</span> iface.mainWindow().findChildren(QToolBar): </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(x.objectName())</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># En la lista impresa, se observa que la barra de selección se denomina mSelectionToolBar</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtener una referencia por su nombre</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>selectionToolbar <span class="op">=</span> iface.mainWindow().findChild(QToolBar, <span class="st">'mSelectionToolBar'</span>)</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Localizar los botones en la barra de herramientas</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x <span class="kw">in</span> selectionToolbar.findChildren(QAction):</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(x.objectName())</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Alternativamente, se puede utilizar lo siguiente:</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x <span class="kw">in</span> selectionToolbar.actions():</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(x.objectName())</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Si el botón de la barra de herramientas no es una acción, se identifica por su nombre</span></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtener una referencia al botón de deselección por su nombre</span></span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>deselection <span class="op">=</span> selectionToolbar.findChild(QAction, <span class="st">'ActionDeselection'</span>)</span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Es posible desactivar un widget invocando setEnabled(False)</span></span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>deselection.setEnabled(<span class="va">False</span>)</span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Es posible eliminarlo completamente invocando removeAction()</span></span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>selectionToolbar.removeAction(deselection)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="adición-de-un-menú-desplegable-a-la-barra-de-herramientas" class="level2" data-number="28.11">
+<h2 data-number="28.11" class="anchored" data-anchor-id="adición-de-un-menú-desplegable-a-la-barra-de-herramientas"><span class="header-section-number">28.11</span> Adición de un menú desplegable a la barra de herramientas</h2>
+<p>Este ejemplo demuestra la inclusión de un widget <code>QComboBox</code> en una barra de herramientas y su población con valores de atributos de una capa. Al accionar el botón, la selección se lee desde el cuadro combinado y se emplea para aplicar un filtro a la capa.</p>
+<blockquote class="blockquote">
+<p>Se requiere una capa con un atributo denominado <strong>NAME</strong> para la ejecución de este ejemplo. Verificado con la capa <a href="https://www.naturalearthdata.com/downloads/10m-cultural-vectors/">Natural Earth Admin 0 - Countries</a>.</p>
+</blockquote>
+<div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>toolBar <span class="op">=</span> iface.addToolBar(<span class="st">"My Toolbar"</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>toolBar.setObjectName(<span class="st">"My Toolbar"</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>countryCombo <span class="op">=</span> QComboBox(toolBar)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>toolBar.addWidget(countryCombo)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>countryCombo.setToolTip(<span class="st">"Select a country (Seleccionar un país)"</span>)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>filterButton <span class="op">=</span> QPushButton(<span class="st">'Filter (Filtrar)'</span>)</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>filterButton.setToolTip(<span class="st">'Filter (Filtrar)'</span>)</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>toolBar.addWidget(filterButton)</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>resetButton <span class="op">=</span> QPushButton(<span class="st">'Reset (Reiniciar)'</span>)</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>resetButton.setToolTip(<span class="st">'Reset (Reiniciar)'</span>)</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>toolBar.addWidget(resetButton)</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Ordenar la capa por nombres de países</span></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Configurar QgsFeatureRequest y utilizarlo con getFeatures()</span></span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>request <span class="op">=</span> QgsFeatureRequest()</span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>clause <span class="op">=</span> QgsFeatureRequest.OrderByClause(<span class="st">'NAME'</span>)</span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>orderby <span class="op">=</span> QgsFeatureRequest.OrderBy([clause])</span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>request.setOrderBy(orderby)</span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>layer <span class="op">=</span> iface.activeLayer()</span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Leer los nombres de los países y almacenarlos en una lista</span></span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a>countries <span class="op">=</span> []</span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f <span class="kw">in</span> layer.getFeatures(request):</span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> f[<span class="st">'NAME'</span>]</span>
+<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> name:</span>
+<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a>        countries.append(name)</span>
+<span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-31"><a href="#cb28-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Añadir elementos al combobox</span></span>
+<span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> country <span class="kw">in</span> countries:</span>
+<span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a>    countryCombo.addItem(country)</span>
+<span id="cb28-34"><a href="#cb28-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-35"><a href="#cb28-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Definir funciones para aplicar y reiniciar filtros</span></span>
+<span id="cb28-36"><a href="#cb28-36" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> filter_layer():</span>
+<span id="cb28-37"><a href="#cb28-37" aria-hidden="true" tabindex="-1"></a>    layer <span class="op">=</span> iface.activeLayer()</span>
+<span id="cb28-38"><a href="#cb28-38" aria-hidden="true" tabindex="-1"></a>    country <span class="op">=</span> countryCombo.currentText()</span>
+<span id="cb28-39"><a href="#cb28-39" aria-hidden="true" tabindex="-1"></a>    expression <span class="op">=</span> <span class="st">'</span><span class="ch">\"</span><span class="st">NAME</span><span class="ch">\"</span><span class="st"> = </span><span class="ch">\'</span><span class="sc">{}</span><span class="ch">\'</span><span class="st">'</span>.<span class="bu">format</span>(country)</span>
+<span id="cb28-40"><a href="#cb28-40" aria-hidden="true" tabindex="-1"></a>    layer.setSubsetString(expression)</span>
+<span id="cb28-41"><a href="#cb28-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-42"><a href="#cb28-42" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> reset_layer():</span>
+<span id="cb28-43"><a href="#cb28-43" aria-hidden="true" tabindex="-1"></a>    layer <span class="op">=</span> iface.activeLayer()</span>
+<span id="cb28-44"><a href="#cb28-44" aria-hidden="true" tabindex="-1"></a>    layer.setSubsetString(<span class="st">''</span>)</span>
+<span id="cb28-45"><a href="#cb28-45" aria-hidden="true" tabindex="-1"></a>    countryCombo.clear()</span>
+<span id="cb28-46"><a href="#cb28-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> country <span class="kw">in</span> countries:</span>
+<span id="cb28-47"><a href="#cb28-47" aria-hidden="true" tabindex="-1"></a>        countryCombo.addItem(country)</span>
+<span id="cb28-48"><a href="#cb28-48" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb28-49"><a href="#cb28-49" aria-hidden="true" tabindex="-1"></a>filterButton.clicked.<span class="ex">connect</span>(filter_layer)</span>
+<span id="cb28-50"><a href="#cb28-50" aria-hidden="true" tabindex="-1"></a>resetButton.clicked.<span class="ex">connect</span>(reset_layer)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="adición-de-capas-csv" class="level2" data-number="28.12">
+<h2 data-number="28.12" class="anchored" data-anchor-id="adición-de-capas-csv"><span class="header-section-number">28.12</span> Adición de capas CSV</h2>
+<div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>data_dir <span class="op">=</span> os.path.join(os.path.expanduser(<span class="st">'~'</span>), <span class="st">'Downloads'</span>, <span class="st">'pyqgis_masterclass'</span>)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>filename <span class="op">=</span> <span class="st">'trees.csv'</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>csvpath <span class="op">=</span> <span class="st">'file:///'</span> <span class="op">+</span> data_dir <span class="op">+</span> filename</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>uri <span class="op">=</span> <span class="st">'</span><span class="sc">{}</span><span class="st">?type=csv&amp;xField=</span><span class="sc">{}</span><span class="st">&amp;yField=</span><span class="sc">{}</span><span class="st">&amp;crs=</span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    csvpath, <span class="st">'Longitude'</span>, <span class="st">'Latitude'</span>, <span class="st">'EPSG:4326'</span>)</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>iface.addVectorLayer(uri, <span class="st">'trees'</span>, <span class="st">'delimitedtext'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="inserción-de-capas-en-el-árbol-de-capas" class="level2" data-number="28.13">
+<h2 data-number="28.13" class="anchored" data-anchor-id="inserción-de-capas-en-el-árbol-de-capas"><span class="header-section-number">28.13</span> Inserción de capas en el árbol de capas</h2>
+<p>Se emplea la clase <code>QgsLayerTree</code> para insertar la capa en la ubicación adecuada del árbol.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>data_dir <span class="op">=</span> os.path.join(os.path.expanduser(<span class="st">'~'</span>), <span class="st">'Downloads'</span>, <span class="st">'pyqgis_masterclass'</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>filename <span class="op">=</span> <span class="st">'srtm.tif'</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>uri <span class="op">=</span> os.path.join(data_dir, filename)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>rlayer <span class="op">=</span> QgsRasterLayer(uri, <span class="st">'srtm'</span>, <span class="st">'gdal'</span>)</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>rastergroup <span class="op">=</span> QgsLayerTreeGroup(<span class="st">'raster layers (capas ráster)'</span>)</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>treelayer <span class="op">=</span> QgsLayerTreeLayer(rlayer)</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>rastergroup.insertChildNode(<span class="dv">0</span>, treelayer)</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>root <span class="op">=</span> QgsProject.instance().layerTreeRoot()</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>root.insertChildNode(<span class="dv">1</span>, rastergroup)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/rasterlayer.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</section>
+<section id="guardado-de-capas-en-el-disco" class="level2" data-number="28.14">
+<h2 data-number="28.14" class="anchored" data-anchor-id="guardado-de-capas-en-el-disco"><span class="header-section-number">28.14</span> Guardado de capas en el disco</h2>
+<p>Utilice las clases <code>QgsRasterFileWriter</code> o <code>QgsVectorFileWriter</code> para la escritura de capas en el almacenamiento local.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>data_dir <span class="op">=</span> os.path.join(os.path.expanduser(<span class="st">'~'</span>), <span class="st">'Downloads'</span>, <span class="st">'pyqgis_masterclass'</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>options <span class="op">=</span> QgsVectorFileWriter.SaveVectorOptions()</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>options.actionOnExistingFile <span class="op">=</span> QgsVectorFileWriter.CreateOrOverwriteLayer </span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>options.layerName <span class="op">=</span> <span class="st">'point'</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>filename <span class="op">=</span> <span class="st">'sf.gpkg'</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> os.path.join(data_dir, filename)</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>QgsVectorFileWriter.writeAsVectorFormat(vlayer, path, options)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="visualización-de-una-etiqueta-con-color-de-fondo" class="level2" data-number="28.15">
+<h2 data-number="28.15" class="anchored" data-anchor-id="visualización-de-una-etiqueta-con-color-de-fondo"><span class="header-section-number">28.15</span> Visualización de una etiqueta con color de fondo</h2>
+<p>Este es un tema extenso, pero permite apreciar la flexibilidad que ofrece la API para controlar todos los aspectos del etiquetado. Se observa el nombre de la clase <code>QgsPalLayerSettings</code>, debido a que QGIS utiliza una librería de etiquetado denominada <a href="http://pal.heig-vd.ch/index.php?page=about-pal">PAL</a>. El siguiente fragmento de código ilustra el procedimiento para crear una etiqueta en una capa de puntos con un color de fondo.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>vlayer <span class="op">=</span> QgsProject.instance().mapLayersByName(<span class="st">'point'</span>)[<span class="dv">0</span>]</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>symbol <span class="op">=</span> QgsMarkerSymbol.createSimple({<span class="st">'name'</span>: <span class="st">'square'</span>, <span class="st">'color'</span>: <span class="st">'red'</span>})</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>vlayer.renderer().setSymbol(symbol)</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>label_settings <span class="op">=</span> QgsPalLayerSettings()</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="co">#label_settings.drawBackground = True</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>label_settings.fieldName <span class="op">=</span> <span class="st">'name'</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>text_format <span class="op">=</span> QgsTextFormat()</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>background_color <span class="op">=</span> QgsTextBackgroundSettings()</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>background_color.setFillColor(QColor(<span class="st">'white'</span>))</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>background_color.setEnabled(<span class="va">True</span>)</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>text_format.setBackground(background_color )</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>label_settings.setFormat(text_format)</span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>vlayer.setLabeling(QgsVectorLayerSimpleLabeling(label_settings))</span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>vlayer.setLabelsEnabled(<span class="va">True</span>)</span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>vlayer.triggerRepaint()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/label.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+</section>
+<section id="edición-de-la-tabla-de-atributos-de-una-capa-vectorial" class="level2" data-number="28.16">
+<h2 data-number="28.16" class="anchored" data-anchor-id="edición-de-la-tabla-de-atributos-de-una-capa-vectorial"><span class="header-section-number">28.16</span> Edición de la tabla de atributos de una capa vectorial</h2>
+<p>Al utilizar procesos de procesamiento, cada algoritmo genera una capa nueva. Este ejemplo demuestra el procedimiento para emplear el procesamiento con el fin de sobrescribir la capa original con los resultados obtenidos.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>data_dir <span class="op">=</span> os.path.join(os.path.expanduser(<span class="st">'~'</span>), <span class="st">'Downloads'</span>, <span class="st">'pyqgis_masterclass'</span>)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>filename <span class="op">=</span> <span class="st">'sf.gpkg|layername=blocks'</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>uri <span class="op">=</span> os.path.join(data_dir, filename)</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>blocks <span class="op">=</span> QgsVectorLayer(uri, <span class="st">'blocks'</span>, <span class="st">'ogr'</span>)</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> processing.run(</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"qgis:deletecolumn"</span>, </span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'INPUT'</span>: blocks,<span class="st">'COLUMN'</span>:[<span class="st">'multigeom'</span>],<span class="st">'OUTPUT'</span>:<span class="st">'memory:'</span>})</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>outputlayer <span class="op">=</span> output[<span class="st">'OUTPUT'</span>]</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>final <span class="op">=</span> processing.run(<span class="st">"qgis:fieldcalculator"</span>,</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'INPUT'</span>:outputlayer,</span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">'FIELD_NAME'</span>:<span class="st">'area'</span>,</span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">'FIELD_TYPE'</span>:<span class="dv">0</span>,</span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">'FIELD_LENGTH'</span>:<span class="dv">10</span>,</span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">'FIELD_PRECISION'</span>:<span class="dv">3</span>,</span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">'NEW_FIELD'</span>:<span class="va">True</span>,</span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">'FORMULA'</span>:<span class="st">'$area'</span>,</span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">'OUTPUT'</span>:<span class="st">'memory:'</span>})</span>
+<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a>finallayer <span class="op">=</span> final[<span class="st">'OUTPUT'</span>]</span>
+<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a>options <span class="op">=</span> QgsVectorFileWriter.SaveVectorOptions()</span>
+<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Se sobrescribe la capa original</span></span>
+<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a>options.layerName <span class="op">=</span> <span class="st">'blocks'</span></span>
+<span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a>options.actionOnExistingFile <span class="op">=</span> QgsVectorFileWriter.CreateOrOverwriteLayer </span>
+<span id="cb33-29"><a href="#cb33-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-30"><a href="#cb33-30" aria-hidden="true" tabindex="-1"></a>output_file <span class="op">=</span> <span class="st">'sf.gpkg'</span></span>
+<span id="cb33-31"><a href="#cb33-31" aria-hidden="true" tabindex="-1"></a>output_path <span class="op">=</span> os.path.join(data_dir, output_file)</span>
+<span id="cb33-32"><a href="#cb33-32" aria-hidden="true" tabindex="-1"></a>QgsVectorFileWriter.writeAsVectorFormat(finallayer, output_path, options)</span>
+<span id="cb33-33"><a href="#cb33-33" aria-hidden="true" tabindex="-1"></a>QgsProject.instance().reloadAllLayers()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="creación-de-un-pdf-con-título" class="level2" data-number="28.17">
+<h2 data-number="28.17" class="anchored" data-anchor-id="creación-de-un-pdf-con-título"><span class="header-section-number">28.17</span> Creación de un PDF con título</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/layout.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>data_dir <span class="op">=</span> os.path.join(os.path.expanduser(<span class="st">'~'</span>), <span class="st">'Downloads'</span>, <span class="st">'pyqgis_masterclass'</span>)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>project <span class="op">=</span> QgsProject.instance()</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>extent <span class="op">=</span> QgsRectangle(<span class="op">-</span><span class="fl">122.52</span>, <span class="fl">37.71</span>, <span class="op">-</span><span class="fl">122.35</span>, <span class="fl">37.83</span>)</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>layout <span class="op">=</span> QgsPrintLayout(project)</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>layout.initializeDefaults()</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>pages <span class="op">=</span> layout.pageCollection()</span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>pages.beginPageSizeChange()</span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>page <span class="op">=</span> pages.page(<span class="dv">0</span>)</span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>page.setPageSize(<span class="st">'A4'</span>,  QgsLayoutItemPage.Landscape)</span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>pages.endPageSizeChange()</span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>page_center <span class="op">=</span> page.pageSize().width() <span class="op">/</span> <span class="dv">2</span></span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a><span class="bu">map</span> <span class="op">=</span> QgsLayoutItemMap(layout)</span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a><span class="bu">map</span>.setRect(QRectF(<span class="op">-</span><span class="fl">122.52</span>, <span class="fl">37.71</span>, <span class="op">-</span><span class="fl">122.35</span>, <span class="fl">37.83</span>))</span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a><span class="bu">map</span>.setExtent(extent)</span>
+<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a>a4 <span class="op">=</span> QPageSize().size(QPageSize.A4, QPageSize.Millimeter)</span>
+<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a><span class="bu">map</span>.attemptResize(QgsLayoutSize(a4.height(),  a4.width()))</span>
+<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a>layout.addItem(<span class="bu">map</span>)</span>
+<span id="cb34-26"><a href="#cb34-26" aria-hidden="true" tabindex="-1"></a>title <span class="op">=</span> QgsLayoutItemLabel(layout)</span>
+<span id="cb34-27"><a href="#cb34-27" aria-hidden="true" tabindex="-1"></a>title.setText(<span class="st">'San Francisco'</span>)</span>
+<span id="cb34-28"><a href="#cb34-28" aria-hidden="true" tabindex="-1"></a>title.setFont(QFont(<span class="st">'Arial'</span>, <span class="dv">36</span>))</span>
+<span id="cb34-29"><a href="#cb34-29" aria-hidden="true" tabindex="-1"></a>title.adjustSizeToText()</span>
+<span id="cb34-30"><a href="#cb34-30" aria-hidden="true" tabindex="-1"></a>title.setReferencePoint(QgsLayoutItem.UpperMiddle)</span>
+<span id="cb34-31"><a href="#cb34-31" aria-hidden="true" tabindex="-1"></a>title.attemptMove(QgsLayoutPoint(page_center, <span class="dv">10</span>))</span>
+<span id="cb34-32"><a href="#cb34-32" aria-hidden="true" tabindex="-1"></a>layout.addItem(title)</span>
+<span id="cb34-33"><a href="#cb34-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-34"><a href="#cb34-34" aria-hidden="true" tabindex="-1"></a>output_file <span class="op">=</span> <span class="st">'sf.pdf'</span></span>
+<span id="cb34-35"><a href="#cb34-35" aria-hidden="true" tabindex="-1"></a>output_path <span class="op">=</span> os.path.join(data_dir, output_file)</span>
+<span id="cb34-36"><a href="#cb34-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-37"><a href="#cb34-37" aria-hidden="true" tabindex="-1"></a>exporter <span class="op">=</span> QgsLayoutExporter(layout)</span>
+<span id="cb34-38"><a href="#cb34-38" aria-hidden="true" tabindex="-1"></a>exporter.exportToPdf(</span>
+<span id="cb34-39"><a href="#cb34-39" aria-hidden="true" tabindex="-1"></a>    output_path, QgsLayoutExporter.PdfExportSettings())</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/layoutpdf.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+</section>
+<section id="creación-de-una-línea-geodésica" class="level2" data-number="28.18">
+<h2 data-number="28.18" class="anchored" data-anchor-id="creación-de-una-línea-geodésica"><span class="header-section-number">28.18</span> Creación de una línea geodésica</h2>
+<p>Conecta dos puntos mediante el arco de un círculo máximo a lo largo de un elipsoide. Utiliza el método <code>geodesicLine()</code> proporcionado por la clase <code>QgsDistanceArea()</code> para el cálculo.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/geodesic_line.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| file: code/pyqgis/geodesic_line.py</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="simplificación-de-scripts-de-procesamiento" class="level2" data-number="28.19">
+<h2 data-number="28.19" class="anchored" data-anchor-id="simplificación-de-scripts-de-procesamiento"><span class="header-section-number">28.19</span> Simplificación de scripts de procesamiento</h2>
+<p>El Processing Framework (Entorno de procesamiento) proporciona una forma más sencilla de escribir scripts de procesamiento mediante el uso del decorador <code>@alg</code>. Al emplear este enfoque, es posible eliminar gran parte del código base (boilerplate) y centrarse exclusivamente en la escritura de la función principal del algoritmo. Este método presenta algunas limitaciones, siendo la principal que los scripts escritos con el decorador <code>@alg</code> no pueden utilizarse en complementos. No obstante, si el objetivo es crear scripts de procesamiento, este estilo resulta mucho más simple.</p>
+<blockquote class="blockquote">
+<p>Nota: El decorador <code>@alg</code> no puede utilizarse en complementos. Si se están escribiendo algoritmos de procesamiento para un complemento, se debe utilizar la plantilla de script completa mostrada en la sección anterior.</p>
+</blockquote>
+<p>A continuación, se modifica el script <code>save_attributes_algorithm.py</code> cubierto en la sección anterior para utilizar el decorador <code>@alg</code> integrado. Localice el script en la <strong>Processing Toolbox (Caja de herramientas de procesamiento)</strong> bajo <strong>Scripts (Scripts) → Save Attributes As CSV (Guardar atributos como CSV)</strong>. Haga clic derecho sobre él y seleccione <strong>Edit Script… (Editar script…)</strong>. Reemplace todo el código en el <strong>Processing Script Editor (Editor de scripts de procesamiento)</strong> con el siguiente y haga clic en el botón <strong>Save Script (Guardar script)</strong>:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| file: code/pyqgis/save_attributes_decorator.py</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Al ejecutar el script, se observará que el comportamiento es casi idéntico, pero el código es significativamente más sencillo. El código emplea el decorador <code>@alg</code> para definir el nombre del algoritmo, el grupo, las entradas y las salidas de una manera más concisa.</p>
+<p>Otro punto importante a considerar es que, para crear un algoritmo de procesamiento, se debe generar una clase que herede de <code>QgsProcessingAlgorithm</code>. Al escribir una clase, se hace referencia a la instancia actual de la misma con la palabra clave <code>self</code>. En este caso, al escribir solo una función, el decorador creará la clase automáticamente. Por ello, se utiliza un parámetro denominado <code>instance</code>. Cuando el decorador genere la clase, la referencia a la instancia se pasará a la función a través de este parámetro.</p>
+</section>
+<section id="renombrado-de-capas-de-salida-temporales" class="level2" data-number="28.20">
+<h2 data-number="28.20" class="anchored" data-anchor-id="renombrado-de-capas-de-salida-temporales"><span class="header-section-number">28.20</span> Renombrado de capas de salida temporales</h2>
+<p>Cuando se ejecuta un algoritmo de procesamiento y se opta por generar una capa de salida temporal, la capa resultante tiene un nombre predeterminado establecido por el algoritmo. Si se desea asignar un nombre diferente a la capa de salida temporal, es posible adoptar un enfoque alternativo. El fragmento de código siguiente muestra cómo renombrar la capa de salida para que incluya el nombre de la capa de entrada. Como resultado, la capa de sombreado de salida se denominará <code>srtm_hillshade</code> en lugar del nombre predeterminado <code>Hillshade</code>.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>data_dir <span class="op">=</span> os.path.join(os.path.expanduser(<span class="st">'~'</span>), <span class="st">'Downloads'</span>, <span class="st">'pyqgis_masterclass'</span>)</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>filename <span class="op">=</span> <span class="st">'srtm.tif'</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>srtm <span class="op">=</span> os.path.join(data_dir, filename)</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> processing.run(<span class="st">"native:hillshade"</span>, </span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'INPUT'</span>: srtm, </span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Z_FACTOR'</span>: <span class="dv">2</span>,</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'AZIMUTH'</span>: <span class="dv">300</span>,</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'V_ANGLE'</span>: <span class="dv">40</span>,</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'OUTPUT'</span>: <span class="st">'TEMPORARY_OUTPUT'</span>})</span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtener la ruta de la capa generada</span></span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> results[<span class="st">'OUTPUT'</span>]</span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraer el nombre del archivo</span></span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a>input_layer_name <span class="op">=</span> os.path.splitext(os.path.basename(srtm))[<span class="dv">0</span>]</span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a>output_layer <span class="op">=</span> QgsRasterLayer(output)</span>
+<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Establecer el nombre de la capa para incluir el nombre del archivo de entrada</span></span>
+<span id="cb37-23"><a href="#cb37-23" aria-hidden="true" tabindex="-1"></a>output_layer.setName(<span class="ss">f'</span><span class="sc">{</span>input_layer_name<span class="sc">}</span><span class="ss">_hillshade'</span>)</span>
+<span id="cb37-24"><a href="#cb37-24" aria-hidden="true" tabindex="-1"></a>QgsProject.instance().addMapLayer(output_layer)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="selección-de-objetos-conectados-mediante-acciones" class="level2" data-number="28.21">
+<h2 data-number="28.21" class="anchored" data-anchor-id="selección-de-objetos-conectados-mediante-acciones"><span class="header-section-number">28.21</span> Selección de objetos conectados mediante acciones</h2>
+<p>En la sección de selección de vecinos, se analizó cómo crear una acción para seleccionar los vecinos de primer y segundo grado de un objeto espacial. Es posible extender este código para seleccionar vecinos de grado n, lo que permite seleccionar rápidamente regiones contiguas en una capa. Se puede crear una <strong>Python Action (Acción de Python)</strong> denominada <strong>Select Connected Features (Seleccionar objetos conectados)</strong> con el código siguiente. El uso de la acción sobre un objeto seleccionará todos los elementos conectados con un solo clic.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pyqgis/select_connected.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>layer_id <span class="op">=</span> <span class="st">'[%@layer_id%]'</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>fid <span class="op">=</span> [<span class="op">%</span> $id <span class="op">%</span>]</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>layer <span class="op">=</span> QgsProject.instance().mapLayer(layer_id)</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_neighbors(feature):</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>    bbox <span class="op">=</span> feature.geometry().boundingBox()</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>    neighbors <span class="op">=</span> []</span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> f <span class="kw">in</span> layer.getFeatures(bbox):</span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> f.<span class="bu">id</span>() <span class="op">!=</span> feature.<span class="bu">id</span>() <span class="kw">and</span> f.geometry().intersects(feature.geometry()):</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>            neighbors.append(f.<span class="bu">id</span>())</span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> neighbors</span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Inicializar la selección con el objeto en el que se hizo clic</span></span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a>visited <span class="op">=</span> <span class="bu">set</span>()</span>
+<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a>to_visit <span class="op">=</span> <span class="bu">set</span>([fid])</span>
+<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> to_visit:</span>
+<span id="cb38-20"><a href="#cb38-20" aria-hidden="true" tabindex="-1"></a>    current_id <span class="op">=</span> to_visit.pop()</span>
+<span id="cb38-21"><a href="#cb38-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> current_id <span class="kw">in</span> visited:</span>
+<span id="cb38-22"><a href="#cb38-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">continue</span></span>
+<span id="cb38-23"><a href="#cb38-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-24"><a href="#cb38-24" aria-hidden="true" tabindex="-1"></a>    visited.add(current_id)</span>
+<span id="cb38-25"><a href="#cb38-25" aria-hidden="true" tabindex="-1"></a>    current_feature <span class="op">=</span> layer.getFeature(current_id)</span>
+<span id="cb38-26"><a href="#cb38-26" aria-hidden="true" tabindex="-1"></a>    neighbors <span class="op">=</span> get_neighbors(current_feature)</span>
+<span id="cb38-27"><a href="#cb38-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-28"><a href="#cb38-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Añadir vecinos no visitados a la cola</span></span>
+<span id="cb38-29"><a href="#cb38-29" aria-hidden="true" tabindex="-1"></a>    new_neighbors <span class="op">=</span> <span class="bu">set</span>(neighbors) <span class="op">-</span> visited</span>
+<span id="cb38-30"><a href="#cb38-30" aria-hidden="true" tabindex="-1"></a>    to_visit.update(new_neighbors)</span>
+<span id="cb38-31"><a href="#cb38-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-32"><a href="#cb38-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Aplicar la selección final</span></span>
+<span id="cb38-33"><a href="#cb38-33" aria-hidden="true" tabindex="-1"></a>layer.selectByIds(<span class="bu">list</span>(visited))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="uso-de-código-de-otros-complementos-using-code-from-plugins" class="level1" data-number="29">
+<h1 data-number="29"><span class="header-section-number">29</span> Uso de código de otros complementos (Using code from plugins)</h1>
+<p>Es posible acceder a las clases y métodos de otros complementos mediante PyQGIS. Se puede acceder a todos los complementos instalados mediante el módulo <code>qgis.utils</code> y utilizar el código correspondiente de la siguiente manera:</p>
+<p>Imprimir la lista de complementos instalados:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(qgis.utils.plugins.keys())</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Acceder al método de un complemento (reemplazar <code>PluginName</code> con el nombre obtenido de la lista anterior):</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>myPlugin <span class="op">=</span> qgis.utils.plugins[<span class="st">'PluginName'</span>]</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> myPlugin.A()</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>A.my_method()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="especificación-de-dependencias-de-complementos-specifying-plugin-dependencies" class="level1" data-number="30">
+<h1 data-number="30"><span class="header-section-number">30</span> Especificación de dependencias de complementos (Specifying plugin dependencies)</h1>
+<p>El Plugin Manager (Administrador de complementos) de QGIS admite la instalación de dependencias de otros complementos a través del metadato <code>plugin_dependencies</code> en el archivo <a href="https://docs.qgis.org/3.44/en/docs/pyqgis_developer_cookbook/plugins/plugins.html#metadata-txt"><code>metadata.txt</code></a>. El administrador de complementos solicitará al usuario la instalación de estas dependencias al momento de instalar el complemento principal. Existe un complemento reciente denominado <a href="https://github.com/opengisch/qpip"><code>qpip</code></a> que aprovecha esta funcionalidad y permite especificar paquetes adicionales de Python requeridos por el complemento. Esta representa la forma más elegante de incluir librerías externas. Se requieren dos cambios en el desarrollo para utilizar esta característica:</p>
+<ol type="1">
+<li>Añadir <strong>qpip</strong> en el campo <code>plugin_dependencies</code> del archivo <code>metadata.txt</code>.</li>
+<li>Añadir un archivo <code>requirements.txt</code> con la lista de paquetes que se instalarán con el complemento en el formato estándar <a href="https://pip.pypa.io/en/stable/reference/requirements-file-format/">soportado por pip</a>.</li>
+</ol>
+<p>Por ejemplo, si se requiere la instalación del paquete <code>prettyprint</code> junto con el complemento, se deben realizar las siguientes modificaciones:</p>
+<p>Modificar el archivo <code>metadata.txt</code> para incluir el metadato de dependencias:</p>
+<pre class="text"><code>[general]
+name=Save Attributes
+description=This plugin saves the attributes of the selected vector layer as a CSV file
+version=1.0
+qgisMinimumVersion=3.0
+author=Ujaval Gandhi
+email=ujaval@spatialthoughts.com
+icon=logo.png
+plugin_dependencies=qpip</code></pre>
+<p>Añadir un nuevo archivo en el directorio del complemento denominado <code>requirements.txt</code> con el siguiente contenido:</p>
+<pre class="text"><code>prettyprint</code></pre>
+<p>Esto solicitará al usuario la instalación previa del complemento <code>qpip</code> y, posteriormente, presentará un diálogo para instalar el paquete de Python en caso de que este no se encuentre en el sistema.</p>
+</section>
+<section id="uso-de-enlaces-simbólicos-para-el-desarrollo-de-complementos-using-symbolic-links-for-plugin-development" class="level1" data-number="31">
+<h1 data-number="31"><span class="header-section-number">31</span> Uso de enlaces simbólicos para el desarrollo de complementos (Using symbolic links for plugin development)</h1>
+<p>El Plugin Manager (Administrador de complementos) carga los componentes desde el directorio de complementos del perfil actual. Durante el desarrollo de complementos para QGIS, generalmente se trabaja en un directorio distinto (comúnmente en un repositorio de Git) y se debe copiar manualmente el código al directorio de complementos para las pruebas. Los <a href="https://www.geeksforgeeks.org/creating-symbolic-links-on-windows/">Enlaces simbólicos (Symbolic links)</a> constituyen una solución eficiente que permite crear vínculos en el directorio de complementos que apuntan directamente al directorio de desarrollo.</p>
+<section id="windows" class="level3">
+<h3 class="anchored" data-anchor-id="windows">Windows</h3>
+<p>Se puede utilizar el comando <strong>MKLINK</strong> desde el Command Prompt (Símbolo del sistema) de Windows para crear el vínculo.</p>
+<p>El siguiente comando crea un enlace simbólico de carpeta en el perfil que apunta a la carpeta física en el equipo:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="ex">mklink</span> /d <span class="op">&lt;</span>ruta de la carpeta del complemento en el perfil<span class="op">&gt;</span> <span class="op">&lt;</span>ruta de la carpeta en el entorno de desarrollo<span class="op">&gt;</span> </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="linux-y-mac" class="level3">
+<h3 class="anchored" data-anchor-id="linux-y-mac">Linux y Mac</h3>
+<p>El comando <strong>ln</strong> permite crear enlaces simbólicos desde la Terminal (Terminal).</p>
+<blockquote class="blockquote">
+<p>Es importante notar que el comando <code>ln</code> utiliza un orden de parámetros que puede resultar poco intuitivo.</p>
+</blockquote>
+<div class="sourceCode" id="cb44"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> <span class="op">&lt;</span>ruta de la carpeta en el entorno de desarrollo<span class="op">&gt;</span> <span class="op">&lt;</span>ruta de la carpeta del complemento en el perfil<span class="op">&gt;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Por ejemplo, el siguiente comando crea un enlace simbólico en la carpeta de complementos del perfil predeterminado que apunta a una carpeta ubicada en el escritorio:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="va">PROFILE_FOLDER</span><span class="op">=</span>/Users/ujavalgandhi/Library/Application\ Support/QGIS/QGIS3/profiles/default</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> ~/Desktop/basemap_loader <span class="va">$PROFILE_FOLDER</span>/python/plugins/basemap_loader</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="siguientes-pasos-what-next" class="level1" data-number="32">
+<h1 data-number="32"><span class="header-section-number">32</span> Siguientes pasos (What next?)</h1>
+<p>Se dispone de diversos tutoriales y guías paso a paso sobre el desarrollo en PyQGIS para practicar las habilidades adquiridas y fortalecer el dominio de la herramienta.</p>
+<p><strong>Tutoriales</strong></p>
+<ul>
+<li><a href="https://www.qgistutorials.com/en/docs/3/getting_started_with_pyqgis.html" target="_blank">Introducción a la programación en Python</a></li>
+<li><a href="https://www.qgistutorials.com/en/docs/3/processing_algorithms_pyqgis.html" target="_blank">Ejecución de algoritmos de procesamiento mediante Python</a></li>
+<li><a href="https://www.qgistutorials.com/en/docs/3/custom_python_functions.html" target="_blank">Uso de funciones de expresión personalizadas en Python</a></li>
+<li><a href="https://www.qgistutorials.com/en/docs/3/processing_python_scripts.html" target="_blank">Escritura de scripts de Python para el Processing Framework</a></li>
+<li><a href="https://www.qgistutorials.com/en/docs/3/building_a_python_plugin.html" target="_blank">Construcción de un complemento de Python</a></li>
+<li><a href="https://www.qgistutorials.com/en/docs/3/processing_python_plugin.html" target="_blank">Construcción de un complemento de procesamiento</a></li>
+</ul>
+<p><strong>Guías</strong></p>
+<ul>
+<li><a href="https://spatialthoughts.com/2020/02/22/snap-to-roads-qgis-and-osrm/" target="_blank">Ajuste de trazas GPS a carreteras mediante PyQGIS y OSRM</a></li>
+<li><a href="https://spatialthoughts.com/2019/04/05/geodesic-buffers-in-qgis/" target="_blank">Aproximación de buffers geodésicos con PyQGIS</a></li>
+<li><a href="https://spatialthoughts.com/2020/02/09/exporting-map-layouts/" target="_blank">Exportación de diseños de impresión desde scripts de procesamiento</a></li>
+<li><a href="https://spatialthoughts.com/2021/01/31/equal-sized-kmeans-qgis/" target="_blank">Agrupamiento K-Means con clústeres de tamaño igual en QGIS</a></li>
+<li><a href="https://spatialthoughts.com/2020/04/04/ndvi-time-series-gee-qgis/" target="_blank">Creación de mapas con Google Earth Engine y PyQGIS</a></li>
+</ul>
+</section>
+<section id="recursos-resources" class="level1" data-number="33">
+<h1 data-number="33"><span class="header-section-number">33</span> Recursos (Resources)</h1>
+<ul>
+<li>Documentación oficial de QGIS: <a href="https://docs.qgis.org/testing/en/docs/pyqgis_developer_cookbook/" target="_blank">PyQGIS Developer Cookbook</a></li>
+<li><a href="https://anitagraser.com/pyqgis-101-introduction-to-qgis-python-programming-for-non-programmers/" target="_blank">PyQGIS 101: Introducción a la programación en QGIS con Python para no programadores</a> por Anita Graser</li>
+<li><a href="https://webgeodatavore.github.io/pyqgis-samples/" target="_blank">Ejemplos de PyQGIS</a> por Thomas Gratier</li>
+<li><a href="https://github.com/haubourg/custom-osgeo4w-qgis" target="_blank">Despliegue de una versión personalizada de QGIS</a> por Régis Haubourg</li>
+</ul>
+</section>
+<section id="créditos-de-los-datos-data-credits" class="level1" data-number="34">
+<h1 data-number="34"><span class="header-section-number">34</span> Créditos de los datos (Data credits)</h1>
+<ul>
+<li><code>blocks</code>, <code>parcels</code>, <code>streets</code>, <code>zoning</code>, <code>trees</code>, <code>seasmic_zones</code>, <code>shoreline</code>: Descargados desde el portal de datos abiertos <a href="https://datasf.org/opendata/">DataSF Open Data Portal</a>.</li>
+<li><code>srtm</code>: NASA Shuttle Radar Topography Mission Global 1 arc second, proporcionado por The Land Processes Distributed Active Archive Center (LP DAAC). Descargado mediante el <a href="https://dwtkns.com/srtm30m/">30-Meter SRTM Tile Downloader</a>.</li>
+<li><code>aoi</code>: Límites de lugares de California de los archivos 2016 TIGER/Line Shapefiles. Descargados desde el portal de datos abiertos <a href="https://data.ca.gov/dataset/ca-geographic-boundaries">California Open Data Portal</a>.</li>
+<li><code>populated_places</code>: Elaborado con Natural Earth. Datos de mapas vectoriales y ráster gratuitos disponibles en <a href="https://www.naturalearthdata.com/">naturalearthdata.com</a>.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./22-pyQGIS_part1.html" class="pagination-link" aria-label="Personalizar QGIS con Python: Primera Parte">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Personalizar QGIS con Python: Primera Parte</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./98-errata.html" class="pagination-link" aria-label="Errata">
+        <span class="nav-page-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Errata</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -60,13 +60,14 @@ book:
       chapters:
         - 18-fundamentos_raster.qmd
         - 19-operaciones_raster.qmd
+    - part: "Datos Multidimensionales"
+      chapters:
         - 20-cubos_multidimensionales.qmd
         - 21-cubos_multidimensionales_vector_raster.qmd
-    - part: "Datos Multidimensionales e Hiperespectrales"
+    - part: "pyQGIS"
       chapters:
-        - 98-errata.qmd
-        # - 21-cubos_multidimensionales.qmd     
-        # - 22-datos_hiperespectrales.qmd
+        - 22-pyQGIS_part1.qmd
+        - 23-pyQGIS_part2.qmd
     - part: "Tópicos Avanzados y Visualización"
       chapters:
         - 98-errata.qmd

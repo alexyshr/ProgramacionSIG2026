@@ -190,3 +190,9 @@ https://servir-amazonia.github.io/trinidad-and-tobago-training/
 	
 https://servir-amazonia.github.io/guyana-training/intro-to-remote-sensing/solutions.html
 
+###############
+
+Guia paso a paso para obtener una cuenta en gee
+
+https://courses.spatialthoughts.com/gee-sign-up.html
+

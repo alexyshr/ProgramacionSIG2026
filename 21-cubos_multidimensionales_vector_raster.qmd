@@ -29,10 +29,6 @@ execute:
 engine: knitr
 ---
 
-execute:
-  cache: true      
-  freeze: auto     
-
 ## Funciones j_eval y j_plot en R
 
 ```{r}

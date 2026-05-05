@@ -14,3 +14,7 @@ l.42596 ...width,height=\textheight]{julia_plot.png}
 
 
 see /home/rstudio/work/01_prog_sig/index.log for more information.
+
+
+
+Pone primero la explicación de period de retorno y probabilidad de excedencia
