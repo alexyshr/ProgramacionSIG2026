@@ -44,6 +44,15 @@ El presente capítulo establece los fundamentos teóricos y prácticos para la a
 
 A lo largo de esta primera parte, se explorará la arquitectura de la Interfaz de Programación de Aplicaciones (API) de QGIS, abordando desde la interacción directa con el lienzo y los metadatos del proyecto, hasta la integración de bibliotecas externas y el uso de algoritmos nativos a través del framework de procesamiento. Asimismo, se introducirán conceptos fundamentales de diseño de Interfaces Gráficas de Usuario (GUI) utilizando PyQt, lo que permitirá construir interacciones robustas entre el analista y los scripts desarrollados.
 
+
+::: {.callout-note}
+## Ecosistema de desarrollo: Qt y PyQt
+
+* **Qt:** Es un marco de trabajo (*framework*) multiplataforma, desarrollado originalmente en C++, utilizado para el **diseño de interfaces gráficas** de usuario (GUI) y el desarrollo de aplicaciones avanzadas. Constituye la base estructural sobre la cual está construido el entorno de escritorio de QGIS.
+* **PyQt:** Es el conjunto de extensiones (*bindings*) de Python para Qt. Permite acceder a las bibliotecas nativas de C++ desde scripts de Python, facilitando la creación de ventanas, botones y diálogos interactivos dentro del ecosistema de PyQGIS.
+:::
+
+
 ## Enfoques de implementación y su alcance técnico
 
 El ecosistema de QGIS ofrece múltiples vías para la ejecución de código Python, cada una con un alcance y un propósito arquitectónico distinto. Comprender cuándo utilizar un script interactivo en la consola frente a cuándo empaquetar la lógica en un complemento de procesamiento es una decisión de ingeniería de software crítica.
@@ -51,12 +60,12 @@ El ecosistema de QGIS ofrece múltiples vías para la ejecución de código Pyth
 A continuación se presenta una matriz comparativa de los métodos de implementación que se estudiarán en este capítulo, detallando sus contextos de uso, ventajas operativas y limitaciones inherentes.
 
 | Enfoque de implementación | Descripción y contexto de uso | Ventajas analíticas | Limitaciones técnicas |
-| :--- | :--- | :--- | :--- |
-| **Consola de Python y editor integrado** | Ejecución directa de bloques de código en vivo (`.py`). Ideal para prototipado rápido, consultas espaciales puntuales y tareas de limpieza de datos ad-hoc. | Retroalimentación inmediata. Acceso directo a variables de sesión y elementos de la interfaz a través del objeto `iface`. | Carece de interfaz gráfica para usuarios finales. No es fácilmente distribuible y bloquea el hilo principal de QGIS en procesos pesados. |
-| **Scripts de inicialización (`startup.py`)** | Archivo ejecutado automáticamente durante el arranque del sistema. Utilizado para configuraciones de entorno y estandarización de interfaz en laboratorios. | Permite forzar configuraciones globales (ej. CRS predeterminado, variables globales o menús corporativos) antes de la interacción del usuario. | Afecta globalmente la instalación. Errores de sintaxis no controlados pueden generar fallos en el arranque de la aplicación. |
-| **Complementos estándar con GUI** | Herramientas interactivas añadidas a la barra de herramientas o menús. Ideales para procesos que requieren alta interacción visual (ej. capturar clics en el mapa). | Máxima flexibilidad en el diseño de interfaces (PyQt5). Integración profunda con los eventos del lienzo y señales del núcleo de la aplicación. | Mayor complejidad de desarrollo. La gestión de validaciones, entradas/salidas y reportes de progreso debe programarse manualmente desde cero. |
-| **Scripts de procesamiento (Processing scripts)** | Archivos Python integrados directamente en la caja de herramientas de QGIS (`Processing Toolbox`). Diseñados para procesos algorítmicos estandarizados. | Desarrollo acelerado. Generación automática de la interfaz de usuario. Facilita la ejecución por lotes (*batch processing*) y la inserción en Model Builder. | Flexibilidad gráfica limitada a los controles del framework. Menor capacidad para manipular menús o interactuar gráficamente con el lienzo. |
-| **Complementos de procesamiento (Processing plugins)** | Empaquetado formal de uno o varios scripts de procesamiento dentro de la estructura de un plugin distribuible. Es el estándar de la industria. | Combina la distribución formal de un complemento con la estabilidad y compatibilidad del framework de procesamiento. Altamente escalable. | Requiere el manejo de una estructura de múltiples archivos (`__init__.py`, metadatos, proveedor, algoritmo) bajo un paradigma estricto de orientación a objetos. |
+| :- | :--- | :--- | :--- |
+| **Consola de Python y editor integrado** | Ejecución directa de bloques de código en vivo (`.py`). Ideal para **prototipado rápido**, consultas espaciales puntuales y tareas de limpieza de datos ad-hoc. | Retroalimentación inmediata. Acceso directo a variables de sesión y elementos de la interfaz a través del objeto `iface`. | **Carece de interfaz gráfica** para usuarios finales. No es fácilmente distribuible y bloquea el hilo principal de QGIS en procesos pesados. |
+| **Scripts de inicialización (`startup.py`)** | Archivo **ejecutado automáticamente** durante el arranque del sistema. Utilizado para configuraciones de entorno y estandarización de interfaz en laboratorios. | Permite **forzar configuraciones globales** (ej. CRS predeterminado, **variables globales** o **menús corporativos**) antes de la interacción del usuario. | Afecta globalmente la instalación. Errores de sintaxis no controlados pueden generar fallos en el arranque de la aplicación. |
+| **Complementos estándar con GUI** | Herramientas **interactivas** añadidas a la **barra de herramientas** o **menús**. Ideales para procesos que requieren alta interacción visual (ej. capturar clics en el mapa). | Máxima **flexibilidad** en el diseño de **interfaces** (PyQt5). Integración profunda con los **eventos** del lienzo y **señales** del núcleo de la aplicación. | Mayor **complejidad** de desarrollo. La gestión de **validaciones**, **entradas/salidas** y **reportes** de progreso debe programarse manualmente desde cero. |
+| **Scripts de procesamiento (Processing scripts)** | Archivos Python **integrados** directamente en la **caja de herramientas** de QGIS (`Processing Toolbox`). Diseñados para procesos algorítmicos estandarizados. | Desarrollo **acelerado**. Generación **automática de la interfaz de usuario**. Facilita la **ejecución por lotes** (*batch processing*) y la **inserción en Model Builder**. | Flexibilidad gráfica **limitada** a los controles del framework. **Menor** capacidad para **manipular** menús o interactuar gráficamente con el lienzo. |
+| **Complementos de procesamiento (Processing plugins)** | **Empaquetado** formal de uno o varios scripts de procesamiento dentro de la estructura de un **plugin** distribuible. Es el **estándar** de la industria. | Combina la distribución **formal** de un complemento con la estabilidad y **compatibilidad** del framework de procesamiento. Altamente escalable. | Requiere el manejo de una estructura de múltiples archivos (`__init__.py`, metadatos, proveedor, algoritmo) bajo un paradigma estricto de **orientación a objetos**. |
 
 El dominio de estos paradigmas de desarrollo permitirá seleccionar la arquitectura óptima para cada problema espacial. Se iniciará con el prototipado algorítmico en consola para, progresivamente, escalar el código hacia complementos de procesamiento formales, listos para su distribución en repositorios o entornos institucionales.
 
@@ -77,7 +86,7 @@ Este curso requiere la versión QGIS LTR 3.44 (instada con Pixi) (Ver [@sec-qgis
 
 ## ¡Hola mundo!
 
-QGIS incluye una **Python Console** (Consola de Python) integrada y un editor de código donde se puede escribir y ejecutar código Python.
+QGIS incluye una **Consola de Python** (Python Console) integrada y un **Editor de Código** (Code Editor) donde se puede escribir y ejecutar código Python.
 
 Diríjase a **Plugins (Complementos) &rarr; Python Console (Consola de Python)** para abrir la consola.
 
@@ -93,11 +102,11 @@ En este paso se ejecuta la función *print()* de Python con el texto 'Hello Worl
 
 ![](images/pyqgis/helloworld.png){fig-align="center" width="75%"}
 
-Aunque la consola es útil para escribir una o dos líneas de código o para imprimir información de una variable, se debe utilizar el editor integrado para escribir guiones más extensos o fragmentos de código. Haga clic en el botón **Show Editor (Mostrar editor)** para abrir el panel del editor. Ingrese el código y haga clic en el botón **Run Script (Ejecutar guion)** para ejecutarlo. Los resultados aparecerán en la consola como anteriormente. Si se trabaja en un guion largo, se puede utilizar el botón **Save (Guardar)** en el editor para almacenar el archivo.
+Aunque la consola es útil para escribir una o dos líneas de código o para imprimir información de una variable, se debe utilizar el editor integrado para escribir scripts más extensos o fragmentos de código. Haga clic en el botón **Show Editor (Mostrar editor)** para abrir el panel del editor. Ingrese el código y haga clic en el botón **Run Script (Ejecutar Script)** para ejecutarlo. Los resultados aparecerán en la consola como anteriormente. Si se trabaja en un script largo, se puede utilizar el botón **Save (Guardar)** en el editor para almacenar el archivo con extensión `.py`.
 
 ![](images/pyqgis/editor.png){fig-align="center" width="75%"}
 
-Todos los fragmentos de código a continuación deben ejecutarse desde el editor.
+Todos los fragmentos de código a continuación deben ejecutarse desde el **Editor de Código**.
 
 ## ¡Hola PyQGIS!
 
@@ -112,13 +121,11 @@ Navegue al directorio de datos y cargue la capa `shoreline.shp`. Abra la **Attri
 Esto puede realizarse mediante la GUI de QGIS de la siguiente manera:
 
 1. Haga clic derecho en la capa `shoreline` y seleccione **Open Attribute Table (Abrir tabla de atributos)**.
-2. En la tabla de atributos, haga clic en el botón **Toggle Editing mode (Conmutar edición)**.
-3. Haga clic en el botón **Delete field (Borrar campo)**. Seleccione la columna `SDE_SFGIS_` y haga clic en **OK (Aceptar)**.
-4. Haga clic en el botón **Save edits (Guardar cambios)** y luego en **Toggle Editing mode (Conmutar edición)** para detener la edición.
+2. En la tabla de atributos, haga clic en el botón **Toggle Editing mode (Conmutar edición)**. Es un ícono en forma de lapiz, que se activa también con la combinación de teclas `Ctrl + E`.
+3. Haga clic en el botón **Delete field (Borrar campo)** (`Ctrl + L`). Seleccione la columna `SDE_SFGIS_` y haga clic en **OK (Aceptar)**.
+4. Haga clic en el botón **Save edits (Guardar cambios)** (`Ctrl + S`) y luego en **Toggle Editing mode (Conmutar edición)** (`Ctrl + E`) para detener la edición.
 
-QGIS proporciona una API para realizar todo este proceso mediante código Python. Se ejecutará esta tarea utilizando exclusivamente el editor. Abra el **Editor** e ingrese el siguiente código. Haga clic en el botón **Run Script (Ejecutar guion)** para ejecutarlo.
-
-
+QGIS proporciona una API para realizar todo este proceso mediante código Python. Se ejecutará esta tarea utilizando exclusivamente el editor de código mediante dos métodos que se ilustran a continuación. El primer método usa la clase `QgsVectorLayer` y no permite interacción del usuario en el proceso, y el segundo método usa la clase `QgsVectorLayerTools` la cual confirma con el usuario antes de guardar los cambios realizados con el código.
 
 ```{mermaid}
 %%| fig-align: center
@@ -154,8 +161,16 @@ graph TD
     M -->|Cancela o descarta| N["Reversión (Rollback)<br/>del búfer en RAM"]:::expl
 ```
 
+Primero ejecutaremos el código que ilustra la rama izquierda de la gráfica anterior (clase `QgsVectorLayer`). Abra el **Editor** e ingrese el siguiente código. Haga clic en el botón **Run Script (Ejecutar script)** para ejecutarlo.
+
+::: {.callout-note}
+## Documentación interna del código
+
+Los bloques de código contenidos en este texto presentan anotaciones y comentarios exhaustivos que detallan la sintaxis, las clases y la lógica operativa de cada instrucción. Se recomienda una lectura minuciosa de estos comentarios directamente dentro de los listados de código, ya que constituyen una parte fundamental de la explicación técnica y del flujo metodológico desarrollado.
+:::
 
 > Asegúrese de haber seleccionado la capa `shoreline` en el panel **Layers (Capas)** antes de ejecutar el código.
+
 
 ```python
 #| eval: false
@@ -209,7 +224,7 @@ Explicación del código paso a paso:
 
 Este ejemplo permite visualizar el alcance de la API. Para aprovechar todo el potencial de PyQGIS, es fundamental comprender primero el funcionamiento de las clases.
 
-Tome en cuenta que también es posible activar las acciones de inicio y fin de edición mediante la clase [`QgsVectorLayerTools`](https://qgis.org/pyqgis/3.44/core/QgsVectorLayerTools.html). A continuación, se presenta un código alternativo que muestra un diálogo de confirmación al usuario antes de aplicar los cambios:
+Ahora ejecutaremos el código que ilustra la rama derecha de la gráfica anterior (clase `QgsVectorLayerTools`). Es posible activar las acciones de inicio y fin de edición mediante la clase [`QgsVectorLayerTools`](https://qgis.org/pyqgis/3.44/core/QgsVectorLayerTools.html). A continuación, se presenta un código alternativo que muestra un diálogo de confirmación al usuario antes de aplicar los cambios:
 
 ```python
 #| eval: false
@@ -250,12 +265,21 @@ layer.deleteAttribute(1)
 iface.vectorLayerTools().stopEditing(layer)
 ```
 
+Explicación paso a paso del código anterior:
+
+El código describe la interacción de los métodos de PyQGIS con la interfaz gráfica de usuario (GUI) y la mediación directa del operador:
+
+1. `layer = iface.activeLayer()`: Recupera la referencia de la capa seleccionada en el panel mediante el objeto de interfaz (`iface`).
+2. `iface.vectorLayerTools().startEditing(layer)`: Habilita el modo de edición y actualiza la GUI activando el icono del lápiz y los botones de la barra de herramientas.
+3. `layer.deleteAttribute(1)`: Elimina la segunda columna de la tabla de atributos (índice `1`), debido a que la indexación de la API de QGIS comienza en `0`.
+4. `iface.vectorLayerTools().stopEditing(layer)`: Finaliza la edición y despliega un cuadro de diálogo nativo. El script interrumpe la automatización para que el usuario interactúe directamente con la interfaz, decidiendo de forma explícita si desea guardar los cambios en el disco, descartarlos o cancelar la acción para continuar editando.
+
 ### Resumen sintáctico
 
 A continuación se presenta la tabla comparativa que contrasta los dos métodos de edición del esquema tabular, destacando las clases empleadas y el comportamiento del sistema en cada etapa del ciclo **CRUD**.
 
 | Etapa del proceso | Método de núcleo (Scripting backend) | Método interactivo (Desarrollo de GUI) |
-| :--- | :--- | :--- |
+| :-- | :--- | :--- |
 | **Clase gestora principal** | `QgsVectorLayer` | `QgsVectorLayerTools` |
 | **Apertura de transacción** | `layer.startEditing()` | `iface.vectorLayerTools().startEditing(layer)` |
 | **Comportamiento visual** | Silencioso (sin cambios en la interfaz) | Activa el icono de lápiz y herramientas del panel |
@@ -266,21 +290,23 @@ A continuación se presenta la tabla comparativa que contrasta los dos métodos 
 
 ## Entendimiento de clases
 
-Antes de profundizar en PyQGIS, es fundamental comprender ciertos conceptos relacionados con las clases en C++ y Python. Tanto Qt como QGIS están desarrollados en lenguaje C++. La funcionalidad de cada widget de Qt/QGIS se implementa como una clase, la cual posee propiedades y funciones específicas. Al utilizar clases de PyQt o PyQGIS, se ejecuta el código de las clases en C++ a través de los enlaces de Python (python bindings).
+Antes de profundizar en PyQGIS, es fundamental comprender ciertos conceptos relacionados con las clases en C++ y Python. Tanto Qt como QGIS están desarrollados en lenguaje C++. La funcionalidad de cada widget de Qt/QGIS se implementa como una **clase**, la cual posee propiedades y funciones específicas. Al utilizar clases de PyQt o PyQGIS, se ejecuta el código de las clases en **C++** a través de los **enlaces de Python** (python bindings).
 
 A continuación, se presenta el código para crear una clase denominada `Car`. El código define una clase, la inicializa para crear nuevas instancias y demuestra el concepto de herencia. Una nueva clase se define mediante la palabra reservada `class`. Todas las clases cuentan con una función denominada `__init__()`, la cual se ejecuta siempre que se crea un nuevo objeto. También se utiliza la palabra clave `self`, que hace referencia a la instancia actual de la clase. El código emplea la palabra clave `super` para referirse a la clase de nivel superior o clase padre.
 
 ```{mermaid}
 %%| fig-align: center
-%%| out-width: 30%
+%%| out-width: 45%
 
 classDiagram
     class Car {
-        +String model$
-        +String color
-        +String type
-        +Boolean started
-        +Boolean stopped
+        +str model$
+        +list features$
+        +str color
+        +str type
+        +bool started
+        +bool stopped
+        +__str__() str
         +start()
         +stop()
     }
@@ -295,22 +321,38 @@ classDiagram
     Sedan <|-- ElectricSedan : Herencia multinivel
 ```
 
-```python
+
+```{python}
 #| file: code/pyqgis/car.py
 # Clase padre (superclase)
 # Esta clase define atributos y comportamientos comunes para todos los carros
 class Car: 
     
-    # Variable de clase (compartida por todas las instancias)
+    # Variables de clase (compartidas por todas las instancias en la memoria de la clase)
     model = 'Civic'
+    features = []  # Objeto mutable (lista) compartido colectivamente
     
     # Constructor: se ejecuta al crear un objeto de la clase
     def __init__(self, color, type):
-        # Variables de instancia (propias de cada objeto)
+        # Variables de instancia (propias y aisladas para cada objeto en particular)
         self.color = color
         self.type = type
         self.started = False
         self.stopped = False
+        
+    # Método especial para personalizar la representación del objeto en texto (print)
+    def __str__(self):
+        # Identificación dinámica del tipo de clase (Car, Sedan o ElectricSedan)
+        class_name = self.__class__.__name__
+        msg = f"[{class_name}] Modelo base: {self.model} | Color: {self.color} | Transmisión: {self.type}"
+        
+        # Inclusión condicional de atributos si la instancia pertenece a una subclase
+        if hasattr(self, 'seats'):
+            msg += f" | Capacidad: {self.seats} puestos"
+        if hasattr(self, 'range_km'):
+            msg += f" | Autonomía: {self.range_km} km"
+            
+        return msg
     
     # Método para encender el carro
     def start(self):
@@ -322,7 +364,7 @@ class Car:
     def stop(self):
         print('Car Stopped')
         self.stopped = True
-        self.started = False   # (corregido error: "sefl" -> "self")
+        self.started = False 
 
 
 # -------------------------
@@ -333,6 +375,7 @@ print('1. Instanciar una clase: Car')
 # Crear un objeto (instancia) de la clase Car
 my_car = Car('blue', 'automatic')
 
+# Ahora imprimirá el mensaje personalizado definido en __str__
 print(my_car)
 
 # Llamar a un método de la clase
@@ -376,42 +419,69 @@ class ElectricSedan(Sedan):
 # -------------------------
 # 2. Instanciar una subclase (Sedan)
 # -------------------------
-print('2. Instanciar una clase que hereda de otra: Sedan <- Car')
+print('\n2. Instanciar una clase que hereda de otra: Sedan <- Car')
 
 # Crear un objeto de Sedan
-my_car = Sedan('blue', 'automatic', 5)
+my_sedan = Sedan('blue', 'automatic', 5)
 
-# Accedemos a atributos heredados (de Car)
-print(my_car.color)
-
-# Atributo propio de Sedan
-print(my_car.seats)
+# Imprime el mensaje heredado y adaptado automáticamente para Sedan
+print(my_sedan)
 
 # Método heredado de Car
-my_car.start()
+my_sedan.start()
 
 
 # -------------------------
 # 3. Herencia multinivel
 # ElectricSedan <- Sedan <- Car
 # -------------------------
-print('3. Instanciar una clase que hereda de otra y esta a su vez hereda de otra: ElectricSedan <- Sedan <- Car')
+print('\n3. Instanciar una clase que hereda de otra y esta a su vez hereda de otra: ElectricSedan <- Sedan <- Car')
 
 # Crear un objeto de ElectricSedan
 my_future_car = ElectricSedan('red', 'automatic', 5, 500)
 
-# Atributos heredados de Car
-print(my_future_car.color)
-
-# Atributos heredados de Sedan
-print(my_future_car.seats)
-
-# Atributo propio de ElectricSedan
-print(my_future_car.range_km)
+# Imprime el mensaje heredado y adaptado con los datos de autonomía de ElectricSedan
+print(my_future_car)
 
 # Método heredado de Car
 my_future_car.start()
+
+
+# -------------------------
+# 4. Demostración del alcance de variables de clase e instancia
+# -------------------------
+print('\n4. Demostración de variables de clase (Alcance y mutabilidad)')
+
+# Instanciación de dos objetos independientes
+car_a = Car('black', 'manual')
+car_b = Car('white', 'automatic')
+
+# Caso A: Intento de modificación de variable inmutable (str) vía instancia
+car_a.model = 'Corolla'  # Crea una variable de instancia "sombra" local para car_a
+print(f"Modelo car_a: {car_a.model}")  # Imprime 'Corolla' (desde la instancia)
+print(f"Modelo car_b: {car_b.model}")  # Imprime 'Civic' (desde la clase)
+print(f"Modelo Clase Car: {Car.model}")  # Imprime 'Civic' (la clase no mutó)
+
+# Caso B: Modificación global directa sobre la clase base
+Car.model = 'Accord'
+print(f"Nuevo modelo car_b: {car_b.model}")  # Refleja 'Accord' (apunta al espacio de la clase)
+
+# Caso C: Modificación de un objeto mutable (list) desde una instancia específica
+car_a.features.append('Sunroof')  # Altera directamente la lista compartida en memoria
+print(f"Atributos compartidos en car_b: {car_b.features}")  # Refleja ['Sunroof']
 ```
+
+### Variables (atributos) de clase vs. variables de instancia
+
+El espacio de nombres (*namespace*) en Python determina cómo se accede y modifican los atributos según su nivel de declaración dentro de la arquitectura de objetos:
+
+* **Variables de instancia:** Definidas anteponiendo `self.` dentro del constructor `__init__()`. Cada objeto creado reserva su propia sección de memoria aislada para estas variables, por lo que alterar el color de un objeto no genera impactos sobre los demás.
+* **Variables de clase:** Declaradas directamente en el cuerpo de la clase (como `model` y `features`). Son compartidas colectivamente por todas las instancias a través del puntero de la clase base.
+
+La interacción con variables de clase presenta dos comportamientos críticos:
+
+1. **Ocultamiento por asignación (Sombra):** Si se asigna un valor a una variable de clase **inmutable** (como una cadena de texto) utilizando la referencia de una instancia (`car_a.model = 'Corolla'`), Python no modifica la clase. En su lugar, intercepta la instrucción y crea un nuevo atributo de instancia con el mismo nombre, ocultando temporalmente la variable de clase original solo para ese objeto específico.
+2. **Efecto de mutabilidad lateral:** Cuando la variable de clase es un objeto **mutable**, como la lista `features = []`, operaciones internas que **alteren el objeto sin reasignarlo** (por ejemplo, `.append()`) se ejecutan directamente sobre la dirección de memoria compartida. Como consecuencia, cualquier cambio provocado desde una única instancia se propagará de forma inmediata e idéntica a todos los objetos del ecosistema.
 
 ## Uso de clases de PyQGIS
 
@@ -419,7 +489,7 @@ Se inicia ahora el trabajo con las clases de PyQGIS. QGIS dispone de clases para
 
 ### Cálculo de distancia mediante PyQGIS
 
-Una operación básica pero fundamental en los SIG es el cálculo de distancias y áreas. Se explicará cómo utilizar las API de PyQGIS para calcular distancias.
+Una operación básica en los SIG es el cálculo de distancias y áreas. Se explicará cómo utilizar las API de PyQGIS para calcular distancias.
 
 ```{mermaid}
 %%| fig-align: center
@@ -461,14 +531,14 @@ new_york = (40.661, -73.944)
 
 QGIS proporciona la clase `QgsDistanceArea`, que cuenta con métodos para calcular distancias y áreas.
 
-Para utilizar esta clase, se debe crear un objeto mediante su instanciación. Según la documentación de la clase, el constructor no requiere argumentos. Se puede emplear el constructor por defecto para crear un objeto y asignarlo a la variable `d`.
+Para utilizar esta clase, se debe crear un objeto mediante su instanciación. Según la documentación de la clase, el **constructor no requiere argumentos**. Se puede emplear el constructor por defecto para crear un objeto y asignarlo a la variable `d`.
 
 ```python
 from qgis.core import QgsDistanceArea
 d = QgsDistanceArea()
 ```
 
-La documentación indica que, si se ha establecido un elipsoide válido para `QgsDistanceArea`, todos los cálculos se realizarán mediante algoritmos elipsoidales (por ejemplo, utilizando las fórmulas de Vincenty). Dado que se requiere calcular la distancia entre un par de latitudes y longitudes, es necesario emplear algoritmos elipsoidales. Se establecerá el elipsoide `WGS84` para el cálculo mediante el método `setEllipsoid()`. Es importante recordar que los métodos deben aplicarse sobre los objetos y no directamente sobre las clases.
+La documentación indica que, si se ha establecido un elipsoide válido para `QgsDistanceArea`, todos los cálculos se realizarán mediante algoritmos elipsoidales (por ejemplo, utilizando las fórmulas de [Vincenty](https://es.wikipedia.org/wiki/F%C3%B3rmulas_de_Vincenty). Dado que se requiere calcular la distancia entre un par de latitudes y longitudes, es necesario emplear algoritmos elipsoidales. Se establecerá el elipsoide `WGS84` para el cálculo mediante el método `setEllipsoid()`. Es importante recordar que los métodos deben aplicarse sobre los objetos y no directamente sobre las clases.
 
 ```python
 d.setEllipsoid('WGS84')
@@ -476,7 +546,7 @@ d.setEllipsoid('WGS84')
 
 > Sugerencia: Todos los elipsoides válidos pueden consultarse llamando a `QgsEllipsoidUtils.acronyms()`.
 
-El objeto `d` es ahora capaz de realizar cálculos de distancia elipsoidales. Al revisar los métodos disponibles en la clase `QgsDistanceArea`, se identifica el método `measureLine()`. Este método requiere una lista de objetos `QgsPointXY`. Estos objetos pueden crearse a partir de los pares de coordenadas y pasarse al método `measureLine()` para obtener la distancia. El resultado se entregará en metros, por lo que se divide entre 1000 para la conversión a kilómetros.
+El objeto `d` es ahora capaz de realizar cálculos de distancia elipsoidales. Al revisar los métodos disponibles en la clase `QgsDistanceArea`, se identifica el método `measureLine()`. Este método requiere una **lista** `[]` de objetos `QgsPointXY`. Estos objetos pueden crearse a partir de los pares de coordenadas y pasarse al método `measureLine()` para obtener la distancia. El resultado se entregará en metros, por lo que se divide entre 1000 para la conversión a kilómetros.
 
 ```python
 lat1, lon1 = san_francisco
@@ -561,7 +631,7 @@ print(distance / 1000)
 Este bloque de código introduce las clases fundamentales del núcleo geométrico de QGIS (`qgis.core`) para realizar análisis espacial geodésico, superando las limitaciones de los cálculos euclidianos planos.
 
 | Clase / Método | Función técnica y consideraciones |
-| :--- | :--- |
+| :- | :---- |
 | `QgsDistanceArea()` | Instancia el motor principal para mediciones de área y longitud. Sin configuración adicional, opera bajo suposiciones planimétricas dependientes del CRS del proyecto. |
 | `.setEllipsoid('WGS84')` | Transforma el comportamiento del motor matemático. Al definir un elipsoide válido (ej. `WGS84`), fuerza a la API a utilizar algoritmos de alta precisión (como las ecuaciones de Vincenty) para contemplar la curvatura terrestre. |
 | `QgsPointXY(x, y)` | Construye un objeto geométrico primitivo 2D. **Punto crítico de fallo:** Los sistemas de posicionamiento global reportan coordenadas como `(Latitud, Longitud)`. Sin embargo, los sistemas cartesianos SIG requieren estrictamente la notación `(X, Y)`. El desarrollador debe invertir el par a `(Longitud, Latitud)`. |
@@ -610,8 +680,7 @@ graph TD
     G["Salida: Valor escalar<br/>en la unidad requerida"]:::exp
 ```
 
-
-La clase `QgsDistanceArea` posee el método `convertLengthMeasurement()`, capaz de convertir la distancia medida a cualquier unidad compatible. Este método requiere dos argumentos: la longitud medida y la unidad a la que se desea convertir. La unidad debe ser un valor del tipo `Qgis.DistanceUnit`. Los valores permitidos se definen en la documentación de `Qgis.DistanceUnit`. El siguiente código demuestra la conversión de la distancia medida a kilómetros y millas.
+La clase `QgsDistanceArea` posee el método `convertLengthMeasurement()`, capaz de convertir la distancia medida a cualquier unidad compatible. Este método requiere dos argumentos: la longitud medida y la unidad a la que se desea convertir. La unidad debe ser un valor perteneciente a la **enumeración** `Qgis.DistanceUnit`. Los valores permitidos se definen en la documentación de dicha **enumeración** (`Qgis.DistanceUnit`). El siguiente código demuestra la conversión de la distancia medida a kilómetros y millas.
 
 > Nota: En versiones anteriores a QGIS 3.40, los tipos de unidad se especificaban como `QgsUnitTypes.DistanceKilometers`.
 
@@ -701,7 +770,7 @@ print('Distance in miles', distance_mi)
 La implementación de conversiones mediante la API se fundamenta en el uso de constantes tipificadas que aseguran la precisión de los cálculos según el elipsoide configurado.
 
 | Clase / Constante / Método | Función técnica y especificaciones de uso |
-| :--- | :--- |
+| :- | :---- |
 | `Qgis.DistanceUnit` | Espacio de nombres que contiene las constantes de enumeración para las unidades de medida (ej. `Kilometers`, `Miles`, `Meters`, `Feet`). |
 | `.convertLengthMeasurement()` | Método de la clase `QgsDistanceArea` que realiza la conversión escalar. Requiere dos argumentos: el valor original (flotante) y la unidad de destino (constante de `Qgis.DistanceUnit`). |
 | `QgsUnitTypes` | Referencia histórica: En versiones anteriores a QGIS 3.40, se utilizaba para definir tipos como `DistanceKilometers`. La migración al espacio `Qgis` es la práctica recomendada actualmente. |
@@ -711,9 +780,9 @@ La implementación de conversiones mediante la API se fundamenta en el uso de co
 
 ### Qt y PyQt
 
-[Qt](https://www.qt.io/) es un conjunto de herramientas de widgets de código abierto para la creación de interfaces gráficas de usuario y aplicaciones multiplataforma. QGIS está construido sobre la plataforma Qt. Tanto Qt como QGIS disponen de API documentadas que deben utilizarse al desarrollar código Python para ser ejecutado en QGIS.
+[Qt](https://doc.qt.io/) es un conjunto de herramientas de widgets de código abierto para la creación de interfaces gráficas de usuario y aplicaciones multiplataforma. QGIS está construido sobre la plataforma Qt. Tanto Qt como QGIS disponen de API documentadas que deben utilizarse al desarrollar código Python para ser ejecutado en QGIS.
 
-[PyQt](https://wiki.python.org/moin/PyQt) es la interfaz de Python para Qt, la cual proporciona clases y funciones para interactuar con los widgets de Qt.
+[PyQt](https://riverbankcomputing.com/software/pyqt/intro) es la interfaz de Python para Qt, la cual proporciona clases y funciones para interactuar con los widgets de Qt.
 
 ### Construcción de un cuadro de diálogo
 
@@ -747,7 +816,13 @@ graph TD
 ```
 
 
-El código puede ingresarse en el `Editor` y ejecutarse mediante `Run Script` (Ejecutar guion).
+::: {.callout-note}
+## Ejecución modal
+
+La **ejecución modal** es un estado de la interfaz gráfica donde el cuadro de diálogo abierto bloquea por completo la interacción con las demás ventanas de la aplicación. El flujo del script se detiene en la instrucción de apertura (usualmente `.exec()`) y el control no se devuelve al programa principal hasta que el usuario interactúa con la ventana emergente y la cierra de forma explícita.
+:::
+
+El código puede ingresarse en el `Editor` y ejecutarse mediante `Run Script` (Ejecutar script).
 
 `QMessageBox` es una clase de PyQt para la creación de diálogos con botones. Para utilizarla, se crea un objeto mediante la instanciación de la clase. En este caso, `mb` es un objeto que representa una instancia de `QMessageBox`, creado con los parámetros por defecto.
 
@@ -767,18 +842,16 @@ La función `dir()` devuelve la lista de atributos y métodos de cualquier objet
 dir(mb)
 ```
 
-Las clases poseen métodos que proporcionan funcionalidad, los cuales pueden ejecutarse sobre los objetos de instancia. Para la clase `QMessageBox`, el método `setText()` añade un texto al diálogo.
+Las clases poseen métodos que proporcionan funcionalidad, los cuales pueden ejecutarse sobre los objetos instanciados. Para la clase `QMessageBox`, el método `setText()` añade un texto al diálogo.
 
 ```python
 mb = QMessageBox()
 mb.setText('Click OK to confirm')
 ```
 
-Las clases también poseen atributos de clase que se comparten entre todas las instancias. La clase `QMessageBox` cuenta con los atributos `Ok` y `Cancel`, a los que se hace referencia como `QMessageBox.Ok` y `QMessageBox.Cancel`.
+Las clases también poseen **atributos (variables) de clase** que se comparten entre todas las instancias. La clase `QMessageBox` cuenta con los atributos `Ok` y `Cancel`, a los que se hace referencia como `QMessageBox.Ok` y `QMessageBox.Cancel`.
 
 ```python
-mb = QMessageBox()
-mb.setText('Click OK to confirm')
 mb.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
 ```
 
@@ -827,7 +900,7 @@ elif return_value == QMessageBox.Cancel:
 La implementación de cuadros de diálogo en PyQt se basa en la instanciación de objetos y la configuración de sus propiedades mediante métodos específicos antes de su ejecución modal.
 
 | Clase / Método / Atributo | Función técnica y especificaciones de uso |
-| :--- | :--- |
+| :- | :---- |
 | `QMessageBox()` | Clase de PyQt diseñada para crear diálogos interactivos. La instanciación genera un objeto con parámetros por defecto. |
 | `setText(str)` | Método de instancia que define el mensaje textual que se presentará al usuario dentro del cuadro de diálogo. |
 | `setStandardButtons()` | Configura los botones de respuesta. Utiliza atributos de clase (constantes) combinados mediante el operador bitwise OR (`|`). |
@@ -842,7 +915,12 @@ La implementación de cuadros de diálogo en PyQt se basa en la instanciación d
 ::: {.callout-note}
 ### Definición de SIP
 
+* S: Simple (Simple)
+* Interface (Interfaz)
+* Python (Python)
+
 SIP es una herramienta de código abierto diseñada para la generación de enlaces (*bindings*), lo que permite la interoperabilidad entre el núcleo de C++ de QGIS y el entorno de Python. La función técnica principal consiste en envolver (*wrapping*) las clases de C++ para que sean interpretadas como objetos nativos dentro de PyQGIS, gestionando de manera eficiente la memoria y el ciclo de vida de los objetos entre ambos lenguajes.
+
 :::
 
 
@@ -858,7 +936,104 @@ Ambas API son idénticas en su mayor parte, aunque ciertas funciones específica
 
 En esta sección se analiza la clase [`QgisInterface`](https://qgis.org/pyqgis/3.44/gui/QgisInterface.html), que proporciona métodos para la interacción con el entorno de QGIS. Durante la ejecución de QGIS, se configura una variable denominada `iface`, la cual provee un objeto de la clase `QgisInterface` para interactuar con la sesión activa. Esta interfaz permite el acceso al lienzo del mapa, menús, barras de herramientas y otros componentes de la aplicación. Tanto la `Python Console` (Consola de Python) como los complementos utilizan `iface` para acceder a diversas partes de QGIS.
 
+```{mermaid}
+%%| fig-align: center
+%%| out-width: 60%
+
+graph TD
+    %% Definición de componentes principales
+    QGIS[Sesión Activa de QGIS] -->|Instancia e Inyecta| iface([Objeto: iface])
+    
+    %% Clase base
+    subclass[Clase: QgisInterface] -.->|Define la API de| iface
+    
+    %% Consumidores de la interfaz
+    Console[Python Console] -->|Utiliza| iface
+    Plugins[Complementos / Plugins] -->|Utiliza| iface
+    
+    %% Componentes expuestos
+    iface -->|Acceso a| Canvas[Lienzo del Mapa <br> QgsMapCanvas]
+    iface -->|Acceso a| Menus[Menús y Barras de Herramientas]
+    iface -->|Acceso a| Layers[Panel de Capas y Leyenda]
+```
+
+
+#### Estructura general de interacción con QgisInterface
+
+El objeto global `iface` actúa como el punto de entrada unificado para interactuar con los componentes de la interfaz gráfica de QGIS. Su arquitectura se divide en cuatro dimensiones principales de control operativo:
+
+```{mermaid}
+%%| fig-align: center
+%%| out-width: 60%
+
+graph TD
+    IFACE["Objeto iface<br/>(Clase: QgisInterface)"] --> MW["Ventana Principal<br/>(mainWindow)"]
+    IFACE --> MENU["Menús Nativos<br/>(vectorMenu / helpMenu...)"]
+    IFACE --> TB["Barras de Herramientas<br/>(pluginToolBar / addToolBarIcon)"]
+    IFACE --> MB["Barra de Mensajes<br/>(messageBar)"]
+
+    classDef default fill:#e1f5fe,stroke:#0288d1,stroke-width:1px;
+```
+
+El siguiente diagrama resume la arquitectura de comunicación entre el objeto global `iface` y los elementos de la GUI, incluyendo el mecanismo de señales y ranuras para la ejecución de funciones personalizadas. Cada uno de esos elementos se abordarán en detalle en los siguientes ejercicios.
+
+```{mermaid}
+%%| fig-align: center
+%%| out-width: 100%
+
+graph TD
+    %% Definición de estilos para evitar desbordes tipográficos
+    classDef cod fill:#f4f6f9,stroke:#2c3e50,stroke-width:2px,font-family:monospace,font-size:12px;
+    classDef exp fill:#e1f5fe,stroke:#0288d1,stroke-width:1px;
+
+    %% Nodo Central
+    IFACE["Objeto iface<br/>(Clase: QgisInterface)"]:::exp --> MW
+    IFACE --> MENU
+    IFACE --> TB
+    IFACE --> MB
+
+    %% Rama Window
+    MW["mainWindow()"]:::cod --> QMW["Clase: QMainWindow<br/>(Título de ventana)"]:::exp
+    QMW --> ST["setWindowTitle()"]:::cod
+
+    %% Rama Menús
+    MENU["vectorMenu() /<br/>rasterMenu()"]:::cod --> QMB["Clase: QMenuBar<br/>(Gestión de acciones)"]:::exp
+    QMB --> RM["removeAction()"]:::cod
+
+    %% Rama Acciones y Señales
+    TB["addToolBarIcon() /<br/>helpMenu()"]:::cod --> QA["Clase: QAction<br/>(Botones/Items)"]:::exp
+    QA --> SIG["Señal: triggered"]:::exp
+    SIG -->|connect| SLOT["Función de Python<br/>(Slot)"]:::exp
+
+    %% Rama Mensajes
+    MB["messageBar()"]:::cod --> QMBAR["Clase: QgsMessageBar<br/>(Notificaciones)"]:::exp
+    QMBAR --> PI["pushInfo() /<br/>pushCritical()"]:::cod
+```
+
+
 #### Cambio del título de la ventana principal de QGIS
+
+```{mermaid}
+%%| fig-align: center
+%%| out-width: 55%
+
+graph TD
+    %% Nodos principales con saltos de línea estratégicos
+    IFACE["Objeto iface"] -->|mainWindow| QMW["Clase: QMainWindow<br/>(Marco externo de la GUI)"]
+    QMW -->|windowTitle| WT["windowTitle()<br/>(Recupera string<br/>actual)"]
+    QMW -->|setWindowTitle| ST["setWindowTitle<br/>(new_title)<br/>(Inyecta nuevo string)"]
+
+    %% Clases de estilo con control de fuente para evitar desbordes
+    classDef cod fill:#f4f6f9,stroke:#2c3e50,stroke-width:2px,font-family:monospace,font-size:12px;
+    classDef exp fill:#e1f5fe,stroke:#0288d1,stroke-width:1px,font-size:12px;
+
+    %% Asignación individual para compatibilidad estricta con Quarto / Mermaid v10+
+    class IFACE cod;
+    class WT cod;
+    class ST cod;
+    class QMW exp;
+```
+
 
 ```python
 #| eval: false
@@ -897,6 +1072,32 @@ main_window.setWindowTitle(new_title)
 ```
 
 #### Eliminación de los menús de ráster y vectorial
+
+```{mermaid}
+%%| fig-align: center
+%%| out-width: 65%
+
+graph TD
+    IFACE["Objeto<br/>iface"] -->|"vectorMenu() / rasterMenu()"| QMENU["Clase: QMenu<br/>(Menú específico)"]
+    QMENU -->|parentWidget| QMB["Clase: QMenuBar<br/>(Contenedor superior)"]
+    QMENU -->|menuAction| QA["Clase: QAction<br/>(Gatillo disparador)"]
+    QMB -->|removeAction| RM["removeAction(QAction)<br/>(Elimina de la<br/>barra principal)"]
+    
+    %% Conexión corregida: línea punteada de compatibilidad estricta sin saltos de línea en la etiqueta
+    QA -. Inyecta parámetro .-> RM
+
+    %% Definición de estilos con control de fuente para mitigar desbordes
+    classDef cod fill:#f4f6f9,stroke:#2c3e50,stroke-width:2px,font-family:monospace,font-size:12px;
+    classDef exp fill:#e1f5fe,stroke:#0288d1,stroke-width:1px,font-size:12px;
+
+    %% Asignación explícita e individual para compatibilidad con Mermaid v10+
+    class IFACE cod;
+    class RM cod;
+    class QMENU exp;
+    class QMB exp;
+    class QA exp;
+```
+
 
 ```python
 #| eval: false
@@ -939,7 +1140,80 @@ menubar.removeAction(raster_menu.menuAction())
 
 La programación de GUI requiere responder a las acciones del usuario. Todos los objetos en Qt poseen un mecanismo para emitir una señal (`signal`) cuando ocurre un cambio de estado, como cuando un usuario hace clic en un botón o se cierra una ventana. El programador puede conectar dicha señal a una ranura (`slot`), que es una función de Python que se llamará al emitirse la señal. La sintaxis general para la conexión es `<objeto>.<señal>.connect(función)`.
 
+```{mermaid}
+%%| fig-align: center
+%%| out-width: 100%
+
+graph TD
+    %% Bloque Inicial: Acción del usuario
+    USER["Acción del usuario<br/>(Ej: Clic en botón /<br/>Cerrar ventana)"] -->|Desencadena| OBJ["Objeto Qt<br/>(Ej: QAction / QPushButton)"]
+
+    %% Secuencia Principal Horizontal: Objeto -> Señal -> Ranura
+    OBJ -->|Emite| SIG(("Señal<br/>(Signal)"))
+    SIG -->|3. Método .connect| SLOT["Ranura (Slot)<br/>(Función de Python)"]
+
+    %% Catálogo de referencia lateral (Columna Derecha)
+    subgraph SG2 ["Señales comunes en PyQGIS"]
+        LIST["<b>Para botones (QPushButton):</b><br/>• clicked<br/>• toggled<br/><br/><b>Para menús/acciones (QAction):</b><br/>• triggered<br/><br/><b>Para entradas (QLineEdit):</b><br/>• textChanged<br/>• returnPressed"]
+    end
+
+    %% Representación de la Sintaxis (Bloque Inferior Alineado)
+    subgraph SG1 ["Sintaxis en PyQGIS"]
+        SYN["objeto . señal . connect ( función )"]
+    end
+
+    %% Vinculaciones conceptuales mapeadas de izquierda a derecha
+    SIG -.->|Ejemplos| LIST
+    %% Mas abajo hacemos esta conexión transparente
+    LIST --- SIG
+    OBJ -.->|1. Objeto| SYN
+    SIG -.->|2. Señal| SYN
+    SLOT -.->|4. Función| SYN
+    
+
+    %% Configuración de estilos para legibilidad y consistencia
+    classDef comp fill:#e1f5fe,stroke:#0288d1,stroke-width:1px,font-size:12px;
+    classDef code fill:#fdfdfd,stroke:#2c3e50,stroke-width:2px,font-family:monospace,font-size:12px;
+    classDef list fill:#fff9c4,stroke:#fbc02d,stroke-width:1px,font-size:11px;
+    
+    class USER,OBJ,SIG,SLOT comp;
+    class SYN code;
+    class LIST list;
+
+    %% Estilos de los contenedores (subgraphs)
+    style SG1 fill:#f5f5f5,stroke:#b0bec5,stroke-width:1px,color:#1a237e;
+    style SG2 fill:#fffde7,stroke:#fff59d,stroke-width:1px,color:#f57f17;
+    %% Ocultamiento explícito del enlace SIG --- LIST (Enlace número 3)
+    linkStyle 4 stroke:transparent,stroke-width:0px;
+```
+
+
 #### Adición de un nuevo elemento de menú
+
+```{mermaid}
+%%| fig-align: center
+%%| out-width: 75%
+
+graph TD
+    %% Bloque de construcción de la interfaz (Estructura Superior)
+    IFACE["Objeto<br/>iface"] -->|helpMenu| HM["helpMenu()"]
+    HM -->|addAction| QA["Objeto: QAction<br/>'Go to gis.stackexchange'"]
+
+    %% Bloque de la mecánica del evento (Flujo Inferior)
+    QA -->|Emite| SIG(("Señal:<br/>.triggered"))
+    SIG -. Conecta .-> SLOT["Ranura (Slot)<br/>(Función open_website):<br/><br/>.connect(open_website)"]
+
+    %% Definición de estilos con control de fuentes e interlineado
+    classDef cod fill:#f4f6f9,stroke:#2c3e50,stroke-width:2px,font-family:monospace,font-size:12px;
+    classDef exp fill:#e1f5fe,stroke:#0288d1,stroke-width:1px,font-size:12px;
+
+    %% Asignación individual para compatibilidad estricta con Quarto
+    class IFACE cod;
+    class HM cod;
+    class QA exp;
+    class SIG exp;
+    class SLOT exp;
+```
 
 Un nuevo botón o elemento de menú se crea mediante `QAction()`. En este caso, se crea una acción y se conecta la señal de activación (`triggered`) a un método que abre un sitio web.
 
@@ -1013,6 +1287,46 @@ Para asegurar que los scripts localicen correctamente las rutas a los archivos c
 La arquitectura original del código empleaba el directorio de inicio del usuario para centralizar el acceso a los datos. Dicha configuración se fundamentaba en la instrucción `os.path.expanduser('~')`, la cual resuelve la ruta absoluta hacia la carpeta home del sistema operativo. Se informa que este método se ha sustituido en la versión actual de la guía por una estructura de directorios relativa para optimizar la portabilidad del proyecto.
 :::
 
+
+```{mermaid}
+%%| fig-align: center
+%%| out-width: 90%
+
+graph TD
+    %% Validación de Precondición
+    PROJECT["QgsProject.instance.fileName"] --> VAL{"¿Ruta vacía?"}
+    
+    %% Rama de Error
+    VAL -->|Sí: Proyecto no guardado| ERR["iface.messageBar.pushCritical"]
+    
+    %% Rama Principal: Inicialización
+    VAL -->|No: Proyecto válido| PATH["Calcular rutas:<br/>os.path.join(project_dir, 'question.svg')"]
+    PATH --> QA["Instanciar QAction<br/>parent: iface.mainWindow"]
+    
+    %% Mecánica de Eventos (Señales y Ranuras)
+    QA -->|triggered.connect| SLOT["Función:<br/>show_time"]
+    SLOT -->|Ejecución| INF["iface.messageBar.pushInfo"]
+    
+    %% Gestión del Icono (Estructura de Control)
+    QA --> VALID_ICON{"¿os.path.exists<br/>(icon_path)?"}
+    VALID_ICON -->|Sí| SET_ICON["action.setIcon<br/>(QIcon)"]
+    
+    %% Integración en la GUI de QGIS
+    QA --> ADD_GUI["iface.addToolBarIcon(action)"]
+    SET_ICON -.->|Aporta recurso| ADD_GUI
+    ADD_GUI --> GUI["Barra de herramientas<br/>de complementos"]
+
+    %% Configuración de estilos con control de fuente para mitigar desbordes
+    classDef default fill:#e1f5fe,stroke:#0288d1,stroke-width:1px,font-size:12px;
+    classDef cond fill:#fff3e0,stroke:#ffb74d,stroke-width:1px,font-size:12px;
+    classDef code fill:#f4f6f9,stroke:#2c3e50,stroke-width:1px,font-family:monospace,font-size:11px;
+    
+    %% Asignación de clases
+    class VAL,VALID_ICON cond;
+    class PROJECT,ERR,QA,SLOT,INF,SET_ICON,ADD_GUI code;
+```
+
+
 ```python
 #| eval: false
 
@@ -1065,6 +1379,7 @@ else:
     # -------------------------
     
     # La instanciación de la acción se realiza solo tras validar el proyecto
+    # Se pasa iface.mainWindow() como parent para definir jerarquía y asegurar la liberación de memoria en RAM al cerrar QGIS
     action = QAction('Show Time', iface.mainWindow())
     
     # Conexión del evento de activación con la función de reporte temporal
@@ -1087,49 +1402,22 @@ else:
 ![](images/pyqgis/toolbar2.png){fig-align="center" width="75%"}
 
 
-#### Estructura y flujo de interacción con QgisInterface
+**Gestión de jerarquía en PyQGIS:**
 
-El siguiente diagrama detalla la arquitectura de comunicación entre el objeto global `iface` y los elementos de la GUI, incluyendo el mecanismo de señales y ranuras para la ejecución de funciones personalizadas.
+El paso de `iface.mainWindow()` como segundo argumento en el constructor de la clase `QAction` define la ventana principal de QGIS como el elemento padre (*parent*) del objeto instanciado.
 
-```{mermaid}
-%%| fig-align: center
-%%| out-width: 100%
+Esta asignación cumple dos funciones críticas dentro de la arquitectura del complemento:
 
-graph TD
-    %% Definición de estilos para evitar desbordes tipográficos
-    classDef cod fill:#f4f6f9,stroke:#2c3e50,stroke-width:2px,font-family:monospace,font-size:12px;
-    classDef exp fill:#e1f5fe,stroke:#0288d1,stroke-width:1px;
+* **Ciclo de vida del objeto:** Vincula la existencia de la acción directamente a la sesión activa de la interfaz gráfica de usuario.
+* **Gestión automatización de memoria:** Activa el recolector de elementos nativo de Qt, liberando de forma automática los recursos asignados en la memoria RAM cuando la ventana principal se destruye, previniendo fugas de memoria (*memory leaks*).
 
-    %% Nodo Central
-    IFACE["Objeto iface<br/>(Clase: QgisInterface)"]:::exp --> MW
-    IFACE --> MENU
-    IFACE --> TB
-    IFACE --> MB
-
-    %% Rama Window
-    MW["mainWindow()"]:::cod --> QMW["Clase: QMainWindow<br/>(Título de ventana)"]:::exp
-    QMW --> ST["setWindowTitle()"]:::cod
-
-    %% Rama Menús
-    MENU["vectorMenu() /<br/>rasterMenu()"]:::cod --> QMB["Clase: QMenuBar<br/>(Gestión de acciones)"]:::exp
-    QMB --> RM["removeAction()"]:::cod
-
-    %% Rama Acciones y Señales
-    TB["addToolBarIcon() /<br/>helpMenu()"]:::cod --> QA["Clase: QAction<br/>(Botones/Items)"]:::exp
-    QA --> SIG["Señal: triggered"]:::exp
-    SIG -->|connect| SLOT["Función de Python<br/>(Slot)"]:::exp
-
-    %% Rama Mensajes
-    MB["messageBar()"]:::cod --> QMBAR["Clase: QgsMessageBar<br/>(Notificaciones)"]:::exp
-    QMBAR --> PI["pushInfo() /<br/>pushCritical()"]:::cod
-```
 
 #### Resumen sintáctico de la interfaz de usuario
 
 A continuación se presenta la relación de métodos y clases involucradas en la personalización de la sesión activa de QGIS mediante la API de Python.
 
 | Componente | Método / Atributo | Clase asociada | Descripción técnica |
-| :--- | :--- | :--- | :--- |
+| :- | :- | :- | :--- |
 | **Ventana principal** | `mainWindow()` | `QMainWindow` | Recupera el contenedor de máximo nivel de la aplicación para gestionar títulos y estados de la ventana. |
 | **Gestión de menús** | `vectorMenu()`, `helpMenu()` | `QMenu` / `QMenuBar` | Permite acceder a los menús nativos para añadir separadores, acciones o remover menús completos mediante `parentWidget()`. |
 | **Eventos de usuario** | `triggered.connect()` | `QAction` (Signal/Slot) | Mecanismo de Qt para vincular un evento de la interfaz (clic) con una función de respuesta (*callback*) en Python. |
@@ -1148,13 +1436,57 @@ Reto: El mensaje de advertencia no tiene un tiempo de expiración y debe cerrars
 
 ### Administración de capas
 
+La correcta gestión de la información geoespacial en entornos de automatización requiere comprender la interacción entre el acceso a las fuentes de almacenamiento en disco y su representación en la interfaz gráfica. El desarrollo de complementos o scripts en PyQGIS exige un flujo ordenado que garantice la estabilidad del entorno mediante la validación previa de rutas relativas, previniendo fallas de segmentación al invocar objetos inexistentes.
+
+El siguiente diagrama ilustra la estructura lógica bidireccional de este proceso: en primer lugar, el flujo descendente para la **adición y tipificación de fuentes vectoriales** (Shapefile y GeoPackage) en la interfaz; en segundo lugar, el mecanismo de **captura, mutación de metadatos y actualización del árbol de capas** en tiempo de ejecución.
+
+
+```{mermaid}
+%%| fig-align: center
+%%| fig-width: 10
+%%| fig-height: 8
+
+graph TD
+    %% Definición de estilos para prevenir desbordes tipográficos
+    classDef cod fill:#f4f6f9,stroke:#2c3e50,stroke-width:2px,font-family:monospace,font-size:12px;
+    classDef exp fill:#e1f5fe,stroke:#0288d1,stroke-width:1px;
+
+    %% Flujo de Adición
+    A["Validación: ¿Proyecto guardado?"]:::exp --> B
+    B(["path =<br/>QgsProject.instance().fileName()"]):::cod --> C{Evaluación}
+    
+    C -->|No| D["Error crítico en<br/>iface.messageBar()"]:::exp
+    C -->|Sí| E["Construcción de URI<br/>(os.path.join)"]:::exp
+    
+    E --> F["Carga de Shapefile<br/>(Proveedor 'ogr')"]:::exp
+    G["Carga de GeoPackage<br/>(...gpkg#124;layername='...')"]:::exp
+    E --> G
+    
+    F --> H(["iface.addVectorLayer(<br/>uri, name, 'ogr')"]):::cod
+    G --> H
+    
+    %% Flujo de Renombrado
+    H --> I["Interacción con<br/>capa activa"]:::exp
+    I --> J(["layer =<br/>iface.activeLayer()"]):::cod --> K
+    K{"¿Capa válida?"}:::exp
+    
+    K -->|No| N["Notificar selección<br/>vacía en Barra"]:::exp
+    K -->|Sí| L(["name =<br/>layer.name()"]):::cod --> M
+    M(["layer.setName(<br/>'sf_' + name)"]):::cod --> O["Refresco síncrono<br/>iface.mapCanvas().refresh()"]:::cod
+    O --> P["Refresco en<br/>Panel de Capas"]:::exp
+
+    %% Asignación explícita de estilos para nodos condicionales
+    class C,K cond;
+    classDef cond fill:#fff3e0,stroke:#ffb74d,stroke-width:1px;
+```
+
 #### Adición de nuevas capas
 
 Las fuentes de datos se identifican mediante un URI (Uniform Resource Identifier).
 
-*   Para archivos locales, el URI es la ruta del archivo.
-*   Para bases de datos, el URI se construye mediante la clase `QgsDataSourceUri` e incluye la ruta, tabla, usuario, contraseña, etc.
-*   Para capas web (WMF/WFS), el URI es la URL correspondiente.
+* Para archivos locales, el URI es la ruta del archivo.
+* Para bases de datos, el URI se construye mediante la clase `QgsDataSourceUri` e incluye la ruta, tabla, usuario, contraseña, etc.
+* Para capas web (WMF/WFS), el URI es la URL correspondiente.
 
 Se recomienda consultar el `PyQGIS Developer Cookbook` para ejemplos sobre la construcción de URI para distintos tipos de datos.
 
@@ -1202,7 +1534,7 @@ else:
 
 
     # -------------------------
-    # Integración de datos vectoriales
+    # Integration de datos vectoriales
     # -------------------------
 
     # Proceso 1: Carga de archivo de intercambio ESRI Shapefile
@@ -1219,6 +1551,7 @@ else:
     uri_gpkg = os.path.join(data_dir, filename_gpkg)
     
     iface.addVectorLayer(uri_gpkg, 'zoning', 'ogr')
+
 ```
 
 ![](images/pyqgis/vectorlayer.png){fig-align="center" width="50%"}
@@ -1234,52 +1567,34 @@ else:
 # referencia al objeto de la capa seleccionada actualmente en el panel de capas.
 layer = iface.activeLayer()
 
-# -------------------------
-# Recuperación de metadatos
-# -------------------------
+# Control de flujo de seguridad: Evalúa si existe una capa seleccionada activa en la GUI
+# Evita excepciones de tipo 'NoneType' si el usuario ejecuta el script con el TOC vacío
+if not layer:
+    iface.messageBar().pushCritical(
+        'Error de selección',
+        'Operación cancelada: Debe seleccionar una capa vectorial en el Panel de Capas antes de renombrar.'
+    )
+else:
+    # -------------------------
+    # Recuperación de metadatos
+    # -------------------------
 
-# name(): Función que extrae la cadena de texto correspondiente 
-# al nombre actual de la capa en el árbol del proyecto.
-name = layer.name()
+    # name(): Función que extrae la cadena de texto correspondiente 
+    # al nombre actual de la capa en el árbol del proyecto.
+    name = layer.name()
 
-# -------------------------
-# Aplicación de cambios
-# -------------------------
+    # -------------------------
+    # Aplicación de cambios
+    # -------------------------
 
-# setName(): Método de la clase QgsMapLayer que permite redefinir 
-# el nombre de la capa. Se aplica un prefijo ('sf_') al nombre original.
-layer.setName('sf_' + name)
-```
-#### Estructura lógica de la gestión de capas
-
-```{mermaid}
-%%| fig-align: center
-%%| fig-width: 10
-%%| fig-height: 8
-
-graph TD
-    %% Definición de estilos para prevenir desbordes tipográficos
-    classDef cod fill:#f4f6f9,stroke:#2c3e50,stroke-width:2px,font-family:monospace,font-size:12px;
-    classDef exp fill:#e1f5fe,stroke:#0288d1,stroke-width:1px;
-
-    %% Flujo de Adición
-    A["Validación: ¿Proyecto guardado?"]:::exp --> B
-    B(["path =<br/>QgsProject.instance().fileName()"]):::cod --> C{Evaluación}
+    # setName(): Método de la clase QgsMapLayer que permite redefinir 
+    # el nombre de la capa. Se aplica un prefijo ('sf_') al nombre original.
+    layer.setName('sf_' + name)
     
-    C -->|No| D["Error crítico en<br/>iface.messageBar()"]:::exp
-    C -->|Sí| E["Construcción de URI<br/>(os.path.join)"]:::exp
-    
-    E --> F["Carga de Shapefile<br/>(Proveedor 'ogr')"]:::exp
-    E --> G["Carga de GeoPackage<br/>(Parámetro |layername=)"]:::exp
-    
-    F --> H(["iface.addVectorLayer(<br/>uri, name, 'ogr')"]):::cod
-    G --> H
-    
-    %% Flujo de Renombrado
-    H --> I["Interacción con<br/>capa activa"]:::exp
-    I --> J(["layer =<br/>iface.activeLayer()"]):::cod --> K
-    K(["name =<br/>layer.name()"]):::cod --> L
-    L(["layer.setName(<br/>'sf_' + name)"]):::cod --> M["Refresco en<br/>Panel de Capas"]:::exp
+    # mapCanvas().refresh(): Fuerza el repintado síncrono del lienzo de QGIS
+    # Asegura que las modificaciones de la API se reflejen inmediatamente en la interfaz
+    iface.mapCanvas().refresh()
+
 ```
 
 #### Resumen sintáctico
@@ -1287,7 +1602,7 @@ graph TD
 La manipulación de capas integra métodos del núcleo de QGIS para el acceso a datos y métodos de la interfaz para la visualización y control.
 
 | Operación técnica | Componente / Método | Especificación y lógica de uso |
-| :--- | :--- | :--- |
+| - | - | --- |
 | **Validación de entorno** | `QgsProject.instance().fileName()` | Recupera la ruta absoluta del proyecto. Es indispensable para establecer el directorio base en flujos de trabajo con rutas relativas. |
 | **Definición de fuente** | `URI (Uniform Resource Identifier)` | Cadena que identifica el origen de datos. En GeoPackage, utiliza el delimitador `|layername=` para especificar la tabla interna del contenedor. |
 | **Carga de datos** | `iface.addVectorLayer()` | Registra y visualiza la capa. Requiere la ruta (URI), el alias para la leyenda y el identificador del proveedor (comúnmente `'ogr'`). |
@@ -1574,7 +1889,7 @@ La manipulación programática de la sesión requiere el conocimiento de los mé
 
 
 | Operación técnica | Componente / Método | Especificación y lógica de uso |
-| :--- | :--- | :--- |
+| :- | :- | :--- |
 | **Acceso al Singleton** | `QgsProject.instance()` | Método estático indispensable para obtener el control de la sesión activa de QGIS. |
 | **Carga de sesión** | `.read(path)` | Lee el contenido de un archivo `.qgz`, reemplazando el estado actual del lienzo y la leyenda. |
 | **Validación de ruta** | `.fileName()` | Recupera la ruta absoluta del proyecto. Una cadena vacía indica que el proyecto no ha sido guardado. |
@@ -1772,7 +2087,7 @@ graph TD
 La implementación de scripts de inicio requiere el manejo de variables de contexto globales y la conexión a señales específicas del ciclo de vida de la aplicación.
 
 | Componente / Método | Función técnica y especificaciones de uso |
-| :--- | :--- |
+| :- | :--- |
 | `startup.py` | Archivo de Python ubicado en el directorio de inicio del usuario que QGIS ejecuta automáticamente al arrancar. |
 | `initializationCompleted` | Señal de la clase `QgisInterface` indispensable para diferir la ejecución de scripts hasta que la interfaz gráfica (UI) sea funcional. |
 | `QgsExpressionContextUtils` | Clase núcleo para gestionar ámbitos de variables. El método `.globalScope()` permite acceder a metadatos del sistema. |
@@ -2019,7 +2334,7 @@ graph TD
 La ejecución de geoprocesos mediante scripts optimiza la extensión del código al delegar tareas complejas (geometría, topología o análisis ráster) al motor nativo de QGIS o proveedores externos como GDAL/SAGA.
 
 | Método / Parámetro | Función técnica y lógica de implementación |
-| :--- | :--- |
+| :- | :--- |
 | `processing.run()` | Ejecuta un algoritmo de forma interna. Es el método estándar para pasos intermedios, ya que devuelve un diccionario con los resultados sin recargar la interfaz gráfica. |
 | `processing.runAndLoadResults()` | Similar a `run()`, pero además añade automáticamente el producto resultante al panel de capas y al lienzo del mapa para su inspección visual. |
 | `native:hillshade` | Identificador único del algoritmo. La sintaxis `proveedor:nombre` asegura que se invoque la herramienta correcta dentro del ecosistema de QGIS. |
@@ -2448,7 +2763,7 @@ graph TD
 La creación de complementos se fundamenta en la implementación de una clase principal que actúe como gestora de los eventos de la interfaz y la integración de proveedores de datos externos.
 
 | Componente / Método | Función técnica y especificaciones de uso |
-| :--- | :--- |
+| :- | :----- |
 | `metadata.txt` | Archivo de configuración que define los atributos de identidad (nombre, versión, autor) requeridos para el indexado en el Plugin Manager. |
 | `__init__.py` | Módulo de inicialización que contiene la función `classFactory(iface)`. Es el puente obligatorio que retorna la instancia de la clase del plugin a la aplicación. |
 | `initGui()` | Método encargado de la construcción de los elementos visuales (`QAction`). Se ejecuta al habilitar el plugin para registrar botones o menús. |
@@ -2668,7 +2983,7 @@ graph LR
 La interacción con los registros de una capa vectorial se basa en el acceso a sus atributos y su identificador único (FID), facilitando operaciones de gestión de datos.
 
 | Método / Concepto | Función técnica y especificaciones de uso |
-| :--- | :--- |
+| :- | :----- |
 | `getFeatures()` | Genera un `QgsFeatureIterator`. Establece la conexión con el proveedor de datos para la recuperación secuencial. |
 | `next()` | Función de Python que solicita el siguiente objeto al iterador, desplazando el puntero interno. |
 | `f.id()` | Recupera el Feature ID (FID). Identificador mandatorio para operaciones **CRUD** sobre el proveedor. |
@@ -2863,7 +3178,7 @@ graph TD
 La transición hacia complementos de procesamiento requiere el dominio de la validación de tipos de capa y la gestión de iteradores para la captura de metadatos.
 
 | Método / Clase | Función técnica y lógica de aplicación |
-| :--- | :--- |
+| :- | :--- |
 | `Processing Framework` | Marco de trabajo que facilita la creación de herramientas integradas en la caja de herramientas sin diseño manual de GUI. |
 | `QgsMapLayer.VectorLayer` | Constante de tipo utilizada para validar que el insumo posea una tabla de atributos iterable. |
 | `layer.fields()` | Recupera el objeto `QgsFields`, permitiendo la extracción de nombres de columnas mediante comprensión de listas. |
@@ -3092,7 +3407,7 @@ graph TD
 La ejecución exitosa del método `QgsVectorFileWriter.create()` requiere la definición precisa de metadatos espaciales y opciones del controlador de datos.
 
 | Parámetro | Función técnica y especificaciones |
-| :--- | :--- |
+| :- | :----- |
 | `fileName` | Cadena de texto con la ruta absoluta del archivo de salida en el sistema de archivos. |
 | `fields` | Objeto `QgsFields` que define el esquema de columnas y tipos de datos de la tabla resultante. |
 | `geometryType` | Definición del tipo de geometría (Punto, Línea, Polígono) o `NoGeometry` para tablas alfanuméricas. |
@@ -3341,7 +3656,7 @@ graph TD
 La transición de scripts de consola a algoritmos integrados requiere el uso de clases que normalizan la interacción con el sistema operativo y el núcleo de QGIS.
 
 | Componente técnico | Clase / Método | Función técnica y lógica de aplicación |
-| :--- | :--- | :--- |
+| :-- | :-- | :--- |
 | **Parámetro de entrada** | `QgsProcessingParameterFeatureSource` | Define una capa vectorial de entrada, permitiendo al usuario seleccionar capas del mapa o archivos en disco. |
 | **Parámetro de salida** | `QgsProcessingParameterFileDestination` | Gestiona la selección de la ruta de destino para archivos no vectoriales, como CSV o reportes. |
 | **Recuperación de capas** | `self.parameterAsVectorLayer()` | Método de ayuda para obtener la referencia a la capa cargada a partir de los parámetros del diálogo. |
@@ -3799,7 +4114,7 @@ graph TD
 El empaquetamiento funcional se basa en la correcta comunicación entre los componentes de la interfaz de usuario y los proveedores de datos del framework de procesamiento.
 
 | Archivo | Rol técnico | Descripción y lógica de integración |
-| :--- | :--- | :--- |
+| :- | :- | :--- |
 | **`metadata.txt`** | Descriptor de sistema | Contiene la definición mínima requerida por QGIS para indexar el complemento en el repositorio oficial y local. |
 | **`__init__.py`** | Punto de entrada | Implementa `classFactory(iface)`, permitiendo que QGIS genere el objeto controlador del plugin al arranque. |
 | **`save_attributes.py`** | Clase controladora | Gestiona la creación de menús e iconos, y orquesta el registro del proveedor en el `processingRegistry()`. |

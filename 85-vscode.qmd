@@ -179,3 +179,81 @@ Una vez instaladas las extensiones, verifique que su entorno esté correctamente
 ### Sincronización Automática
 Recuerde que cualquier cambio que realice en la configuración de estas extensiones mientras esté conectado al contenedor se guardará en su perfil local de VSCode, facilitando las conexiones futuras.
 :::
+
+
+## Configuración de asistentes de inteligencia artificial en Visual Studio Code
+
+Para optimizar el entorno de desarrollo y evitar conflictos de concurrencia entre los diferentes motores de inteligencia artificial (IA) integrados en Visual Studio Code, se estableció una arquitectura distribuida de funciones. Esta organización técnica previene colisiones en el proveedor de sugerencias en línea (`inlineCompletionsProvider`), asegurando la estabilidad del editor durante la generación de código y el análisis de datos.
+
+La distribución de responsabilidades se estructuró bajo el siguiente esquema:
+
+* **Gemini Code Assist:** Actúa como el motor principal para la generación de código en tiempo real y autocompletado en línea (*inline completions*).
+* **Continue:** Especializado exclusivamente en tareas de auditoría estructural de repositorios mediante indexación local (`@codebase`), ejecución de agentes complejos y consultas contextuales profundas en el panel lateral a través de la API de Gemini Pro.
+* **GitHub Copilot:** Configurado de manera de restringir la ejecución al panel de chat secundario, suspendiendo el autocompletado automático para evitar solapamientos.
+
+### Procedimiento de despliegue e integración
+
+El proceso secuencial para la puesta en marcha del entorno distribuido consta de las siguientes fases analíticas:
+
+1. **Instalación de componentes:** Desde el gestor de extensiones de Visual Studio Code (`Ctrl+Shift+X`), se incorporaron los complementos oficiales **Gemini Code Assist**, **Continue**, y **GitHub Copilot**.
+2. **Autenticación y vinculación de proyecto en Gemini:** Se efectuó el inicio de sesión en la extensión Gemini Code Assist utilizando las credenciales institucionales asociadas a la cuenta de Google. Posteriormente, mediante el menú de comandos de la extensión en la barra de estado, se seleccionó el proyecto activo de Google Cloud Platform (`gen-lang-client-...`) para habilitar la cuota de computación y el motor de sugerencias.
+3. **Extracción de credenciales para Continue:** Desde la plataforma Google AI Studio, se obtuvo una clave de API (*API key*) dedicada, vinculada al proyecto, para la configuración bajo la modalidad *Bring Your Own Key* (BYOK).
+4. **Inhabilitación de redundancias:** A través de la interfaz de comandos de Gemini Code Assist y la especificación de directivas en el archivo de preferencias del editor, se suspendieron las sugerencias predictivas secundarias, delegando el autocompletado en línea al motor principal seleccionado y evitando colisiones en el flujo de trabajo.
+
+### Parametrización de archivos de configuración
+
+La persistencia de la arquitectura configurada requiere la modificación de los archivos de control del entorno.
+
+El archivo de configuración de la extensión Continue, localizado en la ruta `C:\Users\<id_usuario>\.continue\config.yaml`, se estructuró de la siguiente forma para registrar el modelo y deshabilitar el autocompletado nativo:
+
+```yaml
+name: Local Config
+version: 1.0.0
+schema: v1
+models:
+  - title: Gemini Pro
+    provider: gemini
+    model: gemini-pro
+    apiKey: "..."
+tabAutocompleteModel: null
+
+```
+
+> El `apiKey` se copió de *Google AI Studio*
+
+El archivo de preferencias globales del editor (`settings.json`), ubicado en la ruta de usuario `C:\Users\<id_usuario>\AppData\Roaming\Code\User\settings.json`, registra las directivas definitivas de exclusión mutua para mitigar la degradación de rendimiento en el proceso de extensiones:
+
+```json
+{
+    "workbench.colorTheme": "Light 2026",
+    "terminal.integrated.commandsToSkipShell": [
+        "language-julia.interrupt"
+    ],
+    "julia.symbolCacheDownload": false,
+    "security.workspace.trust.untrustedFiles": "open",
+    "remote.autoForwardPortsSource": "hybrid",
+    "cSpell.language": "en,es-ES",
+    "python.analysis.typeCheckingMode": "standard",
+    "editor.renderWhitespace": "all",
+    "jupyter.interactiveWindow.creationMode": "perFile",
+    "languageTool.language": "es",
+    "github.copilot.enable": {
+        "*": false,
+        "plaintext": false,
+        "markdown": false,
+        "scminput": false,
+        "quarto": false
+    },
+    "geminicodeassist.project": "gen-lang-client-..."
+}
+
+```
+
+### Desactivación mediante componentes visuales de la barra de estado
+
+Para gestionar de forma ágil la exclusión mutua de los motores de sugerencias sin alterar directamente los archivos de configuración, el entorno de desarrollo permite conmutar el estado de autocompletado a través de los iconos interactivos ubicados en la barra de estado.
+
+El procedimiento operativo para cada asistente se ejecuta de la siguiente manera:
+
+* **GitHub Copilot:** Localizar el icono del avatar de robot en la sección inferior de la interfaz. Al hacer clic sobre este, se despliega el menú contextual donde se debe seleccionar la directiva *Disable Completions* (Desactivar completados), lo cual suspende la inserción de texto predictivo en el editor de forma global o para el lenguaje activo.
+* **Gemini Code Assist:** Seleccionar el identificador de Gemini situado en el extremo inferior del editor. En la ventana emergente de comandos rápidos, hacer clic en la opción *Enable/disable Auto Completion*. Esta acción cambia el estado de la propiedad a *Status: off* y remueve la marca de verificación, manteniendo operativas las funciones de consulta analítica en el panel de chat sin generar conflictos en el área de edición de código.
