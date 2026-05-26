@@ -68,6 +68,9 @@ book:
       chapters:
         - 22-pyQGIS_part1.qmd
         - 23-pyQGIS_part2.qmd
+    - part: "ArcPy"
+      chapters:
+        - 24-ArcPy.qmd
     - part: "Tópicos Avanzados y Visualización"
       chapters:
         - 98-errata.qmd

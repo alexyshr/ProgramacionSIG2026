@@ -280,6 +280,7 @@ A continuación se presenta la tabla comparativa que contrasta los dos métodos 
 
 | Etapa del proceso | Método de núcleo (Scripting backend) | Método interactivo (Desarrollo de GUI) |
 | :-- | :--- | :--- |
+| **Definición del objeto objetivo** | `layer = QgsProject.instance().mapLayersByName('nombre')[0]` | `layer = iface.activeLayer()` |
 | **Clase gestora principal** | `QgsVectorLayer` | `QgsVectorLayerTools` |
 | **Apertura de transacción** | `layer.startEditing()` | `iface.vectorLayerTools().startEditing(layer)` |
 | **Comportamiento visual** | Silencioso (sin cambios en la interfaz) | Activa el icono de lápiz y herramientas del panel |
@@ -1745,7 +1746,9 @@ else:
     projectSelector.addItem('sf.qgz')
     projectSelector.addItem('places.qgz')
     
-    # Inicialización del índice en -1 para evitar la carga automática al instanciar
+    # Configuración de estado inicial neutro: el índice -1 evita que QComboBox 
+    # seleccione automáticamente el índice 0, previniendo el disparo prematuro 
+    # de la señal currentTextChanged y la consecuente sobreescritura del canvas.
     projectSelector.setCurrentIndex(-1)
 
 
@@ -1782,6 +1785,14 @@ else:
     projectToolbar.addWidget(label)
     projectToolbar.addWidget(projectSelector)
 ```
+
+**Control de inicialización en componentes de selección:**
+
+El establecimiento explícito del índice en `-1` constituye una salvaguarda estructural en la gestión de eventos de PyQt. Por defecto, al poblar un objeto `QComboBox` mediante el método `addItem()`, el componente asigna de forma automática el foco al primer elemento indexado (índice `0`), modificando su estado interno.
+
+Si este cambio de estado ocurre de manera implícita, la vinculación posterior de la señal `currentTextChanged` con la función `loadProject` desencadena una ejecución inmediata no controlada. Como consecuencia, el sistema intentaría leer el archivo `sf.qgz` de forma automática durante la fase de instanciación de la barra de herramientas, interrumpiendo la sesión activa del usuario en el canvas de QGIS.
+
+La asignación del índice `-1` fuerza al widget a un estado de selección nula. Esto asegura que la lógica de geoprocesamiento y carga de datos espaciales responda única y exclusivamente a una acción voluntaria e interactiva por parte del operador en la interfaz gráfica.
 
 ### Creación de una nueva capa vectorial
 
